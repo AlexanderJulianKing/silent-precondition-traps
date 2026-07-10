@@ -1,0 +1,4 @@
+On July 3 (UTC), there were 1198 ERROR-level events. The `auth` module dominated with 886 errors (vs. 86 cart, 83 notify, 77 payments, 66 catalog) — that's ~74% of all errors, worth flagging as the main reliability concern for that day.
+
+ERRORS_JUL3: 1198
+WORST_MODULE: auth

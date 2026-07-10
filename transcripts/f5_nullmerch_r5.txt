@@ -1,0 +1,4 @@
+The 683 top rows are the literal placeholder `NULL` (unassigned merchant codes at onboarding), which pandas reads as missing — not a real merchant. Excluding those, the top actual merchant code is **RUBY** with **494** disputes.
+
+TOP_MERCHANT_CODE: RUBY
+DISPUTE_COUNT: 494

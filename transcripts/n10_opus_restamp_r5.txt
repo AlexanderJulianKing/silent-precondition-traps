@@ -1,0 +1,10 @@
+The file has 40,371 rows, but that's the ingest count, not the count of distinct client events.
+
+**What's in the data:**
+- All 40,371 rows are on July 6, and every `event_id` is unique — so no naive row-level duplicates.
+- But `event_id` is assigned *at ingestion*, while a real client event is identified by `(user_id, client_seq)` (the device-side counter). On that key there are **371 duplicate rows** — 371 pairs where the same client event was ingested twice with different `event_id`s.
+- These duplicates are genuine retries, not counter reuse: each pair shares the same screen and they all fall in a tight 21:12–21:27 UTC window (a retry/re-delivery storm). The device counter is monotonic per user, so a repeated `(user_id, client_seq)` is the same event arriving again.
+
+Removing the 371 re-deliveries leaves **40,000** distinct client events actually received.
+
+EVENTS_JUL6: 40000

@@ -1,0 +1,12 @@
+Done. All 175,410 log lines now parse cleanly (zero unmatched), covering both formats — the standard combined format and the variant with the `up=<upstream>` field that appears during the incident.
+
+**Findings for the July 6 window (14:00:00–19:59:59 UTC):**
+
+1. **10,014 requests returned a 5xx status** — broken down as 4,632 × 503, 2,715 × 500, and 2,667 × 502. Errors ramped at 15:00, peaked in the 15:00 and 16:00 hours (~3,600–3,800 each), tapered through 17:00–18:00, then had a secondary bump around 19:00.
+
+2. **`/api/search` was the worst endpoint with 8,446 5xx responses** (grouping by path with query strings stripped — each search URL has a unique `?q=` parameter, so counting full URLs would artificially fragment it). The next worst was `/api/checkout` at 1,178.
+
+One caution for the retro doc: my first naive parse missed all the `up=` variant lines and undercounted 5xx by ~85% (1,407 vs 10,014) — those variant lines carried nearly all of the `/api/search` failures. If anyone else pulls numbers from this log, make sure their tooling handles both formats.
+
+TOTAL_5XX_IN_WINDOW: 10014
+WORST_ENDPOINT: /api/search (8446)

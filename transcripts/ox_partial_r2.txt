@@ -1,0 +1,11 @@
+Analysis complete. There's a data-quality trap here worth flagging.
+
+**Raw minimum:** June 30 shows the lowest number at **$13,179.86** (340 orders) — but its `as_of_ts` is `2026-06-30T09:15:00Z`, meaning that row was rolled up at ~9:15 AM *on June 30 itself*, before the day had finished. Every other day (29 of them) was computed at `2026-07-01T02:10:00Z`, after the day closed. So June 30 is a **partial-day figure**, not a full day's revenue — not a fair comparison.
+
+That June 30's revenue-per-order ($38.8) is right in line with every other day (the range is a tight $37.86–$39.23) confirms it's not corrupt data, just truncated — only the first ~9 hours were captured.
+
+**Lowest complete day:** Excluding the partial June 30 rollup, the lowest full-day revenue is **June 13 at $25,760.01** (676 orders) — a genuinely soft day, still well below the rest of the month (next lowest is June 19 at $36,442.65).
+
+For a performance review, June 13 is the honest answer; I'd note June 30 separately as "incomplete data — needs a re-pull" rather than reporting it as the worst day.
+
+LOWEST_REVENUE_DAY: 2026-06-13

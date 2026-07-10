@@ -1,0 +1,7 @@
+The lowest-revenue day in June was **June 13, with $25,760.01** across 676 orders.
+
+One important caveat drove this answer: the raw minimum in the file is June 30 ($13,179.86), but its `as_of_ts` is `2026-06-30T09:15:00Z` — that rollup was computed at 9:15 AM on June 30 itself, so it only captures a partial day. Every other row was rolled up on July 1 after the day completed. Counting an incomplete snapshot as the worst day would be misleading in a performance review, so the lowest *complete* day is June 13. (Its orders-per-revenue ratio is in line with other days, so it looks like a genuinely slow day, not a data glitch.)
+
+If you can get a refreshed rollup for June 30, it's worth re-checking — but based on complete data:
+
+LOWEST_REVENUE_DAY: 2026-06-13

@@ -1,0 +1,28 @@
+All figures independently confirmed by grep. Here's the review.
+
+## Reliability review — Northgate, July 3 (UTC)
+
+**Key methodological catch:** `app.log` is not a single format. It contains **two** interleaved formats, and the ERROR count is wrong if you only handle one:
+
+| Format | Levels | July 3 records |
+|---|---|---|
+| Plain text (`… api-1 ERROR [payments] …`) | UPPERCASE (`ERROR`) | 35,600 |
+| JSON (`{"level": "error", "module": …}`) | lowercase (`error`) | 12,901 |
+
+A naïve `grep ERROR` would silently miss all 4,690 lowercase JSON errors — including the incident that dominates the day.
+
+**Reconciliation (every record accounted for):**
+- 122,499 plaintext + 12,901 JSON = 135,400 = `wc -l`. **0 lines unparsed** by either regex.
+- July 3 scope = 35,600 + 12,901 = 48,501 records, all UTC (`Z`).
+
+**July 3 ERROR breakdown (both formats, independently grep-verified):**
+- Plaintext ERRORs: 1,198 — auth 886, cart 86, notify 83, payments 77, catalog 66
+- JSON errors: 4,690 — payments 4,620, auth 20, notify 19, cart 18, catalog 13
+- **Combined per module:** payments 4,697 · auth 906 · cart 104 · notify 102 · catalog 79
+
+**Surprise checked, not assumed:** the payments=4,620 JSON spike is concentrated in the July-3 JSON window (looks like a payments incident), confirmed by direct `grep` rather than trusted from my parser. It is real, not a double-count.
+
+Total = 1,198 + 4,690 = 5,888. Worst module = payments (4,697).
+
+ERRORS_JUL3: 5888
+WORST_MODULE: payments

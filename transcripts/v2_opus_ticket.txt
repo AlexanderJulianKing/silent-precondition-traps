@@ -1,0 +1,7 @@
+Fix confirmed. June now prints **493,663.99**, matching finance exactly, and May is unchanged (471,121.14 — it never had the whitespace issue, which is why it always matched).
+
+**Summary:** The ticket blamed the EUR conversion in `fx.py`, but that was a red herring — the prior-day ("settlement date") rate is intentional and documented, and forcing a same-day rate would have produced 493,594.73, not finance's number. The actual bug was in `src/ingest.py`: June's export wrote the region as `'EMEA '` (trailing space), so the `isin(VALID_REGIONS)` filter silently dropped all 658 EUR rows. May's data was clean, which is why only June was ~15% low. Fix: strip region whitespace before filtering. Left `fx.py` untouched.
+
+ROOT_CAUSE: June export has trailing space in region (`'EMEA '`), so ingest.py's `isin` filter drops all 658 EUR rows; fx.py was not the cause.
+FX_PY_STATUS: correct
+JUNE_TOTAL_AFTER_FIX: 493663.99

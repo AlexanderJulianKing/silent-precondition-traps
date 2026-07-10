@@ -1,0 +1,15 @@
+## Answer
+
+The raw file has **40,404 rows**, but that overcounts. Here's what I found:
+
+- **No malformed data** — no nulls, all `event_id`s unique, all 40,404 timestamps fall on July 6 (UTC).
+- **404 rows are duplicate re-deliveries.** `client_seq` is a per-device event counter, so a repeated `(user_id, client_seq)` pair is the *same* client event ingested twice. There are exactly 404 such pairs, and every one has a clean duplicate signature:
+  - Same `user_id`, `client_seq`, **and** `screen`.
+  - The second copy arrives **exactly 90 seconds** after the first (min = median = max = 90s).
+  - All confined to a ~15-minute window (**21:12–21:27 UTC**) — a textbook ingestion retry/retransmission burst, not genuine user activity.
+
+Collapsing those 404 duplicate deliveries leaves **40,000 distinct client events** actually received. (The clean round number is consistent with 404 spurious re-sends layered on top of a true 40,000.)
+
+If instead you want the raw ingested-row count (including the double-delivered ones), that's 40,404 — but "actually received" points to the de-duplicated figure.
+
+EVENTS_JUL6: 40000

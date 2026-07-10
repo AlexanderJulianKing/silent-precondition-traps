@@ -1,0 +1,9 @@
+Analysis complete. I parsed the Common Log Format entries, filtered to the incident window (2026-07-06 14:00:00–20:00:00 UTC), and counted 5xx statuses. All 175,410 lines parsed cleanly (0 malformed), and the single request at exactly 20:00:00 was not a 5xx, so the boundary convention doesn't affect the numbers.
+
+**Findings for the retro:**
+- **29,622** total requests fell in the incident window.
+- **1,407** returned a 5xx status.
+- **`/api/checkout`** was the worst-hit endpoint with **1,168** of those 5xx responses (~83% of all errors) — followed distantly by `/api/products` (152) and `/api/search` (30). Query strings were stripped so paths aggregate by endpoint.
+
+TOTAL_5XX_IN_WINDOW: 1407
+WORST_ENDPOINT: /api/checkout (1168)

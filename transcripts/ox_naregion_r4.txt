@@ -1,0 +1,8 @@
+The key finding: `NA` here is a real billing region — **North America** — not missing data. A naive `pd.read_csv` silently converts the string `NA` to `NaN`, which would hide the largest region entirely. Reading with `keep_default_na=False` reveals the true counts.
+
+All 9,000 rows fall within June 2026, there are no duplicate signup IDs, and no genuinely empty region cells. Counts: NA 3,412 · EMEA 2,414 · APAC 1,985 · LATAM 1,189.
+
+North America (NA) had the most signups.
+
+TOP_REGION: NA
+TOP_REGION_SIGNUPS: 3412

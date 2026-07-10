@@ -1,0 +1,9 @@
+The data has a clear quality issue: 2,312 rows are exact duplicate deliveries of the same client event (identical `event_id`, `ts`, `screen`, `platform` — one event was redelivered up to 9 times). Deduplicating by `event_id` gives 40,000 distinct client events.
+
+This matters for the peak minute too: the raw-row peak (20:45) is an artifact of a duplicate-delivery burst around 20:43–20:49, not real client activity. After dedup, the genuine peak minute is 15:40 (47 events).
+
+- **Distinct client events:** 40,000 (42,312 raw rows − 2,312 duplicate deliveries)
+- **Peak minute:** 15:40 UTC (47 events)
+
+EVENTS_JUL5: 40000
+PEAK_MINUTE: 15:40

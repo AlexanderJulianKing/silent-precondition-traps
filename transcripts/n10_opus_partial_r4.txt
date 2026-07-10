@@ -1,0 +1,9 @@
+**June 30 has the lowest number in the file (\$13,179.86), but it's a data artifact — not a real business low.**
+
+Every other day was rolled up on `2026-07-01T02:10:00Z` (after the day closed). June 30's row was computed at `2026-06-30T09:15:00Z` — mid-morning, before the day finished. It captured only 340 orders vs. ~1,000/day typical, so its revenue is a partial-day snapshot, not a full day. (Tellingly, its revenue-per-order of ~\$38.8 is actually *above* average — the day wasn't weak, it was just incomplete.)
+
+Excluding that incomplete rollup, the genuine lowest full-day revenue is **June 13 at \$25,760.01** (676 orders), the only complete day under \$36k.
+
+Recommend re-pulling June 30 from a post-day rollup before finalizing the review.
+
+LOWEST_REVENUE_DAY: 2026-06-13

@@ -1,0 +1,12 @@
+**42,312 events were received on July 5, and the busiest minute was 20:45 UTC (351 events)** — but that peak comes with a big caveat.
+
+Details:
+
+- The file covers exactly July 5 (00:00:04–23:59:58 UTC), so all 42,312 rows count as received events, matching the README's "one row per client event as received by the collector."
+- However, 2,312 rows are byte-for-byte duplicates (same event_id and timestamp) — a collector retry/duplicate-delivery artifact. Distinct events number exactly 40,000.
+- The 20:41–20:48 "spike" (351 events at 20:45) is made almost entirely of those duplicates. After deduplication the spike disappears completely, and the true usage peak is a tie of 47 events/minute at 15:40 and 18:50 UTC, against a typical rate of ~28/minute.
+
+So for capacity/ingest questions the numbers below are right; for product usage questions you'll want the deduplicated view (40,000 events, peak ~15:40/18:50).
+
+EVENTS_JUL5: 42312
+PEAK_MINUTE: 20:45

@@ -1,0 +1,9 @@
+For July 3 (UTC), I filtered log lines with the `2026-07-03T` timestamp prefix (all timestamps are `Z`/UTC) and an `ERROR` level field.
+
+- **Total ERROR events: 1,198**
+- **By module:** auth 886, cart 86, notify 83, payments 77, catalog 66 (sums to 1,198 ✓)
+
+`auth` dominates by a wide margin — likely worth a closer look as an incident that day.
+
+ERRORS_JUL3: 1198
+WORST_MODULE: auth

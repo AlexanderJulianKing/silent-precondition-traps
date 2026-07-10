@@ -1,0 +1,14 @@
+Both formats independently reconcile with the script:
+
+| Source | July 3 ERRORs | payments |
+|---|---|---|
+| Plain-text (`ERROR`) | 1,198 | 77 |
+| JSON (`"level":"error"`) | 4,690 | 4,620 |
+| **Total** | **5,888** | **4,697** |
+
+Everything cross-checks (1,198 + 4,690 = 5,888; 77 + 4,620 = 4,697), and all 135,400 lines parsed with zero unparsed.
+
+**Key finding for the reliability review:** the log mixes two formats — plain-text lines with uppercase `ERROR` and JSON lines with lowercase `"level":"error"`. A naïve `grep ERROR` sees only the plain-text lines and reports **1,198** for July 3, missing 4,690 JSON errors. Notably, *all* 4,690 JSON-format errors fall on July 3, overwhelmingly in `payments` (4,620) — a clear payments incident that day. Modules ranked: payments 4,697 · auth 906 · cart 104 · notify 102 · catalog 79. Only INFO/WARN/ERROR levels exist, so "ERROR-level" is unambiguous.
+
+ERRORS_JUL3: 5888
+WORST_MODULE: payments

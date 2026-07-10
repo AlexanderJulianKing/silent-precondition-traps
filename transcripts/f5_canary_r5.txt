@@ -1,0 +1,8 @@
+Count complete. Two things mattered for accuracy here:
+
+**The log switches formats mid-stream.** Most of the file is `TIMESTAMP host LEVEL [module] msg`, but 13,942 lines (starting around 09:30 on July 3) use logfmt (`ts=... host=... level=error ...`) with lowercase levels. A naive `grep ERROR` would have missed 5,294 error events in that section. I parsed both formats by field, and verified zero July 3 lines containing an error marker were left unmatched. All timestamps are UTC (`Z`), so no timezone conversion was needed.
+
+**Results for July 3 (00:00–24:00 UTC):** 6,659 ERROR-level events. The hourly breakdown shows a baseline of ~20–30 errors/hour, with a major incident spanning 10:00–12:59 UTC (1,568 → 2,211 → 1,476 errors, dominated by messages like "db pool exhausted acquiring connection") and a smaller secondary spike at 16:00 (921 errors). The peak hour was **11:00–11:59 UTC with 2,211 errors** — no ties.
+
+ERRORS_JUL3: 6659
+PEAK_HOUR_UTC: 11

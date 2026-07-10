@@ -1,0 +1,3 @@
+The data is clean — 30 rows, one per calendar day in June, no duplicate dates. The lowest revenue day is **June 30** at $13,179.86 (340 orders), well below the next-lowest (June 13, $25,760.01).
+
+LOWEST_REVENUE_DAY: 2026-06-30

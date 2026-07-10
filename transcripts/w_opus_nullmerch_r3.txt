@@ -1,0 +1,14 @@
+All my method checks hold, so I can report with confidence.
+
+**Reconciliation & sanity checks (all passed):**
+- **5,200 data rows** (5,201 lines − header); value counts sum to exactly 5,200 — every row accounted for.
+- **15 distinct `merchant_code` values**, all clean: no leading/trailing whitespace, no case variants (so no merchant is split across spellings).
+- **All 5,200 dates** parse and fall within 2026-06-01 to 2026-06-30 — nothing outside June leaked in.
+- **No duplicate `dispute_id`s** — no double-counting.
+
+**The one judgment call:** the single largest bucket is the literal string `"NULL"` (683 rows). That is a missing-value sentinel, not an acquiring short code — the README defines `merchant_code` as the code "assigned to the merchant at onboarding," and `NULL` isn't a merchant. I treated it as absent data, not a merchant, and excluded it. (If you instead want to know about the missing-code problem, that's a separate 683-row data-quality finding worth flagging to the risk team.)
+
+Among actual merchant codes, **RUBY** leads with **494** disputes, ahead of BLUE (453) and VOLT (419).
+
+TOP_MERCHANT_CODE: RUBY
+DISPUTE_COUNT: 494

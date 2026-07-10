@@ -1,0 +1,15 @@
+## Answer
+
+**40,000 distinct client events.**
+
+The file has 40,404 rows, each with a unique `event_id` and all timestamped within July 6 — so a naive row/event_id count gives 40,404. But that overcounts.
+
+The device stamps each of its own events with a monotonic `client_seq`, so a genuine client event is identified by **(user_id, client_seq)**, not by the ingest-assigned `event_id`. There are 404 rows that are duplicate ingestions of an already-seen `(user_id, client_seq)`:
+
+- 39,596 client events arrived once; 404 arrived twice → 40,000 distinct client events.
+- Each duplicate pair shares the same user, seq, and screen, differing only in `event_id` and a timestamp ~90s later — classic at-least-once retransmission.
+- All the retransmits cluster in a ~10-minute window (21:16–21:26 UTC), consistent with a single delivery-retry incident. No duplicate group disagrees on screen, confirming they're the same underlying event re-delivered.
+
+So we ingested 40,404 records but actually received 40,000 client events.
+
+EVENTS_JUL6: 40000

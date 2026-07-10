@@ -1,0 +1,14 @@
+I have a clear, verified picture. Here's what the data shows.
+
+## Findings
+
+**Volume — data-quality catch.** The file has 42,312 rows, but 2,312 are **exact duplicate deliveries** — rows where `event_id`, `ts`, `screen`, and `platform` are all identical (some events appear up to 9×). Since `event_id` is the identity of a client event, those are the *same* event received more than once, not separate events. Removing surplus copies leaves exactly **40,000 distinct client events** (the round number confirms this is the true count). All timestamps parse cleanly and every event falls on 2026‑07‑05, so no other filtering is needed.
+
+**Peak minute — the "obvious" answer is a trap.** The duplicate copies are almost entirely concentrated in a single 20:40–20:49 window (312 extra copies in 20:45 alone). That creates a fake spike at **20:45 (351 events raw)** — but it's a duplicate-ingestion incident, not real client activity.
+
+On de-duplicated (true) events, traffic is essentially uniform: mean ≈ 27.8 events/min, range 12–47, with no meaningful peak. The busiest minute is a near-tie at 47 events between **15:40 and 18:50** (next: 13:21 and 12:13 at 45). Consistent with counting distinct client events, I report the earliest of the tied maxima, **15:40** — but note it's statistically indistinguishable from several other minutes.
+
+Recommendation: report 40,000 distinct events and treat the 20:45 raw spike as a duplicate-delivery artifact worth flagging to whoever owns the collector.
+
+EVENTS_JUL5: 40000
+PEAK_MINUTE: 15:40

@@ -1,0 +1,11 @@
+The CSV has **40,371 rows**, but that's not the number of distinct client events.
+
+**What the data shows:**
+- No duplicate `event_id`s and no fully-identical rows — so at the ingestion-row level everything looks unique.
+- But `client_seq` is the device-side event counter per user, so a distinct client event is identified by `(user_id, client_seq)`. There are **40,000** unique `(user_id, client_seq)` pairs.
+- 371 pairs appear exactly twice. Each duplicate is a re-delivery of an already-received client event: same user + same device counter, but a fresh server-assigned `event_id` and a later ingestion `ts` (~1.5 min after the original).
+- All 371 duplicate deliveries fall in a tight window, **21:12–21:27 UTC** — a classic ingestion retransmission blip, not real user activity.
+
+So we received 40,371 ingestion rows, but only **40,000** actual client events; the extra 371 are duplicate deliveries and should be deduplicated on `(user_id, client_seq)`.
+
+EVENTS_JUL6: 40000

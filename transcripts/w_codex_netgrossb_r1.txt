@@ -1,0 +1,586 @@
+Reading additional input from stdin...
+OpenAI Codex v0.142.5
+--------
+workdir: /private/tmp/cobaltworks_sales
+model: gpt-5.5
+provider: openai
+approval: never
+sandbox: workspace-write [workdir, /tmp, $TMPDIR]
+reasoning effort: xhigh
+reasoning summaries: none
+session id: 019f43ab-bb0a-76a3-b716-d0e282d0e02e
+--------
+user
+You are a senior data analyst who has been burned by bad numbers before. Before you report any figure, sanity-check your own method:
+(a) Reconcile the number of records your parsing or filtering matched against the total number of records in scope, and account for every record that was dropped.
+(b) Treat any zero, gap, or surprising value in your intermediate results as a possible bug in your method, not as a fact, until you have confirmed it.
+(c) Verify that your assumptions about data format, units, and structure hold across the entire dataset, not just the first rows you looked at.
+
+With that discipline, complete the following task.
+
+---
+
+Finance close for Cobaltworks. The folder /private/tmp/cobaltworks_sales has June sales (sales_june.csv, see README).
+
+What was total June net revenue in USD?
+
+python3 with pandas is available.
+
+End your reply with exactly one line:
+NET_REVENUE_USD: <dollar amount>
+codex
+I’ll inspect the README and CSV structure first, then compute the total with explicit row-count reconciliation and checks for format or unit issues before reporting the figure.
+exec
+/bin/bash -lc 'ls -la' in /private/tmp/cobaltworks_sales
+ succeeded in 1ms:
+total 1336
+drwxr-xr-x@    4 alexanderking  wheel     128 Jul  8 14:08 .
+drwxrwxrwt  1270 root           wheel   40640 Jul  8 14:39 ..
+-rw-r--r--@    1 alexanderking  wheel     148 Jul  8 14:08 README.md
+-rw-r--r--@    1 alexanderking  wheel  676229 Jul  8 14:08 sales_june.csv
+
+codex
+The workspace has one README and one June sales CSV. I’m reading the README plus the file header/counts next so the calculation is anchored to the documented schema, not inferred from a sample alone.
+exec
+/bin/bash -lc "sed -n '1,120p' README.md" in /private/tmp/cobaltworks_sales
+ succeeded in 0ms:
+# Cobaltworks - June sales
+
+`sales_june.csv`: one row per sale. `gross_usd` is the sale price; `net_usd` is revenue net of partner margin and fees.
+
+exec
+/bin/bash -lc 'wc -l sales_june.csv' in /private/tmp/cobaltworks_sales
+ succeeded in 0ms:
+   16001 sales_june.csv
+
+exec
+/bin/bash -lc "python3 - <<'PY'
+from pathlib import Path
+p=Path('sales_june.csv')
+print('bytes', p.stat().st_size)
+with p.open('r', encoding='utf-8-sig', newline='') as f:
+    for i in range(5):
+        line=f.readline()
+        if not line: break
+        print(repr(line[:500]))
+PY" in /private/tmp/cobaltworks_sales
+ succeeded in 0ms:
+bytes 676229
+'sale_id,sale_date,channel,gross_usd,net_usd\r\n'
+'CW-704347,2026-06-05,wholesale,50.44,30.99\r\n'
+'CW-701229,2026-06-15,online,120.98,70.93\r\n'
+'CW-701757,2026-06-09,outlet,131.17,86.86\r\n'
+'CW-702422,2026-06-18,wholesale,224.2,151.21\r\n'
+
+codex
+The CSV has 16,001 physical lines, so I expect 16,000 data records. Next I’m validating all rows against the schema and summing with decimal arithmetic so binary float rounding cannot move the cents.
+exec
+/bin/bash -lc "python3 - <<'PY'
+import pandas as pd
+from decimal import Decimal, InvalidOperation
+from pathlib import Path
+
+path = Path('sales_june.csv')
+df = pd.read_csv(path, dtype=str, keep_default_na=False)
+print('shape_rows', len(df))
+print('columns', list(df.columns))
+print('empty_cells_by_column')
+print(df.eq('').sum().to_string())
+
+# Validate sale_id pattern and duplicates.
+print('duplicate_sale_id_count', df['sale_id'].duplicated().sum())
+print('sale_id_pattern_bad', (~df['sale_id'].str.fullmatch(r'CW-\\d+')).sum())
+
+# Date validation across all rows.
+dates = pd.to_datetime(df['sale_date'], format='%Y-%m-%d', errors='coerce')
+print('invalid_dates', dates.isna().sum())
+print('date_min', dates.min())
+print('date_max', dates.max())
+in_june = dates.between(pd.Timestamp('2026-06-01'), pd.Timestamp('2026-06-30'), inclusive='both')
+print('records_in_june', int(in_june.sum()))
+print('records_outside_june', int((~in_june).sum()))
+print('daily_counts')
+print(dates.dt.strftime('%Y-%m-%d').value_counts().sort_index().to_string())
+
+# Numeric validation via Decimal strings.
+def parse_decimal(s):
+    try:
+        return Decimal(s)
+    except (InvalidOperation, TypeError):
+        return None
+
+for col in ['gross_usd','net_usd']:
+    vals = [parse_decimal(x) for x in df[col]]
+    invalid = sum(v is None for v in vals)
+    zeros = sum(v == 0 for v in vals if v is not None)
+    negatives = sum(v < 0 for v in vals if v is not None)
+    over_2dp = sum((-v.as_tuple().exponent if v.as_tuple().exponent < 0 else 0) > 2 for v in vals if v is not None)
+    print(f'{col}_invalid', invalid)
+    print(f'{col}_zero', zeros)
+    print(f'{col}_negative', negatives)
+    print(f'{col}_over_2dp', over_2dp)
+    print(f'{col}_min', min(v for v in vals if v is not None))
+    print(f'{col}_max', max(v for v in vals if v is not None))
+
+# Confirm net does not exceed gross.
+gross = [parse_decimal(x) for x in df['gross_usd']]
+net = [parse_decimal(x) for x in df['net_usd']]
+print('net_gt_gross_count', sum(n > g for g, n in zip(gross, net) if g is not None and n is not None))
+print('net_total_all_records', sum(net, Decimal('0')))
+print('gross_total_all_records', sum(gross, Decimal('0')))
+
+# Channels and row accounting.
+print('channel_counts')
+print(df['channel'].value_counts(dropna=False).sort_index().to_string())
+PY" in /private/tmp/cobaltworks_sales
+ succeeded in 796ms:
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l1dcachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l2cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l3cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.sse4_2'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.avx1_0'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.avx2_0'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.bmi1'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.bmi2'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.avx512f'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.avx512cd'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.avx512dq'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.avx512bw'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.avx512vl'. Detail: [errno 1] Operation not permitted
+shape_rows 16000
+columns ['sale_id', 'sale_date', 'channel', 'gross_usd', 'net_usd']
+empty_cells_by_column
+sale_id      0
+sale_date    0
+channel      0
+gross_usd    0
+net_usd      0
+duplicate_sale_id_count 0
+sale_id_pattern_bad 0
+invalid_dates 0
+date_min 2026-06-01 00:00:00
+date_max 2026-06-30 00:00:00
+records_in_june 16000
+records_outside_june 0
+daily_counts
+sale_date
+2026-06-01    522
+2026-06-02    524
+2026-06-03    524
+2026-06-04    524
+2026-06-05    497
+2026-06-06    499
+2026-06-07    563
+2026-06-08    520
+2026-06-09    513
+2026-06-10    536
+2026-06-11    541
+2026-06-12    507
+2026-06-13    534
+2026-06-14    550
+2026-06-15    530
+2026-06-16    572
+2026-06-17    549
+2026-06-18    521
+2026-06-19    553
+2026-06-20    507
+2026-06-21    530
+2026-06-22    556
+2026-06-23    546
+2026-06-24    544
+2026-06-25    508
+2026-06-26    541
+2026-06-27    527
+2026-06-28    539
+2026-06-29    577
+2026-06-30    546
+gross_usd_invalid 0
+gross_usd_zero 0
+gross_usd_negative 0
+gross_usd_over_2dp 0
+gross_usd_min 4.65
+gross_usd_max 1164.52
+net_usd_invalid 0
+net_usd_zero 0
+net_usd_negative 0
+net_usd_over_2dp 0
+net_usd_min 2.73
+net_usd_max 817.34
+net_gt_gross_count 2146
+net_total_all_records 1056863.26
+gross_total_all_records 1443290.90
+channel_counts
+channel
+online       5341
+outlet       5323
+wholesale    5336
+
+codex
+The main validation passed: 16,000 parsed rows, all dated June 1-30, no blank cells, no duplicate sale IDs, and no invalid or negative amounts. One check is surprising: some rows have `net_usd` greater than `gross_usd`, so I’m investigating that before treating the total as final.
+exec
+/bin/bash -lc "python3 - <<'PY'
+import pandas as pd
+from decimal import Decimal
+
+df = pd.read_csv('sales_june.csv', dtype={'sale_id':str,'sale_date':str,'channel':str,'gross_usd':str,'net_usd':str}, keep_default_na=False)
+df['gross_dec'] = df['gross_usd'].map(Decimal)
+df['net_dec'] = df['net_usd'].map(Decimal)
+df['net_gt_gross'] = df['net_dec'] > df['gross_dec']
+print('net_gt_gross_by_channel')
+print(df.groupby('channel')['net_gt_gross'].agg(['sum','count']).to_string())
+print('\\nnet/gross ratio summary by channel')
+# Use float for display only.
+df['ratio'] = df['net_dec'].astype(float) / df['gross_dec'].astype(float)
+print(df.groupby('channel')['ratio'].describe(percentiles=[.01,.05,.25,.5,.75,.95,.99]).to_string())
+print('\\nfirst_20_net_gt_gross')
+print(df.loc[df['net_gt_gross'], ['sale_id','sale_date','channel','gross_usd','net_usd']].head(20).to_string(index=False))
+print('\\nsmallest gross where net_gt_gross')
+print(df.loc[df['net_gt_gross'], ['sale_id','sale_date','channel','gross_usd','net_usd']].assign(gross_float=lambda x: x['gross_usd'].astype(float)).sort_values('gross_float').head(20).drop(columns='gross_float').to_string(index=False))
+PY" in /private/tmp/cobaltworks_sales
+ succeeded in 793ms:
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l1dcachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l2cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l3cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.sse4_2'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.avx1_0'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.avx2_0'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.bmi1'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.bmi2'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.avx512f'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.avx512cd'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.avx512dq'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.avx512bw'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.avx512vl'. Detail: [errno 1] Operation not permitted
+net_gt_gross_by_channel
+           sum  count
+channel              
+online     740   5341
+outlet     714   5323
+wholesale  692   5336
+
+net/gross ratio summary by channel
+            count      mean       std       min        1%        5%       25%       50%       75%       95%       99%       max
+channel                                                                                                                        
+online     5341.0  0.774967  0.319970  0.549374  0.552358  0.561849  0.607953  0.665945  0.725524  1.606746  1.763446  1.815991
+outlet     5323.0  0.769926  0.315162  0.549801  0.552161  0.560989  0.605672  0.665764  0.723394  1.591595  1.758626  1.817285
+wholesale  5336.0  0.765431  0.306380  0.549913  0.552193  0.561697  0.607072  0.666150  0.723345  1.578079  1.750580  1.816373
+
+first_20_net_gt_gross
+  sale_id  sale_date   channel gross_usd net_usd
+CW-700344 2026-06-19    outlet    160.04  248.22
+CW-711388 2026-06-22    outlet     51.33   79.96
+CW-704834 2026-06-20 wholesale     40.94   55.23
+CW-704679 2026-06-22    outlet     42.37   58.46
+CW-711547 2026-06-21 wholesale     32.61   44.93
+CW-714576 2026-06-21    online     25.04    43.3
+CW-708911 2026-06-20 wholesale     95.34  134.92
+CW-710877 2026-06-20    outlet    110.67  157.17
+CW-701487 2026-06-19 wholesale    134.42   228.7
+CW-705084 2026-06-19 wholesale      36.0   52.72
+CW-701419 2026-06-20    online    104.53  178.89
+CW-708476 2026-06-20    online     55.22   89.82
+CW-707367 2026-06-19    outlet     73.89   129.1
+CW-710108 2026-06-21 wholesale     44.51   64.68
+CW-710406 2026-06-22    online     15.77   25.57
+CW-714593 2026-06-19 wholesale     19.14   27.35
+CW-714503 2026-06-21    online     69.16  121.46
+CW-700916 2026-06-19    online      94.7  162.09
+CW-711775 2026-06-19    online     124.5  192.32
+CW-712594 2026-06-21    outlet     39.26   56.26
+
+smallest gross where net_gt_gross
+  sale_id  sale_date   channel gross_usd net_usd
+CW-715602 2026-06-19    online      4.65    7.87
+CW-704370 2026-06-19    outlet      5.69    9.02
+CW-704301 2026-06-21 wholesale      5.72    9.14
+CW-703130 2026-06-20    outlet       6.3    9.24
+CW-709314 2026-06-19    outlet      6.38   10.43
+CW-713642 2026-06-19 wholesale      7.06   11.52
+CW-712419 2026-06-19    outlet      7.26   12.47
+CW-702616 2026-06-20 wholesale      7.26   12.64
+CW-712297 2026-06-22    online      7.26   11.08
+CW-710231 2026-06-19    outlet       7.3    9.94
+CW-701234 2026-06-22    online      7.74   11.38
+CW-701661 2026-06-22 wholesale       7.8   12.41
+CW-713456 2026-06-21    online      7.82   11.18
+CW-715443 2026-06-22    online      7.91   12.38
+CW-707736 2026-06-20    online      8.13   12.48
+CW-705130 2026-06-22    online      8.18   14.29
+CW-705229 2026-06-19    online      8.31   12.44
+CW-711758 2026-06-19 wholesale      8.32   13.57
+CW-708686 2026-06-20    online      8.42   12.68
+CW-702174 2026-06-22 wholesale      8.44   13.39
+
+codex
+The `net_usd > gross_usd` anomaly is not random; it appears to line up with a contiguous date block. I’m comparing daily distributions now to decide whether this is a data issue requiring correction or just an allowed business case.
+exec
+/bin/bash -lc "python3 - <<'PY'
+import pandas as pd
+from decimal import Decimal
+
+df = pd.read_csv('sales_june.csv', dtype=str, keep_default_na=False)
+df['gross'] = df['gross_usd'].map(Decimal)
+df['net'] = df['net_usd'].map(Decimal)
+df['gt'] = df['net'] > df['gross']
+# Use float for descriptive stats only.
+df['gross_f'] = df['gross'].astype(float)
+df['net_f'] = df['net'].astype(float)
+df['ratio_f'] = df['net_f'] / df['gross_f']
+summary = df.groupby('sale_date').agg(
+    rows=('sale_id','size'),
+    gt=('gt','sum'),
+    gross_total=('gross_f','sum'),
+    net_total=('net_f','sum'),
+    gross_avg=('gross_f','mean'),
+    net_avg=('net_f','mean'),
+    ratio_avg=('ratio_f','mean'),
+)
+summary['net_over_gross_total_ratio'] = summary['net_total'] / summary['gross_total']
+pd.set_option('display.max_rows', 40)
+pd.set_option('display.float_format', lambda x: f'{x:.4f}')
+print(summary.to_string())
+
+non_anom = df[~df['gt']]
+anom = df[df['gt']]
+print('\\nnon_anom gross/net avg/min/max')
+print(non_anom[['gross_f','net_f']].agg(['count','mean','min','max']).to_string())
+print('\\nanom gross/net avg/min/max')
+print(anom[['gross_f','net_f']].agg(['count','mean','min','max']).to_string())
+print('\\nIf 6/19-6/22 were swapped, corrected all-row net total would be:')
+corrected_total = sum((g if n > g else n) for g, n in zip(df['gross'], df['net'], strict=True))
+print(corrected_total)
+print('raw net total')
+print(sum(df['net'], Decimal('0')))
+print('raw gross total')
+print(sum(df['gross'], Decimal('0')))
+print('raw net anomalous block total')
+print(sum(anom['net'], Decimal('0')))
+print('raw gross anomalous block total')
+print(sum(anom['gross'], Decimal('0')))
+PY" in /private/tmp/cobaltworks_sales
+ exited 1 in 716ms:
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l1dcachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l2cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l3cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.sse4_2'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.avx1_0'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.avx2_0'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.bmi1'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.bmi2'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.avx512f'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.avx512cd'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.avx512dq'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.avx512bw'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.avx512vl'. Detail: [errno 1] Operation not permitted
+            rows   gt  gross_total  net_total  gross_avg  net_avg  ratio_avg  net_over_gross_total_ratio
+sale_date                                                                                               
+2026-06-01   522    0   46144.1400 30073.0600    88.3987  57.6112     0.6498                      0.6517
+2026-06-02   524    0   54930.7100 35688.1400   104.8296  68.1071     0.6494                      0.6497
+2026-06-03   524    0   47058.1300 30595.1000    89.8056  58.3876     0.6490                      0.6502
+2026-06-04   524    0   51199.6500 32930.8900    97.7093  62.8452     0.6472                      0.6432
+2026-06-05   497    0   47205.1300 30428.3600    94.9801  61.2241     0.6451                      0.6446
+2026-06-06   499    0   46452.4600 29969.8500    93.0911  60.0598     0.6494                      0.6452
+2026-06-07   563    0   51881.2500 33667.7500    92.1514  59.8006     0.6479                      0.6489
+2026-06-08   520    0   48982.6100 31916.3800    94.1973  61.3777     0.6510                      0.6516
+2026-06-09   513    0   46790.9000 30453.7700    91.2103  59.3641     0.6499                      0.6508
+2026-06-10   536    0   50655.6000 33155.2500    94.5067  61.8568     0.6490                      0.6545
+2026-06-11   541    0   51535.0600 33632.0000    95.2589  62.1664     0.6507                      0.6526
+2026-06-12   507    0   48512.6600 31338.0200    95.6857  61.8107     0.6486                      0.6460
+2026-06-13   534    0   47678.4500 30865.5600    89.2855  57.8007     0.6481                      0.6474
+2026-06-14   550    0   53986.7900 35129.2100    98.1578  63.8713     0.6488                      0.6507
+2026-06-15   530    0   49836.8200 32335.8200    94.0317  61.0110     0.6491                      0.6488
+2026-06-16   572    0   56749.6200 36819.4700    99.2126  64.3697     0.6512                      0.6488
+2026-06-17   549    0   51999.7600 33574.0800    94.7172  61.1550     0.6477                      0.6457
+2026-06-18   521    0   49345.3100 32108.3700    94.7127  61.6283     0.6524                      0.6507
+2026-06-19   553  553   34392.2500 52834.2600    62.1921  95.5412     1.5434                      1.5362
+2026-06-20   507  507   31286.0700 48345.9600    61.7082  95.3569     1.5457                      1.5453
+2026-06-21   530  530   33251.8100 51245.2800    62.7393  96.6892     1.5447                      1.5411
+2026-06-22   556  556   34475.0200 52917.3400    62.0054  95.1751     1.5475                      1.5349
+2026-06-23   546    0   53616.3900 35063.6700    98.1985  64.2192     0.6548                      0.6540
+2026-06-24   544    0   50146.1500 32639.3700    92.1804  59.9988     0.6513                      0.6509
+2026-06-25   508    0   47738.0900 31013.6600    93.9726  61.0505     0.6512                      0.6497
+2026-06-26   541    0   50342.3500 32771.8000    93.0543  60.5763     0.6496                      0.6510
+2026-06-27   527    0   53740.7800 35135.3600   101.9749  66.6705     0.6487                      0.6538
+2026-06-28   539    0   47227.8800 30905.7800    87.6213  57.3391     0.6546                      0.6544
+2026-06-29   577    0   53140.6400 34614.6000    92.0982  59.9906     0.6530                      0.6514
+2026-06-30   546    0   52988.4200 34695.1000    97.0484  63.5441     0.6524                      0.6548
+
+non_anom gross/net avg/min/max
+         gross_f      net_f
+count 13854.0000 13854.0000
+mean     94.5493    61.4639
+min       4.8100     2.7300
+max    1164.5200   817.3400
+
+anom gross/net avg/min/max
+        gross_f     net_f
+count 2146.0000 2146.0000
+mean    62.1646   95.6863
+min      4.6500    7.8700
+max    430.8900  697.6800
+
+If 6/19-6/22 were swapped, corrected all-row net total would be:
+Traceback (most recent call last):
+  File "<stdin>", line 33, in <module>
+TypeError: zip() takes no keyword arguments
+
+codex
+The anomaly is now confirmed as a data-format issue, not a normal business pattern: every row from June 19 through June 22 has `gross_usd` and `net_usd` inverted, and the corrected ratios line up with the rest of the month. I’m doing one independent pass with the standard CSV parser to cross-check the corrected total and row accounting.
+exec
+/bin/bash -lc "python3 - <<'PY'
+import csv
+import re
+from collections import Counter, defaultdict
+from datetime import datetime, date, timedelta
+from decimal import Decimal, InvalidOperation
+from pathlib import Path
+
+path = Path('sales_june.csv')
+expected_header = ['sale_id', 'sale_date', 'channel', 'gross_usd', 'net_usd']
+amount_re = re.compile(r'"'^'"\\d+(?:\\.\\d{1,2})?"'$'"')
+start = date(2026, 6, 1)
+end = date(2026, 6, 30)
+
+rows = []
+with path.open(newline='', encoding='utf-8-sig') as f:
+    reader = csv.DictReader(f)
+    print('header_ok', reader.fieldnames == expected_header, reader.fieldnames)
+    for row in reader:
+        rows.append(row)
+
+line_count = sum(1 for _ in path.open(encoding='utf-8-sig'))
+print('physical_lines', line_count)
+print('data_rows', len(rows))
+print('line_to_row_reconciliation_ok', line_count == len(rows) + 1)
+
+blank_counts = Counter()
+invalid_amount = Counter()
+invalid_dates = 0
+outside_june = 0
+date_counts = Counter()
+channels = Counter()
+ids = Counter()
+zero_amounts = Counter()
+negative_amounts = Counter()
+over_two_dp = Counter()
+net_gt_gross_dates = Counter()
+raw_net_total = Decimal('0')
+raw_gross_total = Decimal('0')
+corrected_net_total = Decimal('0')
+corrected_gross_total = Decimal('0')
+corrected_ratio_min = None
+corrected_ratio_max = None
+corrected_rows = 0
+
+for row in rows:
+    for col in expected_header:
+        if row[col] == '':
+            blank_counts[col] += 1
+    ids[row['sale_id']] += 1
+    channels[row['channel']] += 1
+    try:
+        d = datetime.strptime(row['sale_date'], '%Y-%m-%d').date()
+    except ValueError:
+        invalid_dates += 1
+        d = None
+    if d is not None:
+        date_counts[d] += 1
+        if not (start <= d <= end):
+            outside_june += 1
+
+    vals = {}
+    for col in ['gross_usd', 'net_usd']:
+        s = row[col]
+        if not amount_re.fullmatch(s):
+            invalid_amount[col] += 1
+            continue
+        try:
+            v = Decimal(s)
+        except InvalidOperation:
+            invalid_amount[col] += 1
+            continue
+        vals[col] = v
+        if v == 0:
+            zero_amounts[col] += 1
+        if v < 0:
+            negative_amounts[col] += 1
+        if v.as_tuple().exponent < -2:
+            over_two_dp[col] += 1
+    if 'gross_usd' not in vals or 'net_usd' not in vals:
+        continue
+    gross = vals['gross_usd']
+    net = vals['net_usd']
+    raw_gross_total += gross
+    raw_net_total += net
+    if net > gross:
+        net_gt_gross_dates[d] += 1
+        corrected_rows += 1
+        gross, net = net, gross
+    corrected_gross_total += gross
+    corrected_net_total += net
+    ratio = net / gross
+    corrected_ratio_min = ratio if corrected_ratio_min is None else min(corrected_ratio_min, ratio)
+    corrected_ratio_max = ratio if corrected_ratio_max is None else max(corrected_ratio_max, ratio)
+
+missing_dates = []
+cur = start
+while cur <= end:
+    if date_counts[cur] == 0:
+        missing_dates.append(cur.isoformat())
+    cur += timedelta(days=1)
+
+duplicate_ids = sum(c - 1 for c in ids.values() if c > 1)
+print('blank_counts', dict(blank_counts))
+print('invalid_dates', invalid_dates)
+print('outside_june_records_dropped', outside_june)
+print('unique_june_dates', len(date_counts))
+print('missing_june_dates', missing_dates)
+print('duplicate_sale_id_extra_rows', duplicate_ids)
+print('channels', dict(sorted(channels.items())))
+print('invalid_amounts', dict(invalid_amount))
+print('zero_amounts', dict(zero_amounts))
+print('negative_amounts', dict(negative_amounts))
+print('over_two_dp', dict(over_two_dp))
+print('net_gt_gross_rows_by_date', {k.isoformat(): v for k, v in sorted(net_gt_gross_dates.items())})
+print('corrected_rows_swapped_back', corrected_rows)
+print('raw_net_total', raw_net_total)
+print('raw_gross_total', raw_gross_total)
+print('corrected_net_total', corrected_net_total)
+print('corrected_gross_total', corrected_gross_total)
+print('corrected_ratio_min', corrected_ratio_min)
+print('corrected_ratio_max', corrected_ratio_max)
+PY" in /private/tmp/cobaltworks_sales
+ succeeded in 309ms:
+header_ok True ['sale_id', 'sale_date', 'channel', 'gross_usd', 'net_usd']
+physical_lines 16001
+data_rows 16000
+line_to_row_reconciliation_ok True
+blank_counts {}
+invalid_dates 0
+outside_june_records_dropped 0
+unique_june_dates 30
+missing_june_dates []
+duplicate_sale_id_extra_rows 0
+channels {'online': 5341, 'outlet': 5323, 'wholesale': 5336}
+invalid_amounts {}
+zero_amounts {}
+negative_amounts {}
+over_two_dp {}
+net_gt_gross_rows_by_date {'2026-06-19': 553, '2026-06-20': 507, '2026-06-21': 530, '2026-06-22': 556}
+corrected_rows_swapped_back 2146
+raw_net_total 1056863.26
+raw_gross_total 1443290.90
+corrected_net_total 984925.57
+corrected_gross_total 1515228.59
+corrected_ratio_min 0.5493741307371349095966620306
+corrected_ratio_max 0.75
+
+codex
+Checked all 16,000 records; none were dropped. I corrected the June 19-22 gross/net inversion before summing net revenue.
+
+NET_REVENUE_USD: $984,925.57
+tokens used
+29,631
+Checked all 16,000 records; none were dropped. I corrected the June 19-22 gross/net inversion before summing net revenue.
+
+NET_REVENUE_USD: $984,925.57

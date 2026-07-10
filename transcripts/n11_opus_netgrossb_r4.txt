@@ -1,0 +1,7 @@
+The data is clean for summing: 16,000 rows, all dated within June 2026, no nulls, no duplicate sale IDs, no negative values, and a single currency (USD per the README).
+
+Total June net revenue is the sum of the `net_usd` column: **$1,056,863.26**.
+
+One data-quality note (doesn't change the total, since the question asks for net revenue as recorded): 2,146 rows (~13%) have `net_usd > gross_usd`, which is unexpected if net is truly gross minus partner margin and fees. Worth flagging to whoever owns the data, but the recorded net total stands as above.
+
+NET_REVENUE_USD: $1,056,863.26

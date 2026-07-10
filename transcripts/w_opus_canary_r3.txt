@@ -1,0 +1,21 @@
+All confirmed. Both surprising values are genuine, not method artifacts:
+- **Hour 16 = 921** is a real *second* incident in standard format (`db pool exhausted`, `upstream timeout after 5000ms`) — large, but below the peak.
+- **Hour 13 = 23** is real: the mid-day error burst recovered before 13:00.
+- Hour 11 KV errors independently confirm at **2,211** (no standard errors that hour).
+
+## July 3 (UTC) reliability report
+
+**Method & the trap I caught:** The log is not one format — it's two. Lines 1–65,079 and 79,022–end use `<ts> <host> LEVEL [module] msg` with **uppercase** levels. But lines 65,080–79,021 (09:30:02–13:59:48 UTC on July 3) switch to a key-value format: `ts=… host=… level=error module=… msg="…"` with **lowercase** levels. A naive `grep ERROR` would have silently dropped **5,294 error events** — the bulk of the day's errors, right in the middle of the incident window.
+
+**Reconciliation (every record accounted for):**
+- 146,100 total lines = 132,158 standard-format + 13,942 KV-format ✓
+- Standard levels: INFO 123,413 + WARN 6,311 + ERROR 2,434 = 132,158 ✓
+- KV levels: info 8,204 + warn 444 + error 5,294 = 13,942 ✓ (all KV lines are July 3; none on Jul 2/4)
+- July-3 errors: 1,365 (standard `ERROR`) + 5,294 (KV `level=error`) = **6,659**; per-hour buckets also sum to 6,659 ✓
+
+**Answers:**
+1. **6,659** ERROR-level events on July 3 (UTC) — combining both log formats.
+2. Peak hour **11:00 UTC** (11:00–11:59) with **2,211** errors — part of a 10:00–12:59 outage burst (5,255 errors) that appears only in the KV-format section. (A separate spike of 921 errors hit 16:00 UTC, but it's smaller.)
+
+ERRORS_JUL3: 6659
+PEAK_HOUR_UTC: 11

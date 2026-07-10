@@ -1,0 +1,10 @@
+June signups by billing region (excluding rows with missing region, which is a notable data-quality issue itself — 3,412 of 9,000 rows, 38%, have no region assigned):
+
+- EMEA: 2,414
+- APAC: 1,985
+- LATAM: 1,189
+
+EMEA had the most signups. Note the missing-region rate is large enough that it's worth flagging to whoever owns the signup pipeline — if those 3,412 were skewed toward a different region, the ranking could change.
+
+TOP_REGION: EMEA
+TOP_REGION_SIGNUPS: 2414

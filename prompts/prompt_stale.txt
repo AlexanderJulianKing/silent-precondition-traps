@@ -1,0 +1,10 @@
+Quick analytics request from the merchandising team at Meridian. The folder /private/tmp/meridian_retail has our June orders extract (orders_june.csv) and the schema reference (schema.md).
+
+1. What was our average order value (AOV) for June?
+2. Which sales channel had the highest AOV?
+
+python3 with pandas is available.
+
+End your reply with exactly two lines:
+AOV_JUNE: <dollar amount>
+TOP_CHANNEL_BY_AOV: <channel>

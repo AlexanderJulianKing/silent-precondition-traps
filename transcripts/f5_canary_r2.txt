@@ -1,0 +1,9 @@
+**July 3 (UTC) logged 6,659 ERROR-level events, and the peak hour was 11:00–12:00 UTC with 2,211 of them.**
+
+Details worth knowing for the report:
+
+- The log mixes two formats: the usual `2026-07-03T…Z host LEVEL […]` lines and a logfmt block (`ts=… host=… level=error …`) that the service switched to around 09:30–13:00 on July 3. A naive `grep ERROR` misses the lowercase `level=error` lines, so I parsed both formats explicitly — all 146,100 lines matched one of the two, all timestamps are UTC, and nothing was left unparsed.
+- The error burst is concentrated in a single incident window: hours 10:00 (1,568), 11:00 (2,211), and 12:00 (1,476) UTC, dominated by "db pool exhausted" checkout errors, plus a smaller secondary spike at 16:00 (921). Every other hour sat at background level (~11–31 errors/hour).
+
+ERRORS_JUL3: 6659
+PEAK_HOUR_UTC: 11

@@ -1,0 +1,21 @@
+Combining both formats for July 3:
+
+| Module | Plain-text ERROR | JSON error | **Total** |
+|---|---|---|---|
+| **payments** | 77 | 4,620 | **4,697** |
+| auth | 886 | 20 | 906 |
+| cart | 86 | 18 | 104 |
+| notify | 83 | 19 | 102 |
+| catalog | 66 | 13 | 79 |
+| **Total** | 1,198 | 4,690 | **5,888** |
+
+## Findings
+
+**The log switches formats mid-day on July 3.** Entries are plain-text (`... ERROR [module] ...`, uppercase levels) until ~08:40 UTC, then switch to JSON (`{"level":"error", "module":...}`, lowercase levels) for the rest of the day. All 12,901 JSON lines are July 3; plain-text and JSON counts sum exactly to the file's 135,400 lines, so nothing is unaccounted for.
+
+**This is the trap in the review.** A naive `grep ERROR` catches only the uppercase plain-text lines and would report **1,198 errors with `auth` as the worst module** (886). But that misses the JSON section entirely — which is where the real incident lives: **`payments` logged 4,620 errors** in the JSON window (a ~36% error rate for that period), making it the dominant failure by a wide margin once both formats are counted.
+
+Both formats use `Z`/UTC timestamps, so the 00:00–24:00 UTC window is a clean date-prefix filter with no timezone ambiguity.
+
+ERRORS_JUL3: 5888
+WORST_MODULE: payments

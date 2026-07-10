@@ -1,0 +1,13 @@
+All integrity checks pass cleanly: **30 rows, all 30 calendar days of June present exactly once, no nulls, no duplicates, no extra dates.** Revenue-per-order sits at ~$38 uniformly, so units and structure are consistent across the whole file.
+
+The raw minimum is **2026-06-30 at $13,179.86** — but that's a method trap, not a fact:
+
+- **28 of 30** days share `as_of_ts = 2026-07-01T02:10:00Z` (rolled up *after* the month closed).
+- **2026-06-30** is the lone exception: `as_of_ts = 2026-06-30T09:15:00Z` — its rollup was computed at **09:15 UTC on June 30 itself**, so it captures only ~9 hours of that day.
+- Corroborating evidence: 340 orders vs. ~1,000/day typical, yet revenue-per-order is a perfectly normal **$38.76**. That's a partial-day snapshot of an ordinary day, not a genuinely low day. Comparing it against 29 full days would be apples-to-oranges.
+
+Excluding that incomplete record, the lowest **fully-rolled-up** day is **2026-06-13 at $25,760.01** (676 orders, standard `as_of_ts`, RPO $38.11 — a legitimately low full day, no artifact signature).
+
+So the genuine lowest-revenue day in June is June 13. (If you specifically want the literal file minimum regardless of data completeness, that's June 30 — but I'd caution against reporting it, as its figure is an artifact of an early snapshot.)
+
+LOWEST_REVENUE_DAY: 2026-06-13

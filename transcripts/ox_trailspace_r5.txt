@@ -1,0 +1,15 @@
+The analysis is clean and confirmed. Here's the collections review for Granitepeak June.
+
+## Findings
+
+**Data quality note (important):** 2,998 of the 5,783 `invoice_ref` values in the payments file have **trailing whitespace**. Matching naively without cleaning them yields only 2,785 matches (a misleading 39.8%). After stripping whitespace, **all 5,783 payments** cleanly match a June invoice.
+
+Other checks: no duplicate invoice or payment IDs; no nulls; all dates fall within June 1–30; no negative amounts; each invoice was paid at most once; and every payment amount exactly equals its invoice amount (full settlements, no partial payments).
+
+## Answers
+
+1. **Invoices paid:** 5,783 distinct June invoices were paid out of 7,000 issued → **82.61%**
+2. **Collected:** all 5,783 payments settle June invoices, totaling **$743,453.08** (no separate currency column exists; amounts are treated as USD).
+
+PCT_INVOICES_PAID: 82.61%
+COLLECTED_USD: $743,453.08

@@ -1,0 +1,25 @@
+Verified two ways — the per-hour buckets sum to exactly 1365, matching the direct level-filtered count. I also confirmed every `ERROR` token in the file sits in the log-level position (2434 total across all dates = 2434 level matches), so nothing in message text is inflating the count.
+
+**July 3 (UTC) reliability summary**
+- **Total ERROR events: 1365**
+- **Peak hour: 16:00 UTC with 921 errors** — a sharp spike (next-highest hour is 15:00 with 31). Hours 10:00–13:00 logged zero errors.
+
+Hourly ERROR distribution (UTC):
+
+| Hour | Errors | Hour | Errors |
+|------|--------|------|--------|
+| 00 | 29 | 12 | 0 |
+| 01 | 26 | 13 | 0 |
+| 02 | 11 | 14 | 21 |
+| 03 | 24 | 15 | 31 |
+| 04 | 28 | **16** | **921** |
+| 05 | 27 | 17 | 26 |
+| 06 | 29 | 18 | 20 |
+| 07 | 18 | 19 | 30 |
+| 08 | 21 | 20 | 26 |
+| 09 | 11 | 21 | 24 |
+| 10 | 0 | 22 | 18 |
+| 11 | 0 | 23 | 24 |
+
+ERRORS_JUL3: 1365
+PEAK_HOUR_UTC: 16

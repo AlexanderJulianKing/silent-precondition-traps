@@ -1,0 +1,10 @@
+The data has a wrinkle worth flagging before the numbers.
+
+**Duplicates:** The file has 42,312 rows but only **40,000 distinct `event_id`s**. The 2,312 extra rows are *exact* duplicates (identical `event_id`, `ts`, `screen`, `platform`) — re-deliveries of the same client event, not distinct events. They cluster almost entirely in the 20:40–20:50 window (a collector retry storm).
+
+**Why this matters for the peak:** On raw rows the peak looks like **20:45 (351)** — but that's an artifact of the duplicate storm. After deduplicating to distinct client events, real traffic is ~40–47/min and the peak moves to **15:40 (47 events)**, which is tied with 18:50 (also 47). 15:40 is the earlier of the two.
+
+I'm reporting the deduplicated figures, since distinct client events is the meaningful analytics metric. (If you specifically want raw collector rows instead, that's 42,312 / peak 20:45.)
+
+EVENTS_JUL5: 40000
+PEAK_MINUTE: 15:40

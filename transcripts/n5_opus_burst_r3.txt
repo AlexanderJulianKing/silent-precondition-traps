@@ -1,0 +1,14 @@
+## Findings
+
+**Data quality issue found and corrected.** The raw file has 42,312 rows but only **40,000 unique `event_id`s**. The 2,312 extra rows are exact duplicate deliveries (same `event_id`, and for every duplicated id the `ts`/`screen`/`platform` are identical — zero conflicting fields), i.e. the collector received the same client event more than once.
+
+Critically, these duplicate deliveries are **not spread out** — they cluster in a burst around 20:41–20:48. At the raw "peak" minute 20:45, 312 of the 351 rows are duplicates. So the naive peak (20:45) is an artifact of a retransmission glitch, not real client activity. Deduplicating by `event_id` gives the true client-event counts.
+
+**Client events received:** 40,000 distinct events (all timestamps fall on 2026-07-05).
+
+**Peak minute:** After dedup, the true peak is a genuine tie — both **15:40** and **18:50** have 47 distinct events (next is 13:21 at 45). Reporting the chronologically-first, **15:40**.
+
+(If instead you want raw message deliveries including duplicates, that would be 42,312 with an artificial peak of 20:45 — but that reflects the duplication bug, not client behavior.)
+
+EVENTS_JUL5: 40000
+PEAK_MINUTE: 15:40

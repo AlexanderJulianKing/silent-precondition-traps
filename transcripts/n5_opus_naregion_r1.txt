@@ -1,0 +1,6 @@
+Confirmed. The default pandas read was silently converting the **NA** (North America) region into missing values. Reading the file with `keep_default_na=False` shows NA is a real region — and the largest one.
+
+All 9,000 rows fall within June 2026, with no duplicate IDs or blank regions. Region tallies: **NA 3,412**, EMEA 2,414, APAC 1,985, LATAM 1,189.
+
+TOP_REGION: NA
+TOP_REGION_SIGNUPS: 3412

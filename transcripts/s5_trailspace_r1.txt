@@ -1,0 +1,7 @@
+June invoices: 7,000 total, 5,783 had a matching payment (invoice_ref matches invoice_id exactly, one payment per invoice, no amount mismatches, and all dates fall within June 2026).
+
+- **Paid rate:** 5,783 / 7,000 = 82.61%
+- **Collected:** sum of all June payments = $743,453.08 (all payments matched exactly one June invoice with no discrepancies)
+
+PCT_INVOICES_PAID: 82.61%
+COLLECTED_USD: $743,453.08

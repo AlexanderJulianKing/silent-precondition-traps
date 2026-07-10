@@ -1,0 +1,6 @@
+**RUBY** had the most disputes in June, with **494**.
+
+The dataset has 5,200 dispute rows. 683 of them carry a literal `NULL` merchant code (missing/unassigned at onboarding), which isn't a real merchant, so I excluded it. Among actual merchant codes RUBY leads, followed by BLUE (453) and VOLT (419). Codes are clean — no case or whitespace variants splitting or inflating any merchant.
+
+TOP_MERCHANT_CODE: RUBY
+DISPUTE_COUNT: 494

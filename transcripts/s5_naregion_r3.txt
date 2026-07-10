@@ -1,0 +1,6 @@
+The billing region "NA" (North America) had the most signups. Note: a naive pandas read would mis-parse "NA" as a missing value rather than the region code — I reloaded with `keep_default_na=False` to fix that before counting.
+
+All 9,000 rows fall within June 2026 with no duplicates, so this reflects the full dataset.
+
+TOP_REGION: NA
+TOP_REGION_SIGNUPS: 3412

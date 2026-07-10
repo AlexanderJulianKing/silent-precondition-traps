@@ -1,0 +1,10 @@
+All log lines fall on 2026-07-07 (UTC). Here's what I found:
+
+- **requests.log** (current): 21,843 lines, spanning 18:02:44 → 23:59:58
+- **requests.log.1** (previous rotation): 66,745 lines, spanning 00:00:02 → 18:12:43
+
+The two rotations **overlap** in the window 18:02:44–18:12:43. Naively summing gives 88,588, but 588 full log lines (identical IP + timestamp + path + status + byte size) appear in **both** files — each exactly twice, all inside that overlap window. Neither file has any internal duplicate lines, so an identical line reliably denotes the same request; these 588 are rotation double-writes, not distinct requests.
+
+Deduplicating: 88,588 − 588 = **88,000** unique requests.
+
+TOTAL_REQUESTS_JUL7: 88000

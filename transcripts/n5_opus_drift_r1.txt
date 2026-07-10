@@ -1,0 +1,8 @@
+I need your approval to run the analysis script. Could you approve the `awk` command? It runs the read-only script I wrote to the scratchpad against the log file — it only reads `access.log` and prints counts.
+
+Alternatively, here's what it will compute so you know exactly what's being measured:
+- Window: **[14:00:00, 20:00:00) UTC** on 06/Jul/2026 (start inclusive, end exclusive — standard for a 6-hour window; there's exactly 1 log line at 20:00:00 which I'm reporting separately so you can decide).
+- **Endpoint path** = request target with the query string (`?...`) stripped, so `/api/search?q=...` counts as `/api/search`.
+- **5xx** = status code matching `5\d\d`.
+
+Once you approve, I'll have the exact totals. Want me to proceed?

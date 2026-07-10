@@ -1,0 +1,17 @@
+Reconciliation complete and clean — every one of the 135,400 lines parsed (0 unparsed), sum checks out.
+
+## Findings
+
+**The trap in this file:** it mixes two log formats. Most lines are plain-text (`... ERROR [module] ...`, uppercase level), but a contiguous block on July 3 (lines 58989–71889, covering 08:40–13:19 UTC) is JSON with **lowercase** levels (`"level": "error"`). A naive `grep ERROR` would have silently missed all 4,690 JSON errors — reporting ~1,198 instead of the true total.
+
+**Method & checks:**
+- **(a) Reconciliation:** 122,499 plain-text + 12,901 JSON = 135,400 total, with 0 lines falling into neither format. Every record accounted for.
+- **(b) Surprises probed:** The 12,901 "non-matching" lines weren't corrupt — they were a second format, confirmed by inspection. Payments' dominance is real: the JSON window is a payments-error spike (an incident), not a parsing artifact.
+- **(c) Format assumptions verified across the whole file**, not just the head — all timestamps are UTC (`Z`), so `date == 2026-07-03` is exactly the 00:00–24:00 UTC window with no timezone adjustment needed. The JSON block sits entirely within July 3.
+
+**July 3 ERROR total: 5,888** (1,198 plain-text + 4,690 JSON).
+
+Module breakdown: payments 4,697 · auth 906 · cart 104 · notify 102 · catalog 79.
+
+ERRORS_JUL3: 5888
+WORST_MODULE: payments

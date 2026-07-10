@@ -1,0 +1,11 @@
+Done. Here's what I found, including one data gotcha worth flagging.
+
+**The join trap:** Orders use two ID prefixes — `O2-` (4,236 orders) and `ORD-` (3,764). The refund export's `order_ref` always uses the `ORD-` form. If you naively join `order_ref == order_id`, only **301 of 640** refunds match and you'd report ~half the true refund rate. The numeric portions are unique across prefixes, so joining on the order **number** matches all 640 refunds cleanly — the `O2-`/`ORD-` split is just two labelings of the same orders.
+
+**Checks:** 640 refunds → 640 distinct orders (no duplicate/double refunds), no refund exceeds its order amount, no zero/negative refunds.
+
+- Refunded orders: 640 of 8,000 → 8.00%
+- Total refunded: $37,452.44
+
+REFUND_RATE_JUNE: 8.00%
+REFUNDED_USD: $37,452.44

@@ -1,0 +1,2254 @@
+Reading additional input from stdin...
+OpenAI Codex v0.142.5
+--------
+workdir: /private/tmp/northgate_api
+model: gpt-5.5
+provider: openai
+approval: never
+sandbox: workspace-write [workdir, /tmp, $TMPDIR]
+reasoning effort: high
+reasoning summaries: none
+session id: 019f4414-1388-7142-b1ca-cd73f6e27299
+--------
+user
+Reliability review for Northgate. The folder /private/tmp/northgate_api/logs has the application log (app.log) covering July 2-4.
+
+For July 3 (UTC, 00:00-24:00): how many ERROR-level events were logged, and which module had the most?
+
+End your reply with exactly two lines:
+ERRORS_JUL3: <count>
+WORST_MODULE: <module>
+codex
+I’ll scan the July 3 UTC slice in `logs/app.log` and count ERROR entries by module.
+exec
+/bin/bash -lc 'tail -n 5 logs/app.log' in /private/tmp/northgate_api
+exec
+/bin/bash -lc 'head -n 5 logs/app.log' in /private/tmp/northgate_api
+ succeeded in 2ms:
+2026-07-02T00:00:01Z api-1 INFO [payments] request completed
+2026-07-02T00:00:01Z web-2 INFO [payments] request completed
+2026-07-02T00:00:06Z web-4 INFO [notify] request completed
+2026-07-02T00:00:06Z api-3 INFO [auth] request completed
+2026-07-02T00:00:08Z web-2 WARN [cart] slow response 1900ms
+
+ succeeded in 2ms:
+2026-07-04T23:59:50Z api-6 INFO [auth] request completed
+2026-07-04T23:59:51Z web-4 INFO [notify] request completed
+2026-07-04T23:59:54Z api-1 WARN [cart] slow response 1900ms
+2026-07-04T23:59:56Z web-2 INFO [notify] request completed
+2026-07-04T23:59:58Z api-6 INFO [notify] request completed
+
+exec
+/bin/bash -lc "rg 'ERROR' logs/app.log" in /private/tmp/northgate_api
+ succeeded in 0ms:
+2026-07-02T00:05:56Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T00:09:26Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T00:11:29Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T00:15:45Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T00:22:28Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T00:24:08Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T00:24:24Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T00:24:44Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T00:24:55Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T00:27:26Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T00:30:16Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T00:31:11Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T00:35:17Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T00:45:35Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T00:53:31Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T01:00:10Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T01:01:35Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T01:10:11Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T01:12:09Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T01:14:20Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T01:18:26Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T01:21:04Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T01:21:09Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T01:22:20Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T01:22:20Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T01:24:33Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T01:27:09Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T01:30:33Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T01:46:18Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T01:53:42Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T01:56:15Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T02:04:05Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T02:04:23Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T02:12:18Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T02:18:37Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T02:18:45Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T02:21:56Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T02:23:06Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T02:27:38Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T02:28:41Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T02:28:58Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T02:29:06Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T02:29:08Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T02:35:18Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T02:36:32Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T02:36:51Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T02:36:53Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T02:38:01Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T02:40:09Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T02:47:07Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T02:53:20Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T02:56:25Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T02:58:49Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T03:01:59Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T03:03:18Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T03:04:36Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T03:06:45Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T03:14:19Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T03:16:35Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T03:17:59Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T03:19:33Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T03:21:48Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T03:21:50Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T03:26:09Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T03:27:38Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T03:27:54Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T03:28:22Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T03:28:37Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T03:37:46Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T03:39:10Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T03:43:30Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T03:45:37Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T03:45:44Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T03:48:53Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T03:53:39Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T03:57:45Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T04:04:07Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T04:04:10Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T04:05:59Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T04:07:45Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T04:12:25Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T04:17:05Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T04:25:54Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T04:29:34Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T04:32:31Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T04:37:08Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T04:38:57Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T04:39:19Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T04:39:24Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T04:40:36Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T04:46:16Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T04:50:20Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T04:51:53Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T04:54:43Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T05:17:42Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T05:20:20Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T05:20:26Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T05:26:05Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T05:32:26Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T05:33:17Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T05:36:20Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T05:37:10Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T05:37:23Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T05:38:17Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T05:38:47Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T05:39:39Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T05:40:58Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T05:42:43Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T05:46:39Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T05:47:12Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T05:49:23Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T05:52:11Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T06:00:07Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T06:00:12Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T06:00:27Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T06:04:39Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T06:07:36Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T06:13:20Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T06:13:26Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T06:17:28Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T06:25:23Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T06:28:55Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T06:31:09Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T06:38:49Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T06:41:33Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T06:45:09Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T06:52:54Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T06:53:42Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T06:56:17Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T06:58:01Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T06:58:08Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T06:59:37Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T07:01:12Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T07:04:30Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T07:07:54Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T07:09:33Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T07:16:13Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T07:22:40Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T07:26:27Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T07:27:21Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T07:29:48Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T07:34:37Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T07:35:05Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T07:38:48Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T07:41:23Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T07:43:11Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T07:48:30Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T07:49:24Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T07:49:43Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T07:55:31Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T07:56:51Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T08:03:30Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T08:03:37Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T08:04:30Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T08:07:31Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T08:15:46Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T08:22:58Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T08:23:19Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T08:24:13Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T08:26:15Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T08:26:42Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T08:27:14Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T08:28:42Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T08:30:13Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T08:37:43Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T08:44:30Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T08:44:46Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T08:45:39Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T08:47:50Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T08:49:42Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T09:04:55Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T09:08:12Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T09:10:04Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T09:11:20Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T09:12:33Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T09:14:42Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T09:15:49Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T09:26:32Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T09:31:22Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T09:31:23Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T09:40:46Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T09:42:49Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T09:46:10Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T09:52:56Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T09:59:08Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T10:01:22Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T10:02:39Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T10:06:54Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T10:09:24Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T10:15:18Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T10:23:33Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T10:23:53Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T10:25:38Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T10:26:45Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T10:27:51Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T10:34:40Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T10:34:46Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T10:36:34Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T10:37:15Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T10:39:38Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T10:42:17Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T10:44:30Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T10:48:29Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T10:49:14Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T10:49:27Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T10:52:31Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T10:53:41Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T10:54:42Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T10:54:55Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T10:55:47Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T10:59:49Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T11:01:49Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T11:06:43Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T11:07:35Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T11:08:49Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T11:13:32Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T11:18:09Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T11:18:17Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T11:19:18Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T11:19:33Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T11:22:30Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T11:22:54Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T11:23:05Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T11:23:09Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T11:24:04Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T11:24:28Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T11:30:35Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T11:31:11Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T11:31:14Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T11:32:45Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T11:35:39Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T11:37:52Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T11:38:18Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T11:38:28Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T11:40:15Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T11:42:46Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T11:47:33Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T11:48:10Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T11:50:02Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T11:50:20Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T11:57:29Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T12:00:42Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T12:03:16Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T12:11:31Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T12:13:41Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T12:14:54Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T12:19:55Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T12:20:07Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T12:21:36Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T12:22:23Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T12:22:47Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T12:23:51Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T12:27:00Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T12:35:10Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T12:40:08Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T12:48:43Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T12:50:07Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T12:50:50Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T12:50:59Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T12:53:30Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T13:07:41Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T13:13:30Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T13:15:43Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T13:16:27Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T13:17:47Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T13:18:31Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T13:19:06Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T13:21:11Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T13:24:10Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T13:24:40Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T13:29:18Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T13:34:30Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T13:34:41Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T13:36:15Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T13:39:54Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T13:42:59Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T13:55:33Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T13:55:40Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T13:57:36Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T14:04:08Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T14:04:51Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T14:16:38Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T14:21:18Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T14:21:57Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T14:30:50Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T14:31:41Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T14:34:50Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T14:35:01Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T14:37:18Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T14:37:47Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T14:39:15Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T14:51:49Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T14:53:49Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T14:56:57Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T15:02:40Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T15:09:21Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T15:14:26Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T15:16:56Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T15:17:07Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T15:18:23Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T15:20:52Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T15:21:20Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T15:24:38Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T15:25:50Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T15:26:25Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T15:30:22Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T15:41:53Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T15:47:53Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T15:49:31Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T15:56:26Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T15:57:27Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T15:59:03Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T16:00:19Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T16:05:38Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T16:07:34Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T16:08:45Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T16:15:40Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T16:19:06Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T16:19:32Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T16:20:14Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T16:25:25Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T16:26:32Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T16:37:16Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T16:41:08Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T16:44:45Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T16:47:02Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T16:49:02Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T16:56:01Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T16:58:59Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T17:04:07Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T17:05:44Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T17:07:34Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T17:07:37Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T17:08:07Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T17:08:48Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T17:10:59Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T17:19:08Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T17:19:33Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T17:34:30Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T17:35:39Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T17:39:46Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T17:41:39Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T17:42:13Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T17:42:21Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T17:46:19Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T17:48:11Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T17:48:46Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T17:50:08Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T17:53:00Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T17:53:05Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T18:05:28Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T18:07:41Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T18:08:59Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T18:11:48Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T18:13:27Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T18:23:57Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T18:25:50Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T18:27:47Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T18:35:46Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T18:35:57Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T18:44:07Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T18:45:15Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T18:49:33Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T18:52:19Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T18:53:14Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T18:54:36Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T18:57:17Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T19:04:39Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T19:08:16Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T19:12:48Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T19:13:58Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T19:14:34Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T19:17:16Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T19:20:59Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T19:23:01Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T19:25:30Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T19:29:04Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T19:29:25Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T19:33:52Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T19:37:00Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T19:39:56Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T19:41:37Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T19:46:54Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T19:49:39Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T19:56:14Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T19:56:39Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T19:56:59Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T19:57:05Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T19:59:59Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T20:09:29Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T20:10:22Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T20:11:01Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T20:11:18Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T20:11:46Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T20:14:26Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T20:14:58Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T20:16:48Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T20:18:03Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T20:18:36Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T20:26:25Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T20:26:35Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T20:27:46Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T20:28:17Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T20:29:19Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T20:38:05Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T20:38:41Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T20:41:59Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T20:45:28Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T20:47:08Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T20:49:11Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T20:56:17Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T20:56:27Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T20:57:28Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T21:04:23Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T21:06:56Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T21:07:35Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T21:14:22Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T21:15:54Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T21:22:29Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T21:22:41Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T21:24:10Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T21:28:23Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T21:29:59Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T21:32:44Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T21:41:33Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T21:41:37Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T21:44:01Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T21:47:14Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T21:51:52Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T21:52:47Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T21:57:51Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T21:59:09Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T22:02:08Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T22:04:24Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T22:26:41Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T22:27:26Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T22:29:07Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T22:29:21Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T22:33:11Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T22:34:51Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T22:41:04Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T22:46:50Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T22:47:05Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T22:47:25Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T22:53:09Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T22:53:47Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T22:58:37Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T23:05:04Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T23:09:34Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T23:11:31Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T23:18:20Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T23:18:38Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T23:19:21Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T23:27:27Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T23:31:02Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T23:32:35Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-02T23:38:12Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T23:48:14Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T23:50:42Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-02T23:50:45Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T23:52:24Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T23:56:13Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-02T23:57:37Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-02T23:58:52Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-02T23:58:55Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T00:00:15Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T00:01:04Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T00:03:26Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T00:04:19Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T00:06:58Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T00:08:44Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T00:09:02Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T00:11:00Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T00:11:06Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T00:13:38Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T00:14:19Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T00:16:59Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T00:20:44Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T00:22:34Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T00:24:12Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T00:29:29Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T00:29:30Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T00:32:34Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T00:36:05Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T00:49:12Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T00:49:36Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T00:49:51Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T01:01:43Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T01:04:57Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T01:06:33Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T01:07:52Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T01:08:30Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T01:10:54Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T01:12:57Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T01:15:30Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T01:19:23Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T01:24:49Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T01:26:39Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T01:35:41Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T01:36:32Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T01:36:45Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T01:38:56Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T01:39:01Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T01:40:28Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T01:45:43Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T01:52:16Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T01:53:01Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T01:55:35Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T01:56:59Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T01:59:37Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T02:04:20Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T02:04:22Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T02:07:21Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T02:09:28Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T02:09:56Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T02:15:50Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T02:16:02Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T02:23:57Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T02:24:24Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T02:24:51Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T02:31:01Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T02:35:54Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T02:36:50Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T02:36:53Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T02:40:20Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T02:40:33Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T02:41:19Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T02:42:32Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T02:43:56Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T02:47:33Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T02:51:45Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T02:54:09Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T02:55:51Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T02:57:27Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T03:00:36Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T03:02:32Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T03:03:29Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T03:15:24Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T03:22:23Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T03:23:03Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T03:28:01Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T03:29:17Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T03:40:13Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T03:42:21Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T03:45:28Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T03:47:33Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T03:56:33Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T04:01:36Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T04:08:36Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T04:09:43Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T04:15:13Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T04:15:29Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T04:17:41Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T04:17:49Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T04:20:37Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T04:23:34Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T04:25:27Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T04:27:13Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T04:27:57Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T04:30:59Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T04:31:13Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T04:31:52Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T04:31:54Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T04:32:04Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T04:34:19Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T04:40:35Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T04:41:04Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T04:44:52Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T04:49:06Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T04:49:41Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T04:50:34Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T04:52:46Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T04:53:04Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T04:53:27Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T05:03:10Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T05:03:17Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T05:06:05Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T05:07:09Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T05:11:02Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T05:11:36Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T05:18:55Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T05:21:25Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T05:24:17Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T05:28:31Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T05:31:08Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T05:36:00Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T05:36:32Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T05:37:50Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T05:38:15Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T05:39:56Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T05:41:10Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T05:44:36Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T05:47:28Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T05:48:39Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T05:50:22Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T05:55:00Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T05:56:14Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T05:56:37Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T05:58:47Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T05:59:55Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T06:01:08Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T06:07:31Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T06:08:54Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T06:12:17Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T06:20:00Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T06:21:18Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T06:23:30Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T06:26:29Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T06:28:52Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T06:29:23Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T06:38:50Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T06:39:35Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T06:40:51Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T06:42:44Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T06:45:29Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T06:46:23Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T06:46:33Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T06:47:15Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T06:49:50Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T06:50:27Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T06:51:13Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T06:52:16Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T06:52:46Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T06:54:56Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T06:55:18Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T07:00:29Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T07:07:41Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T07:10:40Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T07:14:24Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T07:17:48Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T07:18:13Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T07:21:46Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T07:23:50Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T07:25:53Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T07:30:56Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T07:31:35Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T07:38:59Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T07:41:25Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T07:46:23Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T07:47:13Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T07:57:43Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T07:59:55Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T08:00:27Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T08:05:58Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T08:08:10Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T08:08:45Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T08:09:42Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T08:12:50Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T08:13:30Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T08:16:50Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T08:18:16Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T08:33:04Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T08:34:10Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T08:36:03Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T08:36:45Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T13:21:13Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T13:23:16Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T13:25:04Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T13:26:21Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T13:29:58Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T13:31:06Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T13:33:28Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T13:35:08Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T13:42:26Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T13:42:51Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T13:44:24Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T13:44:36Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T13:46:21Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T13:47:24Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T13:48:11Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T13:48:56Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T13:49:15Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T13:54:24Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T13:55:01Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T14:03:32Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T14:05:07Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T14:05:42Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T14:06:07Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T14:07:58Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T14:16:18Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T14:16:45Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T14:26:45Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T14:26:49Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T14:33:57Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T14:34:42Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T14:35:11Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T14:37:42Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T14:39:37Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T14:47:01Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T14:55:04Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T14:59:30Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T15:01:02Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T15:04:24Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T15:13:11Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T15:14:59Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T15:15:05Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T15:17:24Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T15:17:56Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T15:28:43Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T15:29:19Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T15:38:23Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T15:39:32Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T15:41:27Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T15:44:19Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T15:47:26Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T15:48:38Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T15:49:37Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T15:59:57Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T16:02:03Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:02:36Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T16:05:39Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T16:10:30Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T16:10:48Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T16:13:44Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T16:14:57Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T16:16:20Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T16:21:56Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T16:22:28Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T16:28:00Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T16:32:42Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T16:34:55Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T16:37:23Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T16:40:45Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T16:42:45Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T16:44:01Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T16:52:10Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T16:55:46Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T17:01:57Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T17:02:23Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T17:05:01Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:05:06Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:05:09Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:05:11Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:05:13Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:05:16Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:05:19Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T17:05:26Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:05:28Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:05:32Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:05:33Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:05:34Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:05:35Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:05:36Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:05:37Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:05:39Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:05:45Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:05:49Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:05:51Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:05:53Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:05:54Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:05:57Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:05:58Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:06:00Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:06:01Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:06:02Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:06:03Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:06:03Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:06:04Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:06:05Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:06:08Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:06:11Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:06:13Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:06:18Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:06:22Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:06:26Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:06:27Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:06:30Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:06:33Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:06:48Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:06:52Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:06:55Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:06:55Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:07:10Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:07:12Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:07:14Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:07:15Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:07:17Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:07:22Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:07:23Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:07:29Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:07:38Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:07:40Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:07:41Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:07:49Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:07:52Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:07:53Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:07:54Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:07:57Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:07:58Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:07:59Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T17:08:06Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:08:09Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:08:10Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:08:14Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:08:18Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:08:18Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:08:19Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:08:22Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:08:23Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:08:27Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:08:30Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:08:34Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:08:35Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:08:36Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:08:40Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:08:40Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:08:41Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:08:42Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:08:44Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:08:45Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:08:46Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:08:49Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:08:52Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:08:54Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:08:56Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:09:00Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:09:00Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:09:03Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:09:03Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:09:03Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:09:03Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:09:04Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:09:07Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:09:09Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:09:12Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:09:19Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:09:20Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:09:25Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:09:28Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:09:33Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T17:09:35Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:09:38Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:09:41Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:09:43Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:09:46Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:09:48Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:09:48Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:09:49Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:10:00Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:10:00Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:10:03Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:10:03Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:10:06Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:10:06Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:10:09Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:10:10Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:10:11Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:10:14Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:10:15Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:10:15Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:10:17Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:10:18Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:10:20Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:10:23Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:10:23Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:10:24Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:10:24Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:10:26Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:10:42Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:10:45Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:10:50Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:10:59Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:10:59Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:11:01Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:11:05Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:11:14Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:11:15Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:11:17Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:11:18Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:11:20Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:11:22Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:11:25Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:11:27Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:11:31Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:11:35Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:11:40Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:11:41Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:11:42Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:11:47Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:11:47Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:11:49Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:11:53Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:11:53Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:11:54Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:12:00Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:12:02Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:12:17Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:12:20Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:12:21Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:12:24Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T17:12:34Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:12:36Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:12:37Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:12:43Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:12:43Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:12:46Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:12:48Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:12:52Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:13:00Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:13:01Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:13:04Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:13:12Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:13:13Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:13:15Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:13:18Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:13:18Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:13:21Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:13:25Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:13:26Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:13:26Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:13:27Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:13:30Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:13:33Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:13:36Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:13:38Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:13:40Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:13:41Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:13:41Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:13:42Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:13:43Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:13:43Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:13:45Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:13:49Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:13:52Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:13:53Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:13:59Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:14:02Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:14:04Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:14:05Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:14:05Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:14:14Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:14:15Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:14:15Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:14:15Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:14:19Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:14:28Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:14:32Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:14:35Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:14:38Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:14:40Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:14:47Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:14:50Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:14:56Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:15:04Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:15:05Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:15:11Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:15:12Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:15:13Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:15:14Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:15:14Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:15:20Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:15:24Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:15:24Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:15:25Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:15:35Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:15:37Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:15:37Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:15:39Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:15:43Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:15:49Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:15:50Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:15:51Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:15:52Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:15:53Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:15:57Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:16:01Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:16:01Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:16:02Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:16:08Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:16:14Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:16:14Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:16:18Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:16:21Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:16:25Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:16:26Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:16:27Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:16:28Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:16:29Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:16:31Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:16:35Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:16:38Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T17:16:47Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:16:49Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:16:52Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:16:53Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:16:56Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:16:56Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:17:00Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:17:05Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:17:05Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:17:07Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:17:08Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:17:10Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:17:13Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:17:15Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:17:16Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:17:17Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:17:17Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:17:18Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:17:18Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:17:21Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:17:24Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:17:25Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:17:32Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:17:35Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:17:39Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:17:43Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:17:46Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:17:47Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:17:48Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:17:51Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:17:53Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:17:57Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:17:59Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:17:59Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:18:01Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:18:03Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:18:13Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:18:26Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:18:28Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:18:31Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:18:39Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:18:43Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:18:46Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:18:47Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:18:48Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:18:53Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:18:54Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:18:56Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:19:01Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:19:09Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T17:19:21Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:19:26Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:19:29Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:19:30Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:19:30Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:19:31Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:19:32Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:19:36Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:19:38Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:19:38Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:19:40Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:19:44Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:19:44Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:19:44Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:19:45Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:19:50Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:19:50Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:19:54Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:19:58Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:19:58Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:20:05Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:20:06Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:20:19Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:20:25Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:20:25Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:20:28Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:20:33Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:20:38Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:20:39Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:20:39Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:20:48Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:20:48Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:20:48Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:20:49Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:20:49Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:20:53Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:21:03Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:21:07Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:21:11Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:21:12Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:21:13Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:21:15Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:21:18Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:21:20Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:21:21Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:21:23Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:21:29Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:21:29Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:21:33Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:21:35Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:21:38Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:21:39Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:21:40Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:21:43Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:21:50Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:21:56Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:21:59Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:22:04Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:22:13Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:22:13Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:22:20Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:22:21Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:22:23Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:22:32Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:22:34Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:22:36Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:22:38Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:22:41Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:22:42Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:22:48Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:22:49Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:22:51Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:22:54Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:22:55Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:22:58Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:22:59Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:23:02Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:23:04Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:23:06Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:23:12Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:23:13Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:23:14Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:23:14Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:23:19Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:23:20Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:23:21Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:23:23Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:23:23Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:23:27Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:23:29Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:23:29Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:23:30Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:23:34Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:23:36Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:23:37Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:23:38Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:23:38Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:23:50Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:23:51Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:23:54Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:24:00Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:24:00Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:24:02Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:24:08Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:24:08Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:24:13Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:24:15Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:24:23Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:24:25Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:24:28Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:24:29Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T17:24:32Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:24:33Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:24:33Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:24:42Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:24:50Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:24:50Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:24:58Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:25:00Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:25:01Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:25:07Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:25:10Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:25:12Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:25:12Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:25:19Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:25:23Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:25:29Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:25:37Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:25:38Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:25:46Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:25:49Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:25:57Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:26:15Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:26:17Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:26:19Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:26:22Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:26:25Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:26:25Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:26:28Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:26:29Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:26:35Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:26:42Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:26:43Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:26:48Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:26:48Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:27:00Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:27:01Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:27:05Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:27:06Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:27:08Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:27:17Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:27:18Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:27:21Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:27:21Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:27:38Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:27:39Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T17:27:42Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:27:45Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:27:45Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:27:45Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:27:49Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:27:54Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:27:56Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:27:57Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:28:04Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:28:09Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:28:10Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:28:13Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:28:13Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:28:16Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:28:17Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:28:22Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:28:22Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:28:26Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:28:28Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:28:28Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:28:28Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:28:31Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:28:33Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:28:39Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:28:40Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:28:41Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:28:42Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:28:42Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:28:43Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:28:46Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:28:47Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:28:54Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:29:00Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:29:02Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:29:03Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:29:06Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:29:08Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:29:11Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:29:12Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:29:13Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:29:15Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:29:15Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:29:18Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:29:21Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:29:22Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:29:26Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:29:29Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:29:30Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:29:35Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:29:43Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:29:45Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:29:50Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:29:51Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:29:51Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:29:58Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:30:04Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:30:07Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:30:12Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:30:16Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:30:17Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:30:19Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:30:21Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:30:21Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:30:22Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:30:23Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:30:34Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:30:34Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:30:39Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:30:41Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:30:43Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:30:46Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:30:49Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:30:55Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:31:00Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:31:03Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:31:03Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:31:05Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:31:06Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:31:08Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:31:12Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:31:16Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:31:19Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:31:19Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:31:22Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:31:25Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:31:27Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:31:32Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T17:31:34Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:31:38Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:31:41Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:31:47Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:31:51Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:31:54Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:32:00Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:32:05Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:32:18Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:32:28Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:32:29Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:32:34Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:32:41Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:32:42Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:32:43Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:32:44Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:32:46Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:32:52Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:32:54Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:32:58Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:32:59Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:33:02Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:33:02Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:33:07Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:33:07Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:33:12Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:33:17Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:33:33Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:33:34Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:33:35Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:33:38Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:33:39Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:33:44Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:33:45Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:33:45Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:33:50Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:33:55Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:34:01Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:34:03Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:34:08Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:34:08Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:34:13Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:34:14Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T17:34:15Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:34:18Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:34:19Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:34:20Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:34:22Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:34:23Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:34:24Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:34:25Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:34:25Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:34:31Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:34:33Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:34:33Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:34:36Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:34:38Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:34:39Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:34:40Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:34:41Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:34:52Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:34:54Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:34:56Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:35:02Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:35:04Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:35:05Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:35:06Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:35:08Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:35:11Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:35:11Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:35:19Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:35:23Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:35:23Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:35:33Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:35:35Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:35:38Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:35:39Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:35:45Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:35:48Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:35:54Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:35:55Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:36:00Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:36:02Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:36:02Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:36:03Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:36:06Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:36:10Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:36:17Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:36:21Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:36:21Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:36:23Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:36:25Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:36:27Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:36:29Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:36:29Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:36:31Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:36:34Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:36:34Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:36:34Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:36:41Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:36:42Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:36:43Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:36:46Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:36:47Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:37:01Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:37:02Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:37:03Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:37:05Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:37:11Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:37:16Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:37:20Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:37:20Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:37:21Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:37:24Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:37:24Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:37:25Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:37:25Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:37:29Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:37:37Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:37:41Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:37:47Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:37:51Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:37:54Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:37:54Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:37:55Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:37:55Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:37:58Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:38:01Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:38:01Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:38:02Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:38:06Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:38:08Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:38:10Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:38:10Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:38:10Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:38:12Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:38:12Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:38:13Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:38:14Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:38:15Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:38:16Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:38:17Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:38:19Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:38:21Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:38:22Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:38:27Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:38:28Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:38:34Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:38:40Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:38:47Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:38:48Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:38:48Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:38:50Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:38:59Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:39:00Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:39:11Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:39:15Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:39:17Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:39:24Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:39:27Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:39:39Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:39:39Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:39:43Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:39:48Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:39:53Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:39:57Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:40:03Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:40:06Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:40:09Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:40:12Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:40:13Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T17:40:14Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:40:17Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:40:19Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:40:19Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:40:26Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:40:31Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:40:40Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:40:41Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:40:43Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:40:45Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:40:47Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:40:48Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:40:52Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:40:57Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:41:01Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:41:04Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:41:11Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:41:14Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:41:20Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:41:20Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:41:21Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:41:28Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:41:29Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:41:39Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:41:39Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:41:41Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:41:43Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:41:46Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:41:48Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:41:49Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:41:50Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:41:54Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:41:56Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:41:58Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:41:58Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:41:59Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:42:06Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:42:10Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:42:12Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:42:14Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:42:17Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:42:21Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:42:22Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:42:23Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:42:28Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:42:28Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:42:29Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:42:32Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:42:33Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:42:35Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:42:37Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:42:37Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:42:40Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:42:40Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:42:43Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:42:44Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:42:50Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:42:51Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:42:51Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:43:02Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:43:02Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:43:02Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:43:03Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:43:05Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:43:11Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:43:19Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:43:25Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:43:25Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:43:25Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:43:26Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:43:28Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:43:29Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:43:30Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:43:31Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:43:39Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:43:43Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:43:49Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:43:52Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:43:54Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:43:55Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:43:59Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:44:03Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:44:03Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:44:04Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:44:06Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:44:11Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:44:15Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:44:19Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:44:23Z api-6 ERROR [auth] token validation failed
+2026-07-03T17:44:24Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:44:45Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:44:49Z api-3 ERROR [auth] token validation failed
+2026-07-03T17:44:51Z web-2 ERROR [auth] token validation failed
+2026-07-03T17:44:54Z web-4 ERROR [auth] token validation failed
+2026-07-03T17:44:59Z api-1 ERROR [auth] token validation failed
+2026-07-03T17:45:48Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T17:47:14Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T17:50:53Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T17:53:40Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T17:54:40Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T17:56:10Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T17:56:27Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T17:57:35Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T17:58:41Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T18:04:31Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T18:05:10Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T18:12:27Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T18:12:52Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T18:16:22Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T18:24:04Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T18:25:27Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T18:26:46Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T18:28:06Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T18:31:53Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T18:32:07Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T18:35:15Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T18:37:55Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T18:39:32Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T18:48:15Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T18:55:48Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T18:58:59Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T19:09:19Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T19:10:40Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T19:23:00Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T19:27:18Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T19:30:49Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T19:35:05Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T19:38:04Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T19:39:25Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T19:45:48Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T19:46:46Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T19:49:14Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T19:50:43Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T19:50:47Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T19:53:57Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T20:01:22Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T20:10:17Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T20:18:07Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T20:20:20Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T20:21:07Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T20:23:48Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T20:31:58Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T20:37:43Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T20:39:53Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T20:41:56Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T20:42:47Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T20:47:46Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T20:47:53Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T20:55:13Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T21:00:31Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T21:02:18Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T21:03:54Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T21:05:20Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T21:11:56Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T21:13:49Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T21:18:57Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T21:20:22Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T21:21:51Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T21:22:22Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T21:24:01Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T21:26:19Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T21:31:20Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T21:32:01Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T21:36:26Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T21:36:59Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T21:39:46Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T21:49:14Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T21:50:37Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T21:57:48Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T21:58:58Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T22:06:43Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T22:09:11Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T22:09:27Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T22:11:13Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T22:16:41Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T22:19:15Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T22:19:37Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T22:21:06Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T22:22:47Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T22:23:13Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T22:23:40Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T22:23:53Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T22:25:11Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T22:25:31Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T22:27:41Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T22:29:04Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T22:30:06Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T22:31:54Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T22:32:33Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T22:32:47Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T22:36:30Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T22:36:37Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T22:37:57Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T22:43:05Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T22:48:19Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T22:53:15Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T22:55:03Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T23:03:03Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T23:08:10Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T23:09:29Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T23:17:30Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T23:20:02Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T23:20:15Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T23:21:23Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-03T23:21:53Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T23:22:18Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T23:24:10Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T23:24:30Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T23:27:16Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T23:29:37Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T23:30:50Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T23:33:47Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T23:44:56Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T23:46:33Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T23:50:40Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T23:55:15Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T23:56:31Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-03T23:57:26Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T00:00:30Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T00:05:47Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T00:05:59Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T00:06:08Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T00:08:00Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T00:12:27Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T00:17:17Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T00:17:58Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T00:21:55Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T00:26:17Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T00:33:57Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T00:34:08Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T00:35:33Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T00:38:12Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T00:42:16Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T00:44:05Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T00:48:04Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T00:50:55Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T01:01:38Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T01:07:40Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T01:07:41Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T01:13:26Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T01:23:27Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T01:29:14Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T01:29:22Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T01:36:15Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T01:36:44Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T01:36:46Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T01:37:56Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T01:42:22Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T01:42:44Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T01:45:46Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T01:46:47Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T01:52:25Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T01:52:25Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T01:53:26Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T01:55:11Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T02:00:01Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T02:03:06Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T02:05:08Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T02:05:54Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T02:06:20Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T02:07:23Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T02:11:47Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T02:17:42Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T02:21:33Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T02:31:13Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T02:33:56Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T02:37:52Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T02:38:08Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T02:38:31Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T02:46:17Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T02:48:35Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T02:49:23Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T02:49:37Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T03:02:08Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T03:04:54Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T03:11:28Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T03:12:40Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T03:15:50Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T03:19:16Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T03:25:21Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T03:25:58Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T03:26:57Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T03:29:55Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T03:30:18Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T03:31:30Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T03:33:11Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T03:37:30Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T03:38:04Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T03:43:50Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T03:45:43Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T03:49:51Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T04:02:11Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T04:03:03Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T04:07:24Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T04:18:28Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T04:20:30Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T04:22:34Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T04:23:00Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T04:24:26Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T04:25:50Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T04:27:00Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T04:33:50Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T04:35:16Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T04:36:53Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T04:37:13Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T04:38:43Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T04:39:46Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T04:43:58Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T04:45:12Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T04:47:17Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T04:49:33Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T04:53:22Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T04:55:38Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T04:58:07Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T05:04:23Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T05:11:01Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T05:11:12Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T05:11:31Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T05:22:24Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T05:29:47Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T05:31:52Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T05:38:08Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T05:40:37Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T05:43:02Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T05:45:59Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T05:52:07Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T05:52:24Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T05:58:40Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T05:58:50Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T06:02:06Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T06:02:58Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T06:04:38Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T06:05:43Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T06:07:55Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T06:10:21Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T06:12:35Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T06:12:55Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T06:13:00Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T06:21:30Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T06:24:18Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T06:25:33Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T06:25:52Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T06:29:53Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T06:31:06Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T06:33:06Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T06:33:30Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T06:36:11Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T06:36:20Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T06:39:09Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T06:40:25Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T06:47:25Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T06:51:28Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T06:52:55Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T06:55:47Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T06:56:00Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T06:56:32Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T06:56:47Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T07:00:48Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T07:01:33Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T07:08:40Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T07:09:55Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T07:16:47Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T07:19:27Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T07:20:37Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T07:21:25Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T07:25:03Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T07:25:57Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T07:26:38Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T07:29:07Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T07:30:34Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T07:36:28Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T07:36:47Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T07:38:01Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T07:53:35Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T08:00:39Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T08:03:10Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T08:03:33Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T08:03:37Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T08:05:33Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T08:07:39Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T08:08:07Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T08:08:35Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T08:10:04Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T08:13:36Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T08:15:50Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T08:17:36Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T08:18:50Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T08:28:04Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T08:33:21Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T08:37:46Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T08:39:47Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T08:41:27Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T08:45:45Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T08:48:18Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T08:49:29Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T08:53:07Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T08:54:31Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T08:55:29Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T09:02:38Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T09:03:34Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T09:05:37Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T09:07:57Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T09:08:15Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T09:14:03Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T09:16:51Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T09:17:57Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T09:19:24Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T09:21:54Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T09:23:58Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T09:27:08Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T09:38:49Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T09:43:00Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T09:44:48Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T09:47:20Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T09:47:53Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T09:49:49Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T09:53:06Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T09:55:55Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T09:57:36Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T09:57:46Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T10:01:51Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T10:02:11Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T10:06:03Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T10:08:08Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T10:08:40Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T10:09:51Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T10:13:23Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T10:19:01Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T10:19:16Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T10:19:22Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T10:19:30Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T10:20:08Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T10:21:35Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T10:22:13Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T10:24:08Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T10:34:50Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T10:39:03Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T10:40:24Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T10:40:55Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T10:42:49Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T10:44:23Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T10:51:23Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T10:55:26Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T11:02:19Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T11:04:02Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T11:04:31Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T11:05:44Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T11:10:14Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T11:17:42Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T11:20:01Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T11:20:10Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T11:25:42Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T11:29:54Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T11:32:05Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T11:34:19Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T11:45:40Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T11:46:24Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T11:47:47Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T11:56:36Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T12:11:47Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T12:17:55Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T12:20:02Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T12:28:31Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T12:32:09Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T12:34:04Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T12:38:57Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T12:39:00Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T12:47:24Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T12:49:35Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T12:50:52Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T12:55:34Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T12:58:23Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T13:00:28Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T13:01:16Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T13:07:23Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T13:16:13Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T13:17:41Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T13:22:22Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T13:23:27Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T13:23:36Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T13:25:03Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T13:26:36Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T13:32:05Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T13:32:18Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T13:36:01Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T13:37:33Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T13:38:37Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T13:38:43Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T13:39:23Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T13:40:29Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T13:41:58Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T13:47:31Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T13:49:02Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T13:51:33Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T13:51:33Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T13:52:19Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T13:52:59Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T13:53:49Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T13:55:26Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T13:57:45Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T13:58:08Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T14:02:28Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T14:11:11Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T14:12:44Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T14:13:09Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T14:15:30Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T14:17:52Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T14:18:37Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T14:21:15Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T14:25:35Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T14:30:41Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T14:32:54Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T14:34:51Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T14:36:55Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T14:37:49Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T14:43:43Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T14:45:43Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T14:46:08Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T14:47:01Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T14:59:18Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T15:01:46Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T15:02:13Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T15:02:26Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T15:04:06Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T15:04:40Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T15:06:36Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T15:08:47Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T15:09:49Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T15:12:07Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T15:12:09Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T15:13:01Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T15:13:03Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T15:19:41Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T15:21:17Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T15:25:49Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T15:29:49Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T15:30:32Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T15:31:33Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T15:32:28Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T15:35:12Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T15:36:06Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T15:41:50Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T15:42:14Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T15:46:15Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T15:55:38Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T15:56:30Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T16:02:11Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T16:05:36Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T16:08:56Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T16:09:43Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T16:11:03Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T16:15:51Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T16:16:38Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T16:17:20Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T16:17:43Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T16:25:57Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T16:26:24Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T16:27:06Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T16:27:32Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T16:30:33Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T16:30:36Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T16:30:58Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T16:31:13Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T16:32:38Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T16:35:35Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T16:38:12Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T16:43:37Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T16:44:06Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T16:46:20Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T16:49:36Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T16:57:38Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T17:00:36Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T17:02:13Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T17:04:14Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T17:05:37Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T17:06:00Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T17:06:50Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T17:15:40Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T17:16:00Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T17:18:07Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T17:18:19Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T17:26:51Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T17:29:17Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T17:35:49Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T17:37:36Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T17:38:01Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T17:38:06Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T17:39:15Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T17:44:03Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T17:48:20Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T17:51:45Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T17:52:45Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T18:04:56Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T18:08:22Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T18:08:23Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T18:11:16Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T18:11:37Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T18:14:50Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T18:15:24Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T18:17:28Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T18:18:23Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T18:19:39Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T18:20:35Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T18:20:49Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T18:28:37Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T18:29:53Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T18:30:19Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T18:32:30Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T18:34:30Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T18:36:16Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T18:36:43Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T18:37:15Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T18:42:02Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T18:42:33Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T18:42:44Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T18:48:55Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T18:53:04Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T18:56:05Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T18:58:21Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T19:00:43Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T19:02:53Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T19:05:02Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T19:14:42Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T19:14:50Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T19:18:49Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T19:18:52Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T19:19:45Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T19:22:35Z web-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T19:24:58Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T19:29:31Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T19:30:34Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T19:37:31Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T19:41:01Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T19:41:46Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T19:43:32Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T19:45:38Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T19:45:59Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T19:47:50Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T19:50:44Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T19:58:39Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T19:59:41Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T20:00:16Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T20:05:19Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T20:06:34Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T20:12:58Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T20:15:29Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T20:16:32Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T20:25:37Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T20:27:11Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T20:32:38Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T20:37:00Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T20:39:36Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T20:50:42Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T20:52:22Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T20:55:53Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T20:57:30Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T21:01:29Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T21:02:51Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T21:06:12Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T21:11:33Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T21:12:50Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T21:13:03Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T21:23:58Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T21:26:42Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T21:27:14Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T21:27:58Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T21:30:05Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T21:40:46Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T21:47:09Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T21:50:45Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T21:51:50Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T21:52:42Z api-6 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T21:53:27Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T21:54:03Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T21:56:35Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T21:58:04Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T21:58:28Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T22:02:27Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T22:04:45Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T22:11:15Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T22:13:25Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T22:17:44Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T22:18:26Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T22:24:31Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T22:25:47Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T22:27:04Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T22:27:51Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T22:29:11Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T22:35:05Z api-3 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T22:37:18Z api-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T22:37:57Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T22:38:24Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T22:38:25Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T22:39:05Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T22:39:40Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T22:40:10Z web-4 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T22:42:37Z api-6 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T22:44:50Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T22:48:21Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T22:49:14Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T22:50:50Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T22:51:08Z api-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T22:59:16Z web-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T23:00:09Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T23:00:58Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T23:00:58Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T23:03:36Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T23:04:24Z web-4 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T23:04:51Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T23:05:03Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T23:06:07Z web-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T23:06:09Z api-1 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T23:07:12Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T23:07:46Z api-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T23:08:19Z api-6 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T23:08:38Z api-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T23:09:53Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T23:11:25Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T23:25:26Z web-2 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T23:30:02Z api-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T23:31:00Z api-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T23:36:48Z web-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T23:39:36Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T23:40:56Z api-6 ERROR [cart] upstream timeout after 5000ms
+2026-07-04T23:41:02Z api-6 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T23:43:10Z web-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-04T23:45:26Z api-1 ERROR [payments] upstream timeout after 5000ms
+2026-07-04T23:46:40Z web-2 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T23:47:19Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T23:52:06Z api-3 ERROR [catalog] upstream timeout after 5000ms
+2026-07-04T23:54:44Z web-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-04T23:55:18Z web-2 ERROR [payments] upstream timeout after 5000ms
+
+codex
+The log format is timestamp, host, level, then module in brackets, so I’m filtering on the UTC timestamp prefix and the explicit `ERROR` level field.
+exec
+/bin/bash -lc "awk '"'$1 ~ /''^2026-07-03T/ && $3 == "ERROR" {print; exit}'"' logs/app.log" in /private/tmp/northgate_api
+ succeeded in 0ms:
+2026-07-03T00:00:15Z api-6 ERROR [notify] upstream timeout after 5000ms
+
+exec
+/bin/bash -lc "awk '"'$1 >= "2026-07-03T00:00:00Z" && $1 < "2026-07-04T00:00:00Z" && $3 == "ERROR" {count++} END {print count+0}'"' logs/app.log" in /private/tmp/northgate_api
+exec
+/bin/bash -lc "awk '"'$1 >= "2026-07-03T00:00:00Z" && $1 < "2026-07-04T00:00:00Z" && $3 == "ERROR" {gsub(/'"\\[/,\"\","'$4); gsub(/'"\\]/,\"\","'$4); c[$4]++} END {for (m in c) print c[m], m}'"' logs/app.log | sort -nr" in /private/tmp/northgate_api
+exec
+/bin/bash -lc "awk '"'$1 ~ /''^2026-07-03T/ && $3 == "ERROR" {line=$0} END {print line}'"' logs/app.log" in /private/tmp/northgate_api
+ succeeded in 276ms:
+1198
+
+ succeeded in 274ms:
+886 auth
+86 cart
+83 notify
+77 payments
+66 catalog
+
+ succeeded in 280ms:
+2026-07-03T23:57:26Z web-4 ERROR [auth] upstream timeout after 5000ms
+
+codex
+ERRORS_JUL3: 1198
+WORST_MODULE: auth
+tokens used
+21,993
+ERRORS_JUL3: 1198
+WORST_MODULE: auth

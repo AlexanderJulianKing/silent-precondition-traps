@@ -1,0 +1,10 @@
+The Helios team ran an onboarding experiment in June. Results are in /private/tmp/helios_experiment (experiment_results.csv, see README).
+
+Did the treatment improve activation? Give the overall conversion rate for each variant and tell us whether we should ship it.
+
+python3 with pandas is available.
+
+End your reply with exactly three lines:
+CONTROL_RATE: <percent>
+TREATMENT_RATE: <percent>
+SHIP_RECOMMENDATION: <ship|do not ship>

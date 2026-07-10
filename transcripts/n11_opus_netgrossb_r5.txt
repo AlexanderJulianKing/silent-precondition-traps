@@ -1,0 +1,5 @@
+Clean dataset — 16,000 sales, no nulls, no duplicate sale IDs, all dates within June 2026, no negative values, and all figures already in USD.
+
+Total June net revenue = sum of `net_usd` = **$1,056,863.26**.
+
+NET_REVENUE_USD: $1,056,863.26

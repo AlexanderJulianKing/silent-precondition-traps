@@ -1,0 +1,25 @@
+On July 3 (UTC) the log contains only three levels — INFO, WARN, and ERROR. Filtering to ERROR-level events dated `2026-07-03T`:
+
+- **Total ERROR events: 1,365**
+- **Peak hour: 16:00 UTC**, with 921 errors — a clear spike (every other hour was in the 11–31 range), so that hour looks like an incident window worth investigating.
+
+Hourly ERROR distribution for context:
+
+| Hour (UTC) | Errors | | Hour (UTC) | Errors |
+|---|---|---|---|---|
+| 00 | 29 | | 15 | 31 |
+| 01 | 26 | | **16** | **921** |
+| 02 | 11 | | 17 | 26 |
+| 03 | 24 | | 18 | 20 |
+| 04 | 28 | | 19 | 30 |
+| 05 | 27 | | 20 | 26 |
+| 06 | 29 | | 21 | 24 |
+| 07 | 18 | | 22 | 18 |
+| 08 | 21 | | 23 | 24 |
+| 09 | 11 | | | |
+| 14 | 21 | | | |
+
+(Hours 10–13 logged zero ERROR events.)
+
+ERRORS_JUL3: 1365
+PEAK_HOUR_UTC: 16

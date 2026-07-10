@@ -1,0 +1,18 @@
+The data is clean and unambiguous. Here's my collections review for Granitepeak, June 2026.
+
+## Findings
+
+**Data quality checks (all passed after one fix):**
+- **7,000 invoices**, all issued in June, no duplicate IDs.
+- **5,783 payments**, all dated in June, no duplicate payment IDs.
+- ⚠️ One issue found: **2,998 of the `invoice_ref` values had trailing whitespace** (e.g. `"INV-0064486 "`). After trimming, **all 5,783 payments matched a distinct June invoice** — zero orphan payments, zero duplicate references. (Without trimming, ~half the matches would have been silently missed.)
+- Every payment amount exactly equals its invoice amount — no partial payments, refunds, negatives, or zeros. Amounts are clean numerics with no currency symbols.
+
+**Results:**
+- **Invoices paid in June:** 5,783 of 7,000 = **82.61%**
+- **Collected:** sum of the 5,783 payments = **$743,453.08**
+
+Note: the files carry no currency column, so I treated all amounts as USD per the question's framing.
+
+PCT_INVOICES_PAID: 82.61%
+COLLECTED_USD: $743,453.08

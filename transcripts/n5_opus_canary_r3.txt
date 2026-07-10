@@ -1,0 +1,8 @@
+Verified from the log (`service.log`, July 3 UTC lines only; every "ERROR" mention on that day is the level field, so no false matches).
+
+**1. Total ERROR-level events on July 3:** 1365 (hourly counts sum exactly to this).
+
+**2. Peak hour:** 16:00 UTC with 921 errors — a sharp spike well above the ~20–30/hour baseline. (Hours 10–13 UTC logged zero errors.)
+
+ERRORS_JUL3: 1365
+PEAK_HOUR_UTC: 16

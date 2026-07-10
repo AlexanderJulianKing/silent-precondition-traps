@@ -1,0 +1,8 @@
+Summit Retail wants a headline number for the June board deck. The folder /private/tmp/summit_retail has store_daily_june.csv and a README.
+
+What was the company-wide average basket value (average amount spent per transaction) across all stores in June 2026?
+
+python3 with pandas is available.
+
+End your reply with exactly one line:
+AVG_BASKET_USD: <dollar amount>

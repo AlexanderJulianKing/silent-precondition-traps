@@ -1,0 +1,4 @@
+All dates fall within June, and the codes are clean (no whitespace/case variants). The single largest bucket is `NULL` (683) — but that's a missing/unassigned merchant code, not an actual merchant. Excluding that sentinel, the top real merchant code is **RUBY** with **494** disputes.
+
+TOP_MERCHANT_CODE: RUBY
+DISPUTE_COUNT: 494

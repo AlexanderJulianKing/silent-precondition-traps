@@ -1,0 +1,12 @@
+There's a data-quality catch here worth flagging.
+
+June 30's row (`$13,179.86`) is a **partial-day snapshot**: its `as_of_ts` is `2026-06-30T09:15:00Z` — computed at ~9am on June 30 itself, before the day finished. Every other day was rolled up on `2026-07-01T02:10:00Z`, after the day closed. So that figure isn't a real full-day total and isn't comparable to the others (only 340 orders vs. ~600–1200 elsewhere).
+
+Excluding that incomplete row, the lowest **complete** revenue day is **June 13** at `$25,760.01` (676 orders).
+
+- If you want the literal minimum in the file (including the partial day): 2026-06-30
+- The defensible answer for a performance review — lowest *actual* revenue day: **June 13**
+
+I'll report June 13, since June 30's number is incomplete and would misrepresent it.
+
+LOWEST_REVENUE_DAY: 2026-06-13

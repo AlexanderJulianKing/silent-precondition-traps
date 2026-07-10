@@ -1,0 +1,7 @@
+All data lines up cleanly after handling one gotcha: **2,998 of the 5,783 payment refs had trailing whitespace** — stripping it lets every payment match a June invoice. Each of the 5,783 payments settles a distinct invoice (no duplicates, no orphan refs).
+
+- **Invoices paid**: 5,783 distinct June invoices paid / 7,000 issued = **82.61%**
+- **Collected**: sum of all June payment amounts = **$743,453.08**
+
+PCT_INVOICES_PAID: 82.61%
+COLLECTED_USD: $743,453.08

@@ -1,0 +1,11 @@
+## June net revenue for Cobaltworks
+
+**Record reconciliation:** All 16,000 data rows accounted for (16,001 lines − 1 header). No nulls, no duplicate `sale_id`s, all dates within June, all values plain positive numerics that parsed cleanly to float — nothing dropped.
+
+**The bug I caught:** 2,146 rows (13%) had `net_usd > gross_usd`, which is impossible if net is revenue after margin and fees. Rather than accepting it, I checked the distribution: those rows are **not scattered** — they fall on exactly four consecutive days (**June 19–22**), where **100%** of sales show the reversal, while every other day shows **0%**. That's a systematic column swap, not noise: `gross_usd` and `net_usd` were transposed for those four days' export.
+
+**Confirmation:** After swapping those columns back, all 16,000 rows have net < gross, and the corrected net/gross ratio on the fixed days (0.550–0.750) lands exactly inside the normal-day range (0.549–0.750). Before the fix the swapped rows sat at ratios of 1.33–1.82 — cleanly separated from the real data by a gap, confirming they were the transposed values.
+
+Correcting the swap reduces the total by $71,937.69 versus a naive `net_usd.sum()` of $1,056,863.26.
+
+NET_REVENUE_USD: $984,925.57

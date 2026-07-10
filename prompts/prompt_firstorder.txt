@@ -1,0 +1,8 @@
+Lifecycle-marketing question for Cascade Commerce. The folder /private/tmp/cascade_commerce has the consolidated all-time order history (orders_all.csv, see README).
+
+What percentage of our customers used a promo code on their first-ever order?
+
+python3 with pandas is available.
+
+End your reply with exactly one line:
+PCT_FIRST_ORDER_WITH_PROMO: <percent>

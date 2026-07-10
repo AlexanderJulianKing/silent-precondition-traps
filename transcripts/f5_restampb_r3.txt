@@ -1,0 +1,11 @@
+**40,000 distinct client events.** The file has 40,404 rows, but 404 of them are duplicate deliveries of events already in the stream.
+
+How I got there:
+
+- The CSV contains 40,404 rows, all with timestamps on July 6 (UTC), no nulls, and no duplicated `event_id` values — so at first glance it looks clean.
+- However, `client_seq` is a per-device event counter, and 404 `(user_id, client_seq)` pairs appear exactly twice. Each pair has the identical `screen` but a fresh `event_id` and a timestamp roughly 90 seconds after the first copy, and all of them are clustered in a ~15-minute window around 21:12–21:27 UTC. That pattern is a client retry burst — likely an ingest hiccup where devices re-sent events and the pipeline assigned new event_ids, so event_id dedup didn't catch them.
+- Deduplicating on `(user_id, client_seq)` leaves exactly 40,000 unique client events.
+
+So we ingested 40,404 rows, but only 40,000 distinct client events were actually generated and received; the other 404 are retry duplicates.
+
+EVENTS_JUL6: 40000

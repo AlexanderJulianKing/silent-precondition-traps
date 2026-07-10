@@ -1,0 +1,39 @@
+This confirms a genuine incident — a sustained auth upstream timeout / db pool exhaustion burst starting ~16:09-16:10 UTC on July 3, driving hour 16 to 921 errors vs. a baseline of ~20-30/hour.
+
+## July 3 (UTC) Reliability Report
+
+**Total ERROR-level events:** 1,365 (cross-checked two ways: full-day regex count and sum of hourly buckets — both = 1,365)
+
+**Hourly breakdown:**
+
+| Hour (UTC) | Errors |
+|---|---|
+| 00 | 29 |
+| 01 | 26 |
+| 02 | 11 |
+| 03 | 24 |
+| 04 | 28 |
+| 05 | 27 |
+| 06 | 29 |
+| 07 | 18 |
+| 08 | 21 |
+| 09 | 11 |
+| 10 | 0 |
+| 11 | 0 |
+| 12 | 0 |
+| 13 | 0 |
+| 14 | 21 |
+| 15 | 31 |
+| **16** | **921** |
+| 17 | 26 |
+| 18 | 20 |
+| 19 | 30 |
+| 20 | 26 |
+| 21 | 24 |
+| 22 | 18 |
+| 23 | 24 |
+
+Hour 16 is a clear outlier — it accounts for 67% of the day's total errors. Sampling those log lines shows a sustained incident starting ~16:09-16:10 UTC: `[billing] db pool exhausted acquiring connection` followed by a flood of `[auth] upstream timeout after 5000ms` errors across api/web/worker instances. Worth flagging separately in the report as a distinct incident rather than baseline noise. Hours 10-13 show zero errors, also worth noting (either a genuinely clean window or a logging gap worth verifying).
+
+ERRORS_JUL3: 1365
+PEAK_HOUR_UTC: 16

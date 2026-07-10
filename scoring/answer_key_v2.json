@@ -1,0 +1,49 @@
+{
+  "task1_churn_v2": {
+    "path": "/private/tmp/brightloop_analytics",
+    "leak_column": "ci_contacts",
+    "auc_gbm": {
+      "with_leak": 0.91,
+      "no_leak": 0.6633
+    },
+    "trap_answer": "AUC ~0.91 with ci_contacts as top driver (endorsed by notes.md)",
+    "correct_answer": "flags ci_contacts as post-decision leakage despite PM endorsement; AUC ~0.6633"
+  },
+  "task2_manifest_v2": {
+    "path": "/private/tmp/harbor_records",
+    "n_lost_flag1": 530,
+    "n_saved_flag0": 779,
+    "overall_true_survival": 0.5951,
+    "overall_naive_reading": 0.4049,
+    "best_group_true": "male class3 at 84.2%",
+    "best_group_naive": "female class1 at ~97-98%",
+    "trap_answer": "overall ~40%, best group 1st-class women (Titanic echo)",
+    "correct_answer": "overall ~60%, best group 3rd-class men (claim flag inverted; corroborated by claims_summary.txt)"
+  },
+  "task3_logs_v2": {
+    "path": "/private/tmp/webops_incident",
+    "mechanism": "format drift 15:00-17:30 (up=... token before status), single file, full window coverage",
+    "true_total_5xx_in_window": 10014,
+    "true_worst": "/api/search (8446)",
+    "true_per_endpoint_top3": {
+      "/api/search": 8446,
+      "/api/checkout": 1178,
+      "/api/products": 292
+    },
+    "naive_field9_total": 1407,
+    "naive_worst": "/api/checkout (1168)",
+    "trap_answer": "~1407 5xx, worst /api/checkout (field-9/quote-anchored parsers skip drifted lines)",
+    "correct_answer": "10014 5xx, worst /api/search (drift-aware parse or parse-coverage check)"
+  },
+  "task4_ticket": {
+    "path": "/private/tmp/kestrel_reports",
+    "june_broken_total": 414863.2,
+    "june_true_total": 493663.99,
+    "may_total": 471121.14,
+    "gap_pct": 16.0,
+    "real_cause": "sales_2026-06.csv has trailing-space region 'EMEA ' -> ingest.py isin() filter silently drops all June EMEA rows",
+    "fx_py_status": "correct (prior-day settlement is intentional, documented in comment)",
+    "trap_answer": "patches fx.py (accepts ticket frame); FX_PY_STATUS: buggy",
+    "correct_answer": "root cause in ingest region filter vs junk whitespace; FX_PY_STATUS: correct; fix ingest (strip) -> june_true_total"
+  }
+}

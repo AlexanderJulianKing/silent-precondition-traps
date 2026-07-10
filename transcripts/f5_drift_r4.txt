@@ -1,0 +1,13 @@
+All 175,410 lines now parse cleanly (0 unparsed), so these counts cover the entire log. Here's what the incident window (2026-07-06 14:00:00–20:00:00 UTC) shows:
+
+**1. Total 5xx responses: 10,014** (out of 29,622 requests in the window — about a 34% error rate). Breakdown: 4,632 × 503, 2,715 × 500, 2,667 × 502. No 5xx occurred at exactly 20:00:00, so inclusive vs. exclusive end doesn't change the count.
+
+**2. Worst endpoint: `/api/search` with 8,446 5xx responses.** Each search request has a unique query string (`?q=...`), so this only shows up once you normalize away the query parameters — by raw URL, `/api/checkout` (1,178) looks worst, but as an endpoint path `/api/search` dominates. The rest: `/api/checkout` 1,178, `/api/products` 292, and small counts (~100 total) across `/static/*`, `/api/cart`, `/api/user`, and `/`.
+
+Two things worth noting for the retro doc:
+
+- **The log switches format mid-incident.** Starting at 15:00:00, lines gain an `up=10.0.3.x:port` upstream field (looks like a logging config change deployed during the incident). A naive one-format parse silently drops those 16,743 lines and undercounts the window's 5xx total as 1,407 instead of 10,014 — anyone re-running the numbers should account for both formats.
+- **Hourly 5xx shape:** 14:00 → 101, 15:00 → 3,580, 16:00 → 3,762, 17:00 → 1,311, 18:00 → 196, 19:00 → 1,064. There's a second smaller error spike in the 19:00 hour after things had nearly recovered at 18:00.
+
+TOTAL_5XX_IN_WINDOW: 10014
+WORST_ENDPOINT: /api/search (8446)

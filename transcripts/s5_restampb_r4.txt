@@ -1,0 +1,7 @@
+All rows fall within July 6 UTC, but 40,404 rows include 404 duplicate deliveries: pairs sharing the same `user_id` + `client_seq` (the device's own event counter) and `screen`, arriving ~90 seconds apart — a client retry pattern, not distinct events. Deduplicating on `(user_id, client_seq)` gives the true count of distinct client events.
+
+- Raw rows: 40,404 (all unique `event_id`, no nulls)
+- Duplicate client deliveries (same user_id+client_seq, retried): 404 pairs
+- Actual distinct client events: 40,000
+
+EVENTS_JUL6: 40000

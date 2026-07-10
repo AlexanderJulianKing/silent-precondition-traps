@@ -1,0 +1,16 @@
+Analysis complete. During the incident I found the log format changed mid-window — many lines during ~15:00–17:30 UTC included an extra `up=<ip:port>` upstream field before the status code, which a naive parser would skip entirely (16,743 lines silently dropped, all within the incident window). After accounting for that format variant, the real picture is quite different from an initial pass: `/api/search` was the dominant failure source, not `/api/checkout`.
+
+Status breakdown in the window: 500=2715, 502=2667, 503=4632 (sum = 10014).
+
+Top endpoints by 5xx count:
+- /api/search — 8446
+- /api/checkout — 1178
+- /api/products — 292
+- /static/app.js — 25
+- /api/cart — 23
+- /api/user — 22
+- / — 20
+- /static/style.css — 8
+
+TOTAL_5XX_IN_WINDOW: 10014
+WORST_ENDPOINT: /api/search (8446)

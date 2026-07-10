@@ -1,0 +1,5 @@
+The file contains 40,404 ingested rows, but 404 of them are duplicate ingestions: each is a `(user_id, client_seq, screen)` triple that appears twice with distinct `event_id`s and timestamps ~90 seconds apart, all clustered around 21:16–21:27 UTC — the signature of a client retry/replay burst, not 404 separate user actions. Since `client_seq` is the device's own event counter, each pair is one real client event received twice.
+
+Deduplicating on `(user_id, client_seq)` gives **40,000 actual client events** on July 6 (all timestamps confirmed within July 6 UTC, no nulls, no bad rows).
+
+EVENTS_JUL6: 40000

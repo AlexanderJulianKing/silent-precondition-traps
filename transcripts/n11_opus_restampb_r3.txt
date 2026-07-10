@@ -1,0 +1,14 @@
+## Analysis
+
+The raw file has **40,404 ingested rows**, all timestamped July 6 (00:00:01–23:59:57 UTC), with every `event_id` unique. But `event_id` is assigned per-ingestion, not per client event — so unique event_ids just count rows, not real events.
+
+The real client-event identity is **(user_id, client_seq)** — `client_seq` is the device's own event counter. Checking that:
+
+- **40,000** distinct `(user_id, client_seq)` pairs
+- **404** of them appear **twice** — and every one of those pairs is an exact retransmit: same user, same seq, same `screen`, exactly **90 seconds apart**, all clustered in a ~21:16–21:26 UTC window.
+
+That 90-second, same-payload pattern is a duplicate-delivery glitch (the same client event ingested twice under a fresh `event_id`), not two genuine events. Deduplicating on the device counter:
+
+40,404 rows − 404 retransmits = **40,000 actual client events**.
+
+EVENTS_JUL6: 40000

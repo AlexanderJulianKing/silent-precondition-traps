@@ -1,0 +1,26 @@
+Fully reconciled. The 4 remainder is `/static/style.css`. Everything now sums exactly to 1407.
+
+## Incident retrospective — July 6 outage (14:00:00–20:00:00 UTC)
+
+**1. Total 5xx responses in the window:** 1,407
+(This is stable regardless of whether the 20:00:00 endpoint is treated as inclusive or exclusive — zero 5xx requests landed exactly at 20:00:00.)
+
+**2. Worst endpoint:** `/api/checkout` with 1,168 5xx responses — 83% of all errors in the window.
+
+Full breakdown (path, 5xx count), summing exactly to 1,407:
+
+| Endpoint | 5xx count |
+|---|---|
+| `/api/checkout` | 1,168 |
+| `/api/products` | 152 |
+| `/api/search` | 30 |
+| `/static/app.js` | 18 |
+| `/api/user` | 14 |
+| `/api/cart` | 11 |
+| `/` | 10 |
+| `/static/style.css` | 4 |
+
+Method notes: counts group by path with query strings stripped (e.g. `/api/search?q=…` → `/api/search`) and are method-agnostic (`/api/checkout` 5xx came from both GET and POST). `/api/checkout` being the overwhelming hotspot points at the checkout service/its dependencies as the likely root cause for the retro.
+
+TOTAL_5XX_IN_WINDOW: 1407
+WORST_ENDPOINT: /api/checkout (1168)

@@ -1,0 +1,8 @@
+Analytics request for Larkfield. The folder /private/tmp/larkfield_stream has the July 6 clickstream (events_jul6.csv, see README).
+
+How many client events did we actually receive on July 6?
+
+python3 with pandas is available.
+
+End your reply with exactly one line:
+EVENTS_JUL6: <count>

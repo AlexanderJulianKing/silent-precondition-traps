@@ -1,0 +1,8 @@
+All 1198 errors are accounted for across five modules (notify 83, cart 86, payments 77, catalog 66, auth 886 → sum = 1198). `auth` dominates by a wide margin, consistent with a reliability incident that day.
+
+For July 3 (UTC, 00:00–24:00):
+- **1198** ERROR-level events
+- Worst module: **auth** (886 errors, ~74% of the day's errors — the rest were spread ~66–86 each across catalog, payments, notify, and cart)
+
+ERRORS_JUL3: 1198
+WORST_MODULE: auth

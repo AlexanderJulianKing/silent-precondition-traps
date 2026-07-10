@@ -1,0 +1,5 @@
+Data quirk worth flagging: June 30's row has `as_of_ts` of 2026-06-30T09:15:00Z — computed mid-day on the 30th itself, while every other day was rolled up on 2026-07-01T02:10:00Z (i.e., after the full day closed). June 30's revenue ($13,179.86) and orders (340) are roughly a third of typical days, consistent with a partial-day snapshot rather than a genuinely slow day. Treat it as incomplete/not comparable rather than a true low.
+
+Excluding that partial day, the lowest full-day revenue was **June 19** at $36,442.65 (937 orders).
+
+LOWEST_REVENUE_DAY: 2026-06-19

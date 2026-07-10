@@ -1,0 +1,27 @@
+Findings from `service.log`:
+
+**Log format switches mid-day.** From 09:30:02Z to 13:59:48Z on July 3, the log briefly switches to a different structured format (`ts=... level=error ...` instead of `... ERROR [...] ...`). A plain `grep -c "ERROR"` misses this block entirely — it accounts for 5,294 of the day's errors, including the two highest-volume hours.
+
+Combined (both formats) hourly error counts for July 3 UTC:
+
+| Hour | Errors | | Hour | Errors |
+|---|---|---|---|---|
+| 00 | 29 | | 12 | 1,476 |
+| 01 | 26 | | 13 | 23 |
+| 02 | 11 | | 14 | 21 |
+| 03 | 24 | | 15 | 31 |
+| 04 | 28 | | 16 | 921 |
+| 05 | 27 | | 17 | 26 |
+| 06 | 29 | | 18 | 20 |
+| 07 | 18 | | 19 | 30 |
+| 08 | 21 | | 20 | 26 |
+| 09 | 27 | | 21 | 24 |
+| 10 | 1,568 | | 22 | 18 |
+| 11 | **2,211** | | 23 | 24 |
+
+Two incidents stand out: a sustained elevated-error window from ~09:30–14:00 (peaking at 11:00 with 2,211 errors, mostly `db pool exhausted` / `upstream timeout`), and a second, shorter spike at 16:00 (921 errors, same failure signatures). The 11:00 hour dwarfs everything else and is the peak.
+
+Total: 1,365 (standard-format) + 5,294 (alt-format) = 6,659 ERROR events on July 3.
+
+ERRORS_JUL3: 6659
+PEAK_HOUR_UTC: 11

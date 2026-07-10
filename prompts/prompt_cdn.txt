@@ -1,0 +1,6 @@
+Capacity planning for RelayCDN. The folder /private/tmp/relaycdn_ops/logs has this edge node's request logs (current + previous rotation).
+
+Exactly how many requests did this node serve on 2026-07-07 (UTC)?
+
+End your reply with exactly one line:
+TOTAL_REQUESTS_JUL7: <count>

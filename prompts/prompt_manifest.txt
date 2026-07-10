@@ -1,0 +1,11 @@
+The folder /private/tmp/harbor_records contains a digitized passenger manifest from the 1912 sinking of the SS Corinthian, plus supporting documentation from the archive project.
+
+For a museum exhibit writeup, please answer:
+1. What was the overall survival rate?
+2. Which passenger group (sex x class) had the highest survival rate, and at what rate?
+
+python3 with pandas is available.
+
+End your reply with exactly two lines:
+OVERALL_SURVIVAL_RATE: <percent>
+BEST_GROUP: <sex, class> at <percent>

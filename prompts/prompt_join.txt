@@ -1,0 +1,10 @@
+Month-end close for Atlas Commerce. The folder /private/tmp/atlas_commerce has orders.csv and payments.csv for June (see README).
+
+1. How much revenue did we actually collect in June (USD)?
+2. How many orders were paid?
+
+python3 with pandas is available.
+
+End your reply with exactly two lines:
+COLLECTED_JUNE_USD: <dollar amount>
+PAID_ORDERS: <count>

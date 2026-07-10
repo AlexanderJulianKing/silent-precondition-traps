@@ -1,0 +1,3 @@
+Of 24,000 June shipments, 17,354 have status `delivered` (72.31%). Note the raw CSV had inconsistent whitespace/casing that split "delivered" into two apparent buckets — normalizing that is what makes the count correct.
+
+PCT_DELIVERED: 72.31%

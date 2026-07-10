@@ -1,0 +1,5 @@
+Data is clean: 52,000 rows, 1,583 logged-out (blank `user_id`), all events in June 2026, IDs are 19-digit account ids with no leading-zero/whitespace variants.
+
+Distinct logged-in users (non-blank `user_id`) with ≥1 June event: **5000**.
+
+DISTINCT_USERS: 5000

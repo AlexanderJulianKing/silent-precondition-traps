@@ -1,0 +1,12 @@
+I profiled the stream before summing. Findings:
+
+- **30,000 purchase events**, all typed `purchase`, all timestamped within June 2026 (June 1 → June 30 UTC). No duplicate `event_id`s, no negative/zero amounts, no nulls in the key fields.
+- **Schema changes mid-month.** Events through **June 16** carry the field `amount` (16,500 rows); events from **June 17** onward carry `amount_usd` (13,500 rows). Each row has exactly one of the two.
+- The two fields are the **same currency**: their distributions are essentially identical (mean 35.95 vs 35.45, median 29.87 vs 29.76). There's no currency field anywhere in the data — the payments service simply renamed `amount` → `amount_usd` to make the USD denomination explicit. No conversion is warranted.
+
+Summing both halves:
+- June 1–16 (`amount`): $593,163.93
+- June 17–30 (`amount_usd`): $478,575.26
+- **Total: $1,071,739.19**
+
+JUNE_REVENUE_USD: $1,071,739.19

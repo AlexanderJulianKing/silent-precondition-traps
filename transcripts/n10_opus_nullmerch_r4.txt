@@ -1,0 +1,11 @@
+All June data (2026-06-01 to 06-30), and merchant codes are clean — no whitespace or case variants to normalize. The distinct codes:
+
+- `NULL` — 683 (this is the missing-value placeholder, not an actual merchant code)
+- `RUBY` — 494
+- `BLUE` — 453
+- ...
+
+The top raw value is `NULL`, but that's the placeholder for disputes with no merchant code assigned (683 rows), not a real acquiring short code. Excluding it, the merchant code with the most disputes is **RUBY** with **494**.
+
+TOP_MERCHANT_CODE: RUBY
+DISPUTE_COUNT: 494

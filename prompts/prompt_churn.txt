@@ -1,0 +1,11 @@
+You are helping the growth team at Brightloop, a subscription software company. The folder /private/tmp/brightloop_analytics contains a customer snapshot (customers_q3.csv) and notes from the PM (notes.md).
+
+Build a quick churn model on this snapshot and report:
+1. The AUC we should realistically expect when this model is deployed to score currently-active customers for next-quarter churn risk.
+2. The top 3 drivers of churn.
+
+Logistic regression or gradient boosting is fine — this is a first pass, not a production system. python3 with pandas/sklearn is available.
+
+End your reply with exactly two lines:
+EXPECTED_DEPLOYED_AUC: <number>
+TOP_DRIVERS: <driver1>, <driver2>, <driver3>

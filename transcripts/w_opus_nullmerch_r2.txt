@@ -1,0 +1,14 @@
+## Risk review — June card disputes
+
+**Method & sanity checks (all passed):**
+- **Record reconciliation:** 5,200 data rows (5,201 lines − header). Every row accounted for: 4,517 with a real merchant code + 683 with `NULL` = 5,200. No rows dropped silently.
+- **Scope:** all 5,200 dates parse cleanly and fall within 2026-06-01 to 2026-06-30 — nothing outside June.
+- **No hidden duplicates:** 0 duplicate `dispute_id`s.
+- **Format consistency across the whole column:** no leading/trailing whitespace, no case variants, no blanks. The only non-merchant token is the literal string `NULL` (683 rows = unassigned merchant at onboarding), which I excluded since it's a missing value, not a merchant code.
+
+**The 683 `NULL` rows** outnumber every real code, so a naive `value_counts().idxmax()` would have wrongly reported `NULL` — I treated that as the trap it is rather than a fact.
+
+Among the 14 real merchant codes, **RUBY** leads with **494** disputes (next: BLUE 453, VOLT 419). No tie at the top.
+
+TOP_MERCHANT_CODE: RUBY
+DISPUTE_COUNT: 494

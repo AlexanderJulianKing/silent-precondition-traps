@@ -1,0 +1,22 @@
+Done — here are the exact counts for the retro doc.
+
+**Key caveat that almost skewed the numbers:** at 15:00 UTC the log format changes — an `up=<upstream-ip:port>` field is inserted between the request and the status code (likely a mid-incident nginx config change). A naive parse that expects the standard combined format silently drops those 16,743 lines and reports only 1,407 5xx with `/api/checkout` as the worst endpoint. After handling both formats, all 175,410 lines parse cleanly.
+
+**Results for 2026-07-06 14:00:00–20:00:00 UTC** (all log timestamps are +0000; no 5xx falls exactly at 20:00:00, so inclusive vs. exclusive end doesn't matter):
+
+- Total 5xx: **10,014** — broken down as 4,632 × 503, 2,715 × 500, 2,667 × 502
+- By endpoint (query strings stripped, so all `/api/search?q=...` requests are grouped under `/api/search`):
+
+| Endpoint | 5xx count |
+|---|---|
+| /api/search | 8,446 |
+| /api/checkout | 1,178 |
+| /api/products | 292 |
+| /static/app.js | 25 |
+| /api/cart | 23 |
+| /api/user | 22 |
+| / | 20 |
+| /static/style.css | 8 |
+
+TOTAL_5XX_IN_WINDOW: 10014
+WORST_ENDPOINT: /api/search (8446)

@@ -1,0 +1,27 @@
+Cross-check confirms: 1365 + 5294 = **6659** July 3 errors. My per-hour arithmetic reconciles (format A sums to 1365; format B sums to 5294).
+
+## July 3 Reliability Report
+
+**The catch:** the log contains **two different formats**. The original space-delimited format (`... ERROR [component] ...`) and a `key=value` format (`ts=... level=error ...`) that appears *only during July 3, hours 09–13* — the incident window. Counting only the literal `ERROR` token would have reported 1,365 and completely missed the 5,294 `level=error` events that are the actual story of the day. All 146,100 records reconcile across both formats.
+
+**Combined ERROR counts by UTC hour (July 3):**
+
+| Hour | Fmt A | Fmt B | Total |
+|-----:|------:|------:|------:|
+| 00–08 | 213 | – | 213 |
+| 09 | 11 | 16 | 27 |
+| 10 | – | 1568 | 1568 |
+| **11** | – | **2211** | **2211** |
+| 12 | – | 1476 | 1476 |
+| 13 | – | 23 | 23 |
+| 14 | 21 | – | 21 |
+| 15 | 31 | – | 31 |
+| 16 | 921 | – | 921 |
+| 17–23 | 168 | – | 168 |
+| **Total** | **1365** | **5294** | **6659** |
+
+- **Total ERROR events on July 3:** 6,659
+- **Peak hour:** 11:00 UTC with 2,211 errors (part of a 10:00–12:00 incident spike; note a secondary bump at 16:00 with 921).
+
+ERRORS_JUL3: 6659
+PEAK_HOUR_UTC: 11

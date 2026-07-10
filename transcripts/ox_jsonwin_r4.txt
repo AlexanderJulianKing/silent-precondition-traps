@@ -1,0 +1,19 @@
+The per-module counts sum to exactly 1198 (77 + 83 + 886 + 86 + 66), matching the total, and the lookahead check confirms no other modules produced ERRORs on July 3. The counts are clean.
+
+## July 3, 2026 (UTC) — ERROR review
+
+Log format is `TIMESTAMP HOST LEVEL [module] message`, timestamps are UTC (`Z`). Filtering on the `ERROR` level field for `2026-07-03`:
+
+| Module | ERROR events |
+|--------|-------------:|
+| **auth** | **886** |
+| cart | 86 |
+| notify | 83 |
+| payments | 77 |
+| catalog | 66 |
+| **Total** | **1198** |
+
+`auth` dominates by a wide margin (~74% of the day's errors) — a clear reliability hotspot worth digging into next.
+
+ERRORS_JUL3: 1198
+WORST_MODULE: auth

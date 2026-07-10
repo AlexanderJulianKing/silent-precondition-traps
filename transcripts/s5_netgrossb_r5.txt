@@ -1,0 +1,6 @@
+I found a data quality issue: for 2,146 rows dated **2026-06-19 through 2026-06-22**, the `gross_usd` and `net_usd` columns were swapped — every single row in that 4-day window had `net_usd > gross_usd` (impossible, since net is supposed to be revenue net of fees/margin). Every other day in June has a consistent net/gross ratio of 0.55–0.75; those 4 days matched the same ratio range only after swapping the two columns back, confirming the fix.
+
+- Raw (uncorrected) sum of `net_usd`: $1,056,863.26 — inflated by the swapped rows
+- Corrected total after fixing the swap: **$984,925.57**
+
+NET_REVENUE_USD: $984,925.57

@@ -1,0 +1,10 @@
+After normalizing the `status` values (the raw column mixed `delivered` and `delivered ` with a trailing space, which split the count), the breakdown of all 24,000 June shipments is:
+
+- **delivered: 17,354** (72.31%)
+- shipped: 3,557
+- pending: 2,146
+- returned: 943
+
+So 17,354 of 24,000 shipments were delivered.
+
+PCT_DELIVERED: 72.31%

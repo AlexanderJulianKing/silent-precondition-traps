@@ -1,0 +1,12 @@
+## Findings
+
+The raw file has **42,312 rows**, but 2,312 of them are exact duplicate deliveries — the same `event_id` (with identical ts/screen/platform) received multiple times by the collector. Deduplicating by `event_id` gives **40,000 distinct client events**.
+
+This matters for the peak minute too:
+- **Raw** peak is 20:45 with 351 rows — but that's an artifact. The duplicate re-deliveries cluster heavily in 20:41–20:48 (one event, `E2000075`, was delivered ~300×), so the raw "peak" is just noise from double-counting.
+- **Deduplicated**, real client activity peaks at **15:40 (47 events)** — tied with 18:50, also 47. I'm reporting the earliest, 15:40.
+
+I'm reporting distinct client events (deduped), since duplicate collector deliveries aren't separate events. If you specifically want raw collector rows, that's 42,312 / peak 20:45.
+
+EVENTS_JUL5: 40000
+PEAK_MINUTE: 15:40

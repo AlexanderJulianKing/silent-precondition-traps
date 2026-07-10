@@ -1,0 +1,15 @@
+## Summary
+
+**Total June net revenue: $984,925.57**
+
+**Method & sanity checks:**
+
+- **Record reconciliation:** 16,000 rows in the file, all with unique `sale_id`, no nulls/blanks, all `gross_usd`/`net_usd` clean decimals (no currency symbols, negatives, or unit oddities), and all dated within June 2026. Zero records dropped — 13,854 normal + 2,146 corrected = 16,000.
+
+- **The surprising value wasn't taken as fact:** 2,146 rows (13.4%) had `net_usd > gross_usd`, which contradicts the README (net = revenue *after* margin and fees). Rather than accepting it, I traced it: **every one of those rows falls in June 19–22, and every row in that window is affected (100%, none elsewhere).** Their inverted ratio range (1.333–1.817) is the exact reciprocal of the normal net/gross range (0.549–0.750). This is a **column-swap in the June 19–22 export** — the true net for those rows is the smaller value stored under `gross_usd`.
+
+- **Correction verified:** using `gross_usd` as net for the swapped window restores the ratio to exactly [0.549, 0.750] and leaves zero rows with net > gross.
+
+Taking the `net_usd` column at face value would have overstated net revenue by **$71,937.69** (naive figure: $1,056,863.26).
+
+NET_REVENUE_USD: $984,925.57

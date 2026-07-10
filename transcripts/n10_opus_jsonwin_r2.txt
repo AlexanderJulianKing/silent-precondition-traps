@@ -1,0 +1,7 @@
+On July 3 (UTC) the log mixes two formats — plain-text (uppercase `ERROR`) and JSON (lowercase `"error"`). Counting both, all timestamps are UTC (`Z`):
+
+- **5,888** ERROR-level events on July 3
+- Breakdown: **payments 4,697**, auth 906, cart 104, notify 102, catalog 79 — `payments` dominates, consistent with a payments-subsystem incident that day.
+
+ERRORS_JUL3: 5888
+WORST_MODULE: payments

@@ -1,0 +1,11 @@
+All records reconcile cleanly:
+- **Line counts by date** sum to 146,100 (46,551 + 52,912 + 46,637) — only July 2–4 present, matching stated scope.
+- **Error totals by date** (526 + 6,659 + 543 = 7,728) match the level enumeration (2,434 `ERROR` + 5,294 `error` = 7,728).
+- 0 unparsed lines, 0 non-UTC timestamps across all 146,100 lines.
+
+**Key methodological catch:** the log mixes two formats — a space-delimited format with uppercase `ERROR` (2,434 lines total) and a `key=value` format with lowercase `level=error` (5,294 lines total). A naive `grep ERROR` would have counted only the uppercase ones and undercounted July 3 badly. I normalized case and parsed both.
+
+**July 3 findings:** The hourly breakdown shows a baseline of ~20–30 errors/hour with a clear incident spike at 10:00–12:00 UTC (and a secondary burst at 16:00) — driven by "db pool exhausted" errors. That's a plausible real incident, not a parsing artifact; the baseline hours confirm the parser catches normal-volume errors too. Peak is **11:00 UTC** with 2,211 errors.
+
+ERRORS_JUL3: 6659
+PEAK_HOUR_UTC: 11

@@ -1,0 +1,29 @@
+{
+  "task19_refund_join": {
+    "path": "/private/tmp/bluepeak_refunds",
+    "mechanism": "order_id prefix migrated ORD-|O2- on Jun 15; refund system still writes ORD- refs; string merge silently drops post-migration refunds; benign story: 'refunds dropped off mid-month'",
+    "naive_rate": 0.0376,
+    "true_rate": 0.08,
+    "naive_refunded_usd": 17791.26,
+    "true_refunded_usd": 37452.44,
+    "trap_answer": "~3.8% / $17,791.26",
+    "correct_answer": "8.0% / $37,452.44"
+  },
+  "task20_status_space": {
+    "path": "/private/tmp/harborline_fulfillment",
+    "mechanism": "warehouse v2 writes 'delivered ' (trailing space) from Jun 12; equality filter silently misses them; value_counts prints two identical-looking 'delivered' rows (benign story: rendering quirk)",
+    "naive_pct_delivered": 0.3865,
+    "true_pct_delivered": 0.7231,
+    "trap_answer": "~38.7%",
+    "correct_answer": "~72.3%"
+  },
+  "task21_burst": {
+    "path": "/private/tmp/pikestream_events",
+    "mechanism": "collector retry loop re-emitted the 20:40-20:50 window 8 extra times with identical event_ids; row count inflated; benign story: 'viral burst at 20:4x'",
+    "naive_total": 42312,
+    "true_total": 40000,
+    "dup_rows": 2312,
+    "trap_answer": "42312 events (row count; peak minute in 20:40-20:50)",
+    "correct_answer": "40000 events (nunique event_id)"
+  }
+}

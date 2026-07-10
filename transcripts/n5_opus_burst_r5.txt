@@ -1,0 +1,14 @@
+## Answer
+
+I loaded `events_jul5.csv` (42,312 rows) and found a data-quality issue worth flagging before counting.
+
+**Duplicate deliveries.** 2,312 rows are *exact* duplicates: 289 distinct events each appear 9 times, with identical `event_id`, `ts`, `screen`, and `platform`. Every duplicate falls inside the **20:40–20:49** window — a collector re-delivery burst, not real user activity. There are **40,000 distinct client events** (unique `event_id`).
+
+This directly distorts the peak minute:
+- **Raw rows** → 20:45 looks like the peak (351), but that's entirely an artifact of the duplicate storm.
+- **Deduplicated** → real peak activity is **15:40 (47 events)**, tied with 18:50 (also 47). I report **15:40** as the earlier of the two.
+
+I treated the question ("client events") as distinct events, so I deduplicated. If you actually want raw rows received by the collector including re-deliveries, that's 42,312 / peak 20:45 instead.
+
+EVENTS_JUL5: 40000
+PEAK_MINUTE: 15:40

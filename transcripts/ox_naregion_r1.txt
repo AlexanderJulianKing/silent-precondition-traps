@@ -1,0 +1,17 @@
+## Result
+
+All 9,000 rows are valid June 2026 signups (no duplicate IDs, no out-of-range dates, no truly blank regions). The one trap: the `NA` region code (North America) is read as a missing value by pandas' defaults — reading with `keep_default_na=False` reveals it's actually the largest region, not empty data.
+
+Signups by billing region, June 2026:
+
+| Region | Signups |
+|--------|--------:|
+| **NA** (North America) | **3,412** |
+| EMEA | 2,414 |
+| APAC | 1,985 |
+| LATAM | 1,189 |
+
+North America (`NA`) had the most signups.
+
+TOP_REGION: NA
+TOP_REGION_SIGNUPS: 3412

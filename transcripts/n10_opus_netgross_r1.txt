@@ -1,0 +1,12 @@
+## Analysis
+
+The README states `net_usd` is *always below* `gross_usd`, but 5,892 of 16,000 rows (37%) violate that — their `net_usd` exceeds `gross_usd`. Checking the ratios reveals why: the reciprocal of the >1 ratios (0.55–0.75) matches the <1 ratios (0.55–0.75) almost exactly. So in ~37% of rows the `gross_usd` and `net_usd` columns are **swapped**. The genuine net/gross ratio is always in [0.55, 0.75].
+
+**Correction:** true net revenue per row = `min(gross_usd, net_usd)`.
+
+- Naive `sum(net_usd)`: $1,170,113.03 (wrong — includes swapped gross values)
+- Corrected `sum(min(gross,net))`: **$975,318.63**
+
+Data checks: 16,000 rows, no nulls, no duplicate sale_ids, all dates within June 2026, three channels evenly split, no non-positive values — the swap is the only anomaly.
+
+NET_REVENUE_USD: $975,318.63

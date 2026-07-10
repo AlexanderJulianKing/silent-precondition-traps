@@ -1,0 +1,17 @@
+The one record at exactly 20:00:00 is a 200, so the window boundary convention has no effect on the 5xx count.
+
+## Incident retrospective — July 6 outage (14:00–20:00 UTC)
+
+**Method & data-quality checks**
+- All **175,410** log lines parsed successfully — **0 dropped**, fully reconciled.
+- **Critical gotcha found:** the log has **two formats**. 16,743 lines (9.5%, concentrated in the incident window — likely a load-balancer/upstream logging mode that kicked in) insert an extra `up=10.0.3.x:port` upstream field *between the request and the status code*. A naive "status = field after the request" parser would read `up=…` as the status and **silently miss those requests**, badly undercounting the outage. My parser skips the optional `up=` token; both formats were cross-checked with two independent methods that agree exactly.
+- All timestamps are UTC (`+0000`) — no timezone conversion needed. Window treated as half-open `[14:00:00, 20:00:00)`; the lone 20:00:00 record is a 200, so this choice doesn't affect the count.
+- Requests in window: **29,622**. Status mix: 200=18,962, 301=258, 404=388, **500=2,715, 502=2,667, 503=4,632**.
+- `/api/search` counts include all `?q=…` query-string variants collapsed to the path (correct "endpoint path" grouping); verified against raw log lines.
+
+**Answers**
+1. **5xx requests in window:** 10,014 (2,715 × 500 + 2,667 × 502 + 4,632 × 503).
+2. **Worst endpoint:** `/api/search` with 8,446 of the 10,014 5xx (84%) — followed distantly by `/api/checkout` (1,178) and `/api/products` (292).
+
+TOTAL_5XX_IN_WINDOW: 10014
+WORST_ENDPOINT: /api/search (8446)

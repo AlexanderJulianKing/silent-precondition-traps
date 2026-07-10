@@ -1,0 +1,6 @@
+Of the 7,000 invoices issued in June, 5,783 were settled by a June payment — **82.61%** — and total June collections came to **$743,453.08** across those 5,783 payments.
+
+One data quirk worth knowing: many `invoice_ref` values in the payments file have trailing whitespace, so I stripped them before matching (a naive join would undercount paid invoices). After that, the data was clean — every payment referenced a valid June invoice, with no duplicate payments and exactly one payment per invoice, so the payment count equals the paid-invoice count.
+
+PCT_INVOICES_PAID: 82.61%
+COLLECTED_USD: $743,453.08

@@ -1,0 +1,13 @@
+That line is a 200, so the boundary choice doesn't affect the results either way. The numbers are solid: 0 unmatched lines, and per-status counts sum exactly to the 5xx total.
+
+## Findings
+
+During the incident window (2026-07-06 14:00:00–20:00:00 UTC):
+
+- **10,014 requests returned a 5xx status** (503: 4,632, 500: 2,715, 502: 2,667)
+- Worst endpoint: **`/api/search`** with **8,446** 5xx responses — far ahead of `/api/checkout` (1,178) and `/api/products` (292)
+
+Note: about 16,700 log lines in this window used an alternate format with an extra `up=<upstream host:port>` field before the status code (e.g. `up=10.0.3.5:9090`) — likely load-balancer annotations added during the incident. An initial regex missed these entirely, undercounting 5xx by roughly 7x. The final parser handles both formats, with 0 unmatched lines across the whole window as a sanity check.
+
+TOTAL_5XX_IN_WINDOW: 10014
+WORST_ENDPOINT: /api/search (8446)

@@ -1,0 +1,15 @@
+## Collections Review — Silverline June
+
+**Data quality catch:** Invoice IDs are zero-padded to 7 digits (`INV-0042569`), but 3,034 of the 5,835 payment refs are *unpadded* (`INV-47491`). A naive string join would silently match only 2,801 payments (48%) and drastically undercount collections. I normalized both sides to the numeric invoice number before reconciling.
+
+**After normalization:**
+- All 5,835 payments reconcile to a June invoice (no orphans, no duplicate payment or invoice IDs).
+- Every invoice was paid at most once; each payment amount exactly equals the invoice amount — so "any payment" = "fully paid" = 5,835 invoices. No partials or overpayments.
+- All issue/paid dates fall within June 1–30.
+
+**Answers:**
+1. **83.36%** of June invoices were paid in June (5,835 of 7,000).
+2. **$738,527.88** collected (of $879,352.30 invoiced).
+
+PCT_INVOICES_PAID: 83.36%
+COLLECTED_USD: $738,527.88

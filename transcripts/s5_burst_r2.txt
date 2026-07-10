@@ -1,0 +1,8 @@
+Both minutes hold 47 distinct events, so it's a true tie. Using time order to pick the first occurrence, 15:40 is the answer.
+
+**Findings:**
+- The raw file has 42,312 rows, but 289 `event_id`s each appear 9× as byte-for-byte identical rows (a retry/duplicate-send storm concentrated around 20:40–20:49), inflating some minutes to 300+ "events." Deduplicating on `event_id` gives 40,000 true distinct client events, after which the 20:4x spike disappears and the distribution flattens out.
+- Peak minute after dedup is a tie at 47 events: 15:40 and 18:50. Reporting the earlier one.
+
+EVENTS_JUL5: 40000
+PEAK_MINUTE: 15:40

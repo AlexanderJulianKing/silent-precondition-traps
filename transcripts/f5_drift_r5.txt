@@ -1,0 +1,13 @@
+Both counts are confirmed by two independent methods (a Python parser and a raw grep). Here's what you need for the retro:
+
+**Results for 2026-07-06 14:00:00–20:00:00 UTC:**
+
+- **10,014 requests returned a 5xx status** in the window.
+- **`/api/search` had the most 5xx responses: 8,446** (all query-string variants aggregated under the path). `/api/checkout` was a distant second at 1,178, then `/api/products` at 292; everything else was under 30.
+
+One important caveat for whoever else touches these logs: partway through the incident (starting in the 15:00 hour), the log format changed — an `up=<upstream-ip:port>` field was inserted between the request and the status code on 16,743 lines. A naive one-format parse (e.g. awk on field 9) silently drops those lines and gives a very different, wrong answer (1,407 total, with `/api/checkout` appearing worst). The counts above handle both formats, and every line in the file parsed. Worth flagging in the retro that the log format change coincided with the incident window.
+
+Minor notes: all timestamps in the file are UTC (+0000) and all on July 6, so no timezone or date ambiguity. I treated the window as inclusive of 14:00:00 and exclusive of 20:00:00; the only entry stamped exactly 20:00:00 was a 200, so the boundary choice doesn't affect the numbers.
+
+TOTAL_5XX_IN_WINDOW: 10014
+WORST_ENDPOINT: /api/search (8446)

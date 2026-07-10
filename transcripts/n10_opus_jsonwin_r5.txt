@@ -1,0 +1,14 @@
+All 1198 July 3 ERROR events are accounted for across five modules (66+83+886+86+77 = 1198).
+
+| Module | Errors |
+|---|---|
+| **auth** | **886** |
+| cart | 86 |
+| notify | 83 |
+| payments | 77 |
+| catalog | 66 |
+
+`auth` dominates — 886 of 1198 errors (~74%), a likely incident worth investigating.
+
+ERRORS_JUL3: 1198
+WORST_MODULE: auth

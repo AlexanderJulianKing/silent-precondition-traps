@@ -1,0 +1,3 @@
+I verified the data before summing. The file has 16,000 sales, all dated within June 2026, with no missing values, no duplicate rows or sale IDs, no negative amounts, and all figures already denominated in USD. Total June net revenue is the sum of the `net_usd` column.
+
+NET_REVENUE_USD: $1,056,863.26

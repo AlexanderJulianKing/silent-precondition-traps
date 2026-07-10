@@ -1,0 +1,7 @@
+That's fine, I'll leave the small analysis script in place rather than fight the permission system.
+
+The raw file has 40,404 rows, but 404 of those are duplicate ingests: same `user_id` + `client_seq` (the device's own event counter) and same `screen`, appearing twice with different `event_id`s exactly **90 seconds apart**, all clustered in a ~15-minute window (21:12–21:27 UTC) — a classic client retry-storm (likely a network blip where the device didn't get an ack and resent, getting a new server-side `event_id` on re-ingestion).
+
+Deduplicating on `(user_id, client_seq)` — the true identity of a client-generated event — gives exactly **40,000** unique client events.
+
+EVENTS_JUL6: 40000

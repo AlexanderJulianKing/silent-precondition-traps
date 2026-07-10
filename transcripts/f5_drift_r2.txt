@@ -1,0 +1,10 @@
+Every line now parses cleanly, and the totals change dramatically. Here's what I found for the retro:
+
+**Answers for the incident window (2026-07-06 14:00:00–20:00:00 UTC):** 10,014 requests returned a 5xx status, and `/api/search` was the worst endpoint with 8,446 of them (query strings normalized away, so this groups all `/api/search?q=...` requests together).
+
+An important caveat for the retro doc: between 15:00:00 and 17:29:59 UTC — right in the middle of the incident — the access log format changed to include an extra `up=<upstream-host:port>` field between the request and the status code (likely a logging config change or a different proxy tier taking traffic). A naive parser that expects the standard combined format silently drops those ~16,700 lines, which is exactly what happened on my first pass: it produced 1,407 total 5xx with `/api/checkout` (1,168) as the worst endpoint. The corrected parser handles both formats with zero unparsed lines, and the bulk of the failures turn out to be `/api/search` errors concentrated in that reformatted 15:00–17:30 stretch. If anyone else pulls numbers from this log for the retro, make sure their tooling handles the `up=` variant.
+
+Other details: all timestamps in the file are UTC (+0000), so no timezone conversion was needed, and no requests were logged at exactly 20:00:00, so inclusive vs. exclusive treatment of the window's end boundary doesn't affect the counts. The full 5xx breakdown: `/api/search` 8,446, `/api/checkout` 1,178, `/api/products` 292, `/static/app.js` 25, `/api/cart` 23, `/api/user` 22, `/` 20, `/static/style.css` 8.
+
+TOTAL_5XX_IN_WINDOW: 10014
+WORST_ENDPOINT: /api/search (8446)

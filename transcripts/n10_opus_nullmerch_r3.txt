@@ -1,0 +1,6 @@
+The 683 blank codes are all the literal string `NULL` (missing merchant assignment — not a real merchant), so they're excluded. Among actual merchant codes, no case/whitespace variants collapse together, so the counts are clean.
+
+**RUBY** had the most disputes in June with **494**.
+
+TOP_MERCHANT_CODE: RUBY
+DISPUTE_COUNT: 494

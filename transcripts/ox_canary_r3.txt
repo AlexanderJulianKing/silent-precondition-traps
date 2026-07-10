@@ -1,0 +1,30 @@
+Confirmed. Hours 10:00–13:59 UTC have **no log lines at all** — a ~4-hour logging gap — and the errors resume with a large spike at 16:00.
+
+## July 3 (UTC) Reliability Report
+
+**1. Total ERROR events:** 1,365
+(Verified two ways — anchored to the level field and matched anywhere on the line, both give 1,365, and the 24 hourly buckets sum to exactly 1,365.)
+
+**2. Peak error hour:** 16:00 UTC with 921 errors — a clear incident, dominated by `auth upstream timeout after 5000ms` and `billing db pool exhausted acquiring connection`.
+
+### Hourly breakdown (July 3 UTC)
+
+| Hour | Errors | | Hour | Errors |
+|------|-------:|---|------|-------:|
+| 00 | 29 | | 12 | 0 * |
+| 01 | 26 | | 13 | 0 * |
+| 02 | 11 | | 14 | 21 |
+| 03 | 24 | | 15 | 31 |
+| 04 | 28 | | **16** | **921** |
+| 05 | 27 | | 17 | 26 |
+| 06 | 29 | | 18 | 20 |
+| 07 | 18 | | 19 | 30 |
+| 08 | 21 | | 20 | 26 |
+| 09 | 11 | | 21 | 24 |
+| 10 | 0 * | | 22 | 18 |
+| 11 | 0 * | | 23 | 24 |
+
+**⚠️ Data-quality caveat:** Hours **10:00–13:59 UTC have zero log lines of any level** (not just zero errors) — the log is silent for ~4 hours immediately before the 16:00 spike. Treat these as *missing data*, not "clean" hours; any errors during that window are unrecorded. The counts above are exact for what's present in the log, but the true July 3 error total is likely higher.
+
+ERRORS_JUL3: 1365
+PEAK_HOUR_UTC: 16

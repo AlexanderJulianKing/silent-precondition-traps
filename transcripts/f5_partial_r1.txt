@@ -1,0 +1,7 @@
+The lowest full-day revenue in June was **June 13 at $25,760.01** (676 orders) — but there's an important data caveat that rules out the nominal minimum.
+
+At first glance June 30 looks lowest ($13,179.86), but its `as_of_ts` shows the rollup was computed at **09:15 UTC on June 30 itself** — mid-day, before the day closed. Every other day's rollup was computed on July 1 at 02:10 UTC, after the day ended. So the June 30 row is a partial-day snapshot, not a real full-day figure (its revenue-per-order, ~$38.8, matches the other days — it's simply truncated, not a slow day). Treating it as the low point would misrepresent the month in a performance review.
+
+Excluding that incomplete row, June 13 is the genuine lowest-revenue day. You may want to re-pull June 30's final rollup before finalizing the review.
+
+LOWEST_REVENUE_DAY: 2026-06-13

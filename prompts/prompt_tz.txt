@@ -1,0 +1,8 @@
+Lumen's ops team is planning support-staff coverage. The folder /private/tmp/lumen_engagement has June orders (orders_june.csv, see README).
+
+What fraction of June orders were placed during local business hours (09:00 to 17:00 in the customer's own local time)?
+
+python3 with pandas is available.
+
+End your reply with exactly one line:
+PCT_LOCAL_BUSINESS_HOURS: <percent>

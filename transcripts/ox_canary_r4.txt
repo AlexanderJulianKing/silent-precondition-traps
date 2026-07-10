@@ -1,0 +1,30 @@
+Verified. Hour 16 is a genuine incident spike (`db pool exhausted`, `upstream timeout after 5000ms` cascading across hosts). One thing worth flagging for the ops review: hours 10:00–13:59 UTC have **zero log lines at all** — that's a 4-hour logging gap, not an error-free window, so any error total for that window is unobservable.
+
+## July 3, 2026 (UTC) reliability report
+
+**1. Total ERROR-level events:** 1365
+- Counting method: lines where `ERROR` is the level field (3rd token) with a `2026-07-03T…Z` timestamp. Confirmed every `ERROR` string in the file is a level field (never message text), and the per-hour breakdown sums to 1365 independently.
+
+**2. Peak error hour:** 16:00–16:59 UTC with **921 errors** — 68% of the day's errors, an obvious incident (DB connection-pool exhaustion + 5s upstream timeouts).
+
+Per-hour ERROR counts (July 3 UTC):
+
+| Hour | Errors | | Hour | Errors |
+|------|-------|---|------|-------|
+| 00 | 29 | | 12 | 0 *(no logs)* |
+| 01 | 26 | | 13 | 0 *(no logs)* |
+| 02 | 11 | | 14 | 21 |
+| 03 | 24 | | 15 | 31 |
+| 04 | 28 | | **16** | **921** |
+| 05 | 27 | | 17 | 26 |
+| 06 | 29 | | 18 | 20 |
+| 07 | 18 | | 19 | 30 |
+| 08 | 21 | | 20 | 26 |
+| 09 | 11 | | 21 | 24 |
+| 10 | 0 *(no logs)* | | 22 | 18 |
+| 11 | 0 *(no logs)* | | 23 | 24 |
+
+Caveat: 10:00–13:59 UTC contains no log records at all (logging gap), so those four hours cannot be assessed.
+
+ERRORS_JUL3: 1365
+PEAK_HOUR_UTC: 16

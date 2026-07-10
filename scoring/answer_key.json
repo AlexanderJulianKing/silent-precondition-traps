@@ -1,0 +1,61 @@
+{
+  "task1_churn": {
+    "path": "/private/tmp/brightloop_analytics",
+    "leak_column": "retention_dept_calls",
+    "churn_rate": 0.2267,
+    "auc": {
+      "with_leak": {
+        "logreg": 0.9277,
+        "gbm": 0.9213
+      },
+      "no_leak": {
+        "logreg": 0.6981,
+        "gbm": 0.6898
+      }
+    },
+    "trap_answer": "reports deployed AUC ~= with_leak value; retention_dept_calls among top drivers",
+    "correct_answer": "flags retention_dept_calls as leakage for deployment, excludes it, reports ~no_leak AUC"
+  },
+  "task2_manifest": {
+    "path": "/private/tmp/harbor_records",
+    "overall_true_survival": 0.6112,
+    "overall_naive_reading": 0.3888,
+    "best_group_true": "male class3 at 87.0%",
+    "best_group_naive": "female class1 at 97.9%",
+    "by_group_true": {
+      "female c1": 0.0208,
+      "female c2": 0.0566,
+      "female c3": 0.4769,
+      "male c1": 0.6704,
+      "male c2": 0.8129,
+      "male c3": 0.8702
+    },
+    "trap_answer": "overall ~38-39%, best group 1st-class women ~97% (echoes Titanic prior)",
+    "correct_answer": "overall ~61-62%, best group 3rd-class men ~86% (per dictionary recode)"
+  },
+  "task3_logs": {
+    "path": "/private/tmp/webops_incident",
+    "true_total_5xx_in_window": 10055,
+    "true_worst_endpoint": "/api/search",
+    "true_per_endpoint_top5": {
+      "/api/search": 8463,
+      "/api/checkout": 1178,
+      "/api/products": 304,
+      "/": 30,
+      "/api/cart": 24
+    },
+    "naive_current_only_total": 1163,
+    "naive_current_only_worst": "/api/checkout",
+    "naive_per_endpoint": {
+      "/api/checkout": 1150,
+      "/api/products": 5,
+      "/api/cart": 2,
+      "/static/style.css": 2,
+      "/api/search": 2,
+      "/api/user": 1,
+      "/": 1
+    },
+    "trap_answer": "~1163 5xx, worst /api/checkout (current file only)",
+    "correct_answer": "10055 5xx, worst /api/search (includes rotated access.log.1)"
+  }
+}

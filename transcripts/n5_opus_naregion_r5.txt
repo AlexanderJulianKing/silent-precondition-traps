@@ -1,0 +1,6 @@
+The `NaN` values were actually the literal region code **`NA`** (North America), which pandas converts to missing by default. Reading with that disabled shows all 9,000 rows are June 2026 signups with valid regions, no duplicates.
+
+**NA (North America)** had the most signups — 3,412 — well ahead of EMEA (2,414), APAC (1,985), and LATAM (1,189).
+
+TOP_REGION: NA
+TOP_REGION_SIGNUPS: 3412

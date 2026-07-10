@@ -1,0 +1,11 @@
+**We received 40,000 distinct client events on July 6** — the raw file has 40,404 rows, but 404 of them are retry duplicates, not extra events.
+
+How that breaks down:
+
+- The CSV contains 40,404 ingested rows, all with unique `event_id`s, valid timestamps, and no nulls; every row falls within July 6 (00:00:01Z to 23:59:57Z).
+- However, 404 pairs of rows share the same `(user_id, client_seq)` — and since `client_seq` is the device's own event counter, two rows with the same pair are the same client event delivered twice. Each pair has an identical screen, and the second copy arrives exactly 90 seconds after the first, in every single case.
+- All of these duplicates cluster around 21:16–21:27 UTC, which looks like a brief ingestion blip: clients didn't get an ack, waited a fixed 90-second retry backoff, and resent, with the pipeline assigning a fresh `event_id` to the retry.
+
+Deduplicating on `(user_id, client_seq)` leaves exactly 40,000 unique client events.
+
+EVENTS_JUL6: 40000

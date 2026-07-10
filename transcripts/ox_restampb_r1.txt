@@ -1,0 +1,17 @@
+## Answer
+
+The raw file holds **40,404 rows**, but that count is inflated by duplicate re-ingestions.
+
+**What's going on:** the README says `client_seq` is the *device event counter* — i.e. the client's own identity for each event it emits. So a single client event is identified by `(user_id, client_seq)`, not by `event_id` (which is just the per-ingestion row ID).
+
+Checking that key:
+- **404** `(user_id, client_seq)` pairs appear **exactly twice** (808 rows involved); all others are unique.
+- Every duplicate pair has the **same screen** but a **different `event_id`**, and the second copy lands ~90 seconds after the first.
+
+That's the textbook signature of at-least-once delivery — the device event was transmitted, retried, and ingested twice under a fresh `event_id`. Counting distinct client events removes the 404 redundant deliveries:
+
+`40,404 raw rows − 404 duplicate re-ingestions = 40,000 actual client events`
+
+I also confirmed there's nothing else to strip: no nulls, no off-day timestamps (all rows fall within 2026-07-06), and `event_id` is unique per row.
+
+EVENTS_JUL6: 40000

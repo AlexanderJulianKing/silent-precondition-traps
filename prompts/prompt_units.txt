@@ -1,0 +1,8 @@
+Finance close request. The folder /private/tmp/beacon_finance contains June settlement exports from our two payment processors (processor_a.csv, processor_b.csv) plus a short README.
+
+What was our total captured revenue for June 2026 in USD across both processors?
+
+python3 with pandas is available.
+
+End your reply with exactly one line:
+TOTAL_CAPTURED_USD: <dollar amount>

@@ -1,0 +1,5 @@
+I found a data quality issue in the raw file: 2,146 of the 16,000 rows (~13%) had `gross_usd` and `net_usd` swapped — net_usd exceeded gross_usd, which is impossible given the README's definition of net (revenue net of partner margin/fees). Evidence: for those "bad" rows, `gross_usd/net_usd` lands squarely in the same 0.55–0.75 range as the normal `net/gross` ratio for clean rows, and after swapping the two columns for those rows, the net/gross ratio distribution becomes uniform across all 16,000 rows with no more anomalies.
+
+Naively summing the `net_usd` column as-is gives $1,056,863.26, but that includes the swapped rows counted at their (larger) gross value. After correcting the swap, total June net revenue is **$984,925.57**.
+
+NET_REVENUE_USD: $984,925.57

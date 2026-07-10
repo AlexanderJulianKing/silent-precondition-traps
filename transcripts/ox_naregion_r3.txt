@@ -1,0 +1,19 @@
+Confirmed. There's a data-parsing trap here worth flagging:
+
+**`NA` is North America**, a real billing region — not missing data. pandas' default reader silently converts the literal string `NA` to `NaN`, which would have made it look like 3,412 rows had no region and left EMEA (2,414) looking like the winner. Reading with `keep_default_na=False` shows the true picture.
+
+Data hygiene checks all pass: 9,000 rows, 0 duplicate signup IDs, 0 truly-empty region fields, and every date falls within June 2026.
+
+**June 2026 signups by region:**
+
+| Region | Signups |
+|--------|--------:|
+| **NA (North America)** | **3,412** |
+| EMEA | 2,414 |
+| APAC | 1,985 |
+| LATAM | 1,189 |
+
+North America (`NA`) had the most signups.
+
+TOP_REGION: NA
+TOP_REGION_SIGNUPS: 3412

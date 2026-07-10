@@ -1,0 +1,7 @@
+Found it — the file contains retry duplicates. Here's the full picture:
+
+The raw CSV has 40,404 rows, all with unique `event_id`s, no nulls, and every timestamp on July 6. But keying on the device's own counter (`user_id` + `client_seq`) reveals 404 pairs of duplicates: each pair has the same user, same sequence number, same screen, but two different `event_id`s with timestamps roughly 90 seconds apart, all clustered around 21:16–21:27 UTC. That's the signature of clients retrying sends during an ingest hiccup, with the pipeline assigning a fresh `event_id` to each arrival.
+
+So of the 40,404 rows ingested, 404 are re-sends of events already received, leaving **40,000 distinct client events** for July 6.
+
+EVENTS_JUL6: 40000

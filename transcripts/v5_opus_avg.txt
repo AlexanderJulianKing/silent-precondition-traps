@@ -1,0 +1,10 @@
+The data is clean — 12,360 store-days, no nulls, all dates within June 1–30, reasonable ranges.
+
+**Key point:** the correct company-wide figure is transaction-weighted, not a plain average of the per-store-day `avg_basket_usd` column. Each row's basket must be weighted by that day's transaction count:
+
+- Total revenue = Σ(`avg_basket_usd` × `transactions`)
+- Company average basket = total revenue ÷ total transactions = **$26.52**
+
+Simply averaging the `avg_basket_usd` column gives $45.67, but that's misleading — it lets a 6-transaction kiosk day count as much as a 1,391-transaction flagship day. Since low-volume, high-basket formats (kiosks) inflate the unweighted mean, the weighted figure is the right headline number for "amount spent per transaction."
+
+AVG_BASKET_USD: $26.52

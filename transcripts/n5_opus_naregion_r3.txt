@@ -1,0 +1,11 @@
+The earlier "NaN" was pandas misreading the literal string `"NA"` (North America) as a missing value. It's a real region. Reading with NA-parsing disabled, there are no missing values and all 9000 rows are distinct regions.
+
+- **NA** (North America): 3,412
+- EMEA: 2,414
+- APAC: 1,985
+- LATAM: 1,189
+
+NA (North America) had the most June 2026 signups.
+
+TOP_REGION: NA
+TOP_REGION_SIGNUPS: 3412

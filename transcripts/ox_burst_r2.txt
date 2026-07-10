@@ -1,0 +1,10 @@
+## Findings
+
+**Total client events: 40,000.** The raw file has 42,312 rows, but 2,312 are exact duplicate rows (same `event_id` re-delivered). The README says one row *per client event*, so these re-deliveries are the same events counted twice — deduplicating by `event_id` yields exactly 40,000 distinct events. (Tellingly, the duplicates are clustered in a burst around 20:41–20:48, which is a re-delivery artifact, not real traffic.)
+
+**Peak minute: 15:40** — but note this is a genuine **tie**. After deduplication, both `15:40` and `18:50` have 47 events, the day's maximum. I'm reporting the earlier one as the single peak. (If you don't deduplicate, the raw peak would instead be 20:45 — but that's purely the duplicate burst, so it's misleading.)
+
+All timestamps are clean UTC on 2026-07-05 (no nulls, no stray dates). Minutes are bucketed by wall-clock UTC `HH:MM`.
+
+EVENTS_JUL5: 40000
+PEAK_MINUTE: 15:40

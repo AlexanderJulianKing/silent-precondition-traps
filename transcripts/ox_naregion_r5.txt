@@ -1,0 +1,15 @@
+The key finding: those 3,412 "missing" regions weren't missing at all — **NA** (North America) is on pandas' default list of null tokens, so a naive `read_csv` silently converts them to `NaN`. Reading with `keep_default_na=False` reveals the true picture.
+
+All 9,000 rows are valid June 2026 signups (no duplicates, no out-of-range dates, no empty regions). Final counts:
+
+| Region | Signups |
+|--------|--------:|
+| **NA** | **3,412** |
+| EMEA | 2,414 |
+| APAC | 1,985 |
+| LATAM | 1,189 |
+
+North America (NA) had the most signups.
+
+TOP_REGION: NA
+TOP_REGION_SIGNUPS: 3412

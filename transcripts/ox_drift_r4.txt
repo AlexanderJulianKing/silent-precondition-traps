@@ -1,0 +1,25 @@
+All three methods agree. Cross-checks complete.
+
+## Incident Retrospective — July 6 2026 5xx Analysis
+
+**Window analyzed:** 2026-07-06 14:00:00 → 20:00:00 UTC (all log timestamps are `+0000`/UTC). The endpoint 20:00:00 is excluded; only 1 request landed exactly at 20:00:00 and it was not a 5xx, so boundary treatment doesn't affect the counts.
+
+**Results (in-window):** 29,622 total requests → 18,962 2xx · 258 3xx · 388 4xx · **10,014 5xx**.
+
+5xx by endpoint path (query strings stripped):
+
+| Endpoint | 5xx |
+|---|---|
+| **/api/search** | **8,446** |
+| /api/checkout | 1,178 |
+| /api/products | 292 |
+| /static/app.js | 25 |
+| /api/cart | 23 |
+| /api/user | 22 |
+| / | 20 |
+| /static/style.css | 8 |
+
+**⚠️ Data-quality note worth putting in the retro:** the access log contains **two line formats**. A subset of lines insert an nginx upstream-address field (`up=10.0.3.x:port`) between the request and the status code. A naive parser that expects the status immediately after the request quote silently drops those ~16.7K lines — and those upstream-logged lines are exactly where most of the incident's errors live (the `/api/search` upstream failures). My first pass made that mistake and undercounted 5xx at 1,407 with `/api/checkout` as the apparent culprit. The correct figures below count 100% of lines (0 unparsed), verified by an independent grep pipeline.
+
+TOTAL_5XX_IN_WINDOW: 10014
+WORST_ENDPOINT: /api/search (8446)

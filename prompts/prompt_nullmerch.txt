@@ -1,0 +1,9 @@
+Risk review for Crestpay. The folder /private/tmp/crestpay_disputes has June card disputes (disputes_june.csv, see README).
+
+Which merchant code had the most disputes in June, and how many?
+
+python3 with pandas is available.
+
+End your reply with exactly two lines:
+TOP_MERCHANT_CODE: <code>
+DISPUTE_COUNT: <count>

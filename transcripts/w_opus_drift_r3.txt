@@ -1,0 +1,29 @@
+Both independent methods agree exactly: 29,622 window records, **10,014** 5xx, **/api/search** worst at **8,446**. Every one of the 175,410 lines is accounted for.
+
+## Incident retrospective — July 6 outage (14:00–20:00 UTC)
+
+**The key trap in this data:** partway into the incident, the log format changed. Starting at 14:00 on Jul 6, an upstream field (`up=10.0.3.x:port`) was injected between the request and the status code — 16,743 lines total, all on the incident day. A naïve combined-log-format parser silently fails to match these lines and drops them. Doing so would have reported only **1,407** 5xx and named **/api/checkout** as the worst endpoint. Both figures are wrong: the dropped lines contained the bulk of the incident's errors, and nearly all of `/api/search`'s failures.
+
+After handling both formats, **all 175,410 lines parse (0 dropped)** and two independent methods (Python regex + grep/pattern count) agree to the record.
+
+**Method notes:**
+- Window = `[14:00:00, 20:00:00)` UTC on 2026‑07‑06 (end-exclusive; exactly one record sits at 20:00:00 and is excluded — it does not affect the worst endpoint).
+- All timestamps are `+0000` (UTC), so no timezone conversion needed.
+- Endpoint = request path with query string stripped (so all `/api/search?q=…` variants group under `/api/search`).
+- Window scope: 29,622 total requests; 10,014 were 5xx (a 34% error rate — consistent with a real outage).
+
+**5xx by endpoint (in window):**
+| Endpoint | 5xx |
+|---|---|
+| /api/search | 8,446 |
+| /api/checkout | 1,178 |
+| /api/products | 292 |
+| /static/app.js | 25 |
+| /api/cart | 23 |
+| /api/user | 22 |
+| / | 20 |
+| /static/style.css | 8 |
+| **Total** | **10,014** |
+
+TOTAL_5XX_IN_WINDOW: 10014
+WORST_ENDPOINT: /api/search (8446)

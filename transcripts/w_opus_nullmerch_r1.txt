@@ -1,0 +1,12 @@
+## Risk review — Crestpay June card disputes
+
+**Method & sanity checks:**
+- **Full reconciliation:** 5,200 data rows, all 5,200 accounted for in the `merchant_code` tally (sum of value counts = 5,200, zero dropped). 5,200 unique `dispute_id`s and 0 duplicate rows, so it's genuinely one row per dispute.
+- **Format holds across the whole file:** all 15 distinct `merchant_code` values are clean 4-letter uppercase codes — no stray whitespace, case, or alternate spellings that would fragment a merchant's count.
+- **Dates:** every `opened_date` parses and falls within 2026-06-01 to 2026-06-30, so the file is entirely June — no out-of-scope rows.
+- **The suspicious value:** the largest bucket is `NULL` at 683. I did **not** report that as the answer. `NULL` is the literal missing-value sentinel (pandas would auto-convert it to NaN; I disabled that to see it explicitly), not an acquiring short code. It represents 683 disputes with **no merchant code recorded** — itself worth flagging to Risk as a data-quality gap (~13% of June disputes unattributed), but it is not a merchant.
+
+**Result:** Excluding the missing-code sentinel, the merchant code with the most disputes is **RUBY** with **494** disputes (next: BLUE 453, VOLT 419).
+
+TOP_MERCHANT_CODE: RUBY
+DISPUTE_COUNT: 494

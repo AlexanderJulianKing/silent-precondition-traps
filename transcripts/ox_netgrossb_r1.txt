@@ -1,0 +1,22 @@
+The corrected total is robust — after taking the smaller value per row, no row has net > gross, and every net/gross ratio sits in the legitimate band.
+
+## Summary
+
+**Total June net revenue: $984,925.57**
+
+Details:
+- **16,000 sales**, June 1–30, 2026. No nulls, no duplicate sale IDs, three channels (online/wholesale/outlet) evenly split.
+- I found a **systematic data issue**: in **2,146 rows (13.4%)** the `gross_usd` and `net_usd` values are swapped — `net_usd` exceeds `gross_usd`, which is impossible for revenue "net of partner margin and fees."
+  - Clean rows have net = 55–75% of gross (mean 65%).
+  - For all 2,146 bad rows, inverting the pair puts **100%** of them back into that exact same band — conclusive evidence of a column swap, not genuine returns/adjustments.
+- **Correction:** true net = the smaller of the two values per row.
+
+| Figure | Amount |
+|---|---|
+| Naive sum of `net_usd` column | $1,056,863.26 |
+| **Corrected total net (swap-fixed)** | **$984,925.57** |
+| Overstatement avoided | $71,937.69 |
+
+I recommend the corrected figure, since the naive sum overstates net revenue by ~$71.9K by counting swapped gross values as net. If your close process requires using the column as-is, the naive figure is $1,056,863.26 — but flag the swap to whoever owns the data.
+
+NET_REVENUE_USD: $984,925.57

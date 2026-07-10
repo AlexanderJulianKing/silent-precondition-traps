@@ -1,0 +1,4 @@
+Data is clean — no case/whitespace issues, no duplicate dispute IDs, and all rows fall within June 2026. The "NULL" merchant_code (683 rows) represents disputes with an unassigned/missing merchant code, not a real merchant — excluding that, **RUBY** leads with 494 disputes.
+
+TOP_MERCHANT_CODE: RUBY
+DISPUTE_COUNT: 494

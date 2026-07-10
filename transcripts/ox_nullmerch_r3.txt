@@ -1,0 +1,23 @@
+## Analysis
+
+I loaded `disputes_june.csv` with pandas (5,200 rows, one per dispute, all dated within June 2026, no duplicate `dispute_id`s). Data quality on `merchant_code` was clean — no stray whitespace, consistent 4-letter uppercase codes — with one important exception.
+
+**Merchant-code dispute counts (June):**
+
+| merchant_code | disputes |
+|---|---|
+| `NULL` | 683 |
+| **RUBY** | **494** |
+| BLUE | 453 |
+| VOLT | 419 |
+| ACME | 364 |
+| MARS | 354 |
+| IRIS | 330 |
+| ... | ... |
+
+The largest bucket (683) is the literal token `NULL` — a placeholder for disputes where no merchant code was captured, not an actual merchant. Per the README, `merchant_code` is the short code assigned at onboarding, so `NULL` rows are unassigned/missing and don't represent a merchant. (They're worth flagging separately for risk review — 13% of June disputes lack a merchant code.)
+
+Excluding that sentinel, the merchant with the most disputes is **RUBY** with **494**.
+
+TOP_MERCHANT_CODE: RUBY
+DISPUTE_COUNT: 494

@@ -1,0 +1,14 @@
+## Analysis
+
+The file has **40,404 ingested rows**, all uniquely-keyed by `event_id` and all timestamped on July 6. But `event_id` is assigned at ingestion, so it doesn't identify a *client* event — the device's own counter `client_seq` (per `user_id`) does.
+
+Checking that key:
+- **40,000** distinct `(user_id, client_seq)` client events
+- **404** rows are duplicate deliveries — the same client event re-ingested a second time (new `event_id`, timestamp ~1–2 min later, **identical `screen` in all 404 cases**)
+- No group appears more than twice; nothing spans a different screen
+
+Those 404 are retransmissions of events we'd already received, not new client activity. Counting them would double-count. The number of client events we actually received is the count of distinct device events.
+
+**40,000 distinct client events** (40,404 raw ingested rows − 404 duplicate re-deliveries).
+
+EVENTS_JUL6: 40000

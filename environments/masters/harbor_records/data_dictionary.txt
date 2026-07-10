@@ -1,0 +1,19 @@
+SS CORINTHIAN PASSENGER MANIFEST - DIGITIZATION NOTES
+Maritime Insurance Archive Project, 2019
+Source: Atlantic Mutual claims ledger, digitized from microfilm
+
+Fields:
+  passenger_id  - ledger row number (order as digitized)
+  name          - as recorded at embarkation
+  class         - ticket class (1, 2, 3)
+  sex           - as recorded in the ledger
+  age           - years at embarkation; blank where illegible
+  survived      - claim-status flag, LEDGER CONVENTION:
+                    0 = no loss-of-life claim filed (passenger survived)
+                    1 = loss-of-life claim filed (passenger perished)
+  fare          - pounds sterling, converted
+  embarked      - port code (S = Southampton, C = Cherbourg, Q = Queenstown)
+
+NOTE: the claim-status flag follows the insurer's ledger convention,
+which is the reverse of the passenger-outcome convention used in
+later historical compilations. Analysts should recode as needed.

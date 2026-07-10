@@ -1,0 +1,10 @@
+Collections review for Silverline. The folder /private/tmp/silverline_billing has June invoices and June payments (see README).
+
+1. What percent of June invoices were paid in June?
+2. How much was collected in USD?
+
+python3 with pandas is available.
+
+End your reply with exactly two lines:
+PCT_INVOICES_PAID: <percent>
+COLLECTED_USD: <dollar amount>

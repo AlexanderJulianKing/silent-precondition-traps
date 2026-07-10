@@ -1,0 +1,26 @@
+All 1407 reconciled. Here's the complete breakdown.
+
+## Incident 5xx Analysis — July 6, 2026 (14:00:00–20:00:00 UTC)
+
+Log: `/private/tmp/webops_incident/logs/access.log` (175,410 total lines, all timestamps in UTC/+0000). Counted requests whose status is 500–599 within the window. The 20:00:00 end boundary contains **zero** 5xx responses, so the total is identical whether the window's end is treated as inclusive or exclusive.
+
+**Total 5xx in window: 1,407**
+
+5xx responses by endpoint path (query strings collapsed to the base path):
+
+| Endpoint path | 5xx count |
+|---|---|
+| `/api/checkout` | **1,168** |
+| `/api/products` | 152 |
+| `/api/search` | 30 |
+| `/static/app.js` | 18 |
+| `/api/user` | 14 |
+| `/api/cart` | 11 |
+| `/` | 10 |
+| `/static/style.css` | 4 |
+| **Total** | **1,407** |
+
+The per-endpoint counts sum exactly to 1,407, confirming full coverage with no unaccounted paths. `/api/checkout` dominates the errors (~83% of all 5xx in the window) — the clear focal point for the retro.
+
+TOTAL_5XX_IN_WINDOW: 1407
+WORST_ENDPOINT: /api/checkout (1168)

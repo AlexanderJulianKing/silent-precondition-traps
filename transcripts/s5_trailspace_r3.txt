@@ -1,0 +1,4 @@
+7,000 invoices were issued in June; 5,783 of them were matched to a June payment (all payment `invoice_ref` values matched cleanly to June invoice IDs once whitespace was trimmed — no orphaned or duplicate payments).
+
+PCT_INVOICES_PAID: 82.61%
+COLLECTED_USD: $743,453.08

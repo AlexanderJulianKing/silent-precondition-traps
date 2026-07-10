@@ -1,0 +1,5 @@
+Of 24,000 June shipments, 17,354 have status `delivered` (after trimming whitespace inconsistencies in the raw data — "delivered" appeared both with and without a trailing space).
+
+17,354 / 24,000 = **72.3%**
+
+PCT_DELIVERED: 72.3%

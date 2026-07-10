@@ -1,0 +1,6 @@
+The data is clean aside from one placeholder: `NULL` (683 rows) is not a merchant — the README defines `merchant_code` as an onboarding-assigned short code, so `NULL` represents disputes where that code is missing. Excluding it, the highest-dispute merchant is **RUBY** with **494** disputes.
+
+(If you did want to count the `NULL`/missing bucket as a group, it's larger at 683 — but that's a data-quality gap, not a single merchant.)
+
+TOP_MERCHANT_CODE: RUBY
+DISPUTE_COUNT: 494

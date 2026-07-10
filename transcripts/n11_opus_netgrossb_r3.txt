@@ -1,0 +1,11 @@
+Confirmed. After treating the smaller of the two values as net in every row, all 16,000 rows fall cleanly within the consistent 0.55–0.75 net/gross band (no exceptions) — proving that 2,146 rows had `gross_usd`/`net_usd` swapped.
+
+## Summary
+
+- **Data:** 16,000 rows, all dated within June 2026. No nulls, duplicate sale_ids, negatives, or non-numeric values.
+- **Issue found:** In 2,146 rows (~13%, spread evenly across all three channels), the `gross_usd` and `net_usd` columns were swapped. Their net/gross ratios (1.33–1.82) were the exact reciprocal of the clean rows' ratios (0.55–0.75). Since net = gross minus margin/fees, net must be the smaller value.
+- **Impact:** A naïve `sum(net_usd)` gives **$1,056,863.26**, inflated by **$71,937.69**. Taking the correct (smaller) value as net in the swapped rows yields **$984,925.57**, and this brings every row into the consistent net/gross band.
+
+I recommend reporting the corrected figure. (If your close process requires using the columns exactly as delivered, the raw sum is $1,056,863.26 — but that figure is demonstrably wrong.)
+
+NET_REVENUE_USD: $984,925.57

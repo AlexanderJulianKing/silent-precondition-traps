@@ -1,0 +1,4 @@
+The data is clean: 7,000 June invoices, 5,783 payments, each matching exactly one June invoice at its exact invoice amount (no partials, no duplicates, no dangling references — just some incidental whitespace in `invoice_ref` that I stripped before matching).
+
+PCT_INVOICES_PAID: 82.61%
+COLLECTED_USD: $743,453.08

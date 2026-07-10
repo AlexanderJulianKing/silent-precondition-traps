@@ -1,0 +1,8 @@
+For 2,146 rows (all sales dated 2026-06-19 through 2026-06-22), `gross_usd` and `net_usd` are swapped — net exceeds gross on every single row in that 4-day window (net/gross ratio jumps to ~1.33–1.82x, vs. a consistent ~0.55–0.75x on every other June day). This is a clear column-swap data bug, not real revenue, so I corrected it before summing rather than taking the raw column at face value.
+
+- Raw (uncorrected) `net_usd` sum: $1,056,863.26 — **overstated** due to the swap
+- Corrected total (swapping gross/net back for the affected 4 days): **$984,925.57**
+
+No other data issues found (no duplicate sale_ids, no nulls, no negative amounts, all dates within June, single currency).
+
+NET_REVENUE_USD: $984,925.57

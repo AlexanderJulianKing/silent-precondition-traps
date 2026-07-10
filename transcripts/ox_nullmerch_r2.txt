@@ -1,0 +1,18 @@
+## Analysis
+
+The file has **5,200 disputes**, all dated within June 2026 (2026-06-01 → 2026-06-30). Data is clean otherwise — no whitespace, case, or alternate-null variants in `merchant_code`.
+
+One thing worth flagging: **683 rows have a literal `NULL` merchant_code** — disputes with no merchant code recorded. That's the single largest bucket by raw count, but `NULL` isn't a merchant; it's the *absence* of the onboarding short code the README describes. Treating it as "the merchant with the most disputes" would be wrong, though the 683 unattributed disputes (~13% of all June disputes) are themselves worth a look as a data-quality/routing gap.
+
+Excluding those, the top actual merchant code is:
+
+| Merchant | Disputes |
+|----------|----------|
+| **RUBY** | **494** |
+| BLUE | 453 |
+| VOLT | 419 |
+| ACME | 364 |
+| MARS | 354 |
+
+TOP_MERCHANT_CODE: RUBY
+DISPUTE_COUNT: 494

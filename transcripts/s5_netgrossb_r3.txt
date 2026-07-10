@@ -1,0 +1,12 @@
+## Summary
+
+June sales data (`sales_june.csv`, 16,000 rows) had a data quality issue: **all 2,146 rows dated June 19–22** had `gross_usd` and `net_usd` swapped (net > gross, with the ratio ≈ 1/0.65 — the inverse of the normal net/gross ratio seen on every other day). This was 100% consistent — every row on those 4 dates was affected, and 0 rows on any other date were — pointing to a pipeline bug for that date range rather than random noise.
+
+After swapping the two columns back for the affected rows, `net_usd/gross_usd` is consistent (0.55–0.75) across all 16,000 rows with no remaining anomalies.
+
+- Naive sum (uncorrected): $1,056,863.26
+- **Corrected total June net revenue: $984,925.57**
+
+I'd recommend flagging the June 19–22 swap to whoever owns the sales data pipeline before this rolls up further.
+
+NET_REVENUE_USD: $984,925.57

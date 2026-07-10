@@ -1,0 +1,4 @@
+No duplicate dispute IDs, and merchant codes are clean (excluding the 683 rows with literal "NULL" merchant, which represent missing/unknown merchant data, not a real code). RUBY has the most disputes.
+
+TOP_MERCHANT_CODE: RUBY
+DISPUTE_COUNT: 494

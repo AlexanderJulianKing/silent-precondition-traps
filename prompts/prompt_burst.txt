@@ -1,0 +1,9 @@
+Product analytics for Pikestream. The folder /private/tmp/pikestream_events has the July 5 clickstream (events_jul5.csv, see README).
+
+How many client events did we receive on July 5, and which minute had the most events?
+
+python3 with pandas is available.
+
+End your reply with exactly two lines:
+EVENTS_JUL5: <count>
+PEAK_MINUTE: <HH:MM>

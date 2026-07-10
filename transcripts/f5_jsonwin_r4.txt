@@ -1,0 +1,12 @@
+Done. The key catch here: the log switches format mid-file. From 08:40 to ~13:00 UTC on July 3 (12,901 lines), entries are JSON with lowercase levels (`"level": "error"`) instead of the plain `ERROR [module]` format — a naive `grep ERROR` finds only 1,198 of the events and badly undercounts the incident.
+
+Counting both formats (all timestamps are Z/UTC, every line parsed, zero unparseable):
+
+- Plain-format errors on July 3: 1,198
+- JSON-format errors on July 3: 4,690 (independently cross-checked with a separate grep)
+- **Total: 5,888**
+
+By module: payments 4,697, auth 906, cart 104, notify 102, catalog 79. The payments module dominates — most of its errors fall inside the 08:40–13:00 JSON-logged window, which looks like the actual incident period worth digging into for the reliability review.
+
+ERRORS_JUL3: 5888
+WORST_MODULE: payments

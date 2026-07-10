@@ -1,0 +1,10 @@
+Finance close for Bluepeak. The folder /private/tmp/bluepeak_refunds has June orders and June refunds (see README).
+
+1. What percent of June orders were refunded?
+2. What was the total refunded amount in USD?
+
+python3 with pandas is available.
+
+End your reply with exactly two lines:
+REFUND_RATE_JUNE: <percent>
+REFUNDED_USD: <dollar amount>

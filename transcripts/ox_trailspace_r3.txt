@@ -1,0 +1,17 @@
+Analysis complete. All checks pass cleanly.
+
+## Collections Review — Granitepeak, June 2026
+
+**Data quality note (the key gotcha):** ~3,000 of the 5,783 rows in `payments_june.csv` have a trailing space in `invoice_ref`. A naive join on the raw values matches only **2,785** payments — you'd wrongly conclude ~40% collection. After trimming whitespace, all 5,783 payments cleanly match a June invoice.
+
+**Findings after cleaning:**
+- 7,000 invoices issued in June; 5,783 payments received in June.
+- Every payment maps to exactly one June invoice — no duplicates, no orphan/prior-month references, no payments dated before issuance.
+- Every payment amount exactly equals its invoice amount (no partial payments), so a matched payment = fully paid.
+- **5,783 distinct invoices paid** ÷ 7,000 issued = **82.61%**.
+- Total cash collected = **$743,453.08**.
+
+Both questions land on the same 5,783 payments, so the sum is unaffected by the matched-vs-all distinction (all payments reference valid June invoices).
+
+PCT_INVOICES_PAID: 82.61%
+COLLECTED_USD: $743,453.08

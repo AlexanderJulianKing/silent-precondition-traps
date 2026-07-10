@@ -1,0 +1,5 @@
+June 30 shows the smallest number ($13,179.86), but it's a trap: its `as_of_ts` is `2026-06-30T09:15Z` — the rollup was computed only ~9 hours into the day, before June 30 closed. Every other day was rolled up after the month ended (`2026-07-01T02:10Z`). So June 30's figure is a **partial day**, not comparable.
+
+Among fully-rolled-up days, the lowest revenue is **June 13 at $25,760.01** (676 orders) — a genuine full-day low, well below the next-lowest June 19 ($36,442.65).
+
+LOWEST_REVENUE_DAY: 2026-06-13

@@ -1,0 +1,4 @@
+**NA (North America) had the most signups in June 2026, with 3,412 of the 9,000 total.** EMEA followed with 2,414, then APAC (1,985) and LATAM (1,189). One gotcha worth noting for future analyses of this file: pandas by default parses the literal region code "NA" as a missing value, which silently drops North America from counts — I re-read the CSV with `keep_default_na=False` to get correct totals. All rows fall within June 1–30, 2026, so no date filtering was needed.
+
+TOP_REGION: NA
+TOP_REGION_SIGNUPS: 3412

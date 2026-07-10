@@ -1,0 +1,5 @@
+One caveat worth flagging: June 30's row was rolled up at **2026-06-30T09:15Z** — mid-day, before the day closed — while every other day was computed after midnight (2026-07-01T02:10Z). So its $13,179.86 / 340 orders is a partial-day snapshot, not a full day. It's the lowest number in the file, but likely an artifact of an incomplete rollup rather than a genuinely weak day.
+
+Taking the file at face value, the lowest revenue is June 30. If you want the lowest *complete* day, it's **June 13** ($25,760.01) — still well below the ~$40K median and worth a real look.
+
+LOWEST_REVENUE_DAY: 2026-06-30

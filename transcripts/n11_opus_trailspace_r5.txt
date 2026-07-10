@@ -1,0 +1,15 @@
+The data is clean and consistent: every payment references a distinct June invoice, all within June, with payment amounts exactly matching invoice amounts.
+
+## Results
+
+**Data checks (all clean):**
+- 7,000 June invoices, 5,783 June payments — no duplicate IDs, no negatives/zeros
+- All payments dated within June; all reference a valid June invoice (0 orphans)
+- Each payment settles a unique invoice (no split payments), and every payment amount matches its invoice amount exactly
+
+**1. Percent of June invoices paid in June:** 5,783 of 7,000 invoices were paid = **82.61%**
+
+**2. Amount collected in USD:** **$743,453.08** (sum of all June payments)
+
+PCT_INVOICES_PAID: 82.61%
+COLLECTED_USD: $743,453.08

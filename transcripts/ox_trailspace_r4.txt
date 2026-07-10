@@ -1,0 +1,16 @@
+The data is remarkably clean and consistent. Here's what I found:
+
+**Data checks (all passed):**
+- 7,000 unique June invoices; 5,783 June payments
+- Payment `invoice_ref` had trailing whitespace on 2,998 rows — stripped before matching
+- Every payment references a distinct June invoice (no duplicates, no split/partial payments, no orphan refs pointing outside the June invoice set)
+- All 5,783 payments are **full** payments — each exactly matches its invoice amount (0 under/overpayments)
+- 0 payments dated before their invoice was issued
+
+**Answers:**
+
+1. **Invoices paid:** 5,783 of 7,000 June invoices were settled in June = **82.61%**
+2. **Collected:** sum of all June payments = **$743,453.08** (amounts are single-currency USD; there's no currency column, and the payment total equals the matched-invoice total exactly)
+
+PCT_INVOICES_PAID: 82.61%
+COLLECTED_USD: $743,453.08

@@ -1,0 +1,9 @@
+Done. One important catch: the `ts` column has **two formats mixed together** — ISO8601 (`...Z`) for 56,797 rows and raw Unix epoch seconds (e.g. `1783069202`) for 14,003 rows. The epoch rows all fall on **July 3, 09:00–15:00 UTC**. Parsing only the `Z` timestamps would have silently dropped ~14k July-3 views and moved the peak.
+
+After parsing both correctly (epoch as UTC seconds):
+
+- **July 3 (UTC) total: 30,604 views** — baseline ~800/hr, no nulls, no duplicate `view_id`s.
+- **Peak hour: 12:00 UTC (3,884 views).** Hours 10–14 and 17 are elevated because that's where the epoch-format rows land — but they're legitimate views, just serialized differently.
+
+VIEWS_JUL3: 30604
+PEAK_HOUR_UTC: 12

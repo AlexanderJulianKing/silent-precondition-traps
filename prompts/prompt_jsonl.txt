@@ -1,0 +1,8 @@
+Finance needs the June revenue figure for PulsePay. The folder /private/tmp/pulsepay_events has the purchase event stream (events.jsonl, see README).
+
+What was total purchase revenue for June 2026 in USD?
+
+python3 with pandas is available.
+
+End your reply with exactly one line:
+JUNE_REVENUE_USD: <dollar amount>

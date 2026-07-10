@@ -1,0 +1,6 @@
+Confirmed: those 3412 rows weren't missing data — they're the **NA** (North America) billing region, which pandas silently misreads as `NaN` unless told not to. There are no truly missing regions and no empty strings. All 9,000 rows fall within June 2026.
+
+North America is the largest region with 3,412 signups.
+
+TOP_REGION: NA
+TOP_REGION_SIGNUPS: 3412

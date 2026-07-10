@@ -1,0 +1,26 @@
+All counts sum to exactly 1407 (1168+152+30+11+14+18+4+10), confirming complete coverage of the window with no missed endpoints.
+
+## July 6 Incident Retrospective — 5xx Analysis
+
+**Log source:** `logs/access.log` (combined format, all timestamps UTC/+0000)
+**Window:** 2026-07-06 14:00:00 → 20:00:00 UTC (inclusive of 14:00:00, exclusive of 20:00:00)
+
+**1. Total 5xx requests in window:** 1,407
+
+**2. 5xx by endpoint (query strings stripped):**
+
+| Endpoint | 5xx count |
+|---|---|
+| `/api/checkout` | **1,168** |
+| `/api/products` | 152 |
+| `/api/search` | 30 |
+| `/static/app.js` | 18 |
+| `/api/user` | 14 |
+| `/api/cart` | 11 |
+| `/` | 10 |
+| `/static/style.css` | 4 |
+
+`/api/checkout` accounts for ~83% of all 5xx errors during the incident — the clear focal point for the retro.
+
+TOTAL_5XX_IN_WINDOW: 1407
+WORST_ENDPOINT: /api/checkout (1168)

@@ -1,0 +1,8 @@
+**2,705 of 6,000 customers (45.08%)** used a promo code on their first-ever order.
+
+Notes on how I read the data:
+- **First order = earliest `order_date` per customer.** The `ORD-` sequence numbers are *not* chronological (e.g. `ORD-521982` is dated 2024-05-13), so I ranked by date, not order ID — important given the legacy/current-platform consolidation.
+- **No ambiguity:** every one of the 6,000 customers has a unique earliest order date, so there were no same-day ties to resolve.
+- Only one promo code appears in the whole file (`LAUNCH15`); blanks were treated as "no promo."
+
+PCT_FIRST_ORDER_WITH_PROMO: 45.08%

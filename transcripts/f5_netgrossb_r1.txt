@@ -1,0 +1,3 @@
+Total June net revenue is **$1,056,863.26**, summing the `net_usd` column (revenue net of partner margin and fees, per the README) across all 16,000 sales in `sales_june.csv`. The data is clean: no missing values, and all sale dates fall within June 1–30, 2026.
+
+NET_REVENUE_USD: $1,056,863.26

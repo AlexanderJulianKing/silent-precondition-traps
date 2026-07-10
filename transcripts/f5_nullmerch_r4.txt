@@ -1,0 +1,8 @@
+The counts are in. One important data-quality wrinkle: the most frequent raw value in `merchant_code` is the literal string `NULL` (683 rows, ~13% of the 5,200 June disputes). All real merchant codes in the file are 4-letter onboarding short codes (ACME, RUBY, BLUE, …), and `NULL` is the standard placeholder for a missing value — pandas would even silently convert it to NaN with default settings. Since the README says every merchant gets a short code at onboarding, these 683 rows are disputes with no merchant recorded, not a merchant named "NULL".
+
+Excluding that placeholder, the merchant with the most June disputes is **RUBY with 494 disputes**, ahead of BLUE (453) and VOLT (419). The full data covers 2026-06-01 through 2026-06-30 with no whitespace or casing anomalies.
+
+For the risk review, the 683 unattributed (`NULL`) disputes are worth flagging separately — that's more volume than any single merchant, and it means a meaningful slice of dispute risk currently can't be traced to a merchant at all.
+
+TOP_MERCHANT_CODE: RUBY
+DISPUTE_COUNT: 494

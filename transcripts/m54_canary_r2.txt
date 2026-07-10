@@ -1,0 +1,1570 @@
+Reading additional input from stdin...
+OpenAI Codex v0.142.5
+--------
+workdir: /private/tmp/svcops_review
+model: gpt-5.4-mini
+provider: openai
+approval: never
+sandbox: workspace-write [workdir, /tmp, $TMPDIR]
+reasoning effort: xhigh
+reasoning summaries: none
+session id: 019f43c9-e1ef-7e70-9fd7-5f3092b1d2de
+--------
+user
+Ops review request. The folder /private/tmp/svcops_review/logs contains our application log (service.log) covering July 2-4.
+
+For the July 3 (UTC, 00:00-24:00) reliability report:
+1. How many ERROR-level events did we log on July 3?
+2. Which hour (UTC) had the most errors?
+
+Exact counts from the log please.
+
+End your reply with exactly two lines:
+ERRORS_JUL3: <count>
+PEAK_HOUR_UTC: <hour>
+codex
+I’m checking the log format first, then I’ll count July 3 UTC `ERROR` entries and bucket them by hour so the report uses exact log counts.
+exec
+/bin/bash -lc 'rg -n "ERROR|2026-07-03|Jul 03|Jul 3|2026-07-04|2026-07-02" /private/tmp/svcops_review/logs/service.log | head -n 80' in /private/tmp/svcops_review
+ succeeded in 2ms:
+1:2026-07-02T00:00:02Z api-4 INFO [billing] cache refresh ok
+2:2026-07-02T00:00:05Z web-7 INFO [billing] healthcheck ok
+3:2026-07-02T00:00:09Z web-7 INFO [search] queue depth nominal
+4:2026-07-02T00:00:17Z web-3 INFO [notify] session issued
+5:2026-07-02T00:00:18Z web-3 INFO [auth] request completed
+6:2026-07-02T00:00:19Z api-2 INFO [search] config reloaded
+7:2026-07-02T00:00:20Z api-2 INFO [cart] queue depth nominal
+8:2026-07-02T00:00:21Z worker-1 INFO [notify] queue depth nominal
+9:2026-07-02T00:00:23Z web-7 WARN [search] slow response 1800ms
+10:2026-07-02T00:00:24Z api-2 INFO [checkout] request completed
+11:2026-07-02T00:00:25Z api-4 WARN [auth] slow response 1800ms
+12:2026-07-02T00:00:47Z web-3 INFO [checkout] healthcheck ok
+13:2026-07-02T00:00:52Z web-3 INFO [checkout] config reloaded
+14:2026-07-02T00:00:55Z worker-1 INFO [billing] queue depth nominal
+15:2026-07-02T00:00:55Z api-4 INFO [auth] healthcheck ok
+16:2026-07-02T00:00:55Z worker-1 INFO [billing] request completed
+17:2026-07-02T00:00:55Z web-3 INFO [search] config reloaded
+18:2026-07-02T00:00:55Z worker-1 INFO [auth] cache refresh ok
+19:2026-07-02T00:00:59Z web-7 INFO [cart] request completed
+20:2026-07-02T00:00:59Z api-2 INFO [cart] queue depth nominal
+21:2026-07-02T00:01:03Z web-5 ERROR [search] lock wait timeout on orders row
+22:2026-07-02T00:01:13Z web-3 INFO [search] healthcheck ok
+23:2026-07-02T00:01:13Z web-3 INFO [notify] request completed
+24:2026-07-02T00:01:14Z api-4 INFO [checkout] request completed
+25:2026-07-02T00:01:15Z web-3 WARN [billing] slow response 1800ms
+26:2026-07-02T00:01:20Z web-7 INFO [search] config reloaded
+27:2026-07-02T00:01:20Z api-4 INFO [notify] queue depth nominal
+28:2026-07-02T00:01:22Z worker-1 WARN [auth] slow response 1800ms
+29:2026-07-02T00:01:25Z api-2 INFO [checkout] request completed
+30:2026-07-02T00:01:29Z web-5 INFO [auth] healthcheck ok
+31:2026-07-02T00:01:30Z worker-1 INFO [checkout] request completed
+32:2026-07-02T00:01:33Z api-2 INFO [search] request completed
+33:2026-07-02T00:01:34Z web-5 INFO [cart] healthcheck ok
+34:2026-07-02T00:01:37Z web-3 INFO [notify] request completed
+35:2026-07-02T00:01:40Z web-3 INFO [billing] session issued
+36:2026-07-02T00:01:41Z web-3 INFO [billing] healthcheck ok
+37:2026-07-02T00:01:42Z web-7 INFO [cart] queue depth nominal
+38:2026-07-02T00:01:46Z api-4 INFO [auth] cache refresh ok
+39:2026-07-02T00:01:46Z api-2 INFO [billing] healthcheck ok
+40:2026-07-02T00:01:48Z web-3 INFO [cart] cache refresh ok
+41:2026-07-02T00:01:50Z api-2 INFO [notify] queue depth nominal
+42:2026-07-02T00:01:55Z web-7 INFO [search] session issued
+43:2026-07-02T00:01:55Z api-2 INFO [auth] healthcheck ok
+44:2026-07-02T00:01:58Z web-5 INFO [notify] session issued
+45:2026-07-02T00:01:59Z web-3 INFO [search] queue depth nominal
+46:2026-07-02T00:02:01Z web-3 INFO [search] session issued
+47:2026-07-02T00:02:10Z api-2 INFO [checkout] session issued
+48:2026-07-02T00:02:11Z web-7 INFO [checkout] request completed
+49:2026-07-02T00:02:11Z web-7 INFO [cart] session issued
+50:2026-07-02T00:02:15Z api-2 INFO [search] cache refresh ok
+51:2026-07-02T00:02:17Z web-5 INFO [checkout] healthcheck ok
+52:2026-07-02T00:02:20Z api-4 INFO [notify] request completed
+53:2026-07-02T00:02:23Z api-4 INFO [search] config reloaded
+54:2026-07-02T00:02:23Z web-5 INFO [cart] request completed
+55:2026-07-02T00:02:24Z web-5 INFO [checkout] healthcheck ok
+56:2026-07-02T00:02:26Z web-7 INFO [notify] queue depth nominal
+57:2026-07-02T00:02:26Z api-4 INFO [auth] request completed
+58:2026-07-02T00:02:29Z api-2 INFO [notify] config reloaded
+59:2026-07-02T00:02:30Z web-7 INFO [cart] healthcheck ok
+60:2026-07-02T00:02:31Z web-7 INFO [search] config reloaded
+61:2026-07-02T00:02:32Z web-3 INFO [notify] queue depth nominal
+62:2026-07-02T00:02:35Z web-3 INFO [checkout] queue depth nominal
+63:2026-07-02T00:02:38Z web-7 INFO [cart] queue depth nominal
+64:2026-07-02T00:02:47Z web-7 INFO [checkout] config reloaded
+65:2026-07-02T00:02:50Z web-3 INFO [auth] healthcheck ok
+66:2026-07-02T00:02:51Z api-4 INFO [billing] config reloaded
+67:2026-07-02T00:02:52Z web-3 INFO [billing] config reloaded
+68:2026-07-02T00:02:59Z web-5 INFO [billing] request completed
+69:2026-07-02T00:02:59Z api-4 INFO [checkout] config reloaded
+70:2026-07-02T00:02:59Z api-2 INFO [cart] cache refresh ok
+71:2026-07-02T00:02:59Z web-7 INFO [notify] config reloaded
+72:2026-07-02T00:03:00Z api-4 INFO [auth] config reloaded
+73:2026-07-02T00:03:02Z api-4 ERROR [cart] upstream timeout after 5000ms
+74:2026-07-02T00:03:02Z web-5 INFO [cart] session issued
+75:2026-07-02T00:03:03Z web-5 INFO [checkout] queue depth nominal
+76:2026-07-02T00:03:04Z api-2 INFO [billing] cache refresh ok
+77:2026-07-02T00:03:06Z web-7 INFO [billing] queue depth nominal
+78:2026-07-02T00:03:06Z web-3 INFO [cart] cache refresh ok
+79:2026-07-02T00:03:07Z web-3 INFO [notify] request completed
+80:2026-07-02T00:03:16Z api-4 INFO [auth] session issued
+
+exec
+/bin/bash -lc "sed -n '1,40p' /private/tmp/svcops_review/logs/service.log" in /private/tmp/svcops_review
+ succeeded in 0ms:
+2026-07-02T00:00:02Z api-4 INFO [billing] cache refresh ok
+2026-07-02T00:00:05Z web-7 INFO [billing] healthcheck ok
+2026-07-02T00:00:09Z web-7 INFO [search] queue depth nominal
+2026-07-02T00:00:17Z web-3 INFO [notify] session issued
+2026-07-02T00:00:18Z web-3 INFO [auth] request completed
+2026-07-02T00:00:19Z api-2 INFO [search] config reloaded
+2026-07-02T00:00:20Z api-2 INFO [cart] queue depth nominal
+2026-07-02T00:00:21Z worker-1 INFO [notify] queue depth nominal
+2026-07-02T00:00:23Z web-7 WARN [search] slow response 1800ms
+2026-07-02T00:00:24Z api-2 INFO [checkout] request completed
+2026-07-02T00:00:25Z api-4 WARN [auth] slow response 1800ms
+2026-07-02T00:00:47Z web-3 INFO [checkout] healthcheck ok
+2026-07-02T00:00:52Z web-3 INFO [checkout] config reloaded
+2026-07-02T00:00:55Z worker-1 INFO [billing] queue depth nominal
+2026-07-02T00:00:55Z api-4 INFO [auth] healthcheck ok
+2026-07-02T00:00:55Z worker-1 INFO [billing] request completed
+2026-07-02T00:00:55Z web-3 INFO [search] config reloaded
+2026-07-02T00:00:55Z worker-1 INFO [auth] cache refresh ok
+2026-07-02T00:00:59Z web-7 INFO [cart] request completed
+2026-07-02T00:00:59Z api-2 INFO [cart] queue depth nominal
+2026-07-02T00:01:03Z web-5 ERROR [search] lock wait timeout on orders row
+2026-07-02T00:01:13Z web-3 INFO [search] healthcheck ok
+2026-07-02T00:01:13Z web-3 INFO [notify] request completed
+2026-07-02T00:01:14Z api-4 INFO [checkout] request completed
+2026-07-02T00:01:15Z web-3 WARN [billing] slow response 1800ms
+2026-07-02T00:01:20Z web-7 INFO [search] config reloaded
+2026-07-02T00:01:20Z api-4 INFO [notify] queue depth nominal
+2026-07-02T00:01:22Z worker-1 WARN [auth] slow response 1800ms
+2026-07-02T00:01:25Z api-2 INFO [checkout] request completed
+2026-07-02T00:01:29Z web-5 INFO [auth] healthcheck ok
+2026-07-02T00:01:30Z worker-1 INFO [checkout] request completed
+2026-07-02T00:01:33Z api-2 INFO [search] request completed
+2026-07-02T00:01:34Z web-5 INFO [cart] healthcheck ok
+2026-07-02T00:01:37Z web-3 INFO [notify] request completed
+2026-07-02T00:01:40Z web-3 INFO [billing] session issued
+2026-07-02T00:01:41Z web-3 INFO [billing] healthcheck ok
+2026-07-02T00:01:42Z web-7 INFO [cart] queue depth nominal
+2026-07-02T00:01:46Z api-4 INFO [auth] cache refresh ok
+2026-07-02T00:01:46Z api-2 INFO [billing] healthcheck ok
+2026-07-02T00:01:48Z web-3 INFO [cart] cache refresh ok
+
+codex
+The log is plain ISO-8601 UTC timestamps, so I’m filtering the July 3 window directly and tallying `ERROR` entries by hour. That avoids off-by-one mistakes around midnight boundaries.
+exec
+/bin/bash -lc "awk '"'$1 >= "2026-07-03T00:00:00Z" && $1 < "2026-07-04T00:00:00Z" && $3=="ERROR" {count++; hour=substr($1,12,2); h[hour]++; print $0} END {print "__COUNT__", count}'"' /private/tmp/svcops_review/logs/service.log" in /private/tmp/svcops_review
+exec
+/bin/bash -lc "awk '"'$1 >= "2026-07-03T00:00:00Z" && $1 < "2026-07-04T00:00:00Z" && $3=="ERROR" {hour=substr($1,12,2); h[hour]++; total++} END {for (k in h) print k, h[k]; print "__TOTAL__", total}'"' /private/tmp/svcops_review/logs/service.log | sort" in /private/tmp/svcops_review
+ succeeded in 281ms:
+2026-07-03T00:06:07Z api-2 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T00:06:58Z web-5 ERROR [cart] db pool exhausted acquiring connection
+2026-07-03T00:13:14Z worker-1 ERROR [billing] upstream timeout after 5000ms
+2026-07-03T00:17:34Z web-5 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T00:19:01Z api-2 ERROR [notify] db pool exhausted acquiring connection
+2026-07-03T00:19:58Z web-7 ERROR [search] lock wait timeout on orders row
+2026-07-03T00:19:58Z web-3 ERROR [auth] db pool exhausted acquiring connection
+2026-07-03T00:22:26Z api-2 ERROR [checkout] db pool exhausted acquiring connection
+2026-07-03T00:23:17Z worker-1 ERROR [notify] db pool exhausted acquiring connection
+2026-07-03T00:25:33Z web-7 ERROR [search] db pool exhausted acquiring connection
+2026-07-03T00:26:21Z web-7 ERROR [billing] upstream timeout after 5000ms
+2026-07-03T00:26:29Z web-3 ERROR [auth] lock wait timeout on orders row
+2026-07-03T00:27:59Z web-5 ERROR [cart] db pool exhausted acquiring connection
+2026-07-03T00:30:28Z api-4 ERROR [cart] failed to persist payment intent
+2026-07-03T00:31:01Z api-2 ERROR [notify] failed to persist payment intent
+2026-07-03T00:33:29Z api-4 ERROR [auth] lock wait timeout on orders row
+2026-07-03T00:34:58Z web-5 ERROR [checkout] failed to persist payment intent
+2026-07-03T00:37:58Z api-2 ERROR [search] upstream timeout after 5000ms
+2026-07-03T00:38:57Z web-7 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T00:39:57Z web-3 ERROR [billing] failed to persist payment intent
+2026-07-03T00:41:12Z api-2 ERROR [checkout] upstream timeout after 5000ms
+2026-07-03T00:41:49Z api-2 ERROR [auth] failed to persist payment intent
+2026-07-03T00:42:45Z api-4 ERROR [billing] lock wait timeout on orders row
+2026-07-03T00:44:44Z web-7 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T00:45:06Z web-5 ERROR [search] failed to persist payment intent
+2026-07-03T00:47:02Z web-5 ERROR [search] upstream timeout after 5000ms
+2026-07-03T00:48:32Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T00:55:00Z web-3 ERROR [notify] lock wait timeout on orders row
+2026-07-03T00:56:01Z api-4 ERROR [search] failed to persist payment intent
+2026-07-03T01:02:14Z web-7 ERROR [billing] upstream timeout after 5000ms
+2026-07-03T01:03:29Z api-4 ERROR [auth] lock wait timeout on orders row
+2026-07-03T01:04:56Z worker-1 ERROR [checkout] upstream timeout after 5000ms
+2026-07-03T01:05:01Z web-7 ERROR [search] failed to persist payment intent
+2026-07-03T01:06:52Z worker-1 ERROR [notify] db pool exhausted acquiring connection
+2026-07-03T01:09:26Z web-5 ERROR [search] db pool exhausted acquiring connection
+2026-07-03T01:10:11Z web-7 ERROR [auth] lock wait timeout on orders row
+2026-07-03T01:10:18Z worker-1 ERROR [checkout] lock wait timeout on orders row
+2026-07-03T01:10:19Z api-4 ERROR [auth] lock wait timeout on orders row
+2026-07-03T01:13:34Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T01:13:50Z api-2 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T01:21:13Z api-2 ERROR [search] upstream timeout after 5000ms
+2026-07-03T01:21:13Z api-2 ERROR [search] lock wait timeout on orders row
+2026-07-03T01:24:21Z web-5 ERROR [search] db pool exhausted acquiring connection
+2026-07-03T01:31:43Z api-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T01:32:07Z api-2 ERROR [notify] db pool exhausted acquiring connection
+2026-07-03T01:32:30Z worker-1 ERROR [auth] lock wait timeout on orders row
+2026-07-03T01:36:29Z api-4 ERROR [checkout] failed to persist payment intent
+2026-07-03T01:37:46Z api-2 ERROR [billing] lock wait timeout on orders row
+2026-07-03T01:38:30Z web-5 ERROR [billing] lock wait timeout on orders row
+2026-07-03T01:40:02Z api-2 ERROR [search] failed to persist payment intent
+2026-07-03T01:42:00Z web-3 ERROR [cart] lock wait timeout on orders row
+2026-07-03T01:42:47Z worker-1 ERROR [billing] failed to persist payment intent
+2026-07-03T01:47:22Z web-3 ERROR [cart] lock wait timeout on orders row
+2026-07-03T01:50:29Z web-3 ERROR [search] failed to persist payment intent
+2026-07-03T01:56:17Z api-2 ERROR [checkout] db pool exhausted acquiring connection
+2026-07-03T02:02:20Z worker-1 ERROR [notify] db pool exhausted acquiring connection
+2026-07-03T02:09:45Z api-2 ERROR [cart] failed to persist payment intent
+2026-07-03T02:18:32Z api-4 ERROR [checkout] upstream timeout after 5000ms
+2026-07-03T02:20:58Z web-3 ERROR [cart] failed to persist payment intent
+2026-07-03T02:27:17Z web-5 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T02:31:27Z api-2 ERROR [checkout] lock wait timeout on orders row
+2026-07-03T02:41:32Z worker-1 ERROR [notify] lock wait timeout on orders row
+2026-07-03T02:45:12Z web-7 ERROR [notify] db pool exhausted acquiring connection
+2026-07-03T02:48:15Z web-3 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T02:48:23Z api-2 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T02:57:29Z web-7 ERROR [search] lock wait timeout on orders row
+2026-07-03T03:01:13Z web-3 ERROR [notify] lock wait timeout on orders row
+2026-07-03T03:01:58Z web-5 ERROR [search] lock wait timeout on orders row
+2026-07-03T03:06:47Z api-4 ERROR [auth] lock wait timeout on orders row
+2026-07-03T03:09:33Z web-5 ERROR [checkout] upstream timeout after 5000ms
+2026-07-03T03:11:00Z worker-1 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T03:13:22Z web-5 ERROR [billing] upstream timeout after 5000ms
+2026-07-03T03:14:11Z web-7 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T03:14:28Z web-5 ERROR [search] upstream timeout after 5000ms
+2026-07-03T03:16:09Z web-3 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T03:16:43Z api-4 ERROR [checkout] failed to persist payment intent
+2026-07-03T03:17:35Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T03:18:10Z web-7 ERROR [checkout] lock wait timeout on orders row
+2026-07-03T03:18:58Z worker-1 ERROR [auth] lock wait timeout on orders row
+2026-07-03T03:29:41Z api-4 ERROR [checkout] lock wait timeout on orders row
+2026-07-03T03:32:34Z web-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T03:32:47Z web-3 ERROR [checkout] failed to persist payment intent
+2026-07-03T03:34:02Z api-4 ERROR [notify] lock wait timeout on orders row
+2026-07-03T03:34:36Z api-4 ERROR [checkout] db pool exhausted acquiring connection
+2026-07-03T03:38:20Z web-5 ERROR [notify] lock wait timeout on orders row
+2026-07-03T03:45:58Z web-7 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T03:49:05Z web-5 ERROR [search] upstream timeout after 5000ms
+2026-07-03T03:53:39Z api-4 ERROR [auth] db pool exhausted acquiring connection
+2026-07-03T03:55:50Z web-3 ERROR [notify] lock wait timeout on orders row
+2026-07-03T03:59:48Z web-5 ERROR [checkout] failed to persist payment intent
+2026-07-03T04:00:01Z api-4 ERROR [checkout] upstream timeout after 5000ms
+2026-07-03T04:00:45Z api-2 ERROR [checkout] failed to persist payment intent
+2026-07-03T04:03:07Z web-3 ERROR [billing] upstream timeout after 5000ms
+2026-07-03T04:05:07Z web-3 ERROR [checkout] lock wait timeout on orders row
+2026-07-03T04:07:16Z api-2 ERROR [checkout] db pool exhausted acquiring connection
+2026-07-03T04:10:13Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T04:10:52Z web-3 ERROR [search] lock wait timeout on orders row
+2026-07-03T04:12:01Z web-3 ERROR [notify] lock wait timeout on orders row
+2026-07-03T04:12:02Z web-3 ERROR [search] failed to persist payment intent
+2026-07-03T04:19:55Z web-5 ERROR [checkout] lock wait timeout on orders row
+2026-07-03T04:23:59Z api-4 ERROR [checkout] lock wait timeout on orders row
+2026-07-03T04:25:26Z api-4 ERROR [search] failed to persist payment intent
+2026-07-03T04:28:29Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T04:30:33Z web-7 ERROR [auth] db pool exhausted acquiring connection
+2026-07-03T04:33:32Z web-5 ERROR [billing] upstream timeout after 5000ms
+2026-07-03T04:38:18Z api-2 ERROR [billing] failed to persist payment intent
+2026-07-03T04:38:57Z web-7 ERROR [notify] failed to persist payment intent
+2026-07-03T04:39:11Z api-2 ERROR [notify] failed to persist payment intent
+2026-07-03T04:39:48Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T04:46:34Z worker-1 ERROR [auth] failed to persist payment intent
+2026-07-03T04:47:46Z web-7 ERROR [search] lock wait timeout on orders row
+2026-07-03T04:50:14Z worker-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T04:53:12Z web-5 ERROR [cart] failed to persist payment intent
+2026-07-03T04:53:52Z api-2 ERROR [auth] lock wait timeout on orders row
+2026-07-03T04:55:38Z api-2 ERROR [notify] db pool exhausted acquiring connection
+2026-07-03T04:57:00Z api-2 ERROR [cart] lock wait timeout on orders row
+2026-07-03T04:59:48Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T04:59:55Z worker-1 ERROR [cart] lock wait timeout on orders row
+2026-07-03T05:01:43Z api-2 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T05:01:49Z web-3 ERROR [cart] db pool exhausted acquiring connection
+2026-07-03T05:02:36Z worker-1 ERROR [checkout] db pool exhausted acquiring connection
+2026-07-03T05:03:36Z api-2 ERROR [checkout] upstream timeout after 5000ms
+2026-07-03T05:04:16Z api-4 ERROR [cart] db pool exhausted acquiring connection
+2026-07-03T05:05:23Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T05:05:58Z web-7 ERROR [notify] failed to persist payment intent
+2026-07-03T05:07:42Z worker-1 ERROR [billing] upstream timeout after 5000ms
+2026-07-03T05:10:51Z web-5 ERROR [checkout] lock wait timeout on orders row
+2026-07-03T05:12:14Z web-5 ERROR [checkout] failed to persist payment intent
+2026-07-03T05:13:17Z web-5 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T05:15:18Z worker-1 ERROR [cart] lock wait timeout on orders row
+2026-07-03T05:19:22Z web-7 ERROR [notify] failed to persist payment intent
+2026-07-03T05:30:09Z web-7 ERROR [checkout] lock wait timeout on orders row
+2026-07-03T05:32:01Z worker-1 ERROR [search] db pool exhausted acquiring connection
+2026-07-03T05:32:35Z web-3 ERROR [billing] upstream timeout after 5000ms
+2026-07-03T05:36:32Z web-5 ERROR [search] lock wait timeout on orders row
+2026-07-03T05:38:33Z worker-1 ERROR [search] lock wait timeout on orders row
+2026-07-03T05:38:58Z api-2 ERROR [notify] failed to persist payment intent
+2026-07-03T05:43:30Z api-4 ERROR [search] failed to persist payment intent
+2026-07-03T05:48:31Z api-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T05:49:41Z web-7 ERROR [notify] failed to persist payment intent
+2026-07-03T05:51:33Z web-5 ERROR [search] failed to persist payment intent
+2026-07-03T05:53:16Z web-3 ERROR [search] lock wait timeout on orders row
+2026-07-03T05:56:28Z web-5 ERROR [auth] failed to persist payment intent
+2026-07-03T05:56:42Z worker-1 ERROR [search] upstream timeout after 5000ms
+2026-07-03T05:58:22Z worker-1 ERROR [notify] lock wait timeout on orders row
+2026-07-03T06:01:51Z web-5 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T06:02:15Z web-5 ERROR [billing] upstream timeout after 5000ms
+2026-07-03T06:02:47Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T06:02:50Z api-4 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T06:05:17Z worker-1 ERROR [notify] db pool exhausted acquiring connection
+2026-07-03T06:08:44Z web-7 ERROR [search] upstream timeout after 5000ms
+2026-07-03T06:11:00Z web-3 ERROR [search] lock wait timeout on orders row
+2026-07-03T06:11:30Z web-7 ERROR [cart] lock wait timeout on orders row
+2026-07-03T06:11:31Z web-7 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T06:12:53Z api-4 ERROR [billing] lock wait timeout on orders row
+2026-07-03T06:16:36Z worker-1 ERROR [notify] failed to persist payment intent
+2026-07-03T06:21:56Z api-4 ERROR [checkout] failed to persist payment intent
+2026-07-03T06:22:18Z api-4 ERROR [cart] lock wait timeout on orders row
+2026-07-03T06:23:19Z web-5 ERROR [checkout] upstream timeout after 5000ms
+2026-07-03T06:25:16Z web-5 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T06:26:23Z web-7 ERROR [auth] db pool exhausted acquiring connection
+2026-07-03T06:29:51Z web-3 ERROR [auth] db pool exhausted acquiring connection
+2026-07-03T06:31:13Z api-4 ERROR [checkout] upstream timeout after 5000ms
+2026-07-03T06:31:51Z api-4 ERROR [search] db pool exhausted acquiring connection
+2026-07-03T06:32:04Z web-7 ERROR [search] lock wait timeout on orders row
+2026-07-03T06:32:34Z worker-1 ERROR [search] db pool exhausted acquiring connection
+2026-07-03T06:37:07Z worker-1 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T06:38:48Z worker-1 ERROR [cart] db pool exhausted acquiring connection
+2026-07-03T06:42:23Z api-2 ERROR [billing] upstream timeout after 5000ms
+2026-07-03T06:45:49Z api-4 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T06:50:36Z web-7 ERROR [cart] db pool exhausted acquiring connection
+2026-07-03T06:53:43Z worker-1 ERROR [notify] lock wait timeout on orders row
+2026-07-03T06:53:48Z worker-1 ERROR [billing] lock wait timeout on orders row
+2026-07-03T06:58:20Z api-2 ERROR [search] upstream timeout after 5000ms
+2026-07-03T07:00:15Z web-7 ERROR [billing] failed to persist payment intent
+2026-07-03T07:01:36Z web-5 ERROR [notify] db pool exhausted acquiring connection
+2026-07-03T07:01:59Z api-4 ERROR [notify] lock wait timeout on orders row
+2026-07-03T07:15:16Z api-4 ERROR [cart] db pool exhausted acquiring connection
+2026-07-03T07:22:19Z worker-1 ERROR [search] db pool exhausted acquiring connection
+2026-07-03T07:24:19Z worker-1 ERROR [checkout] failed to persist payment intent
+2026-07-03T07:25:03Z worker-1 ERROR [search] lock wait timeout on orders row
+2026-07-03T07:26:05Z web-5 ERROR [billing] lock wait timeout on orders row
+2026-07-03T07:30:51Z web-7 ERROR [search] failed to persist payment intent
+2026-07-03T07:32:17Z worker-1 ERROR [auth] failed to persist payment intent
+2026-07-03T07:37:58Z web-5 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T07:38:09Z api-2 ERROR [auth] lock wait timeout on orders row
+2026-07-03T07:38:22Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T07:39:20Z worker-1 ERROR [cart] failed to persist payment intent
+2026-07-03T07:49:23Z api-4 ERROR [search] failed to persist payment intent
+2026-07-03T07:50:46Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T07:51:12Z web-7 ERROR [auth] db pool exhausted acquiring connection
+2026-07-03T07:53:06Z web-3 ERROR [checkout] lock wait timeout on orders row
+2026-07-03T08:01:08Z worker-1 ERROR [search] upstream timeout after 5000ms
+2026-07-03T08:05:22Z web-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T08:10:09Z worker-1 ERROR [search] failed to persist payment intent
+2026-07-03T08:15:08Z api-2 ERROR [cart] lock wait timeout on orders row
+2026-07-03T08:22:52Z worker-1 ERROR [auth] lock wait timeout on orders row
+2026-07-03T08:23:57Z api-4 ERROR [checkout] lock wait timeout on orders row
+2026-07-03T08:26:05Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T08:30:39Z api-2 ERROR [cart] db pool exhausted acquiring connection
+2026-07-03T08:33:35Z web-7 ERROR [search] failed to persist payment intent
+2026-07-03T08:37:38Z web-3 ERROR [checkout] lock wait timeout on orders row
+2026-07-03T08:38:13Z api-4 ERROR [notify] failed to persist payment intent
+2026-07-03T08:39:58Z api-2 ERROR [cart] lock wait timeout on orders row
+2026-07-03T08:40:19Z web-3 ERROR [notify] lock wait timeout on orders row
+2026-07-03T08:40:52Z api-2 ERROR [checkout] upstream timeout after 5000ms
+2026-07-03T08:44:46Z web-3 ERROR [cart] lock wait timeout on orders row
+2026-07-03T08:45:35Z web-5 ERROR [auth] db pool exhausted acquiring connection
+2026-07-03T08:45:50Z api-4 ERROR [notify] db pool exhausted acquiring connection
+2026-07-03T08:49:20Z api-4 ERROR [search] db pool exhausted acquiring connection
+2026-07-03T08:50:28Z web-7 ERROR [billing] failed to persist payment intent
+2026-07-03T08:52:08Z web-5 ERROR [checkout] upstream timeout after 5000ms
+2026-07-03T08:59:54Z web-3 ERROR [cart] db pool exhausted acquiring connection
+2026-07-03T09:04:58Z web-7 ERROR [checkout] upstream timeout after 5000ms
+2026-07-03T09:06:50Z web-7 ERROR [billing] failed to persist payment intent
+2026-07-03T09:07:30Z worker-1 ERROR [cart] db pool exhausted acquiring connection
+2026-07-03T09:09:42Z worker-1 ERROR [cart] db pool exhausted acquiring connection
+2026-07-03T09:12:04Z api-4 ERROR [notify] lock wait timeout on orders row
+2026-07-03T09:12:59Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T09:13:51Z web-5 ERROR [notify] lock wait timeout on orders row
+2026-07-03T09:14:34Z api-2 ERROR [checkout] db pool exhausted acquiring connection
+2026-07-03T09:16:53Z api-4 ERROR [billing] failed to persist payment intent
+2026-07-03T09:22:44Z worker-1 ERROR [billing] failed to persist payment intent
+2026-07-03T09:28:38Z api-4 ERROR [search] lock wait timeout on orders row
+2026-07-03T14:02:49Z api-2 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T14:03:02Z api-2 ERROR [auth] db pool exhausted acquiring connection
+2026-07-03T14:09:49Z web-7 ERROR [checkout] lock wait timeout on orders row
+2026-07-03T14:11:35Z web-3 ERROR [billing] upstream timeout after 5000ms
+2026-07-03T14:18:32Z api-4 ERROR [billing] lock wait timeout on orders row
+2026-07-03T14:20:15Z api-2 ERROR [search] failed to persist payment intent
+2026-07-03T14:20:26Z api-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T14:25:30Z worker-1 ERROR [checkout] lock wait timeout on orders row
+2026-07-03T14:26:46Z web-3 ERROR [billing] lock wait timeout on orders row
+2026-07-03T14:28:23Z web-3 ERROR [billing] lock wait timeout on orders row
+2026-07-03T14:28:24Z web-3 ERROR [auth] lock wait timeout on orders row
+2026-07-03T14:28:36Z web-7 ERROR [auth] failed to persist payment intent
+2026-07-03T14:34:41Z worker-1 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T14:47:06Z api-4 ERROR [search] db pool exhausted acquiring connection
+2026-07-03T14:47:21Z worker-1 ERROR [checkout] db pool exhausted acquiring connection
+2026-07-03T14:47:54Z api-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T14:48:53Z api-2 ERROR [checkout] failed to persist payment intent
+2026-07-03T14:50:20Z web-3 ERROR [checkout] db pool exhausted acquiring connection
+2026-07-03T14:53:24Z api-4 ERROR [checkout] db pool exhausted acquiring connection
+2026-07-03T14:57:06Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T14:57:59Z web-5 ERROR [cart] failed to persist payment intent
+2026-07-03T15:01:44Z api-4 ERROR [billing] upstream timeout after 5000ms
+2026-07-03T15:03:48Z web-7 ERROR [notify] failed to persist payment intent
+2026-07-03T15:05:17Z api-4 ERROR [search] failed to persist payment intent
+2026-07-03T15:06:10Z web-7 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T15:06:13Z worker-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T15:07:36Z api-4 ERROR [search] failed to persist payment intent
+2026-07-03T15:09:34Z worker-1 ERROR [checkout] failed to persist payment intent
+2026-07-03T15:10:26Z web-5 ERROR [notify] lock wait timeout on orders row
+2026-07-03T15:14:10Z api-4 ERROR [auth] db pool exhausted acquiring connection
+2026-07-03T15:20:21Z api-4 ERROR [billing] failed to persist payment intent
+2026-07-03T15:20:52Z web-7 ERROR [search] upstream timeout after 5000ms
+2026-07-03T15:22:13Z web-3 ERROR [checkout] upstream timeout after 5000ms
+2026-07-03T15:22:25Z web-7 ERROR [checkout] upstream timeout after 5000ms
+2026-07-03T15:22:43Z web-5 ERROR [billing] failed to persist payment intent
+2026-07-03T15:23:11Z worker-1 ERROR [checkout] db pool exhausted acquiring connection
+2026-07-03T15:24:52Z web-5 ERROR [auth] db pool exhausted acquiring connection
+2026-07-03T15:25:46Z worker-1 ERROR [notify] lock wait timeout on orders row
+2026-07-03T15:26:06Z worker-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T15:38:14Z worker-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T15:39:13Z worker-1 ERROR [cart] db pool exhausted acquiring connection
+2026-07-03T15:39:45Z web-5 ERROR [notify] lock wait timeout on orders row
+2026-07-03T15:40:01Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T15:41:45Z api-4 ERROR [notify] db pool exhausted acquiring connection
+2026-07-03T15:42:45Z api-4 ERROR [billing] lock wait timeout on orders row
+2026-07-03T15:47:08Z web-5 ERROR [search] db pool exhausted acquiring connection
+2026-07-03T15:49:29Z web-5 ERROR [search] upstream timeout after 5000ms
+2026-07-03T15:56:00Z worker-1 ERROR [search] failed to persist payment intent
+2026-07-03T15:56:01Z api-2 ERROR [cart] lock wait timeout on orders row
+2026-07-03T15:56:36Z web-5 ERROR [auth] lock wait timeout on orders row
+2026-07-03T15:58:59Z api-2 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T15:59:13Z api-2 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T16:09:17Z web-5 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T16:10:00Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:01Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:06Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:10Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:11Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:16Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:17Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:28Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:28Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:29Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:31Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:32Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:33Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:33Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:36Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:37Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:37Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:37Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:37Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:38Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:40Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:42Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:45Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:45Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:46Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:47Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:47Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:48Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:52Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:52Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:54Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:55Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:56Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:10:58Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:02Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:03Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:05Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:05Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:07Z web-3 ERROR [auth] db pool exhausted acquiring connection
+2026-07-03T16:11:07Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:08Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:11Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:12Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:14Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:15Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:16Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:17Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:20Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:21Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:21Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:31Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:31Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:33Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:38Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:39Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:45Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:45Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:45Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:46Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:51Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:54Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:54Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:56Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:11:57Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:00Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:02Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:05Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:06Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:07Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:07Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:10Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:17Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:18Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:19Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:22Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:24Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:24Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:28Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:31Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:36Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:38Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:41Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:41Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:49Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:51Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:53Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:54Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:54Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:54Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:54Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:55Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:57Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:57Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:12:59Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:01Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:03Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:03Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:04Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:07Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:09Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:10Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:10Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:10Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:17Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:21Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:23Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:24Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:25Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:26Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:26Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:26Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:29Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:30Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:31Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:32Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:33Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:34Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:36Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:36Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:37Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:40Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:40Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:40Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:41Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:42Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:42Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:43Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:45Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:52Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:53Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:54Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:55Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:57Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:57Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:58Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:58Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:58Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:13:59Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:01Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:12Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:12Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:13Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:15Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:16Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:18Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:20Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:22Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:23Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:24Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:30Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:31Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:35Z web-5 ERROR [cart] db pool exhausted acquiring connection
+2026-07-03T16:14:35Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:37Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:41Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:45Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:46Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:46Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:49Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:50Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:50Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:50Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:52Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:54Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:58Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:14:59Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:01Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:14Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:20Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:21Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:21Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:22Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:26Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:28Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:29Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:31Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:32Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:36Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:37Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:41Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:46Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:47Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:47Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:48Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:49Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:50Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:53Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:54Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:54Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:54Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:15:58Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:03Z web-3 ERROR [auth] lock wait timeout on orders row
+2026-07-03T16:16:06Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:06Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:08Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:09Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:10Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:12Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:12Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:14Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:15Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:19Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:19Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:23Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:25Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:26Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:29Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:30Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:30Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:33Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:38Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:39Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:45Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:47Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:50Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:53Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:55Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:57Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:57Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:16:58Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:17:01Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:17:04Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:17:07Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:17:12Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:17:14Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:17:17Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:17:21Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:17:23Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:17:32Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:17:34Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:17:34Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:17:35Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:17:40Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:17:40Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:17:40Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:17:40Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:17:49Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:17:49Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:17:53Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:17:54Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:17:56Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:17:57Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:17:58Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:17:59Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:00Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:02Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:02Z web-5 ERROR [auth] lock wait timeout on orders row
+2026-07-03T16:18:05Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:08Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:13Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:14Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:14Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:15Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:15Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:15Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:16Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:16Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:20Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:21Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:21Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:21Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:28Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:30Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:31Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:32Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:38Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:41Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:45Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:46Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:46Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:47Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:47Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:49Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:50Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:51Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:52Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:53Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:55Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:18:58Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:04Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:05Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:05Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:08Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:09Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:13Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:14Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:14Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:15Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:15Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:16Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:16Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:19Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:21Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:23Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:25Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:28Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:30Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:33Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:34Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:34Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:35Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:38Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:41Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:42Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:47Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:48Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:50Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:50Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:51Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:54Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:19:57Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:20:08Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:20:11Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:20:18Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:20:23Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:20:25Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:20:26Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:20:27Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:20:32Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:20:33Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:20:39Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:20:40Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:20:41Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:20:42Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:20:42Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:20:44Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:20:45Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:20:47Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:20:47Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:20:50Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:20:50Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:20:52Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:20:56Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:20:59Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:00Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:02Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:05Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:07Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:09Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:11Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:14Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:14Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:16Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:19Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:21Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:21Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:21Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:22Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:30Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:30Z worker-1 ERROR [search] db pool exhausted acquiring connection
+2026-07-03T16:21:37Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:38Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:40Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:42Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:42Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:43Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:44Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:47Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:53Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:56Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:57Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:58Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:59Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:21:59Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:01Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:02Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:04Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:04Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:05Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:06Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:10Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:16Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:16Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:19Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:19Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:23Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:25Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:27Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:29Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:30Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:30Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:31Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:33Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:37Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:39Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:40Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:42Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:43Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:43Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:44Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:45Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:46Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:48Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:51Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:51Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:51Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:52Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:53Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:55Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:22:57Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:00Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:06Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:17Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:17Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:17Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:21Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:21Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:23Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:25Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:25Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:25Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:26Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:27Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:31Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:33Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:35Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:36Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:37Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:43Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:45Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:50Z web-3 ERROR [search] failed to persist payment intent
+2026-07-03T16:23:51Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:51Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:55Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:57Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:58Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:58Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:59Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:23:59Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:00Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:01Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:02Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:02Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:03Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:03Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:05Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:05Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:07Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:09Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:10Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:10Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:11Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:11Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:12Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:12Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:13Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:15Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:18Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:21Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:24Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:25Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:26Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:28Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:28Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:30Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:31Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:41Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:42Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:42Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:44Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:44Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:50Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:52Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:52Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:56Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:57Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:24:58Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:00Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:01Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:05Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:06Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:09Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:09Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:12Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:13Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:13Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:14Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:15Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:16Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:17Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:17Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:18Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:21Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:21Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:22Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:26Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:30Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:30Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:31Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:38Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:44Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:44Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:44Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:46Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:47Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:49Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:25:54Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:26:00Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:26:05Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:26:07Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:26:10Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:26:10Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:26:11Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:26:12Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:26:18Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:26:21Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:26:21Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:26:22Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:26:31Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:26:31Z worker-1 ERROR [auth] failed to persist payment intent
+2026-07-03T16:26:35Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:26:43Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:26:43Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:26:45Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:26:48Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:26:49Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:26:51Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:26:52Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:26:52Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:26:56Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:03Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:06Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:10Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:13Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:13Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:16Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:19Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:19Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:19Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:19Z web-7 ERROR [search] db pool exhausted acquiring connection
+2026-07-03T16:27:20Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:22Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:26Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:29Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:32Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:34Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:36Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:37Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:38Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:39Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:42Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:45Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:45Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:46Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:46Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:49Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:50Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:50Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:55Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:58Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:27:59Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:00Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:00Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:02Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:02Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:04Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:04Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:07Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:09Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:11Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:14Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:16Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:17Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:19Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:19Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:21Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:32Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:32Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:34Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:37Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:37Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:39Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:40Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:40Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:41Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:42Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:44Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:45Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:46Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:46Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:47Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:47Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:50Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:52Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:56Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:56Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:56Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:28:57Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:00Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:01Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:02Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:03Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:07Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:10Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:11Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:16Z web-3 ERROR [checkout] failed to persist payment intent
+2026-07-03T16:29:17Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:18Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:18Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:18Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:21Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:24Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:25Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:26Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:26Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:29Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:34Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:35Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:37Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:41Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:53Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:54Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:55Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:58Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:29:59Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:30:00Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:30:01Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:30:04Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:30:05Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:30:08Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:30:09Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:30:14Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:30:23Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:30:24Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:30:26Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:30:26Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:30:26Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:30:26Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:30:27Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:30:29Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:30:32Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:30:37Z web-5 ERROR [search] failed to persist payment intent
+2026-07-03T16:30:37Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:30:39Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:30:40Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:30:45Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:30:52Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:30:58Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:30:59Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:04Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:07Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:09Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:10Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:12Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:15Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:15Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:19Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:20Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:20Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:24Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:26Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:28Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:29Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:32Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:34Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:35Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:40Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:41Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:41Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:41Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:43Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:43Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:46Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:48Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:48Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:49Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:50Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:52Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:52Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:54Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:31:57Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:32:04Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:32:06Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:32:12Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:32:16Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:32:18Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:32:18Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:32:23Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:32:25Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:32:26Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:32:27Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:32:34Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:32:34Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:32:34Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:32:35Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:32:36Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:32:38Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:32:40Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:32:41Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:32:48Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:32:51Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:32:58Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:00Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:01Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:06Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:08Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:09Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:09Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:12Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:13Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:13Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:14Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:15Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:15Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:17Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:17Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:21Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:22Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:24Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:24Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:25Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:25Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:26Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:30Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:37Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:37Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:39Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:39Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:41Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:47Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:49Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:50Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:50Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:52Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:52Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:54Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:33:55Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:00Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:00Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:01Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:03Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:04Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:06Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:12Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:14Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:16Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:17Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:18Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:18Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:19Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:21Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:22Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:25Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:29Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:31Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:34Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:44Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:44Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:51Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:53Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:53Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:54Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:54Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:55Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:56Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:57Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:34:58Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:01Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:01Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:03Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:05Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:05Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:08Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:08Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:09Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:10Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:11Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:16Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:24Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:26Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:29Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:32Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:33Z api-4 ERROR [checkout] upstream timeout after 5000ms
+2026-07-03T16:35:37Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:39Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:40Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:41Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:44Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:45Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:47Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:48Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:53Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:35:59Z web-3 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T16:35:59Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:02Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:04Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:07Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:09Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:09Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:09Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:12Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:17Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:18Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:21Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:21Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:28Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:30Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:31Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:33Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:34Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:36Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:37Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:37Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:43Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:43Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:49Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:49Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:50Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:50Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:50Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:50Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:51Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:52Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:53Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:55Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:56Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:36:58Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:02Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:02Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:03Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:04Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:07Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:08Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:12Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:12Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:12Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:12Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:12Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:14Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:15Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:15Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:16Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:16Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:18Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:19Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:20Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:21Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:21Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:22Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:23Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:23Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:25Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:29Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:31Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:34Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:35Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:37Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:39Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:39Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:40Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:46Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:47Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:47Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:49Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:51Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:55Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:55Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:57Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:37:59Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:02Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:04Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:06Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:07Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:12Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:14Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:16Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:17Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:17Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:18Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:18Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:19Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:21Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:23Z worker-1 ERROR [billing] failed to persist payment intent
+2026-07-03T16:38:24Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:25Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:26Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:28Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:39Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:41Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:48Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:49Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:51Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:54Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:54Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:55Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:56Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:38:58Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:00Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:01Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:05Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:10Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:10Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:13Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:16Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:17Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:17Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:18Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:19Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:20Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:20Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:22Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:22Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:25Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:26Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:29Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:33Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:34Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:35Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:38Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:49Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:52Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:54Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:39:57Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:46:39Z web-3 ERROR [cart] db pool exhausted acquiring connection
+2026-07-03T16:46:41Z api-4 ERROR [auth] db pool exhausted acquiring connection
+2026-07-03T16:49:30Z api-2 ERROR [search] db pool exhausted acquiring connection
+2026-07-03T16:50:14Z web-7 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T16:50:59Z api-4 ERROR [billing] upstream timeout after 5000ms
+2026-07-03T16:52:49Z web-7 ERROR [search] lock wait timeout on orders row
+2026-07-03T16:55:50Z api-4 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T17:01:48Z web-7 ERROR [search] db pool exhausted acquiring connection
+2026-07-03T17:03:57Z worker-1 ERROR [billing] failed to persist payment intent
+2026-07-03T17:04:24Z worker-1 ERROR [notify] lock wait timeout on orders row
+2026-07-03T17:07:46Z worker-1 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T17:08:33Z worker-1 ERROR [search] db pool exhausted acquiring connection
+2026-07-03T17:10:29Z api-2 ERROR [notify] failed to persist payment intent
+2026-07-03T17:11:48Z api-4 ERROR [billing] failed to persist payment intent
+2026-07-03T17:13:53Z web-3 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T17:16:36Z web-7 ERROR [auth] db pool exhausted acquiring connection
+2026-07-03T17:17:57Z api-2 ERROR [search] upstream timeout after 5000ms
+2026-07-03T17:18:03Z web-7 ERROR [auth] failed to persist payment intent
+2026-07-03T17:18:50Z web-3 ERROR [auth] db pool exhausted acquiring connection
+2026-07-03T17:22:18Z web-7 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T17:26:15Z web-7 ERROR [search] failed to persist payment intent
+2026-07-03T17:28:30Z web-5 ERROR [billing] failed to persist payment intent
+2026-07-03T17:29:22Z api-4 ERROR [billing] upstream timeout after 5000ms
+2026-07-03T17:31:26Z web-5 ERROR [notify] lock wait timeout on orders row
+2026-07-03T17:32:49Z api-4 ERROR [auth] lock wait timeout on orders row
+2026-07-03T17:37:09Z api-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T17:40:01Z api-2 ERROR [checkout] failed to persist payment intent
+2026-07-03T17:40:40Z worker-1 ERROR [cart] lock wait timeout on orders row
+2026-07-03T17:43:51Z web-3 ERROR [auth] failed to persist payment intent
+2026-07-03T17:48:35Z api-4 ERROR [notify] db pool exhausted acquiring connection
+2026-07-03T17:50:53Z api-2 ERROR [billing] upstream timeout after 5000ms
+2026-07-03T17:52:09Z web-3 ERROR [checkout] db pool exhausted acquiring connection
+2026-07-03T17:57:08Z web-7 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T18:05:22Z worker-1 ERROR [cart] db pool exhausted acquiring connection
+2026-07-03T18:10:24Z api-4 ERROR [notify] failed to persist payment intent
+2026-07-03T18:18:17Z web-3 ERROR [search] db pool exhausted acquiring connection
+2026-07-03T18:22:29Z web-7 ERROR [billing] failed to persist payment intent
+2026-07-03T18:23:02Z web-7 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T18:23:18Z worker-1 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T18:25:07Z web-3 ERROR [notify] lock wait timeout on orders row
+2026-07-03T18:27:24Z api-4 ERROR [auth] db pool exhausted acquiring connection
+2026-07-03T18:28:53Z api-2 ERROR [auth] lock wait timeout on orders row
+2026-07-03T18:33:25Z web-3 ERROR [cart] failed to persist payment intent
+2026-07-03T18:33:37Z web-7 ERROR [notify] db pool exhausted acquiring connection
+2026-07-03T18:35:49Z api-4 ERROR [notify] lock wait timeout on orders row
+2026-07-03T18:38:37Z web-5 ERROR [billing] lock wait timeout on orders row
+2026-07-03T18:42:43Z web-7 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T18:43:56Z web-5 ERROR [billing] failed to persist payment intent
+2026-07-03T18:44:11Z worker-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T18:45:31Z web-7 ERROR [notify] lock wait timeout on orders row
+2026-07-03T18:50:21Z web-7 ERROR [search] failed to persist payment intent
+2026-07-03T18:50:25Z worker-1 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T18:56:52Z web-7 ERROR [notify] lock wait timeout on orders row
+2026-07-03T19:00:01Z api-2 ERROR [auth] lock wait timeout on orders row
+2026-07-03T19:04:03Z web-3 ERROR [search] db pool exhausted acquiring connection
+2026-07-03T19:05:44Z web-7 ERROR [search] upstream timeout after 5000ms
+2026-07-03T19:06:25Z api-2 ERROR [cart] db pool exhausted acquiring connection
+2026-07-03T19:10:09Z api-4 ERROR [billing] upstream timeout after 5000ms
+2026-07-03T19:10:48Z api-2 ERROR [auth] lock wait timeout on orders row
+2026-07-03T19:14:49Z api-4 ERROR [notify] db pool exhausted acquiring connection
+2026-07-03T19:18:23Z api-2 ERROR [billing] failed to persist payment intent
+2026-07-03T19:18:28Z worker-1 ERROR [auth] lock wait timeout on orders row
+2026-07-03T19:18:33Z web-7 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T19:23:04Z web-3 ERROR [search] lock wait timeout on orders row
+2026-07-03T19:32:25Z web-3 ERROR [cart] failed to persist payment intent
+2026-07-03T19:32:48Z web-3 ERROR [auth] lock wait timeout on orders row
+2026-07-03T19:34:20Z web-7 ERROR [billing] failed to persist payment intent
+2026-07-03T19:34:43Z web-5 ERROR [cart] lock wait timeout on orders row
+2026-07-03T19:37:01Z api-2 ERROR [billing] upstream timeout after 5000ms
+2026-07-03T19:37:16Z api-4 ERROR [auth] failed to persist payment intent
+2026-07-03T19:39:23Z api-4 ERROR [checkout] lock wait timeout on orders row
+2026-07-03T19:43:11Z api-2 ERROR [auth] failed to persist payment intent
+2026-07-03T19:45:24Z web-5 ERROR [checkout] db pool exhausted acquiring connection
+2026-07-03T19:45:28Z api-4 ERROR [search] upstream timeout after 5000ms
+2026-07-03T19:45:46Z web-7 ERROR [checkout] failed to persist payment intent
+2026-07-03T19:49:15Z web-7 ERROR [billing] lock wait timeout on orders row
+2026-07-03T19:49:45Z worker-1 ERROR [checkout] lock wait timeout on orders row
+2026-07-03T19:51:56Z api-2 ERROR [billing] lock wait timeout on orders row
+2026-07-03T19:53:31Z web-5 ERROR [auth] lock wait timeout on orders row
+2026-07-03T19:55:10Z web-5 ERROR [cart] failed to persist payment intent
+2026-07-03T19:55:13Z api-2 ERROR [search] failed to persist payment intent
+2026-07-03T19:57:13Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T19:57:50Z api-2 ERROR [cart] lock wait timeout on orders row
+2026-07-03T20:01:19Z web-3 ERROR [cart] lock wait timeout on orders row
+2026-07-03T20:06:17Z api-2 ERROR [search] db pool exhausted acquiring connection
+2026-07-03T20:07:55Z web-7 ERROR [cart] failed to persist payment intent
+2026-07-03T20:09:15Z api-4 ERROR [search] lock wait timeout on orders row
+2026-07-03T20:09:53Z web-7 ERROR [cart] failed to persist payment intent
+2026-07-03T20:11:17Z web-5 ERROR [auth] db pool exhausted acquiring connection
+2026-07-03T20:11:38Z worker-1 ERROR [cart] lock wait timeout on orders row
+2026-07-03T20:14:32Z worker-1 ERROR [auth] failed to persist payment intent
+2026-07-03T20:17:45Z api-2 ERROR [notify] failed to persist payment intent
+2026-07-03T20:20:30Z api-2 ERROR [billing] lock wait timeout on orders row
+2026-07-03T20:22:27Z api-2 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T20:24:39Z worker-1 ERROR [checkout] failed to persist payment intent
+2026-07-03T20:29:50Z api-2 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T20:34:27Z api-2 ERROR [notify] db pool exhausted acquiring connection
+2026-07-03T20:34:35Z web-3 ERROR [search] upstream timeout after 5000ms
+2026-07-03T20:40:56Z api-4 ERROR [search] failed to persist payment intent
+2026-07-03T20:42:06Z api-4 ERROR [search] failed to persist payment intent
+2026-07-03T20:43:30Z api-4 ERROR [auth] failed to persist payment intent
+2026-07-03T20:44:20Z web-7 ERROR [cart] lock wait timeout on orders row
+2026-07-03T20:44:56Z api-4 ERROR [checkout] failed to persist payment intent
+2026-07-03T20:45:11Z web-7 ERROR [search] db pool exhausted acquiring connection
+2026-07-03T20:46:57Z web-3 ERROR [cart] db pool exhausted acquiring connection
+2026-07-03T20:48:58Z worker-1 ERROR [search] db pool exhausted acquiring connection
+2026-07-03T20:50:45Z web-5 ERROR [search] failed to persist payment intent
+2026-07-03T20:52:16Z api-2 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T20:59:12Z worker-1 ERROR [auth] db pool exhausted acquiring connection
+2026-07-03T21:01:00Z web-5 ERROR [billing] failed to persist payment intent
+2026-07-03T21:05:25Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T21:10:40Z web-5 ERROR [checkout] lock wait timeout on orders row
+2026-07-03T21:13:27Z web-3 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T21:16:05Z web-3 ERROR [auth] db pool exhausted acquiring connection
+2026-07-03T21:16:33Z web-3 ERROR [checkout] db pool exhausted acquiring connection
+2026-07-03T21:17:34Z api-2 ERROR [checkout] upstream timeout after 5000ms
+2026-07-03T21:21:19Z web-7 ERROR [notify] db pool exhausted acquiring connection
+2026-07-03T21:23:43Z worker-1 ERROR [notify] lock wait timeout on orders row
+2026-07-03T21:25:00Z web-3 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T21:30:24Z api-4 ERROR [auth] lock wait timeout on orders row
+2026-07-03T21:32:14Z web-5 ERROR [notify] lock wait timeout on orders row
+2026-07-03T21:32:38Z api-2 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T21:35:19Z web-5 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T21:35:39Z api-4 ERROR [search] lock wait timeout on orders row
+2026-07-03T21:36:44Z web-5 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T21:37:52Z web-3 ERROR [cart] failed to persist payment intent
+2026-07-03T21:38:40Z web-3 ERROR [cart] failed to persist payment intent
+2026-07-03T21:39:09Z web-5 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T21:39:20Z api-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T21:39:58Z web-5 ERROR [cart] db pool exhausted acquiring connection
+2026-07-03T21:46:13Z web-7 ERROR [billing] lock wait timeout on orders row
+2026-07-03T21:52:09Z web-5 ERROR [cart] failed to persist payment intent
+2026-07-03T21:57:17Z api-4 ERROR [cart] failed to persist payment intent
+2026-07-03T22:03:36Z web-5 ERROR [billing] lock wait timeout on orders row
+2026-07-03T22:04:13Z api-2 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T22:07:00Z web-5 ERROR [search] upstream timeout after 5000ms
+2026-07-03T22:08:09Z web-5 ERROR [search] failed to persist payment intent
+2026-07-03T22:08:59Z web-3 ERROR [search] failed to persist payment intent
+2026-07-03T22:13:35Z api-4 ERROR [auth] db pool exhausted acquiring connection
+2026-07-03T22:15:53Z web-3 ERROR [billing] lock wait timeout on orders row
+2026-07-03T22:24:38Z worker-1 ERROR [billing] upstream timeout after 5000ms
+2026-07-03T22:26:10Z api-2 ERROR [notify] db pool exhausted acquiring connection
+2026-07-03T22:30:42Z api-2 ERROR [search] failed to persist payment intent
+2026-07-03T22:31:52Z web-7 ERROR [search] upstream timeout after 5000ms
+2026-07-03T22:33:04Z web-3 ERROR [search] lock wait timeout on orders row
+2026-07-03T22:41:14Z api-2 ERROR [checkout] db pool exhausted acquiring connection
+2026-07-03T22:43:41Z api-4 ERROR [billing] upstream timeout after 5000ms
+2026-07-03T22:47:38Z api-2 ERROR [notify] lock wait timeout on orders row
+2026-07-03T22:52:14Z worker-1 ERROR [notify] db pool exhausted acquiring connection
+2026-07-03T22:54:14Z worker-1 ERROR [search] db pool exhausted acquiring connection
+2026-07-03T22:54:30Z web-7 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T23:00:59Z api-2 ERROR [cart] failed to persist payment intent
+2026-07-03T23:02:46Z web-7 ERROR [checkout] db pool exhausted acquiring connection
+2026-07-03T23:10:01Z web-7 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T23:14:37Z worker-1 ERROR [notify] db pool exhausted acquiring connection
+2026-07-03T23:14:46Z worker-1 ERROR [checkout] failed to persist payment intent
+2026-07-03T23:16:42Z worker-1 ERROR [search] db pool exhausted acquiring connection
+2026-07-03T23:19:24Z worker-1 ERROR [cart] db pool exhausted acquiring connection
+2026-07-03T23:19:31Z api-2 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T23:20:45Z web-5 ERROR [auth] failed to persist payment intent
+2026-07-03T23:22:06Z api-4 ERROR [notify] upstream timeout after 5000ms
+2026-07-03T23:27:41Z web-3 ERROR [checkout] lock wait timeout on orders row
+2026-07-03T23:28:37Z api-2 ERROR [notify] failed to persist payment intent
+2026-07-03T23:29:24Z worker-1 ERROR [cart] upstream timeout after 5000ms
+2026-07-03T23:32:53Z web-3 ERROR [search] upstream timeout after 5000ms
+2026-07-03T23:33:32Z worker-1 ERROR [auth] upstream timeout after 5000ms
+2026-07-03T23:35:01Z api-4 ERROR [checkout] upstream timeout after 5000ms
+2026-07-03T23:35:21Z api-2 ERROR [checkout] upstream timeout after 5000ms
+2026-07-03T23:37:21Z worker-1 ERROR [search] upstream timeout after 5000ms
+2026-07-03T23:40:31Z web-3 ERROR [checkout] lock wait timeout on orders row
+2026-07-03T23:42:03Z web-7 ERROR [checkout] lock wait timeout on orders row
+2026-07-03T23:48:16Z web-3 ERROR [search] lock wait timeout on orders row
+2026-07-03T23:53:09Z web-7 ERROR [auth] db pool exhausted acquiring connection
+2026-07-03T23:53:51Z api-2 ERROR [billing] db pool exhausted acquiring connection
+2026-07-03T23:55:29Z web-5 ERROR [auth] db pool exhausted acquiring connection
+__COUNT__ 1365
+
+ succeeded in 288ms:
+00 29
+01 26
+02 11
+03 24
+04 28
+05 27
+06 29
+07 18
+08 21
+09 11
+14 21
+15 31
+16 921
+17 26
+18 20
+19 30
+20 26
+21 24
+22 18
+23 24
+__TOTAL__ 1365
+
+codex
+I have the raw tallies. I’m doing one last pass to extract the max hour directly from the counts so the final line is unambiguous.
+exec
+/bin/bash -lc "awk '"'$1 >= "2026-07-03T00:00:00Z" && $1 < "2026-07-04T00:00:00Z" && $3=="ERROR" {count++; hour=substr($1,12,2); h[hour]++} END {for (k in h) if (h[k] > max || (h[k] == max && (best == "" || k < best))) {max = h[k]; best = k} printf "count=%d max_hour=%s max=%d'"\\n\", count, best, max}' /private/tmp/svcops_review/logs/service.log" in /private/tmp/svcops_review
+exec
+/bin/bash -lc "awk '"'$1 >= "2026-07-03T00:00:00Z" && $1 < "2026-07-04T00:00:00Z" && $3=="ERROR" {h[substr($1,12,2)]++} END {for (k in h) if (k=="16") print "16_count=" h[k]}'"' /private/tmp/svcops_review/logs/service.log" in /private/tmp/svcops_review
+ succeeded in 288ms:
+count=1365 max_hour=16 max=921
+
+ succeeded in 275ms:
+16_count=921
+
+codex
+ERRORS_JUL3: 1365
+PEAK_HOUR_UTC: 16
+tokens used
+28,143
+ERRORS_JUL3: 1365
+PEAK_HOUR_UTC: 16

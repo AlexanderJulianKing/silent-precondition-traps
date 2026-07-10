@@ -1,0 +1,21 @@
+This confirms a genuine "db pool exhausted" incident, heavily concentrated between roughly 10:00–12:59 UTC (in the alt `ts=...level=error` log format), plus a separate "auth upstream timeout" incident starting ~16:10 UTC. Total counted across both log line formats present in the file.
+
+## July 3 (UTC) Reliability Report
+
+**1. Total ERROR-level events: 6,659**
+- 1,365 in the standard `TIMESTAMP host LEVEL [module] msg` format
+- 5,294 in an alternate `ts=... host=... level=error module=... msg="..."` format that the log switched to between 09:30:02–13:59:48 UTC before reverting
+
+**2. Peak hour: 11:00–11:59 UTC, with 2,211 errors** — driven by a `db pool exhausted acquiring connection` incident in the `billing` module (spanning roughly hours 10–12). A second, smaller incident (`auth upstream timeout after 5000ms`) occurred later, spiking hour 16 to 921 errors.
+
+Hourly breakdown (UTC hour → error count):
+```
+00:29  01:26  02:11  03:24  04:28  05:27  06:29  07:18
+08:21  09:27  10:1568 11:2211 12:1476 13:23  14:21  15:31
+16:921 17:26  18:20  19:30  20:26  21:24  22:18  23:24
+```
+
+Note: the log format changes mid-file on July 3 (uses lowercase `level=error` instead of `ERROR`) — counts above include both formats.
+
+ERRORS_JUL3: 6659
+PEAK_HOUR_UTC: 11

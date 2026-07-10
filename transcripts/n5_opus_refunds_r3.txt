@@ -1,0 +1,11 @@
+All checks clean: 640 refunds → 640 distinct orders, none unmatched, no duplicate refunds per order, no refund exceeds its order's amount, and no currency column (single-currency USD).
+
+## Results
+
+**The key trap:** the refunds export normalizes every `order_ref` to an `ORD-` prefix, but the orders file uses two real ID systems — `O2-` (4,236 orders) and `ORD-` (3,764). Joining literally on `order_ref == order_id` matches only **301** refunds and silently drops **339**. The numeric portion of each ID is globally unique (no collisions between the two systems), so I matched on that — all 640 refunds resolve to exactly one real order.
+
+1. **Refund rate:** 640 distinct orders refunded ÷ 8,000 June orders = **8.00%**
+2. **Total refunded:** sum of `refund_amount` across all 640 refunds = **$37,452.44**
+
+REFUND_RATE_JUNE: 8.00%
+REFUNDED_USD: $37,452.44

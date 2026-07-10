@@ -1,0 +1,5 @@
+All rows except June 30 have `as_of_ts` of `2026-07-01T02:10:00Z` — computed the day *after* the month ended, meaning they're complete end-of-day rollups. June 30's `as_of_ts` is `2026-06-30T09:15:00Z`, timestamped the same morning, meaning that rollup only captured ~9 hours of the day, not the full 24. So its $13,179.86 figure isn't a genuine low-revenue day — it's a partial/incomplete snapshot and shouldn't be compared to full-day totals.
+
+Excluding that data artifact, the lowest **complete** day was **June 13**, with $25,760.01 in revenue (676 orders) — notably below the next-lowest day (June 19, ~$36.4K).
+
+LOWEST_REVENUE_DAY: 2026-06-13

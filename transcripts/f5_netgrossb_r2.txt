@@ -1,0 +1,3 @@
+Total June net revenue is **$1,056,863.26**, the sum of `net_usd` across all 16,000 sales in `sales_june.csv`. The data is clean: all dates fall within June 2026, there are no null amounts or duplicate sale IDs. (Gross revenue was $1,443,290.90 for comparison.)
+
+NET_REVENUE_USD: $1,056,863.26

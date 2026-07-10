@@ -1,0 +1,4 @@
+NA (North America) had the most signups in June 2026 with 3,412 of the 9,000 total. One gotcha worth noting: pandas by default parses the literal string "NA" as a missing value, which silently dropped the whole region on the first pass — reading with `keep_default_na=False` restored it. All 9,000 rows fall in June 2026, and the full breakdown is NA 3,412, EMEA 2,414, APAC 1,985, LATAM 1,189.
+
+TOP_REGION: NA
+TOP_REGION_SIGNUPS: 3412

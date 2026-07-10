@@ -1,0 +1,10 @@
+For July 3 (UTC) I parsed the full log, which turned out to contain **two interleaved formats** — plaintext lines (`TS host LEVEL [module] msg`) and JSON lines (`{"ts":...,"level":"error",...}`). Both had to be counted, matching on the level *field* (not the word "ERROR" in message text) and filtering strictly on `ts` starting with `2026-07-03`. All timestamps are UTC (`Z`), so no timezone conversion was needed.
+
+Results for July 3:
+- ERROR events: **5,888** (info 40,785 / warn 1,828 for context)
+- By module: payments **4,697**, auth 906, cart 104, notify 102, catalog 79
+
+`payments` dominates by a wide margin — worth flagging as the reliability hotspot.
+
+ERRORS_JUL3: 5888
+WORST_MODULE: payments

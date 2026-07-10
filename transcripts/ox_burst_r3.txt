@@ -1,0 +1,15 @@
+## Findings
+
+The file has **42,312 rows**, but they aren't all distinct client events:
+
+- **2,312 rows are exact duplicate deliveries** — same `event_id` re-received by the collector (identical `ts`/`screen`/`platform` in every case). These are re-transmissions, not new client events.
+- Removing them leaves exactly **40,000 distinct client events**, all timestamped on 2026-07-05 (UTC), no nulls.
+
+The duplicates aren't spread evenly — they cluster into a retry storm around **20:41–20:48 UTC**. That minute 20:45 looks like the "busiest" minute in the raw data (351 rows) but holds only **39 distinct events** — it's a delivery burst, not real client activity. This is why counting raw rows would mislead on both questions.
+
+On the deduplicated events, the peak minute is a genuine **tie at 47 events**: **15:40** and **18:50** UTC. I'm reporting the earlier one as the peak (all times UTC).
+
+If by "received" you literally mean raw collector deliveries (counting each re-transmission), that answer would instead be 42,312 events with peak minute 20:45 — but that reflects the retry storm, not client behavior, so I'd recommend the deduplicated figures below.
+
+EVENTS_JUL5: 40000
+PEAK_MINUTE: 15:40

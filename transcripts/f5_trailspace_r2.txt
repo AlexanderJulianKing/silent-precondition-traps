@@ -1,0 +1,7 @@
+Clean result. After stripping the trailing whitespace present in ~3,000 of the `invoice_ref` values, every one of the 5,783 June payments matched exactly one of the 7,000 June invoices — no duplicate payments per invoice, no orphan references, no missing values.
+
+- **Paid rate:** 5,783 of 7,000 June invoices were paid within June = **82.61%**
+- **Collected:** the June payments sum to **$743,453.08** (all of it against June invoices, so the total is the same either way you scope it)
+
+PCT_INVOICES_PAID: 82.61%
+COLLECTED_USD: $743,453.08

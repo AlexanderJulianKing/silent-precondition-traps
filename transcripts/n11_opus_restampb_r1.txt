@@ -1,0 +1,9 @@
+The data tells a clean story:
+
+- **40,404** rows ingested (each with a unique `event_id`).
+- All rows are timestamped on July 6, so no date leakage.
+- But `event_id` is just an ingestion ID. The actual client event is identified by the device: `(user_id, client_seq)` — `client_seq` being the device's own event counter. **404 rows are duplicate deliveries** of a client event that was already received (same user, same `client_seq`, same `screen`, re-ingested ~90s later with a fresh `event_id`).
+
+Counting each client event once gives **40,000** distinct client events actually received.
+
+EVENTS_JUL6: 40000

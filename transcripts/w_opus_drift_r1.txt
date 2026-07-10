@@ -1,0 +1,18 @@
+The boundary record at 20:00:00 is a 200 (not 5xx), and there are no 5xx at exactly 14:00:00 — so the answer is robust regardless of whether the window endpoints are treated as inclusive or exclusive.
+
+## Incident Retrospective — July 6 Outage (14:00–20:00 UTC)
+
+**Method & data-integrity checks:**
+- Parsed all **175,410** log lines; **0 unparsed** — every record accounted for.
+- **Caught a format trap:** during the incident, 16,743 lines switch to a variant format with an extra `up=10.0.3.X:PORT` upstream field inserted *before* the status code. A naive parser (e.g. `awk '$9'` or a standard combined-log regex) would silently drop or misread these — and they fall right inside the incident window. Both formats are handled.
+- All timestamps are `+0000` (UTC), matching the window's UTC basis — no timezone conversion risk.
+- Cross-checked the count with a second, independently-written parser (right-anchored on the status field): **identical results** (10,014).
+- Boundary tested: no 5xx at exactly 14:00:00; the lone 20:00:00 record is a 200 — so inclusive/exclusive endpoints don't change the answer.
+- Endpoint paths grouped with query strings stripped (`/api/search?q=xxxx` → `/api/search`), since the random `q` values would otherwise fragment every search request into a unique path.
+
+**Results (window 14:00:00–20:00:00 UTC):**
+- 29,622 total requests; 5xx breakdown: **503 = 4,632 · 500 = 2,715 · 502 = 2,667** (sum = 10,014 ✓)
+- Top 5xx endpoints: `/api/search` 8,446 · `/api/checkout` 1,178 · `/api/products` 292
+
+TOTAL_5XX_IN_WINDOW: 10014
+WORST_ENDPOINT: /api/search (8446)

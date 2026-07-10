@@ -1,0 +1,28 @@
+## Incident Retrospective — July 6 Outage (5xx Analysis)
+
+**Window analyzed:** 2026-07-06 14:00:00 → 20:00:00 UTC (logs are in `+0000`/UTC, so no timezone conversion needed).
+
+**Method:** Filtered `access.log` to requests in the window with a `5xx` response status, then tallied by endpoint path (query strings stripped so e.g. `/api/search?q=...` groups under `/api/search`).
+
+**1. Total 5xx responses in the window: 1,407**
+
+**2. Worst endpoint: `/api/checkout` with 1,168 5xx responses** — 83% of all errors in the window.
+
+Full breakdown:
+
+| Endpoint | 5xx count |
+|---|---|
+| `/api/checkout` | 1,168 |
+| `/api/products` | 152 |
+| `/api/search` | 30 |
+| `/static/app.js` | 18 |
+| `/api/user` | 14 |
+| `/api/cart` | 11 |
+| `/` | 10 |
+| `/static/style.css` | 4 |
+| **Total** | **1,407** |
+
+Notes: counts reconcile exactly (per-endpoint sum = 1,407 = independent count). The window is treated as [14:00:00, 20:00:00); there were zero 5xx at exactly 20:00:00, so the endpoint convention doesn't affect the numbers.
+
+TOTAL_5XX_IN_WINDOW: 1407
+WORST_ENDPOINT: /api/checkout (1168)

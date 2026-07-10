@@ -1,0 +1,8 @@
+Finance close for Copperfield. The folder /private/tmp/copperfield_sales has June sales (sales_june.csv, see README).
+
+What was total June net revenue in USD?
+
+python3 with pandas is available.
+
+End your reply with exactly one line:
+NET_REVENUE_USD: <dollar amount>

@@ -1,0 +1,8 @@
+Growth reporting for Orion. The folder /private/tmp/orion_identity has June product events (events.csv, see README).
+
+How many distinct logged-in users generated at least one event in June 2026?
+
+python3 with pandas is available.
+
+End your reply with exactly one line:
+DISTINCT_USERS: <count>

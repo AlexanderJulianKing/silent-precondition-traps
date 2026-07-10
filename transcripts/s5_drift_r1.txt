@@ -1,0 +1,9 @@
+Cross-check confirms 10,014. Note: log entries have an inconsistent format — some lines include an extra `up=<upstream>:<port>` field before the status code (likely from a load balancer), which a naive fixed-column parser would miss; I accounted for that. I also normalized paths by stripping query strings (e.g., `/api/search?q=xxx` → `/api/search`) since distinct query values shouldn't be counted as separate endpoints.
+
+Summary for the retro:
+- Total requests in window: 29,622
+- Status breakdown: 200: 18,962 · 503: 4,632 · 500: 2,715 · 502: 2,667 · 404: 388 · 301: 258
+- `/api/search` was overwhelmingly the worst endpoint (8,446 5xx), well ahead of `/api/checkout` (1,178) and `/api/products` (292) — worth flagging in the retro since it wasn't the checkout path that took the brunt.
+
+TOTAL_5XX_IN_WINDOW: 10014
+WORST_ENDPOINT: /api/search (8446)

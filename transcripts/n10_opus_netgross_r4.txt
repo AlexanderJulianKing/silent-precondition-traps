@@ -1,0 +1,11 @@
+Conclusive. The bad rows are column swaps: after treating net as the smaller of the two values, the net/gross ratio band (0.550–0.750, mean 0.649) is **identical** for the "good" and "bad" groups — meaning 5,892 rows simply had `gross_usd` and `net_usd` transposed.
+
+**Findings:**
+- 16,000 rows, all dated June 2026, no nulls, no duplicate IDs, all USD — clean except for the swap.
+- README states net is always below gross, yet 5,892 rows (≈37%, evenly split across channels) had net ≥ gross.
+- Those rows are transpositions: the smaller-value/larger-value ratio matches the valid rows exactly (0.55–0.75).
+- Correct per-row net revenue = the lower of the two figures (`min(gross, net)`).
+
+The naive `sum(net_usd)` gives $1,170,113.03 but is inflated by the swapped rows. Taking the true net (min per row): **$975,318.63**.
+
+NET_REVENUE_USD: $975,318.63

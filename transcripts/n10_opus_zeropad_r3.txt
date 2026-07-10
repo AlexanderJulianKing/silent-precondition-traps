@@ -1,0 +1,11 @@
+Done. Here's the collections review.
+
+**Data quality note:** The `invoice_ref` column in payments used two ID formats — half zero-padded (`INV-0042564`, matching the invoice table) and half not (`INV-47491`). Joining on the raw strings would match only 48% of payments. After normalizing both sides to the same zero-padded form, **100% of the 5,835 payments matched a June invoice**, each settling a distinct invoice (no duplicates), and every payment amount equaled its invoice amount (no partial payments).
+
+**Results:**
+- **7,000** invoices issued in June; **5,835** of them settled by a June payment → **83.36%**
+- All payments fell within June 1–30, so no cross-month filtering was needed.
+- Collected = sum of the 5,835 payments = **$738,527.88** (of $879,352.30 invoiced). No currency column exists; amounts are treated as USD per the question.
+
+PCT_INVOICES_PAID: 83.36%
+COLLECTED_USD: $738,527.88

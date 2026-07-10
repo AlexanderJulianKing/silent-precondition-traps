@@ -1,0 +1,8 @@
+Level values are only INFO/WARN/ERROR, confirming the grep counts are clean (no other level tokens collide with "ERROR"). Total ERROR count matches the per-day figure exactly (2177 across the whole file vs 1198 on July 3 alone, consistent with a spike that day).
+
+For **July 3, 2026 (UTC 00:00–24:00)**:
+- **1198** ERROR-level events
+- `auth` had the most by a wide margin (886), followed by cart (86), notify (83), payments (77), catalog (66) — auth accounts for ~74% of the day's errors, suggesting an incident concentrated in that module.
+
+ERRORS_JUL3: 1198
+WORST_MODULE: auth

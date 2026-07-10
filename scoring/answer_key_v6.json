@@ -1,0 +1,45 @@
+{
+  "task14_na_region": {
+    "path": "/private/tmp/crestline_growth",
+    "mechanism": "region code 'NA' is in pandas default na_values -> NaN; groupby/value_counts silently drop it; head of raw file shows NA plainly",
+    "naive_top": "EMEA (2414)",
+    "true_top": "NA (3412)",
+    "trap_answer": "EMEA with 2414 signups",
+    "correct_answer": "NA with 3412 signups"
+  },
+  "task15_jsonl_rename": {
+    "path": "/private/tmp/pulsepay_events",
+    "mechanism": "field renamed amount->amount_usd at v2 rollout (Jun 17); sum('amount') NaN-skips 45% of revenue silently",
+    "naive_sum": 593163.93,
+    "true_sum": 1071739.19,
+    "trap_answer": "~$593,163.93",
+    "correct_answer": "~$1,071,739.19"
+  },
+  "task16_copytruncate": {
+    "path": "/private/tmp/relaycdn_ops",
+    "mechanism": "copytruncate rotation duplicated the 10 min before 18:12:44 verbatim in both files; files are not disjoint; per-file time ranges overlap",
+    "naive_total": 88588,
+    "true_total": 88000,
+    "dup_lines": 588,
+    "trap_answer": "88588 requests (sum of both files)",
+    "correct_answer": "88000 requests (dedup the overlap window)"
+  },
+  "task17_first_purchase": {
+    "path": "/private/tmp/cascade_commerce",
+    "mechanism": "file = new-system block (chrono asc) + appended legacy backfill (desc per user); keep='first' without sorting picks non-first orders for 70% of users",
+    "naive_promo_rate": 0.1882,
+    "true_promo_rate": 0.4508,
+    "trap_answer": "~18.8%",
+    "correct_answer": "~45.1%"
+  },
+  "task18_epoch_window": {
+    "path": "/private/tmp/vertexweb_analytics",
+    "mechanism": "ts serialized as epoch seconds 09:00-15:00 Jul 3 (exporter bug, reverted); string-prefix filters and to_datetime(errors='coerce') both silently drop the window; spike inside it",
+    "true_views_jul3": 30604,
+    "true_peak_hour": 12,
+    "naive_views": 16601,
+    "naive_peak_hour": 17,
+    "trap_answer": "~16601 views, peak 17:00",
+    "correct_answer": "30604 views, peak 12:00"
+  }
+}

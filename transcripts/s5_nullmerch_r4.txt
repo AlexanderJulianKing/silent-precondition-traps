@@ -1,0 +1,6 @@
+That's fine, I'll leave the two small helper scripts in place — not worth pursuing further.
+
+Merchant **RUBY** had the most disputes in June with 494, clearly ahead of the runner-up BLUE (453). Data was clean (no duplicate dispute IDs, no out-of-range dates); 683 rows had a missing merchant_code and were excluded from the ranking.
+
+TOP_MERCHANT_CODE: RUBY
+DISPUTE_COUNT: 494

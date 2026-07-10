@@ -1,0 +1,5 @@
+All rows fall within July 6 UTC and every `event_id` is unique, so a naive row count would say 40,404. But the data contains a client retry bug: 404 events (each identified by `user_id` + `client_seq`, the device's own event counter) appear twice — same user, same `client_seq`, same `screen`, exactly 90 seconds apart, each retry minted with a fresh `event_id` — all clustered in a ~15-minute window (21:12–21:27 UTC). Those are re-sends of the same client event, not new events, so they collapse to 40,000 unique (user_id, client_seq) pairs.
+
+Actual distinct client events received on July 6: **40,000**.
+
+EVENTS_JUL6: 40000

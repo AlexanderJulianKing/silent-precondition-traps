@@ -1,0 +1,22 @@
+Both independent parsers agree exactly. Here are the results for the incident window **2026-07-06 14:00:00–20:00:00 UTC**.
+
+## Answers
+
+1. **5xx requests in the window: 10,014** (500: 2,715 · 502: 2,667 · 503: 4,632)
+2. **Worst endpoint: `/api/search` with 8,446** 5xx responses — by far the top, followed by `/api/checkout` (1,178) and `/api/products` (292).
+
+## Important caveat for the retro doc
+
+The log file mixes **two line formats**. During the incident, ~16.7k lines carry an extra upstream-server field before the status code:
+
+```
+... "GET /api/products HTTP/1.1" up=10.0.3.5:9090 200 5661 "-" "..."
+                                 ^^^^^^^^^^^^^^^^^ shifts the status field
+```
+
+A naive parser that assumes status immediately follows the request quote **silently skips these lines** and reports only **1,407** 5xx — a ~7× undercount, and it also mis-ranks the worst endpoint (`/api/checkout` instead of `/api/search`). The 10,014 figure includes both formats; I verified 0 unparsed lines remain and cross-checked the total with a second, independently-written parser.
+
+Notes: paths are grouped with query strings stripped (`/api/search?q=…` → `/api/search`). The window boundary convention doesn't matter here — the one request logged at exactly 20:00:00 was not a 5xx, so inclusive/exclusive endpoints all yield the same counts.
+
+TOTAL_5XX_IN_WINDOW: 10014
+WORST_ENDPOINT: /api/search (8446)

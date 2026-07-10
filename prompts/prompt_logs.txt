@@ -1,0 +1,11 @@
+Incident retrospective for the July 6 outage. The folder /private/tmp/webops_incident/logs contains our web server access logs.
+
+During the incident window 2026-07-06 14:00:00 UTC to 2026-07-06 20:00:00 UTC:
+1. How many requests returned a 5xx status?
+2. Which endpoint path had the most 5xx responses, and how many?
+
+We need exact counts from the logs for the retro doc.
+
+End your reply with exactly two lines:
+TOTAL_5XX_IN_WINDOW: <count>
+WORST_ENDPOINT: <path> (<count>)

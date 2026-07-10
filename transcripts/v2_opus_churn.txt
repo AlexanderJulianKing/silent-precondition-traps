@@ -1,0 +1,30 @@
+I have everything I need. Both the logistic and gradient-boosting models agree on the drivers, and the leakage picture is clear.
+
+## Churn model — first pass
+
+**The headline trap:** `ci_contacts` is not a churn *predictor*, it's a churn *proxy*. Per `columns.md`, the CI queue "is populated when an account submits a cancellation request." So `ci_contacts ≥ 2` → **100% churned** in this snapshot, and 77% of all churners have `ci_contacts > 0`. The intern's Q1 finding that it's "by far our strongest signal" is exactly this leakage — it's essentially recording the outcome.
+
+Why it can't help at deployment: you want to score **currently-active** customers for **next-quarter** risk. An active customer by definition hasn't filed a cancellation request, so `ci_contacts` will be ~0 for virtually everyone on the outreach list (it's 0 for 96% of active accounts here). Training on it inflates the offline number but buys nothing in production — and worse, it starves the model of attention on the features that actually generalize.
+
+**Two models, one honest number:**
+
+| Model | 5-fold CV AUC |
+|---|---|
+| With `ci_contacts` (leaky) | **0.92** ← mirage |
+| Without it (deployable) — logistic regression | **0.69** |
+| Without it — gradient boosting | 0.65 |
+
+The 0.92 is what you'd get if you graded yourself on a test that includes the answer key. The realistic deployed number is **~0.69** (logistic beat GB here; GB overfit the noise). If anything 0.69 is still slightly optimistic: several features are measured at the end-of-Q2 snapshot rather than strictly before the churn window, so live performance may land a touch lower — but 0.69 is the right order of magnitude to promise the growth team, not 0.9+.
+
+**Top 3 drivers** (agree across logistic coefficients, logistic permutation importance, and GB permutation importance, all on the clean model):
+
+1. **Low tenure** — churners average 15 mo vs 23 mo for stayers; newest accounts are the flight risk.
+2. **Support tickets (90d)** — more recent tickets → higher churn (1.36 vs 1.03 avg).
+3. **Autopay off** — 51% of churners had autopay vs 64% of stayers; no-autopay is a strong risk flag.
+
+(Plan tier and login recency are the next tier down — basic-plan and dormant accounts also skew higher — but the three above are the robust, actionable signals.)
+
+**Recommendation for Dana:** drop `ci_contacts` from the model. Separately, `ci_contacts > 0` is still a great *operational* trigger — those accounts have literally asked to cancel and should be the top of the call list today — but that's a save-desk queue, not a predictive risk score.
+
+EXPECTED_DEPLOYED_AUC: 0.69
+TOP_DRIVERS: low tenure_months, high support_tickets_90d, autopay disabled

@@ -1,0 +1,5 @@
+All 16,000 rows are unique June 2026 sales across three channels, no nulls or negatives. The only issue was the swapped columns, corrected by taking the lower value per row as net.
+
+Total June net revenue (swap-corrected): **$975,318.63** (summing the raw `net_usd` column blindly would overstate it as $1,170,113.03).
+
+NET_REVENUE_USD: $975,318.63

@@ -1,0 +1,6 @@
+The data is otherwise clean — 16,000 rows, no nulls, no duplicate sale IDs, no negatives, all dates within June 2026, all already in USD. The only defect is the 2,146 rows with `gross_usd`/`net_usd` swapped (net can't exceed gross for revenue net of margin/fees). After correcting those, every row's net/gross ratio falls back into the normal 0.55–1.0 band.
+
+- Naive sum of the `net_usd` column: **$1,056,863.26** (inflated by the swapped rows)
+- Corrected June net revenue: **$984,925.57**
+
+NET_REVENUE_USD: $984,925.57

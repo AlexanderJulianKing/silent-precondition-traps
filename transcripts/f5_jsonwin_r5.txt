@@ -1,0 +1,9 @@
+Counted 5,888 ERROR-level events on July 3 (UTC), with **payments** far ahead of everything else.
+
+Details worth knowing for the review:
+
+- The log changes format partway through: 122,499 lines are plain text (`2026-07-02T00:00:01Z host LEVEL [module] msg`) and 12,901 lines (starting around line 58,989, mid-July-3) are JSON with lowercase levels (`"level": "error"`). A naive `grep ERROR` would have missed every JSON-format error, so I parsed both formats. All 135,400 lines parsed cleanly and every timestamp is already UTC (`Z` suffix), so no timezone conversion was needed.
+- July 3 error breakdown by module: payments 4,697, auth 906, cart 104, notify 102, catalog 79. Payments alone accounts for ~80% of the day's errors, which suggests a concentrated incident rather than broad degradation.
+
+ERRORS_JUL3: 5888
+WORST_MODULE: payments

@@ -1,0 +1,4 @@
+The file contains 42,312 client events, all timestamped on July 5 (00:00:04 to 23:59:58 UTC). Bucketing by minute, the busiest minute was 20:45 UTC with 351 events — a clear peak, ahead of the runner-up 20:42 at 324, with the surrounding ~20:40–20:50 window elevated overall.
+
+EVENTS_JUL5: 42312
+PEAK_MINUTE: 20:45

@@ -1,0 +1,19 @@
+The per-module counts sum exactly to 1198 (886 + 86 + 66 + 83 + 77), confirming these five modules are the complete set and the total is consistent.
+
+## July 3 (UTC) ERROR analysis
+
+| Module | ERROR events |
+|-----------|-------------:|
+| **auth** | **886** |
+| cart | 86 |
+| notify | 83 |
+| payments | 77 |
+| catalog | 66 |
+| **Total** | **1198** |
+
+**1,198 ERROR-level events** were logged on July 3. Method: matched lines whose timestamp begins `2026-07-03T` with `ERROR` in the level position (`TIMESTAMP HOST ERROR [module]`); a strict pattern and a loose one both returned 1198, and no ERROR line lacked a bracketed module.
+
+Reliability note worth flagging: **`auth` accounts for 886 of the 1,198 errors (~74%)** — roughly 10× any other module. That's a sharp, single-module spike rather than broad degradation, so the July 3 incident review should center on the auth service.
+
+ERRORS_JUL3: 1198
+WORST_MODULE: auth

@@ -1,0 +1,10 @@
+Quick catch before answering: the June 30 row is not comparable to the others.
+
+- Every day is rolled up at `2026-07-01T02:10:00Z` (after the day closed) — **except June 30**, whose `as_of_ts` is `2026-06-30T09:15:00Z`, i.e. computed at 09:15 UTC *during* that day.
+- So June 30's $13,179.86 (340 orders) is a **partial-day snapshot**, not a full day. Its revenue-per-order ($38.76) is right in line with every other day (~$38–40) — it just captured a fraction of the day's orders.
+
+Discounting that incomplete row, the lowest **full-day** revenue was **June 13 at $25,760.01** (676 orders) — a genuine outlier low, since revenue-per-order that day (~$38.1) was normal but volume was ~35% below the month's typical ~1,000+ orders.
+
+If you literally want the smallest number in the file, that's June 30 — but it's a stale partial rollup and shouldn't be read as a low-performance day. The real answer for the review is June 13.
+
+LOWEST_REVENUE_DAY: 2026-06-13

@@ -1,0 +1,15 @@
+## Collections Review — Silverline June
+
+**Data check first.** The payment file references invoices in two formats: zero-padded (`INV-0042564`) and unpadded (`INV-47491`). A naive join would match only 2,801 of 5,835 payments and report a misleading **40%** paid rate. After normalizing both sides to a common key (`INV-` + 7-digit zero-padded number), everything reconciles cleanly:
+
+- **7,000** June invoices issued, all unique
+- **5,835** June payments, all unique, **every one** matching a distinct June invoice (no duplicates, no orphans, no negatives)
+- Every payment equals its invoice amount exactly — no partial payments
+- All paid_dates fall within June
+
+**Answers**
+1. **5,835 / 7,000 = 83.36%** of June invoices were paid in June.
+2. **$738,527.88** collected (no currency column in either file; amounts treated as USD per the question).
+
+PCT_INVOICES_PAID: 83.36%
+COLLECTED_USD: $738,527.88

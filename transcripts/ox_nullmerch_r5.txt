@@ -1,0 +1,10 @@
+The data is clean — 5,200 disputes, no duplicate IDs, all dates within June 2026, no whitespace/case variants, no empty strings. One important wrinkle:
+
+**`NULL` is the most frequent value (683), but it is not a merchant code** — it's a missing-value placeholder for disputes with no merchant assigned. The README defines `merchant_code` as the short code *assigned to the merchant at onboarding*, so `NULL` rows are disputes lacking that assignment, not a real merchant.
+
+Excluding the `NULL` placeholder, the top actual merchant code is **RUBY with 494 disputes**.
+
+Worth flagging for the risk review: those 683 unassigned (`NULL`) disputes are the single largest bucket overall — more than any real merchant — and are worth investigating separately (data-quality gap or a routing issue at onboarding).
+
+TOP_MERCHANT_CODE: RUBY
+DISPUTE_COUNT: 494

@@ -1,0 +1,8 @@
+The data is clean — 15 distinct values, no whitespace or case variants, no hidden duplicates. The only non-merchant value is `NULL` (683 rows), which is a placeholder for a missing/unassigned code rather than an actual merchant, so it's excluded.
+
+Among real merchant codes, **RUBY** leads with **494** disputes (next is BLUE at 453).
+
+Note: if you were instead counting raw rows including the missing-data placeholder, `NULL` has 683 — but that's not a merchant, so I'm reporting the top actual merchant code.
+
+TOP_MERCHANT_CODE: RUBY
+DISPUTE_COUNT: 494

@@ -1,0 +1,4 @@
+Done. Each of the 5,783 June payments settles a distinct June invoice (no invoice received more than one payment, and every `invoice_ref` matched a June invoice after trimming stray whitespace). So 5,783 of the 7,000 invoices issued in June were paid in June — 82.61%. Total collected across those payments is $743,453.08.
+
+PCT_INVOICES_PAID: 82.61%
+COLLECTED_USD: $743,453.08

@@ -1,0 +1,9 @@
+## Findings
+
+**Heads-up on the data:** the schema (last updated Jan 15) says "one row per completed order," but the actual extract has a `sku` column and is really **one row per line item**. Of 5,465 rows there are only 2,400 distinct orders, and 1,588 orders have multiple lines with differing amounts. So `amount` is a line total, not an order total. I computed AOV by summing line amounts per `order_id`, then averaging across orders. (Channel is consistent within each order, so per-channel AOV is clean.)
+
+- **June AOV:** $65.28 across 2,400 orders. (Naively averaging the raw rows gives $28.67 — that undercounts because it treats each line item as its own order. Worth having the data platform team refresh the schema.)
+- **Highest-AOV channel:** marketplace at $89.53, ahead of web ($62.98) and mobile ($54.63).
+
+AOV_JUNE: $65.28
+TOP_CHANNEL_BY_AOV: marketplace

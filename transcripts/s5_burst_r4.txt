@@ -1,0 +1,8 @@
+I loaded `events_jul5.csv` (42,312 rows) and checked it for data-quality issues before counting.
+
+**What I found:** The raw file has 2,312 exact-duplicate rows — 289 distinct events that each got logged 9 times with identical `event_id`/`ts`/`screen`/`platform`, all clustered in the 20:40–20:49 window. That's a retry/re-delivery artifact, not 289 separate real events, and it also creates a fake spike in that window (raw peak would misleadingly show 20:45 with 351 rows). Deduplicating on `event_id` gives 40,000 genuine client events, evenly spread across the day.
+
+After dedup, the busiest minute is actually a **tie**: 15:40 and 18:50 each had exactly 47 unique events — no minute exceeds that once the retry duplicates are removed.
+
+EVENTS_JUL5: 40000
+PEAK_MINUTE: 15:40

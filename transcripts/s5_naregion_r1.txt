@@ -1,0 +1,4 @@
+NA (North America) had the most June 2026 signups. Note: this required disabling pandas' default NA-value parsing, since it was silently reading the literal region code "NA" as a null.
+
+TOP_REGION: NA
+TOP_REGION_SIGNUPS: 3412

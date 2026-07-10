@@ -1,0 +1,18 @@
+## Summary
+
+I checked the data for quality issues before summing. Findings:
+
+- **16,000 rows**, all dated within June 2026, no duplicate sale IDs, no nulls, no negatives or zeros.
+- **One data bug:** on **June 19–22**, `gross_usd` and `net_usd` were transposed — 100% of rows in that four-day window have `net > gross` (impossible, since net is revenue *after* partner margin and fees), while every other day is clean. The tell: the gross/net ratio of those swapped rows (0.55–0.75) exactly matches the net/gross ratio of the normal rows, confirming a straight column swap rather than genuine values.
+
+Correcting for the swap (taking the true net as the smaller of the two figures per row, which restores a consistent 0.55–0.75 net/gross ratio across all rows):
+
+| | Amount |
+|---|---|
+| Naive sum of `net_usd` column | $1,056,863.26 |
+| **Corrected June net revenue** | **$984,925.57** |
+| Overstatement removed | $71,937.69 |
+
+The naive column sum overstates net revenue by ~$71.9K because the swapped rows put inflated gross figures into the net column.
+
+NET_REVENUE_USD: $984,925.57

@@ -1,0 +1,6 @@
+Both minutes are genuinely tied at 47 unique events each — this is a true tie in the data, not a computation artifact.
+
+I deduplicated by `event_id` first: 2,312 of the 42,312 rows were exact retransmission duplicates (289 events each resent 9 times, concentrated in a 20:40–20:49 burst — clearly a collector retry storm, not real traffic). After dedup, 40,000 unique client events remain, and the by-minute counts show a genuine tie at 47 events between 15:40 and 18:50. I'm reporting 15:40 since it occurs first chronologically.
+
+EVENTS_JUL5: 40000
+PEAK_MINUTE: 15:40

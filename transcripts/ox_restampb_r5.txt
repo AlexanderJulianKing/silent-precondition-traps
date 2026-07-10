@@ -1,0 +1,11 @@
+The file has **40,404 ingested rows**, but 404 of them are duplicate deliveries, not distinct client events.
+
+**What's going on:** The pipeline delivers at-least-once. 404 client events were ingested twice — each pair shares the same `(user_id, client_seq)` (the device's own event counter) and the same `screen`, but the retry got a fresh server-assigned `event_id` and a timestamp exactly **90 seconds** later (an ack-timeout retry). Because `event_id` is minted on ingest, deduping on `event_id` alone misses these — you have to dedupe on the device-level identity `(user_id, client_seq)`.
+
+- Ingested rows: 40,404
+- Duplicate redeliveries: 404 (all screen-consistent, all 90s apart)
+- **Distinct client events actually received: 40,000**
+
+Data checks out otherwise: no nulls, all timestamps within July 6 UTC, no fully-duplicated rows.
+
+EVENTS_JUL6: 40000

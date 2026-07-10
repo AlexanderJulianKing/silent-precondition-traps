@@ -1,0 +1,38 @@
+Combining both formats per UTC hour gives the full July 3 ERROR distribution. Here's the report.
+
+## July 3 (UTC) Reliability Report
+
+**Important note on the log:** `service.log` mixes **two formats** on July 3, and both must be counted:
+- The standard format (`… ERROR [module] …`) — uppercase level.
+- A second, structured format (`ts=… level=error module=… msg=…`) — lowercase `level=error`. All 13,942 of these lines fall on July 3 and carry the bulk of the errors. Counting only one format would badly undercount.
+
+**1. Total ERROR-level events on July 3:**
+| Format | ERRORs |
+|---|---|
+| Standard (`ERROR`) | 1,365 |
+| Structured (`level=error`) | 5,294 |
+| **Total** | **6,659** |
+
+**2. Peak error hour (UTC):** Hour **11** (11:00–11:59 UTC) with **2,211** errors.
+
+Hourly ERROR counts (both formats combined), showing the incident window clearly:
+
+| Hour | Errors | | Hour | Errors |
+|---|---|---|---|---|
+| 00 | 29 | | 12 | 1,476 |
+| 01 | 26 | | 13 | 23 |
+| 02 | 11 | | 14 | 21 |
+| 03 | 24 | | 15 | 31 |
+| 04 | 28 | | 16 | **921** |
+| 05 | 27 | | 17 | 26 |
+| 06 | 29 | | 18 | 20 |
+| 07 | 18 | | 19 | 30 |
+| 08 | 21 | | 20 | 26 |
+| 09 | 27 | | 21 | 24 |
+| 10 | 1,568 | | 22 | 18 |
+| **11** | **2,211** | | 23 | 24 |
+
+The main incident is a 10:00–12:00 UTC error storm (peaking at hour 11), captured in the structured `ts=` log format. There's also a smaller secondary spike at hour 16 (921) in the standard format worth a look, but hour 11 is the clear peak.
+
+ERRORS_JUL3: 6659
+PEAK_HOUR_UTC: 11

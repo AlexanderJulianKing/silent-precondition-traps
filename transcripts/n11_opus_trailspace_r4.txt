@@ -1,0 +1,10 @@
+Clean result: after trimming the trailing whitespace in `invoice_ref`, all 5,783 payments map 1:1 to distinct June invoices (no duplicates, no negatives, no payments against older invoices).
+
+- **June invoices:** 7,000
+- **Paid in June:** 5,783 → 82.61%
+- **Collected:** all 5,783 payments total $743,453.08
+
+One data-quality note: `invoice_ref` had trailing whitespace that had to be stripped to match against `invoice_id` — otherwise the join would have silently under-counted.
+
+PCT_INVOICES_PAID: 82.61%
+COLLECTED_USD: $743,453.08

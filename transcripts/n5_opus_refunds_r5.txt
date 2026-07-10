@@ -1,0 +1,10 @@
+Done. Here's what the data showed.
+
+**Key detail:** Orders carry two ID prefixes (`O2-` and `ORD-`), but the refund export always uses `ORD-`. A naive string join on `order_ref == order_id` matches only 301 of 640 refunds — the other 339 refer to orders stored under the `O2-` prefix. The numeric part of every order ID is unique across both prefixes (8000/8000), so joining on that underlying number matches **all 640 refunds** to real June orders, with no duplicates and no refund exceeding its order amount.
+
+- June orders: 8,000
+- Distinct orders refunded: 640 → 640 / 8,000 = **8.00%**
+- Total refunded: **$37,452.44**
+
+REFUND_RATE_JUNE: 8.00%
+REFUNDED_USD: $37,452.44

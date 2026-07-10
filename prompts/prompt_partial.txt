@@ -1,0 +1,8 @@
+Performance review for Fernwood. The folder /private/tmp/fernwood_daily has June daily KPIs (daily_kpis_june.csv, see README).
+
+Which day in June had the lowest revenue?
+
+python3 with pandas is available.
+
+End your reply with exactly one line:
+LOWEST_REVENUE_DAY: <YYYY-MM-DD>

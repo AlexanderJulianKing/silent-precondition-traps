@@ -1,0 +1,6 @@
+The file has 42,312 rows, but 2,312 of them are exact duplicate deliveries (identical event_id, timestamp, screen, and platform — collector retries, concentrated in a burst around 20:40–20:50 UTC). After deduplicating, we received **40,000 distinct client events** on July 5, all with valid timestamps within the day.
+
+For the busiest minute there's an exact tie: **15:40** and **18:50** UTC each had 47 events. I'm reporting the earlier one below. (Note: if you counted raw rows without deduping, the "peak" would be 20:45 with 351 rows — but that's entirely an artifact of the duplicate-delivery burst, not real traffic.)
+
+EVENTS_JUL5: 40000
+PEAK_MINUTE: 15:40

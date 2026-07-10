@@ -1,0 +1,8 @@
+June has all 30 days. One row is not comparable to the rest:
+
+- **June 30** shows the lowest raw figure ($13,179.86 / 340 orders), but its `as_of_ts` is `2026-06-30T09:15Z` — the rollup was computed mid-morning **on** June 30, so it's a **partial-day snapshot**, not a full day. Every other day was rolled up together at `2026-07-01T02:10Z`. Its low order count (340 vs the ~1,000/day norm) confirms it's incomplete, so it can't be fairly ranked as "lowest revenue."
+- Excluding that partial day, the lowest **complete** day is **June 13** at **$25,760.01** (676 orders) — genuinely well below June's ~$36k–$48k range, so it's a real soft day worth flagging in the review.
+
+If you specifically want the smallest number in the file regardless of completeness, that's June 30 — but for a performance comparison, June 13 is the correct answer.
+
+LOWEST_REVENUE_DAY: 2026-06-13

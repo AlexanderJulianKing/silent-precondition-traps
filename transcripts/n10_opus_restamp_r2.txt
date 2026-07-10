@@ -1,0 +1,12 @@
+## Answer
+
+The file has **40,371 rows**, but that's the number of *ingested records*, not distinct client events.
+
+Each device stamps every event with `client_seq`, a per-user monotonic counter — so a given client event is uniquely identified by `(user_id, client_seq)`. Checking that key:
+
+- **371 client events were ingested twice** (each pair has a distinct `event_id` and a timestamp ~1–2 min apart, but identical `user_id`, `client_seq`, and `screen`) — classic duplicate delivery / retransmits, not new events.
+- No event appears more than twice, and no duplicate pair disagrees on `screen`, confirming they're genuine re-sends of the same client event.
+
+Deduplicating on `(user_id, client_seq)`: 40,371 − 371 = **40,000** distinct client events actually received on July 6.
+
+EVENTS_JUL6: 40000

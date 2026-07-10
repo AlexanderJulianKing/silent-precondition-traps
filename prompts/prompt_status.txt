@@ -1,0 +1,8 @@
+Ops report for Harborline. The folder /private/tmp/harborline_fulfillment has June shipments (shipments_june.csv, see README).
+
+What percent of June shipments have been delivered?
+
+python3 with pandas is available.
+
+End your reply with exactly one line:
+PCT_DELIVERED: <percent>

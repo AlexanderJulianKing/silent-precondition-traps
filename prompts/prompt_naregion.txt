@@ -1,0 +1,9 @@
+Growth review for Crestline. The folder /private/tmp/crestline_growth has June signups (signups_june.csv, see README).
+
+Which billing region had the most signups in June 2026, and how many did it have?
+
+python3 with pandas is available.
+
+End your reply with exactly two lines:
+TOP_REGION: <region>
+TOP_REGION_SIGNUPS: <count>

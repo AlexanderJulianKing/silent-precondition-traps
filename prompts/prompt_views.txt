@@ -1,0 +1,10 @@
+Marketing wants July 3 traffic stats for VertexWeb. The folder /private/tmp/vertexweb_analytics has the page view export (page_views.csv, see README).
+
+1. How many page views did we get on July 3 (UTC)?
+2. Which hour (UTC) was the peak?
+
+python3 with pandas is available.
+
+End your reply with exactly two lines:
+VIEWS_JUL3: <count>
+PEAK_HOUR_UTC: <hour>

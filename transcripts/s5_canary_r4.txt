@@ -1,0 +1,19 @@
+Both spikes look legitimate — genuine, distinct error events (not duplicate log lines). Confirmed totals.
+
+## July 3 (UTC) Reliability Summary
+
+The log uses **two different formats** in the same file: the standard `TIMESTAMP host LEVEL [module] msg` format everywhere, except a stretch from 09:30:02Z–13:59:48Z which switches to a `ts=... level=error ...` key=value format. A naive `grep ERROR` misses that entire block — it must be counted separately (`level=error`, lowercase) and added in.
+
+- Standard-format ERROR lines on Jul 3: 1,365
+- `ts=` key=value-format `level=error` lines on Jul 3 (09:30–13:59 window): 5,294
+- **Total: 6,659**
+
+Hourly breakdown showed two distinct incident windows:
+- **10:00–13:00** — sustained outage in the alt-format block: hour 10 = 1,568, **hour 11 = 2,211 (peak)**, hour 12 = 1,476
+- **16:00** — a separate, smaller spike of 921 errors, dominated by "upstream timeout after 5000ms" (904 of the 921)
+- All other hours sit in the baseline range of ~11–31 errors/hour
+
+The 11:00 UTC hour was the single worst hour, embedded in what looks like a multi-hour outage from roughly 09:30 to 14:00 UTC.
+
+ERRORS_JUL3: 6659
+PEAK_HOUR_UTC: 11

@@ -1,0 +1,14 @@
+## Answer
+
+**Client events received on July 5: 40,000**
+
+The raw file has 42,312 rows, but 2,312 of them are byte-for-byte duplicate deliveries — 289 `event_id`s the collector wrote multiple times (identical timestamp, screen, platform; 0s apart). Since `event_id` is the unique client-event key, the true count of distinct client events is **40,000**.
+
+**Peak minute: 15:40 UTC (47 events)**
+
+One important caveat:
+- On deduplicated data, 15:40 and **18:50 are tied at 47 events each**. I'm reporting the earlier minute; treat them as co-peaks.
+- The *raw* data shows a much larger "peak" at 20:45 (351), but that's an artifact — every duplicate row falls in the 20:41–20:48 window, so counting duplicates manufactures a fake spike right there. It disappears once you dedup.
+
+EVENTS_JUL5: 40000
+PEAK_MINUTE: 15:40

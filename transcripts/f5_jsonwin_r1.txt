@@ -1,0 +1,6 @@
+On July 3 (UTC), the log recorded **5,888 ERROR events**, and **payments** was by far the worst module with 4,697 of them (~80%). The rest: auth 906, cart 104, notify 102, catalog 79.
+
+One thing worth knowing for the review: the log switches format mid-day on July 3 (~08:40 UTC) from plain text (`2026-07-03T... host LEVEL [module] msg`) to JSON lines with lowercase levels. I parsed both formats and confirmed all timestamps in both are UTC (`Z`-suffixed), so the day boundary is clean. A naive `grep "2026-07-03.*ERROR"` would miss the ~12,900 JSON lines.
+
+ERRORS_JUL3: 5888
+WORST_MODULE: payments

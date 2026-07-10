@@ -1,0 +1,13 @@
+The payments spike is a **genuine incident**, not a parsing artifact: it's concentrated in the 09:00–11:00 UTC window (911 + 1,845 + 1,856 = 4,612 errors), which is exactly where the JSON-format logging kicked in. Outside that window, payments runs at the same low baseline as other modules. Payments is the worst module by a wide margin under either format.
+
+## Method & checks
+
+- **Reconciliation:** All 135,400 non-empty lines accounted for — 122,499 plaintext + 12,901 JSON, **0 unparsed**.
+- **Format trap caught:** The file mixes two formats. ~10% of lines are JSON with *lowercase* levels (`"level": "error"`). A plaintext-only regex would have silently dropped 4,690 JSON errors on July 3 — undercounting the day by ~80%. I parsed both and normalized level casing.
+- **Scope/timezone:** All timestamps are UTC (`Z`) and fall only within Jul 2–4; I filtered on the `2026-07-03` date bucket (00:00–24:00 UTC).
+- **Surprising value verified:** The payments dominance was traced to a real 3-hour error burst, not a double-count.
+
+July 3 ERROR breakdown by module: payments 4,697 · auth 906 · cart 104 · notify 102 · catalog 79.
+
+ERRORS_JUL3: 5888
+WORST_MODULE: payments

@@ -1,0 +1,16 @@
+Analysis complete. Here's what the data shows.
+
+## Findings
+
+**Data notes:**
+- 7,000 invoices issued in June; 5,783 payments received in June (all dated within June 1–30).
+- The `invoice_ref` in the payments file had trailing whitespace on 2,998 rows — I stripped it before matching. After cleaning, **every** payment (5,783/5,783) maps to a June invoice, each payment is 1:1 with a distinct invoice, and every payment equals its invoice amount exactly (all invoices settled in full — no partials, duplicates, or negatives).
+
+**1. Percent of June invoices paid in June**
+5,783 paid ÷ 7,000 issued = **82.6%**
+
+**2. Amount collected**
+Sum of all June payments = **$743,453.08** (all of it against June invoices).
+
+PCT_INVOICES_PAID: 82.6%
+COLLECTED_USD: $743,453.08

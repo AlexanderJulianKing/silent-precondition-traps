@@ -1,0 +1,9 @@
+I dug into the data. Here's what "actually received" comes down to:
+
+- **40,404** raw rows in the file, all timestamped July 6, every `event_id` unique.
+- But `client_seq` is the device's own per-user event counter — so a given client event is uniquely identified by `(user_id, client_seq)`, not `event_id`.
+- **404** rows are duplicate deliveries: the same `(user_id, client_seq)` appears twice, always with an **identical screen** but a **new `event_id`** and a receive-`ts` ~90s later. All 404 cluster in a 21:16–21:26 UTC retransmission burst — classic retry/re-ingest, one extra copy each.
+
+So the file records 40,404 ingested rows, but those represent only **40,000 distinct client events** (`40,404 − 404`). Deduplicating by the device counter is the right call since the counter is exactly what identifies a real client event.
+
+EVENTS_JUL6: 40000

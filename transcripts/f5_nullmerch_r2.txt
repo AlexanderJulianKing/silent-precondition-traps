@@ -1,0 +1,4 @@
+The `NULL` entries (683 rows) are the literal string `NULL` in the CSV — these are disputes with no assigned merchant code, not a real merchant. Excluding those missing values, the merchant with the most disputes in June is **RUBY** with **494** disputes (next highest: BLUE at 453).
+
+TOP_MERCHANT_CODE: RUBY
+DISPUTE_COUNT: 494

@@ -1,0 +1,17 @@
+Done. Here's the collections review for Silverline June.
+
+## Findings
+
+**Data hygiene issue (important):** Invoice IDs are consistently zero-padded to 7 digits (`INV-0042569`), but payment `invoice_ref` values are a mix — 2,801 padded (`INV-0042564`) and 3,034 unpadded (`INV-47491`). Matching the raw strings would only catch the 2,801 padded refs and understate collections badly (it would report **40.01%** paid). I normalized both sides on the numeric portion.
+
+**After normalization the data is clean:**
+- All 5,835 payments match a June invoice (0 unmatched, 0 duplicate refs).
+- Every payment amount exactly equals its invoice amount — no partial payments, so a payment = full settlement.
+- No refunds/negatives. No currency column present; amounts treated as USD.
+
+## Answers
+1. **Invoices paid in June:** 5,835 of 7,000 June invoices settled = **83.36%**
+2. **Collected:** sum of all 5,835 June payments = **$738,527.88** (all settle June invoices)
+
+PCT_INVOICES_PAID: 83.36%
+COLLECTED_USD: $738,527.88

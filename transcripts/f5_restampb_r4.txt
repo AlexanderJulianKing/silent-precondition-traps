@@ -1,0 +1,5 @@
+The raw file has 40,404 rows, but 404 of them are duplicate deliveries: around 21:16–21:27 UTC (an ingestion hiccup, evidently), 404 events were re-sent by clients roughly 90 seconds after the original. Each duplicate pair shares the same `user_id`, `client_seq` (the device's event counter), and `screen`, but got a fresh `event_id` and timestamp at ingestion — so the event_id column alone hides them.
+
+Deduplicating on (`user_id`, `client_seq`) — which identifies the actual client event — leaves **40,000 distinct client events** received on July 6. All timestamps fall within the day, and there are no nulls or malformed rows.
+
+EVENTS_JUL6: 40000

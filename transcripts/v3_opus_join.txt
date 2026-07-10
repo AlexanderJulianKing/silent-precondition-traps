@@ -1,0 +1,16 @@
+Here's what June's payment ledger shows and how I reconciled it.
+
+**Data checks**
+- **orders.csv**: 3,200 orders, all dated in June, no duplicate order_ids.
+- **payments.csv**: 4,318 entries, statuses only `succeeded` (3,254) or `failed` (1,064). All posted dates in June. No negative amounts (no refunds).
+
+**Two adjustments matter:**
+
+1. **Failed payments don't collect money.** Only the 3,254 `succeeded` entries represent cash received. The 1,064 failed ones are excluded.
+
+2. **Duplicate gateway postings.** 278 orders had two `succeeded` entries that are identical in order_id, posted_date, and amount — clearly the gateway double-posting the same charge, not a real second collection. Confirming evidence: every deduped succeeded payment's amount equals its order_total *exactly*, and no order has two differing successful amounts. Counting these twice would overstate revenue by $20,735.14 (the raw succeeded sum is $252,296.44). I collapsed each to a single collection.
+
+**Result:** 2,976 distinct orders collected, each paid in full at its order total. (The remaining 224 orders had only failed payments — unpaid.)
+
+COLLECTED_JUNE_USD: $231,561.30
+PAID_ORDERS: 2976

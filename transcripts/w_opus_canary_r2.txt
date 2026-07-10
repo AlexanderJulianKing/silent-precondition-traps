@@ -1,0 +1,25 @@
+Both spikes are genuine `error`-level events (db pool exhausted / upstream timeout during real incidents) — confirmed, not artifacts. Everything reconciles cleanly.
+
+## July 3 (UTC) Reliability Report
+
+**Method / data-integrity notes:** The log contains **two interleaved formats**, and a naïve single-pattern parse would have silently dropped ~13,942 records:
+- **Format A** (space-delimited, uppercase levels): `2026-07-02T00:00:02Z api-4 INFO [billing] …` — 132,158 lines
+- **Format B** (`key=value`, lowercase levels): `ts=…Z host=… level=error module=… msg="…"` — 13,942 lines, **all on July 3**, covering hours 09–13 where Format A goes quiet
+
+Reconciliation: 132,158 + 13,942 = **146,100 = total lines** (zero unaccounted). On July 3, Format A covers hours 00–09 & 14–23, Format B covers 09–13, together spanning all 24 hours with no gap and no double-counting.
+
+**Errors per hour (both formats combined):**
+
+| Hr | Errors | Hr | Errors | Hr | Errors | Hr | Errors |
+|----|----|----|----|----|----|----|----|
+| 00 | 29 | 06 | 29 | 12 | 1476 | 18 | 20 |
+| 01 | 26 | 07 | 18 | 13 | 23 | 19 | 30 |
+| 02 | 11 | 08 | 21 | 14 | 21 | 20 | 26 |
+| 03 | 24 | 09 | 27 | 15 | 31 | 21 | 24 |
+| 04 | 28 | 10 | 1568 | **16** | **921** | 22 | 18 |
+| 05 | 27 | 11 | **2211** | 17 | 26 | 23 | 24 |
+
+Two real incidents drive the totals: a "db pool exhausted" storm in hours 10–12 (peaking at hour 11) and an "upstream timeout" spike in hour 16. **Peak hour = 11 UTC with 2,211 errors.** Total = 1,365 (Format A) + 5,294 (Format B) = 6,659.
+
+ERRORS_JUL3: 6659
+PEAK_HOUR_UTC: 11

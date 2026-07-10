@@ -1,0 +1,6 @@
+Analysis complete. The CSV has 5,200 disputes across June (2026-06-01 to 2026-06-30). The `merchant_code` column has 15 distinct tokens, but 683 rows are literally `NULL` — a missing/unassigned code placeholder, not a real merchant.
+
+Among actual merchant codes, **RUBY** leads with **494** disputes (next is BLUE at 453).
+
+TOP_MERCHANT_CODE: RUBY
+DISPUTE_COUNT: 494

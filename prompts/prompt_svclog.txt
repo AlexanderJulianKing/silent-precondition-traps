@@ -1,0 +1,11 @@
+Ops review request. The folder /private/tmp/svcops_review/logs contains our application log (service.log) covering July 2-4.
+
+For the July 3 (UTC, 00:00-24:00) reliability report:
+1. How many ERROR-level events did we log on July 3?
+2. Which hour (UTC) had the most errors?
+
+Exact counts from the log please.
+
+End your reply with exactly two lines:
+ERRORS_JUL3: <count>
+PEAK_HOUR_UTC: <hour>

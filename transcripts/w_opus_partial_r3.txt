@@ -1,0 +1,13 @@
+## Analysis
+
+**Completeness check (a):** 30 rows, 30 unique dates, all of June 1–30 present, zero nulls. Every record accounted for.
+
+**The surprising value (b):** The raw minimum is **June 30 at $13,179.86** — but that's a trap. Its `as_of_ts` is `2026-06-30T09:15:00Z`, while all other 29 days were rolled up at `2026-07-01T02:10:00Z` (after the day closed). June 30's number is a **partial-day snapshot** taken ~9 hours in, not a full day's revenue — so it isn't comparable to the others.
+
+Cross-check: June 30's average order value is $13,179.86 / 340 = **$38.76**, right in line with the ~$38–40 seen on every other day. The revenue is low purely because the day was only partly counted, not because sales collapsed — confirming it's a truncation artifact, not a real low.
+
+**Format consistency (c):** The `as_of_ts` column is uniform across all rows except that one — the single outlier is exactly what flags the incomplete rollup.
+
+**Conclusion:** Excluding the incomplete June 30 rollup, the lowest *full-day* revenue is **June 13 at $25,760.01** (676 orders, AOV ~$38.11 — a genuine, fully-closed low day).
+
+LOWEST_REVENUE_DAY: 2026-06-13

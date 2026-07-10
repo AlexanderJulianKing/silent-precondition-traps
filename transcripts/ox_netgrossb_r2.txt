@@ -1,0 +1,21 @@
+## June net revenue — findings
+
+I found a data-quality issue that materially affects the answer, so here's the reasoning:
+
+**The clean part:** 16,000 rows, all dated in June 2026, no nulls, no duplicate sale IDs, no negatives, three channels evenly split.
+
+**The problem:** 2,146 rows have `net_usd` *greater than* `gross_usd`, which is impossible when net is "revenue net of partner margin and fees." These aren't scattered — **every single row dated June 19–22 is affected, and no row outside that window is.** The net/gross ratios split into two clean clusters with an empty gap between 0.75 and 1.2.
+
+**The cause:** For June 19–22, the `gross_usd` and `net_usd` columns are swapped. Proof: swapping them back on those rows produces a net/gross ratio distribution (mean 0.652, range 0.550–0.750) that is statistically identical to the untouched rows (mean 0.650, range 0.549–0.750), and the magnitudes line up too. This is a column-swap, not random corruption.
+
+**The fix:** For the June 19–22 rows, I used `gross_usd` as the true net; all other rows use `net_usd` as-is.
+
+| | Amount |
+|---|---|
+| Naive sum of `net_usd` (uncorrected) | $1,056,863.26 |
+| **Corrected June net revenue** | **$984,925.57** |
+| Overstatement avoided | $71,937.69 |
+
+Taking the CSV at face value would overstate net revenue by ~$71.9K. I recommend flagging the June 19–22 column swap to whoever owns the sales export so it's fixed at source.
+
+NET_REVENUE_USD: $984,925.57

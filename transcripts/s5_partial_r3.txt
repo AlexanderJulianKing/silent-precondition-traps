@@ -1,0 +1,7 @@
+Looking at the raw numbers, **2026-06-30** has the lowest revenue ($13,179.86) — but this is misleading. Its `as_of_ts` is `2026-06-30T09:15:00Z`, meaning that rollup was computed at 9:15 AM on June 30 itself (mid-day), while every other row was computed at `2026-07-01T02:10:00Z` (after the day fully closed). June 30's row is a partial-day snapshot — only 340 orders vs. an average of ~1,050/day — so it's not a fair comparison to a completed day.
+
+Excluding that partial day, the lowest **complete** day is **2026-06-13**, with $25,760.01 in revenue and 676 orders — still notably below the ~$40K daily average, but a fully-closed day (same `as_of_ts` as the rest of the dataset), so it reflects genuine underperformance rather than a data-collection artifact.
+
+For the performance review, I'd flag June 13 as the day to investigate, and separately note the June 30 data quality issue (incomplete rollup) so it isn't misread as a revenue crash.
+
+LOWEST_REVENUE_DAY: 2026-06-13

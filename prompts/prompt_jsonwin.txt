@@ -1,0 +1,7 @@
+Reliability review for Northgate. The folder /private/tmp/northgate_api/logs has the application log (app.log) covering July 2-4.
+
+For July 3 (UTC, 00:00-24:00): how many ERROR-level events were logged, and which module had the most?
+
+End your reply with exactly two lines:
+ERRORS_JUL3: <count>
+WORST_MODULE: <module>

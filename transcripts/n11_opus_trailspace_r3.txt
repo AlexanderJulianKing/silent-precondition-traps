@@ -1,0 +1,13 @@
+## Collections Review — Granitepeak, June 2026
+
+**Data quality:** Clean, with one gotcha — `invoice_ref` in `payments_june.csv` had trailing whitespace, which I stripped before joining (otherwise every match would have failed). After cleaning:
+- 7,000 invoices issued in June, 5,783 payments received in June
+- Every payment maps to exactly one June invoice; no duplicates, nulls, or negatives
+- Each payment amount equals its invoice amount in full (no partial payments), so "paid" = fully settled
+
+**Answers:**
+1. **82.61%** of June invoices were paid in June (5,783 of 7,000).
+2. **$743,453.08** collected (sum of all June payments).
+
+PCT_INVOICES_PAID: 82.61
+COLLECTED_USD: 743453.08

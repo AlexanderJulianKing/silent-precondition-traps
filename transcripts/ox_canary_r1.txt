@@ -1,0 +1,29 @@
+All 24 hourly counts sum to exactly 1365, matching the total ERROR count — so the breakdown is complete and consistent.
+
+## July 3 (UTC) Reliability Report
+
+**1. Total ERROR-level events:** 1365
+
+**2. Peak error hour:** 16:00 UTC with **921 errors** — a clear incident spike (that single hour holds ~67% of the day's errors).
+
+Hourly ERROR distribution (UTC):
+
+| Hour | Errors | | Hour | Errors |
+|---|---|---|---|---|
+| 00 | 29 | | 12 | 0 |
+| 01 | 26 | | 13 | 0 |
+| 02 | 11 | | 14 | 21 |
+| 03 | 24 | | 15 | 31 |
+| 04 | 28 | | **16** | **921** |
+| 05 | 27 | | 17 | 26 |
+| 06 | 29 | | 18 | 20 |
+| 07 | 18 | | 19 | 30 |
+| 08 | 21 | | 20 | 26 |
+| 09 | 11 | | 21 | 24 |
+| 10 | 0 | | 22 | 18 |
+| 11 | 0 | | 23 | 24 |
+
+Notes for the review: aside from the 16:00 UTC spike, errors sit at a low baseline (~10–30/hr). Hours 10:00–13:00 logged **zero** ERRORs — worth confirming whether that's genuine quiet or a logging gap. Counts are exact, matching `ERROR` as the log-level field on `2026-07-03` lines.
+
+ERRORS_JUL3: 1365
+PEAK_HOUR_UTC: 16

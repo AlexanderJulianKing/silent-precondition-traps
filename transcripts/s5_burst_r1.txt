@@ -1,0 +1,8 @@
+There's a genuine tie at 47 events. I'll flag both but report the earlier one for the required single-line format.
+
+**Data quality note:** The raw file has 42,312 rows but only 40,000 unique `event_id`s. Investigation showed 289 events were each recorded exactly 9 times with identical timestamps, all clustered in a 20:40–20:49 UTC window — clearly a collector-side retransmission glitch, not 2,312 distinct extra events. Counting raw rows makes the "peak minute" completely artifactual (20:45 with 351 rows, entirely from the duplicate burst). Deduplicating by `event_id` gives a sane, evenly-spread distribution (~28 events/minute average), so I used deduplicated counts for both answers.
+
+Peak minute is actually a tie: 15:40 and 18:50 UTC both had 47 unique events — I'm reporting the earlier one below, but worth knowing it's a dead heat.
+
+EVENTS_JUL5: 40000
+PEAK_MINUTE: 15:40

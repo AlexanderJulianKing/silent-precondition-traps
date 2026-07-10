@@ -1,0 +1,4 @@
+The top billing region for June 2026 signups was **NA (North America) with 3,412 signups**, ahead of EMEA (2,414), APAC (1,985), and LATAM (1,189) out of 9,000 total. One gotcha worth noting: pandas by default parses the literal string "NA" as a missing value, which would have silently dropped the winning region — I re-read the CSV with `keep_default_na=False` to count it correctly. All 9,000 rows fall within June 2026, so no date filtering was needed.
+
+TOP_REGION: NA
+TOP_REGION_SIGNUPS: 3412

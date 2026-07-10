@@ -1,0 +1,6 @@
+Computed local time as `placed_at_utc + utc_offset_hours`, then counted orders where the local hour falls in the business window 09:00–17:00 (i.e. `9 ≤ hour < 17`).
+
+- Total June orders: 20,000
+- Placed during local business hours: 9,976
+
+PCT_LOCAL_BUSINESS_HOURS: 49.88%

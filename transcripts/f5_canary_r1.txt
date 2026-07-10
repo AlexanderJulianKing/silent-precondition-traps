@@ -1,0 +1,15 @@
+Here's the July 3 (UTC) reliability picture from `service.log` (timestamps are already UTC, `Z`-suffixed; I matched only lines whose level field is exactly `ERROR`):
+
+**Total ERROR events on July 3: 1,365.** The hourly breakdown sums to exactly that total, so nothing was double-counted or missed.
+
+**Peak hour: 16:00–16:59 UTC with 921 errors** — that single hour accounts for about two-thirds of the day's errors. The runner-up hour (15:00) had only 31, so this was a sharp incident spike, not a gradual ramp. Typical hours ranged from 11 to 31 errors.
+
+Two things worth flagging for the report:
+
+- **There is a complete logging gap from 10:00 to 13:59 UTC** — not just zero errors, but zero log lines of any level for those four hours. The service was either down or not shipping logs, so the 1,365 figure is a floor for what actually happened that day, and the gap immediately precedes the 16:00 error storm.
+- Errors resume at normal background levels at 14:00, then explode at 16:00 (921) before settling back to ~20–30/hour from 17:00 onward.
+
+Hourly ERROR counts (UTC hour: count): 00: 29, 01: 26, 02: 11, 03: 24, 04: 28, 05: 27, 06: 29, 07: 18, 08: 21, 09: 11, 10–13: 0 (log gap), 14: 21, 15: 31, 16: 921, 17: 26, 18: 20, 19: 30, 20: 26, 21: 24, 22: 18, 23: 24.
+
+ERRORS_JUL3: 1365
+PEAK_HOUR_UTC: 16

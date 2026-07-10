@@ -1,0 +1,4 @@
+Data's clean — no duplicate dispute IDs, all dates fall in June, no whitespace issues. The only wrinkle is 683 rows with `merchant_code` = "NULL" (missing/unknown, not a real merchant), which I'm excluding since it's not an actual merchant code. Among real codes, RUBY leads with 494 disputes.
+
+TOP_MERCHANT_CODE: RUBY
+DISPUTE_COUNT: 494

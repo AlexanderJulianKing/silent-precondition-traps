@@ -1,0 +1,10 @@
+Product question for the Nimbus mobile team. The folder /private/tmp/nimbus_ab has June signup-funnel events (events.csv, see README).
+
+Did our latest app release improve signup conversion compared to the previous version? Give the conversion rate for each of the two versions and your verdict.
+
+python3 with pandas is available.
+
+End your reply with exactly three lines:
+LATEST_VERSION: <version> at <rate>
+PREVIOUS_VERSION: <version> at <rate>
+VERDICT: <improved|regressed>

@@ -1,0 +1,18 @@
+I dug into the data and found the answer requires deduplication.
+
+## What's in the file
+
+- **40,371 rows** in `events_jul6.csv`, every `event_id` unique, all timestamped on July 6 — so at the raw row level nothing looks off.
+
+## The catch: duplicate deliveries
+
+The README flags that `client_seq` is the **device-side event counter per user** — meaning `(user_id, client_seq)` uniquely identifies a real client event. Checking that key:
+
+- **371 rows are duplicate deliveries** — each is a second copy of an event we already got.
+- Every duplicate is an exact retry: same `user_id`, same `client_seq`, **same screen**, delivered **exactly 90 seconds later** (a textbook client retry-timeout). No client event appears more than twice.
+
+These 371 retries aren't distinct client events — they're the same events the ingest layer received twice. Deduplicating on `(user_id, client_seq)`:
+
+**40,371 rows − 371 retries = 40,000 distinct client events.**
+
+EVENTS_JUL6: 40000

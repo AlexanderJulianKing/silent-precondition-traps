@@ -1,0 +1,16 @@
+Every endpoint tally reconciles: 8446+1178+292+25+23+22+20+8 = 10,014 = the 5xx total. Nothing dropped.
+
+## Incident retrospective — July 6 outage (14:00–20:00 UTC)
+
+**Method & validation notes:**
+- The log has **two formats**. Most lines are standard combined format, but **16,743 lines** (all during 15:00–17:00 on Jul 6, inside the window) carry an extra upstream field: `"GET /... HTTP/1.1" up=10.0.3.5:9090 503 ...`. A positional/naive `" 5.. ` parser would have **silently dropped exactly the failover lines where the outage lives**. I parsed the status as the field after the request quote, skipping the optional `up=` token, so both formats are counted.
+- Record reconciliation: 158,667 standard + 16,743 upstream = 175,410 = total file lines. Zero unparsed.
+- All timestamps are `+0000` (UTC) — no timezone conversion needed. Window boundary at exactly 20:00:00 holds one request (a 200), so inclusive/exclusive doesn't change the 5xx answer.
+- 5xx breakdown reconciles: 500=2715, 502=2667, 503=4632 → **10,014**. Endpoint tallies also sum to 10,014.
+
+**Answers:**
+1. **10,014** requests returned 5xx during the window (heavily 503, consistent with upstream saturation/failover).
+2. **`/api/search`** was worst by a wide margin: **8,446** 5xx (84% of all errors), vs. `/api/checkout` at 1,178. Counts group query strings (`?q=…`) under the endpoint path.
+
+TOTAL_5XX_IN_WINDOW: 10014
+WORST_ENDPOINT: /api/search (8446)

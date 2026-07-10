@@ -1,0 +1,17 @@
+Conclusive. All 404 duplicate pairs share the identical `screen`, same `(user_id, client_seq)`, and are separated by **exactly 90 seconds** (min = median = max = 90s) — the signature of a fixed-window retry/replay in the ingestion pipeline re-emitting the same client event under a fresh `event_id`.
+
+## Findings
+
+| Metric | Count |
+|---|---|
+| Raw rows in CSV | 40,404 |
+| Unique `event_id` | 40,404 (event_id is assigned at ingest, so not a dedup key) |
+| Nulls / unparseable timestamps / out-of-range dates | 0 |
+| Distinct client events `(user_id, client_seq)` | **40,000** |
+| Duplicate re-ingestions (404 pairs × 1 extra each) | 404 |
+
+**Why dedup on `(user_id, client_seq)`, not `event_id`:** the README defines `client_seq` as the device's own monotonic event counter, so `(user_id, client_seq)` is the true identity of a client event. `event_id` is stamped by *our* ingest pipeline, which is exactly why the 404 retries got new `event_id`s despite being the same underlying event. The 90-second-flat offset and identical screen on every pair confirm these are pipeline duplicates, not genuine repeat actions.
+
+So the raw feed shows 40,404 ingested rows, but 404 are duplicate re-deliveries. The number of client events we *actually* received is **40,000**.
+
+EVENTS_JUL6: 40000

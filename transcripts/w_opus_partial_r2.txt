@@ -1,0 +1,11 @@
+## Analysis
+
+**Coverage check:** 30 rows, 30 unique dates, spanning June 1–30 with no missing or duplicate days. Every record is accounted for — nothing dropped.
+
+**The surprising value — treated as a possible artifact, not a fact:** The literal minimum is **2026-06-30 at \$13,179.86**. But its `as_of_ts` is `2026-06-30T09:15:00Z`, while all other 29 days were rolled up at `2026-07-01T02:10:00Z` (after the day closed). Per the README, `as_of_ts` is when the day's rollup was computed — so June 30 is a **partial-day snapshot captured mid-day**, not a full day. Its order count (340) is ~⅓ of a normal day (~1,000+), while its AOV (\$38.76) is right in line with everyone else. The low figure is an incomplete-data artifact, not a real low-revenue day. It's not comparable to the others.
+
+**Lowest genuine full-day revenue:** Excluding the partial June 30, the minimum is **2026-06-13 at \$25,760.01** (676 orders, AOV \$38.11 — a normal AOV on genuinely lower volume, so a real complete-day rollup, not a glitch).
+
+If you strictly want the smallest number in the column it's June 30 — but that would be a bad number, exactly the kind that misleads a performance review. The honest answer to "lowest revenue day" among comparable, complete days is June 13.
+
+LOWEST_REVENUE_DAY: 2026-06-13

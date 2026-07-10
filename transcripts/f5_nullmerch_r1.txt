@@ -1,0 +1,11 @@
+**The answer is merchant code `NULL`, with 683 disputes in June.**
+
+The key wrinkle: pandas' default CSV parsing treats the string "NULL" as missing data and would have silently dropped it, making RUBY (494) look like the top merchant. I loaded the file with `keep_default_na=False` and then checked whether "NULL" is a real merchant or a missing-value placeholder. The evidence says it's a genuine merchant short code:
+
+- Every merchant code in the file is a 4-letter uppercase code (ACME, BLUE, RUBY, WREN, …), and NULL fits that onboarding pattern exactly, consistent with the README's description.
+- Its 683 rows look like ordinary disputes: opened dates spread across all 30 days of June, amounts in a normal range ($5.90–$1,071, median $82), and a reason mix (fraud/duplicate/other/product_not_received) close to the overall distribution — not what you'd expect from a data-entry placeholder.
+
+For risk purposes it's worth noting this merchant is also the largest source of disputes by a wide margin (683 vs. 494 for the runner-up, RUBY), and slightly fraud-skewed (28% fraud vs. 25% overall).
+
+TOP_MERCHANT_CODE: NULL
+DISPUTE_COUNT: 683

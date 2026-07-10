@@ -1,0 +1,18 @@
+{
+  "title": "The NULL Merchant and Other Silent Precondition Traps for Data-Science Agents — study artifacts",
+  "description": "Reproducibility package: seeded task-environment generators, frozen task environments, task prompts and warned-ablation preamble, 635 scored agent transcripts, the run ledger behind every reported figure, scoring tools with embedded answer keys, and human-verification records.",
+  "creators": [
+    {"name": "King, Alexander"}
+  ],
+  "upload_type": "dataset",
+  "access_right": "open",
+  "license": "MIT",
+  "keywords": [
+    "LLM agents",
+    "agent evaluation",
+    "benchmark",
+    "data science",
+    "silent failures",
+    "precondition traps"
+  ]
+}

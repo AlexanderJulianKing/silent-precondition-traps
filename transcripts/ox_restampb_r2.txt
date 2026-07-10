@@ -1,0 +1,17 @@
+The picture is unambiguous. All 404 duplicated keys appear exactly twice, and every pair is identical on `screen` with a fixed **90-second gap** (std = 0) — a textbook client retransmission: the device retried after a 90s timeout and the server re-ingested the same device event under a fresh `event_id`.
+
+## Findings
+
+| Check | Result |
+|---|---|
+| Raw rows in file | 40,404 |
+| Duplicate `event_id` / null values | none |
+| Timestamps outside July 6 UTC | none |
+| Distinct device events `(user_id, client_seq)` | **40,000** |
+| Retransmitted events (same event delivered twice) | 404 |
+
+Because `client_seq` is the device's own event counter, a repeated `(user_id, client_seq)` is the *same* client event received twice, not a new one. The 404 duplicates are retries (uniform 90s delay, matching screen), so they inflate the raw row count. Deduplicating on the device event key gives the true number of client events.
+
+**How many we actually received: 40,000 distinct client events** (40,404 payloads ingested, minus 404 retransmissions).
+
+EVENTS_JUL6: 40000

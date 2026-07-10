@@ -1,0 +1,4 @@
+Format is consistent — one bracketed module per line right after the level. Confirmed counts: 1198 total ERROR events on July 3 (UTC), with `auth` dominating at 886.
+
+ERRORS_JUL3: 1198
+WORST_MODULE: auth

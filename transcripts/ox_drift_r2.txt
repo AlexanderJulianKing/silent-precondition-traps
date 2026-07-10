@@ -1,0 +1,28 @@
+Confirmed by an independent direct count: **/api/checkout = 1168**. During the window it took 2,549 requests, ~46% of which failed with 5xx — clearly the epicenter.
+
+## Incident retrospective — July 6 outage (14:00–20:00 UTC)
+
+**Method:** The log spans three dates (Jul 6/7/8) all in UTC (`+0000`), so I filtered to `06/Jul/2026` timestamps in `[14:00:00, 20:00:00)`. A 5xx is counted when the status immediately following the request is 500–599; endpoint paths have query strings stripped (`/api/search?q=…` → `/api/search`).
+
+**1. Total 5xx in the window: 1,407**
+Breakdown: `500` → 506, `502` → 475, `503` → 426 (sums to 1,407). There were **0** 5xx at exactly 20:00:00, so the answer is unaffected by whether the end boundary is inclusive or exclusive.
+
+**2. Worst endpoint: `/api/checkout` with 1,168 5xx** (83% of all 5xx).
+
+Full per-endpoint 5xx ranking:
+
+| Endpoint | 5xx |
+|---|---|
+| /api/checkout | 1168 |
+| /api/products | 152 |
+| /api/search | 30 |
+| /static/app.js | 18 |
+| /api/user | 14 |
+| /api/cart | 11 |
+| / | 10 |
+| /static/style.css | 4 |
+
+The per-endpoint counts sum exactly to 1,407, so all 5xx are accounted for. For context, `/api/checkout` served 2,549 requests in the window (~46% failure rate) — the clear epicenter of the outage.
+
+TOTAL_5XX_IN_WINDOW: 1407
+WORST_ENDPOINT: /api/checkout (1168)

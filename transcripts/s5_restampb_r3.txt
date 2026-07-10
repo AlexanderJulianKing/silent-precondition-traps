@@ -1,0 +1,7 @@
+404 pairs of exact retransmissions — same `user_id`+`client_seq`+`screen`, resent exactly 90 seconds later with a new `event_id`/timestamp (classic client retry-on-timeout behavior, clustered around 21:16–21:27Z). Deduplicating on the true client-side event identity (`user_id`, `client_seq`) gives a clean, round number:
+
+- Rows in file: 40,404
+- Exact duplicate retransmissions: 404 pairs (808 rows)
+- Unique client events: **40,000**
+
+EVENTS_JUL6: 40000

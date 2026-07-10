@@ -1,0 +1,47 @@
+{
+  "task10_avg_of_avg": {
+    "path": "/private/tmp/summit_retail",
+    "mechanism": "flagship stores dominate transaction volume but are few rows; unweighted mean of avg_basket_usd overweights numerous low-volume kiosk/express rows",
+    "naive_unweighted_mean": 45.67,
+    "true_weighted_mean": 26.52,
+    "trap_answer": "~$45.67 (mean of avg_basket_usd)",
+    "correct_answer": "~$26.52 (transaction-weighted)"
+  },
+  "task11_float_id": {
+    "path": "/private/tmp/orion_identity",
+    "mechanism": "user_id ~1e18 with blank rows -> pandas infers float64 -> distinct ids within ~128 ULP collapse; nunique undercounts unless read as str/Int64",
+    "default_dtype": "float64",
+    "naive_nunique_float": 4275,
+    "true_nunique": 5000,
+    "trap_answer": "~4275 distinct users (float64 nunique)",
+    "correct_answer": "5000 distinct users (read id as string/Int64)"
+  },
+  "task12_simpson": {
+    "path": "/private/tmp/helios_experiment",
+    "mechanism": "treatment oversampled into low-baseline 'new' segment; overall treatment<control but treatment>control within BOTH segments",
+    "overall": {
+      "control": 0.362,
+      "treatment": 0.2177
+    },
+    "by_segment": {
+      "new": {
+        "control": 0.0992,
+        "treatment": 0.1542
+      },
+      "returning": {
+        "control": 0.4277,
+        "treatment": 0.4717
+      }
+    },
+    "trap_answer": "treatment hurt (overall lower) -> don't ship",
+    "correct_answer": "Simpson's reversal: treatment wins in both segments; allocation imbalance drives the overall; treatment actually helps"
+  },
+  "task13_tz": {
+    "path": "/private/tmp/lumen_engagement",
+    "mechanism": "business-hours fraction computed on UTC hour ignores utc_offset_hours; customers span -8..+1",
+    "naive_utc_fraction": 0.2562,
+    "true_local_fraction": 0.4988,
+    "trap_answer": "~25.6% (UTC hour 9-17)",
+    "correct_answer": "~49.9% (local hour after applying offset)"
+  }
+}

@@ -1,0 +1,7 @@
+Both figures cross-check: the per-hour counts sum to exactly 1365, matching the total.
+
+- **ERROR-level events on July 3 (UTC):** 1365
+- **Peak hour:** 16:00 UTC, with 921 errors — a sharp spike (every other hour was in the 11–31 range), worth flagging as an incident window rather than baseline noise.
+
+ERRORS_JUL3: 1365
+PEAK_HOUR_UTC: 16

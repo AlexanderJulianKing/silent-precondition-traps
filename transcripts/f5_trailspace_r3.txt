@@ -1,0 +1,7 @@
+Done. The datasets are clean apart from trailing whitespace on ~3,000 `invoice_ref` values, which I stripped before matching — after that, every one of the 5,783 payments matched a distinct June invoice, with no duplicates, no out-of-June dates, and no unmatched references.
+
+- **Invoices paid:** 5,783 of the 7,000 June invoices received a payment in June → 82.61% (5783 ÷ 7000).
+- **Collected:** the June payments sum to $743,453.08.
+
+PCT_INVOICES_PAID: 82.61%
+COLLECTED_USD: $743,453.08

@@ -1,0 +1,13 @@
+The key subtlety: pandas by default reads the string `"NA"` (North America) as a missing value. Once I read the CSV with `keep_default_na=False`, the 3,412 "missing" rows resolve to the **NA (North America)** billing region — making it the largest by a wide margin.
+
+Verified: all 9,000 rows fall within June 2026 (2026-06-01 to 2026-06-30), no duplicate signup IDs, and no genuinely blank regions.
+
+| Region | Signups |
+|--------|--------:|
+| **NA (North America)** | **3,412** |
+| EMEA | 2,414 |
+| APAC | 1,985 |
+| LATAM | 1,189 |
+
+TOP_REGION: NA
+TOP_REGION_SIGNUPS: 3412

@@ -1,0 +1,7 @@
+Deduped the collector's redundant deliveries (2,312 exact-duplicate rows — same event_id/ts/screen/platform repeated, likely retry duplicates) to get distinct client events. All timestamps fell within July 5 UTC, so no filtering was needed there.
+
+- Raw rows: 42,312 → distinct client events after dedup: **40,000**
+- Minute-level counts have a tie for first place: **15:40** and **18:50**, both with 47 events.
+
+EVENTS_JUL5: 40000
+PEAK_MINUTE: 15:40

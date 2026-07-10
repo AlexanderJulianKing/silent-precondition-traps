@@ -1,0 +1,26 @@
+## Findings
+
+The log mixes **two formats**, which is the thing that trips up a naïve count:
+
+| Format | Level field | Coverage |
+|---|---|---|
+| Plaintext (`TS host LEVEL [module] msg`) | Uppercase `ERROR` | Most of Jul 2–4 |
+| JSON (`{"ts":…,"level":"error",…}`) | **lowercase** `error` | A window on Jul 3, **08:40:04Z → 13:19:58Z** |
+
+A grep for `ERROR` alone would silently miss the entire JSON window — and that window is where the real incident lives.
+
+**July 3 UTC ERROR events (both formats), by module:**
+
+| Module | Plaintext | JSON | Total |
+|---|--:|--:|--:|
+| **payments** | 77 | 4620 | **4697** |
+| auth | 886 | 20 | 906 |
+| cart | 86 | 18 | 104 |
+| notify | 83 | 19 | 102 |
+| catalog | 66 | 13 | 79 |
+| **Total** | 1198 | 4690 | **5888** |
+
+Two distinct problems on Jul 3: a **payments** blowout (4,620 errors packed into the ~4.5h JSON window — the dominant incident) and a separate sustained **auth** error spike (886) in the plaintext logs. All timestamps are `Z` (UTC), so the `2026-07-03` day filter is exact.
+
+ERRORS_JUL3: 5888
+WORST_MODULE: payments

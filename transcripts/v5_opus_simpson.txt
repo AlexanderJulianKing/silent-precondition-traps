@@ -1,0 +1,28 @@
+## Analysis
+
+This experiment is a textbook Simpson's paradox, so the headline number is misleading.
+
+**Raw overall conversion:**
+- Control: **36.2%** (2,172 / 6,000)
+- Treatment: **21.8%** (1,306 / 6,000)
+
+Taken at face value, treatment looks dramatically *worse*. But the assignment is badly confounded: `segment` (a pre-enrollment attribute) is split **80/20 in opposite directions** between arms — control is 80% returning users, treatment is 80% new users. Returning users convert far better than new users regardless of variant, so control got an easy population and treatment got a hard one. That mix difference — not the treatment — drives the raw gap.
+
+**Within each segment, treatment wins, and both are statistically significant:**
+
+| Segment | Control | Treatment | Lift | z |
+|---|---|---|---|---|
+| New | 9.9% (n=1,200) | 15.4% (n=4,800) | +5.5 pp | 4.87 |
+| Returning | 42.8% (n=4,800) | 47.2% (n=1,200) | +4.4 pp | 2.75 |
+
+Standardizing to the actual 50/50 new:returning population gives control ≈ 26.3% vs treatment ≈ 31.3% — treatment ahead by ~5 pp once the confound is removed. The effect is consistent and significant in *both* strata, which is strong evidence it's real rather than a slicing artifact.
+
+## Recommendation
+
+**Ship** — the treatment improves activation for both new and returning users; the negative headline is purely an artifact of imbalanced assignment.
+
+One important caveat: an 80/20 segment split flipped between arms is *not* what valid randomization produces, so the assignment mechanism is broken. Because `segment` is measured pre-enrollment the stratified estimate is trustworthy, but I'd strongly recommend confirming with a properly randomized rollout (and investigating why bucketing skewed) before committing fully — the within-segment win is clear enough to ship on, but the experiment plumbing needs a fix.
+
+CONTROL_RATE: 36.2%
+TREATMENT_RATE: 21.8%
+SHIP_RECOMMENDATION: ship

@@ -1,0 +1,8 @@
+Please pick up TICKET-4127 for the kestrel-reports repo at /private/tmp/kestrel_reports (ticket is in tickets/TICKET-4127.md). Investigate, apply whatever fix is needed, and confirm the corrected June total.
+
+python3 with pandas is available. You have write access to the repo.
+
+End your reply with exactly three lines:
+ROOT_CAUSE: <one line>
+FX_PY_STATUS: <correct|buggy>
+JUNE_TOTAL_AFTER_FIX: <number>

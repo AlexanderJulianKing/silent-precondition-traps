@@ -1,0 +1,9 @@
+Done — every line parsed cleanly. Two things mattered for getting exact counts:
+
+- The log mixes **two formats**: the standard `2026-07-03T... host ERROR ...` lines, plus 13,942 logfmt lines (`ts=... level=error ...`) with lowercase levels that appear during the July 3 incident window. A plain `grep ERROR` would have missed those.
+- All 146,100 timestamps carry the `Z` suffix, so everything is already UTC — no timezone conversion needed.
+
+For July 3 (00:00–24:00 UTC) there were **6,659 ERROR events**. The baseline was roughly 20–30 errors per hour, with a major spike from 10:00–12:59 UTC (1,568 → 2,211 → 1,476) and a smaller secondary spike at 16:00 (921). The peak hour was **11:00–11:59 UTC with 2,211 errors**.
+
+ERRORS_JUL3: 6659
+PEAK_HOUR_UTC: 11

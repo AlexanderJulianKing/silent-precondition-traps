@@ -1,0 +1,4 @@
+Clean data: every payment matches exactly one June invoice at its exact amount, no partials/duplicates. 5,783 of 7,000 June invoices were paid in June (82.61%), collecting $743,453.08 total.
+
+PCT_INVOICES_PAID: 82.61%
+COLLECTED_USD: $743,453.08

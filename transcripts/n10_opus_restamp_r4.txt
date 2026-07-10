@@ -1,0 +1,11 @@
+## Answer
+
+The CSV has **40,371 rows**, but each row is *as ingested*, not one per unique client event. Each client event carries a per-user device-side counter `client_seq`.
+
+- Every `event_id` is unique (server-side ID assigned at ingestion), so that key doesn't detect duplicates.
+- Keying on the actual client event identity — `(user_id, client_seq)` — yields **40,000 distinct events**, with **371 duplicate ingestions**.
+- Every one of the 371 duplicate pairs shares the same `user_id`, `client_seq`, and `screen`, differing only in `event_id` and a `ts` ~90 seconds later. That's the classic retry/re-ingestion signature, not a real second event.
+
+So the raw row count (40,371) overcounts by 371 re-deliveries. The number of client events we actually received is the distinct client-event count.
+
+EVENTS_JUL6: 40000

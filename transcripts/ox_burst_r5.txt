@@ -1,0 +1,15 @@
+## Findings
+
+**Data quality — duplicate deliveries.** The raw file has 42,312 rows but only **40,000 unique `event_id`s**. The 2,312 extras are exact full-row duplicates (same `event_id`, `ts`, `screen`, `platform` — zero conflicting attributes; some events delivered up to 9×). Per the README, each row is a client event *"as received by the collector,"* i.e. the collector received the same client event multiple times. The distinct-event count is **40,000**.
+
+**Peak minute — the trap.** Naively counting raw rows puts the peak at **20:45 with 351 events** — but that's an artifact. Normal minutes run ~40–47 events, and the duplicate deliveries are heavily concentrated in the 20:42–20:47 window (top 3 raw minutes), none of which survive as peaks after dedup. That 7× spike is a duplicate-delivery burst, not real traffic.
+
+After deduping to distinct client events, the busiest minute is a genuine **tie at 47 events between 15:40 and 18:50**. I report the earliest, **15:40**, as the peak (tie disclosed).
+
+All timestamps are UTC and fall on 2026-07-05; no nulls, no unparseable rows.
+
+- Received (distinct client events): **40,000** (raw rows: 42,312, incl. 2,312 duplicate deliveries)
+- Peak minute (deduped): **15:40** — 47 events (tied with 18:50)
+
+EVENTS_JUL5: 40000
+PEAK_MINUTE: 15:40

@@ -1,0 +1,11 @@
+After normalizing the `status` field (the raw values had inconsistent trailing spaces/casing that split "delivered" into two buckets), the counts are:
+
+- delivered: 17,354
+- shipped: 3,557
+- pending: 2,146
+- returned: 943
+- **total: 24,000**
+
+Delivered = 17,354 / 24,000 = **72.31%**
+
+PCT_DELIVERED: 72.31%

@@ -1,0 +1,24 @@
+The boundary request at exactly 20:00:00 is a 200, so it doesn't affect the 5xx count — the answer is unambiguous.
+
+## Incident Retrospective — July 6 Outage (14:00–20:00 UTC)
+
+All log timestamps are in UTC (`+0000`), so no timezone conversion was needed. The single request landing exactly on the 20:00:00 boundary was a `200`, so the count is identical whether the window end is treated as inclusive or exclusive.
+
+1. **Total 5xx responses in the window: 1,407**
+2. **Worst endpoint: `/api/checkout` with 1,168 5xx responses** — over 83% of all server errors during the incident, pointing squarely at the checkout path as the failure center.
+
+Full 5xx breakdown by endpoint:
+
+| Endpoint | 5xx count |
+|---|---|
+| /api/checkout | 1,168 |
+| /api/products | 152 |
+| /api/search | 30 |
+| /static/app.js | 18 |
+| /api/user | 14 |
+| /api/cart | 11 |
+| / | 10 |
+| /static/style.css | 4 |
+
+TOTAL_5XX_IN_WINDOW: 1407
+WORST_ENDPOINT: /api/checkout (1168)

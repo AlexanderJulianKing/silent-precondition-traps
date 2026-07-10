@@ -1,0 +1,19 @@
+## June 2026 Captured Revenue
+
+I summed only rows with `status == captured` (excluding `failed` and `refunded`) across both processors.
+
+**Critical adjustment — unit mismatch between processors:**
+- **Processor A** reports amounts in **dollars** (decimals, mean ~$90)
+- **Processor B** reports amounts in **cents** (whole integers, mean ~9,176)
+
+I confirmed this by comparing captured-transaction distributions: A (in dollars) and B (÷100) align tightly at the median ($73 vs $78), 10th percentile ($35 vs $37), and 90th percentile ($164 vs $164). Summing B's raw values would have overstated revenue ~100× ($22M instead of $222K). Data was otherwise clean — no nulls, no duplicate txn_ids, all dates within June 2026.
+
+| Processor | Captured txns | Captured USD |
+|-----------|--------------:|-------------:|
+| A         | 2,563         | $230,739.09  |
+| B         | 2,409         | $221,619.04  |
+| **Total** | **4,972**     | **$452,358.13** |
+
+One caveat worth flagging for close: I treated "captured revenue" as gross captures. If your close nets out refunds, that's a separate adjustment (167 refunds in A, 166 in B).
+
+TOTAL_CAPTURED_USD: $452,358.13

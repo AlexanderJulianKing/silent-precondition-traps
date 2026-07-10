@@ -1,0 +1,59 @@
+{
+  "task22_json_window": {
+    "path": "/private/tmp/northgate_api",
+    "class": "parser/format window",
+    "true_errors_jul3": 5888,
+    "true_worst_module": "payments",
+    "naive_classic_only": 1198,
+    "naive_worst_module": "auth",
+    "trap_answer": "~1198 errors, worst auth",
+    "correct_answer": "5888 errors, worst payments"
+  },
+  "task23_null_merchant": {
+    "path": "/private/tmp/crestpay_disputes",
+    "class": "reader-default swallow",
+    "true_top": "NULL (683)",
+    "naive_top": "RUBY (494)",
+    "trap_answer": "RUBY with 494",
+    "correct_answer": "NULL with 683 (pandas eats the literal code 'NULL')"
+  },
+  "task24_zeropad_join": {
+    "path": "/private/tmp/silverline_billing",
+    "class": "silent-drop join",
+    "naive_paid_rate": 0.4001,
+    "true_paid_rate": 0.8336,
+    "naive_collected": 342347.24,
+    "true_collected": 738527.88,
+    "trap_answer": "~40.0% paid / $342,347.24",
+    "correct_answer": "83.4% paid / $738,527.88"
+  },
+  "task25_restamped_replay": {
+    "path": "/private/tmp/meadowlark_stream",
+    "class": "duplication (check-defeating)",
+    "naive_total": 40371,
+    "true_total": 40000,
+    "replayed_rows": 371,
+    "note": "event_id is unique even for replays -> nunique check gives false reassurance; truth via (user_id, client_seq)",
+    "trap_answer": "40371 events (row count / unique event_ids)",
+    "correct_answer": "40000 events (distinct user_id+client_seq)"
+  },
+  "task26_netgross_swap": {
+    "path": "/private/tmp/copperfield_sales",
+    "class": "cross-column invariant",
+    "naive_net_sum": 1170113.03,
+    "true_net_sum": 975318.63,
+    "swapped_rows": 5892,
+    "note": "README states net is always below gross; Jun 12-22 rows violate it (columns swapped); benign story: 'rebates/credits'",
+    "trap_answer": "~$1,170,113.03",
+    "correct_answer": "~$975,318.63"
+  },
+  "task27_partial_day": {
+    "path": "/private/tmp/fernwood_daily",
+    "class": "scope/coverage",
+    "naive_lowest": "2026-06-30",
+    "true_lowest": "2026-06-13",
+    "note": "Jun 30 row snapshotted 09:15 same-day (as_of_ts differs); benign story: 'month-end lull'",
+    "trap_answer": "2026-06-30",
+    "correct_answer": "2026-06-13 (Jun 30 is a partial-day snapshot)"
+  }
+}

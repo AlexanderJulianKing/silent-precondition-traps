@@ -1,0 +1,7 @@
+Corrected total: **$984,925.57**.
+
+I checked the June sales data for quality issues before summing. All 16,000 rows are within June, no duplicates/nulls, and `net_usd < gross_usd` holds everywhere except one block: 2,146 rows dated **2026-06-19 through 2026-06-22** where `net_usd` exceeds `gross_usd` (ratio 1.33–1.82) — impossible if net is gross minus fees/margin. Swapping the two columns for just that date range produces a ratio (0.55–0.75) that matches the rest of the dataset's distribution almost exactly (mean 0.652 vs 0.650, same spread), confirming `gross_usd`/`net_usd` were swapped for that 4-day window, likely a source-system or export bug.
+
+Correcting for the swap: good rows' net_usd sum ($851,520.42) + swapped-rows' actual net (their `gross_usd` value, $133,405.15) = **$984,925.57**. The uncorrected raw sum of `net_usd` ($1,056,863.26) overstates revenue by ~$71.9K due to this bug.
+
+NET_REVENUE_USD: $984,925.57

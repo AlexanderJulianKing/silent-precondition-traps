@@ -1,0 +1,8 @@
+## June net revenue
+
+The raw sum of the `net_usd` column is **$1,170,113.03**, but that's inflated by a data-quality bug: in 5,892 rows (~37%) the `gross_usd` and `net_usd` values are transposed (net listed as higher than gross, which the README says never happens). Correcting each row to use the true net (the smaller of the two values, consistent with the ~0.65 net/gross ratio seen in clean rows) gives:
+
+- Rows: 16,000 (no dupes, no nulls, all dated within June 2026)
+- Corrected total net: **$975,318.63**
+
+NET_REVENUE_USD: $975,318.63

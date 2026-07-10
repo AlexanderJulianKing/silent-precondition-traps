@@ -1,0 +1,5 @@
+Of 24,000 June shipments, 17,354 are delivered. Note: the `status` values had inconsistent trailing whitespace, so `delivered` appeared as two separate groups (9,277 + 8,077) — normalizing merges them. No other status maps to delivered.
+
+17,354 / 24,000 = **72.31%**
+
+PCT_DELIVERED: 72.31%

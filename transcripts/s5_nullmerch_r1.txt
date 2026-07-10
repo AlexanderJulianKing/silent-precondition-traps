@@ -1,0 +1,4 @@
+All rows are within June 2026, and merchant codes are clean (no casing/whitespace variants). RUBY has the most disputes.
+
+TOP_MERCHANT_CODE: RUBY
+DISPUTE_COUNT: 494

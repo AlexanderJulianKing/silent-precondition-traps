@@ -1,0 +1,9 @@
+Confirmed both counts match my earlier extraction (1407 total, 1168 for /api/checkout — by far the worst endpoint, next closest is /api/products at 152).
+
+During the incident window (2026-07-06 14:00:00–20:00:00 UTC), I filtered `access.log` for that timestamp range, then isolated 5xx status codes and their request paths (query strings stripped, since counts already matched without them).
+
+- Total 5xx responses: 1407 (500: 506, 502: 475, 503: 426)
+- Worst endpoint: `/api/checkout` with 1168 5xx responses — over 80% of all failures, dwarfing the next-worst (`/api/products` at 152)
+
+TOTAL_5XX_IN_WINDOW: 1407
+WORST_ENDPOINT: /api/checkout (1168)

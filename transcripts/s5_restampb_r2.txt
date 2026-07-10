@@ -1,0 +1,9 @@
+## Findings
+
+The CSV has 40,404 ingested rows, but 404 pairs (808 rows) are **retry duplicates**: same `user_id` + `client_seq` + `screen`, re-ingested with a new `event_id` exactly 90 seconds after the original (a consistent client resend pattern, confirmed across all 404 groups). No group appears more than twice, no timestamps fall outside July 6, and there are no fully-duplicate rows or duplicate `event_id`s.
+
+Deduping by `(user_id, client_seq)` — the actual client-side event identity — gives:
+
+40,404 rows − 404 duplicate retries = **40,000 distinct client events**
+
+EVENTS_JUL6: 40000

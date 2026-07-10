@@ -1,0 +1,10 @@
+All 640 refunds reconcile cleanly once the ID formats are handled. Here's what I found:
+
+**The join trap:** Orders use two ID prefixes — `O2-` (4,236 orders) and `ORD-` (3,764) — but the refund export normalized every `order_ref` to `ORD-`. A naive join on `order_id == order_ref` matches only 301 of 640 refunds and badly understates refunds. The numeric parts are the real key: O2 and ORD numeric ranges don't overlap, and joining on the number matches **all 640 refunds to a unique June order** (0 unmatched, 0 duplicates).
+
+**Results:**
+- 640 distinct June orders refunded out of 8,000 → **8.0%**
+- Total refunded: **$37,452.44** (every refund ties to a June order; nothing dropped)
+
+REFUND_RATE_JUNE: 8.0%
+REFUNDED_USD: $37,452.44

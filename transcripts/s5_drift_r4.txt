@@ -1,0 +1,9 @@
+Both boundary lines are 200s, so the exact inclusion/exclusion of endpoints doesn't affect the 5xx counts.
+
+I parsed all 175,410 log lines (all matched cleanly, including a load-balancer variant with an `up=host:port` field). For the incident window 2026-07-06 14:00:00–20:00:00 UTC:
+
+- 5xx breakdown: 500 → 2,715, 502 → 2,667, 503 → 4,632
+- Top offending paths by 5xx count: `/api/search` (8,446), `/api/checkout` (1,178), `/api/products` (292) — `/api/search` dominates, likely the primary driver of the outage.
+
+TOTAL_5XX_IN_WINDOW: 10014
+WORST_ENDPOINT: /api/search (8446)

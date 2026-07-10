@@ -1,0 +1,6 @@
+The data is clean: 5,200 dispute rows spanning all of June, with 15 distinct tokens in `merchant_code`. One of those tokens is the literal string `NULL` (683 rows) — a placeholder for disputes with no merchant code recorded, not an actual acquiring short code. Its dispute rows (e.g. DSP-71492) confirm these are unattributed disputes rather than a merchant named "NULL."
+
+Excluding that missing-data placeholder, the merchant code with the most June disputes is **RUBY** with **494** disputes (next were BLUE at 453 and VOLT at 419).
+
+TOP_MERCHANT_CODE: RUBY
+DISPUTE_COUNT: 494

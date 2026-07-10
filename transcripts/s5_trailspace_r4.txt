@@ -1,0 +1,7 @@
+Data is clean: 7,000 June invoices, 5,783 distinct payments each matching exactly one invoice with amounts matching exactly (no duplicates, no partial/overpayments, all payment amounts trace to invoices in the file — I stripped stray trailing whitespace found in ~half the `invoice_ref` values before matching).
+
+- Invoices paid in June: 5,783 / 7,000 = 82.61%
+- Total collected: $743,453.08 across those 5,783 payments (all dated within June)
+
+PCT_INVOICES_PAID: 82.61%
+COLLECTED_USD: $743,453.08

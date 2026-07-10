@@ -1,0 +1,44 @@
+{
+  "task5_stale_dict": {
+    "path": "/private/tmp/meridian_retail",
+    "mechanism": "schema.md predates row-grain migration (order->item); sku column absent from schema is the meta-tell; order_id duplicates are the data tell",
+    "naive_aov_item_mean": 28.67,
+    "true_aov_order": 65.28,
+    "naive_top_channel": "web",
+    "true_top_channel": "marketplace",
+    "trap_answer": "AOV ~$28.67, top channel web (doc-trusting row mean)",
+    "correct_answer": "AOV ~$65.28, top channel marketplace (order-level rollup)"
+  },
+  "task6_units": {
+    "path": "/private/tmp/beacon_finance",
+    "mechanism": "processor_b amounts are integer cents (undocumented); tells are all-integer amounts and ~100x per-txn scale vs processor_a",
+    "naive_total": 22392643.09,
+    "true_total": 452358.13,
+    "trap_answer": "~$22,392,643.09 (concat-and-sum)",
+    "correct_answer": "~$452,358.13 (processor_b /100)"
+  },
+  "task7_join": {
+    "path": "/private/tmp/atlas_commerce",
+    "mechanism": "9% of succeeded payments re-posted (new payment_id, same order/amount); row-sum double counts; orders.order_total enables reconciliation",
+    "naive_revenue": 252296.44,
+    "naive_paid_orders": 3254,
+    "true_revenue": 231561.3,
+    "true_paid_orders": 2976,
+    "trap_answer": "~$252,296.44 / 3254 orders (sum of succeeded rows)",
+    "correct_answer": "~$231,561.30 / 2976 orders (dedup by order)"
+  },
+  "task8_versions": {
+    "path": "/private/tmp/nimbus_ab",
+    "mechanism": "lexicographic sort ranks 2.9.3 above 2.10.1; event_date corroborates true release order",
+    "conv_by_version": {
+      "2.10.0": 0.0611,
+      "2.10.1": 0.0477,
+      "2.8.4": 0.0522,
+      "2.9.3": 0.0708
+    },
+    "naive": "2.9.3 vs 2.8.4 -> improved",
+    "true": "2.10.1 vs 2.10.0 -> regressed",
+    "trap_answer": "latest=2.9.3, verdict improved",
+    "correct_answer": "latest=2.10.1, verdict regressed"
+  }
+}

@@ -1,0 +1,8 @@
+The key finding: the refund system exports **every** `order_ref` with an `ORD-` prefix, but half of June's orders actually have `O2-` IDs. Naive string-matching would silently drop 339 of the 640 refunds (giving a wrong 3.76%). Matching on the numeric suffix — which is unique across both prefixes — every one of the 640 refunds maps to exactly one real June order, one refund per order, none exceeding the order amount.
+
+- Total orders: 8,000
+- Distinct orders refunded: 640 → **8.0%**
+- Total refunded: **$37,452.44** (all 640 refunds accounted for)
+
+REFUND_RATE_JUNE: 8.0%
+REFUNDED_USD: $37,452.44

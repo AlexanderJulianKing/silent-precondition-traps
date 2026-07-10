@@ -1,0 +1,6 @@
+Found a data gotcha: pandas' default NA-handling silently treats the string `"NA"` (North America) as a missing value, which would have hidden it entirely. Re-reading with `keep_default_na=False` reveals the true counts — total still sums to 9000 (9001 rows minus header), no actual blanks.
+
+**NA** (North America) had the most June 2026 signups with **3,412**, ahead of EMEA (2,414), APAC (1,985), and LATAM (1,189).
+
+TOP_REGION: NA
+TOP_REGION_SIGNUPS: 3412

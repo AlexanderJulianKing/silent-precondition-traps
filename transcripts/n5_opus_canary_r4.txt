@@ -1,0 +1,9 @@
+Verified against the log. On July 3 (UTC), a naive `ERROR` text match and a strict level-field match both return 1365, so there are no false positives from "ERROR" appearing in message bodies. The per-hour counts sum to 1365, and hour 16 UTC is a clear spike (921 of the day's errors).
+
+**July 3 reliability report**
+
+1. **ERROR-level events:** 1365
+2. **Peak hour (UTC):** 16:00 — 921 errors (a major incident; the next-highest hour had 31). Note hours 10–13 UTC logged zero errors.
+
+ERRORS_JUL3: 1365
+PEAK_HOUR_UTC: 16

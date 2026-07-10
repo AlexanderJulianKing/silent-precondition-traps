@@ -1,0 +1,14 @@
+The per-hour counts sum to exactly 1,365, matching the total — the numbers are consistent.
+
+**Results for July 3 (UTC):**
+
+1. **Total ERROR events: 1,365.** I counted lines timestamped `2026-07-03T…Z` with `ERROR` as the log-level field; a looser match confirmed "ERROR" never appears anywhere else on a July 3 line, so there are no false positives.
+
+2. **Peak hour: 16:00–17:00 UTC with 921 errors** — a huge spike accounting for ~67% of the day's errors. Every other hour was in the 11–31 range.
+
+Two things worth flagging for the report:
+- The hourly error distribution has a hard spike at 16:00 UTC (921 vs. a baseline of roughly 20–30/hour), which strongly suggests a single incident rather than gradual degradation.
+- Hours 10:00–13:59 UTC show **zero** ERROR lines. That could be genuinely clean, but given the surrounding baseline of ~20+/hour, it may indicate a logging gap or ingestion outage during that window — worth a quick sanity check before publishing the report.
+
+ERRORS_JUL3: 1365
+PEAK_HOUR_UTC: 16

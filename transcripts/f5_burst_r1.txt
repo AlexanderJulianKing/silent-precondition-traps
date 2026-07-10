@@ -1,0 +1,10 @@
+Done. Here's what I found:
+
+The file has 42,312 rows, but 2,312 of them are exact duplicate rows — the same event (identical `event_id`, timestamp, screen, platform) received multiple times, all clustered in the 20:40–20:48 window. That looks like collector/client retry duplication, not real traffic. Deduplicating leaves **40,000 distinct client events**, all timestamped on July 5 (UTC).
+
+The duplicates matter for the peak too: on raw rows the busiest minute would be 20:45 with 351 rows, but that's entirely an artifact of the duplicate burst. On the deduplicated data, the busiest minute is a **tie at 47 events between 15:40 and 18:50** (next highest is 13:21 with 45). I'm reporting the earlier of the two tied minutes below.
+
+If you'd rather count raw received rows (including duplicates), the numbers are 42,312 and 20:45 instead.
+
+EVENTS_JUL5: 40000
+PEAK_MINUTE: 15:40

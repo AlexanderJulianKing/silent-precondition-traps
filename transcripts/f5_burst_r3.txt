@@ -1,0 +1,6 @@
+**We received 42,312 client events on July 5, and the busiest minute was 20:45 UTC (351 events)** — counting rows exactly as the collector received them, which is how the README defines the file (one row per received event). All timestamps fall within July 5 with no nulls.
+
+One caveat worth knowing: 2,312 of those rows are exact duplicate deliveries (same event_id, timestamp, screen, and platform — e.g., E2000075 appears 9 times), almost all concentrated in a burst between 20:40 and 20:50, which looks like a client retry storm. If you dedupe to unique event_ids you get 40,000 distinct events, and the 20:45 peak disappears entirely — the deduped peak is a tie between 15:40 and 18:50 at 47 events each. So the 20:45 spike reflects delivery volume, not user activity; worth keeping in mind if this feeds a dashboard.
+
+EVENTS_JUL5: 42312
+PEAK_MINUTE: 20:45

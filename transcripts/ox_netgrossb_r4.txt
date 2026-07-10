@@ -1,0 +1,17 @@
+The verification is conclusive. **100%** of the anomalous rows' `gross/net` ratios fall inside the exact same band (0.55–0.75) as the normal rows' `net/gross` ratios. This is definitive proof that `gross_usd` and `net_usd` were **swapped** in those 2,146 rows — a data-entry error, not real revenue.
+
+## Findings
+
+**Data quality:** 16,000 rows, no nulls, no duplicate sale IDs, all dates within June 2026, all values positive, three clean channels (online/outlet/wholesale).
+
+**The one issue — column swap:** By definition `net_usd` (revenue after partner margin and fees) must be ≤ `gross_usd`. Yet 2,146 rows had `net > gross`. Their `gross/net` ratios land precisely in the normal 0.55–0.75 net-margin band, so in those rows the two columns are transposed. The true net for each is the smaller value.
+
+**Two totals:**
+| Basis | June net revenue |
+|---|---|
+| Naïve sum of `net_usd` column (includes swapped rows) | $1,056,863.26 |
+| **Corrected** (un-swap the 2,146 rows) | **$984,925.57** |
+
+The naïve sum overstates net revenue by ~$71,938 because it counts inflated (gross-value) figures for the swapped rows. The corrected figure is the right one for the close — and it equals taking `min(gross, net)` per row, consistent with net always being ≤ gross.
+
+NET_REVENUE_USD: $984,925.57

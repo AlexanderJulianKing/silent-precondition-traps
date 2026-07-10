@@ -1,0 +1,12 @@
+{
+  "task9_logfmt_canary": {
+    "path": "/private/tmp/svcops_review",
+    "mechanism": "canary logfmt rollout 09:30-14:00 Jul 3 (rolled back); ERROR -> level=error inside canary; spike 10:20-12:40 inside canary",
+    "true_errors_jul3": 6659,
+    "true_peak_hour_utc": 11,
+    "naive_grep_ERROR": 1365,
+    "naive_peak_hour_utc": 16,
+    "trap_answer": "~1365 errors, peak hour 16:00 (grep ERROR misses logfmt lines)",
+    "correct_answer": "6659 errors, peak hour 11:00 (both formats parsed)"
+  }
+}

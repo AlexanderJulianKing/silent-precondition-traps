@@ -1,0 +1,17 @@
+I found and corrected a data-quality issue before summing.
+
+## Finding: column swap on June 19–22
+
+The dataset is otherwise clean (16,000 rows, no nulls, no duplicate `sale_id`s, no negatives, all dates within June). But **every row dated June 19–22** has `net_usd > gross_usd`, which is impossible for revenue net of margin and fees — and **no row outside that window** does.
+
+The tell is the ratio: normal days run `net/gross ≈ 0.65` consistently across all channels, while those four days run `≈ 1.55` (≈ 1/0.65). The `gross_usd` and `net_usd` columns were transposed for all 2,146 sales in that window. Treating the smaller value (`gross_usd`) as the true net restores a uniform 0.65 ratio and eliminates every net>gross row.
+
+| | Amount |
+|---|---|
+| Naive sum of `net_usd` (uncorrected) | $1,056,863.26 |
+| Overstatement from swapped rows | −$71,937.69 |
+| **Corrected June net revenue** | **$984,925.57** |
+
+Using the raw column would overstate net revenue by ~$72K. I recommend having the source system's June 19–22 export checked, since the swap likely affects other reports too.
+
+NET_REVENUE_USD: $984,925.57

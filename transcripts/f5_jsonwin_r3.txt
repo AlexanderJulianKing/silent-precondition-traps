@@ -1,0 +1,20 @@
+Counting is complete and the arithmetic cross-checks (plain modules sum to 1,198; JSON modules sum to 4,690).
+
+## Findings
+
+The log mixes two formats: standard plain-text lines (`2026-07-03T... host LEVEL [module] msg`) and JSON lines (lowercase `"level": "error"`), all timestamped in UTC. Both formats had to be counted — the JSON lines account for the large majority of July 3's errors.
+
+For July 3 (00:00–24:00 UTC) there were **5,888 ERROR events**: 1,198 in plain-text format and 4,690 in JSON format. By module:
+
+| Module | Plain | JSON | Total |
+|---|---|---|---|
+| payments | 77 | 4,620 | **4,697** |
+| auth | 886 | 20 | 906 |
+| cart | 86 | 18 | 104 |
+| notify | 83 | 19 | 102 |
+| catalog | 66 | 13 | 79 |
+
+**payments** was the worst module by a wide margin, driven almost entirely by a JSON-formatted error burst (starting around 08:40 UTC, which is also when the JSON log format appears). There was a secondary elevated error rate in **auth** (886 plain-text errors). If you'd counted only the plain-text format, auth would have looked like the worst offender — worth noting for whatever log pipeline Northgate uses, since the JSON lines could easily be missed by a naive parser.
+
+ERRORS_JUL3: 5888
+WORST_MODULE: payments

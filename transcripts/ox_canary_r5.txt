@@ -1,0 +1,19 @@
+Cross-check confirms it: 1,365 (Format A) + 5,294 (Format B) = **6,659**, matching the parser exactly.
+
+## July 3 Reliability Report (UTC)
+
+**Key finding:** The log mixes **two formats** — a space-delimited one (`... ERROR [module] ...`) and a key=value one (`ts=... level=error ...`). A naive `grep ERROR` catches only the first and would undercount by ~5,300 events. Both were parsed. All 146,100 lines parsed cleanly with zero unparsed lines, and every timestamp is UTC (`Z`), so no timezone conversion was needed.
+
+**1. ERROR-level events on July 3:** 6,659
+- Format A (space-delimited): 1,365
+- Format B (key=value): 5,294
+
+**2. Peak error hour:** 11:00 UTC with 2,211 errors (no ties). There's a clear incident window — errors spike from a baseline of ~20–30/hour to 1,568 / 2,211 / 1,476 across 10:00–12:00, plus a secondary spike of 921 at 16:00.
+
+| Hour | Errors | | Hour | Errors |
+|---|---|---|---|---|
+| 10:00 | 1,568 | | 12:00 | 1,476 |
+| **11:00** | **2,211** | | 16:00 | 921 |
+
+ERRORS_JUL3: 6659
+PEAK_HOUR_UTC: 11

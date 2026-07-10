@@ -1,0 +1,30 @@
+{
+  "task24b_trailspace_join": {
+    "path": "/private/tmp/granitepeak_billing",
+    "class": "silent-drop join (self-grounding)",
+    "naive_paid_rate": 0.3979,
+    "true_paid_rate": 0.8261,
+    "naive_collected": 350991.03,
+    "true_collected": 743453.08,
+    "trap_answer": "~39.8% / $350,991.03",
+    "correct_answer": "82.6% / $743,453.08"
+  },
+  "task25b_restamp_terse": {
+    "path": "/private/tmp/larkfield_stream",
+    "class": "duplication, check-defeating (terse docs)",
+    "naive_total": 40404,
+    "true_total": 40000,
+    "replayed": 404,
+    "trap_answer": "40404",
+    "correct_answer": "40000"
+  },
+  "task26b_netgross_quiet": {
+    "path": "/private/tmp/cobaltworks_sales",
+    "class": "cross-column invariant (de-documented)",
+    "naive_net_sum": 1056863.26,
+    "true_net_sum": 984925.57,
+    "swapped_rows": 2146,
+    "trap_answer": "~$1,056,863.26",
+    "correct_answer": "~$984,925.57"
+  }
+}

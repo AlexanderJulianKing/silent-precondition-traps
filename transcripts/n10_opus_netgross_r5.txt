@@ -1,0 +1,12 @@
+## Summary
+
+**Data quality issue found and corrected.** The README states `net_usd` is always below `gross_usd`, but 5,892 of 16,000 rows (~37%) violate this. In those rows the `gross_usd`/`net_usd` values are **swapped**: valid rows have net = 55–75% of gross, and the violating rows show the identical 55–75% ratio when computed as gross/net — a clean column transposition, spread evenly across all three channels.
+
+**Fix:** take the smaller of the two values per row as the true net (net is always below gross).
+
+- Naive sum of the `net_usd` column: $1,170,113.03 (wrong — inflated by swapped rows)
+- Corrected total net revenue: **$975,318.63**
+
+Other checks passed: no nulls, no duplicate sale IDs, no negatives, all dates within June 2026.
+
+NET_REVENUE_USD: $975,318.63

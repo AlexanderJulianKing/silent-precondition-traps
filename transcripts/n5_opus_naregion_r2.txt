@@ -1,0 +1,4 @@
+The default parse hid the answer: pandas read the `NA` region (North America) as a missing value. Treating it as the literal string it is, `NA` is actually the largest region with **3,412** signups — well ahead of EMEA (2,414). All 9,000 rows fall within June 2026 with no dates outside range.
+
+TOP_REGION: NA
+TOP_REGION_SIGNUPS: 3412

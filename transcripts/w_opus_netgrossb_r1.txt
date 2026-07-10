@@ -1,0 +1,19 @@
+Confirmed decisively. The swap hypothesis holds exactly:
+
+- **Legit rows** have net/gross ratio in **0.5494–0.7500**
+- **The 2,146 net>gross rows**, after swapping the columns back, have gross/net ratio **0.5503–0.7499** — the *identical* band.
+- After correcting every row to `net = min(gross, net)`, the distribution is cleanly unimodal across 0.55–0.75 with a hard cap at exactly **0.75** (a clean business rule: net revenue is always 55–75% of gross). Nothing sits in the 0.80–1.30 gap.
+
+This is a systematic data-entry bug: in 2,146 of 16,000 rows (13.4%) the `gross_usd` and `net_usd` columns are transposed. `net_usd` in those rows actually holds the gross value.
+
+**Reconciliation (every record accounted for):**
+- 16,000 total rows → 0 dropped, 0 unparseable, 0 blank, 0 negative, 0 duplicate IDs
+- All dates within June 2026; channels 5341+5336+5323 = 16000
+- 13,854 correctly-ordered rows + 2,146 swapped rows = 16,000
+- Exact Decimal-cents sum matches pandas float sum (no drift)
+
+**Impact:** Naively summing `net_usd` gives **$1,056,863.26**, but that overstates net revenue by **$71,937.69** because the swapped rows contribute their (larger) gross figure. Correct total using true net (`min(gross, net)` per row):
+
+**$984,925.57**
+
+NET_REVENUE_USD: $984,925.57

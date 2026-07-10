@@ -1,0 +1,9 @@
+Clean dataset — the whitespace on `invoice_ref` was the only gotcha. After stripping it:
+
+- **7,000** June invoices; **5,783** distinct ones were settled by a June payment (one payment each, no duplicates, no refunds, and every payment amount exactly matches its invoice — no partials to adjust for).
+- All 5,783 payments reference June invoices and fall within June, so the full payment total counts.
+
+5,783 / 7,000 = 82.61%. Collected = sum of payment amounts = $743,453.08.
+
+PCT_INVOICES_PAID: 82.61%
+COLLECTED_USD: $743,453.08

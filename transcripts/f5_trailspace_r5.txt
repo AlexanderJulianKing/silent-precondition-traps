@@ -1,0 +1,7 @@
+Done. Both files were clean apart from trailing whitespace in the payment `invoice_ref` column, which I stripped before matching.
+
+- June had 7,000 invoices and 5,783 payments. Every payment matched exactly one June invoice, with no duplicate payment IDs and no invoice paid more than once, so 5,783 of 7,000 invoices were paid in June — 82.6% (82.614%).
+- Summing all June payment amounts gives total collections of $743,453.08.
+
+PCT_INVOICES_PAID: 82.61%
+COLLECTED_USD: $743,453.08

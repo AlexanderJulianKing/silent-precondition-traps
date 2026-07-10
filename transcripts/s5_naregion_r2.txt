@@ -1,0 +1,6 @@
+All 9000 rows are within June 2026, no duplicate signup_ids. Note: a naive `pd.read_csv` would silently turn the "NA" (North America) region into missing values, since pandas treats "NA" as a null marker by default — I reloaded with `keep_default_na=False` to preserve it.
+
+NA (North America) had the most signups by a wide margin.
+
+TOP_REGION: NA
+TOP_REGION_SIGNUPS: 3412

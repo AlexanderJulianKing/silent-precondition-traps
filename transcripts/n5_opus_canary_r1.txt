@@ -1,0 +1,26 @@
+Done. Important finding: the log mixes **two formats**, and a naive grep only catches one of them.
+
+## July 3 (UTC) reliability report
+
+- **Format A**: `2026-07-03T… HOST ERROR [module] …` (uppercase level)
+- **Format B**: `ts=2026-07-03T… host=… level=error module=… msg="…"` (lowercase key=value)
+
+Both are real ERROR events. Counting only one format would badly undercount. All 146,100 lines parsed cleanly (0 unparsed), so the totals below cover the full log.
+
+**1. Total ERROR events on July 3:** **6,659** (2,434 from Format A + 4,225 from Format B on that day; the remaining Format-B errors fall on Jul 2/4).
+
+**2. Peak hour:** **11:00 UTC**, with **2,211** errors — no tie.
+
+Hourly shape shows a clear incident, dominated by `db pool exhausted acquiring connection` (billing):
+
+| Hour (UTC) | Errors |
+|---|---|
+| 10:00 | 1,568 |
+| **11:00** | **2,211** |
+| 12:00 | 1,476 |
+| 16:00 | 921 |
+
+All other hours sit at ~11–31 errors (normal baseline). So the reliability event was a ~10:00–12:00 billing/DB-pool storm with a secondary spike at 16:00.
+
+ERRORS_JUL3: 6659
+PEAK_HOUR_UTC: 11
