@@ -1,0 +1,3 @@
+All 17,950 data rows are well-formed, each with a unique tracking number and `ACCEPTED` carrier response, all dated within July 2026 — matching the README's description of the file as the complete carrier-acceptance closeout (no rejects, test scans, or transfers included).
+
+FINAL_ANSWER: 17950

@@ -1,0 +1,7 @@
+{
+  "correct_answer": 3736665.6,
+  "mechanism": "Truck meters report temperature-expanded liquid volume, while delivered gallons are settled at the latent 60\u00b0F reference density recoverable from scale mass.",
+  "planted_answer": 3852666.7,
+  "task": "morrow_propane_gallons",
+  "tolerance": 0.05
+}

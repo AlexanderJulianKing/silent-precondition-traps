@@ -1,0 +1,3 @@
+The total measured weight of accepted RUSH parcels in October is **14,604.9 kg**, summed across 4,177 parcels. The data was clean — every row in the file was an October closeout with `carrier_status` of ACCEPTED, there were no duplicate parcel IDs, and no missing or non-positive weights among the RUSH rows (individual weights ranged from 0.51 to 20.92 kg).
+
+FINAL_ANSWER: 14604.9

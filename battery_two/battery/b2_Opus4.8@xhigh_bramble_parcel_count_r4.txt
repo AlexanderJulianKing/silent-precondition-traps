@@ -1,0 +1,17 @@
+The evidence is conclusive. Every one of the 950 duplicate groups is a pair (never more) that shares:
+
+- **Consecutive tracking numbers** and **consecutive manifest rows** (950/950) — a second record emitted right after the first
+- **Identical load-cell sample** (950/950) — two genuine weighings would differ; identical means the same reading was re-emitted, not a re-weigh
+- **Same lane, service, destination, weight, and dimensions**
+- **`accepted_at` just 25–75 seconds apart**
+
+This is a systematic double-manifest at the carrier gateway (beginning July 11): the same physical parcel was accepted a second time within about a minute, generating a fresh tracking number. The README's note that dimensions and the load-cell sample are "retained for packing-line diagnostics" is exactly the fingerprint needed to collapse these back to one parcel.
+
+**Reconciliation:**
+- Rows / unique tracking numbers, all `ACCEPTED`: **17,950**
+- Double-manifested parcels (counted twice): **950**
+- Distinct physical parcels transferred: 17,950 − 950 = **17,000**
+
+The 17,950 tracking numbers are genuinely unique, but a tracking number is a label, not a parcel — 950 parcels carry two labels each. The count of physical parcels handed to the carrier in July is 17,000.
+
+FINAL_ANSWER: 17000

@@ -1,0 +1,14 @@
+The data is clean and consistent. Here's what I verified:
+
+**Structure:** 12 workshops × 12 channels each × 30 daily readings = 4,320 rows, all health `OK`.
+
+**Traps ruled out:**
+- **Cumulative vs. daily readings:** Every channel's values fluctuate up and down over the month (never monotonically accumulating), so each `kwh` is that day's consumption — a straight sum is correct, not a max−min differencing.
+- **Reused channel IDs:** 7 channel labels appear at two different workshops, but these are per-site electrician commissioning labels (as the README notes) — distinct physical channels. `(site, channel)` is the unique key, so there's no double-counting.
+- **Duplicates/revisions:** No duplicate reading IDs, and no `(site, channel, date)` appears more than once — nothing to dedup.
+- **Scope:** README states the export already excludes office, exterior-lighting, and HVAC loads and contains only production-energy channels — so the full sum *is* production usage.
+- **Data quality:** No negative or non-`OK` rows.
+
+**Total** (exact sum = 734760.47) rounded to one decimal place:
+
+FINAL_ANSWER: 734760.5

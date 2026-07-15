@@ -1,0 +1,3 @@
+The folder at `/private/tmp/granite_shrink_rate` contains Granite Ridge Bicycle Supply's July 31 stocktake, open transfer register, and README. Calculate the network-wide unit shrink percentage at the July 31 close, defined as missing physical units divided by units expected to be physically on hand. Round the percentage to two decimal places.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

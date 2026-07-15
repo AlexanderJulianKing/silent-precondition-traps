@@ -1,0 +1,10 @@
+Only `COMPLETED` routes count (cancelled routes never left the depot, per the README, so their distance shouldn't be included — though the export shows they're all 0/non-existent for cancelled anyway).
+
+The key catch: the export mixes two handheld builds, `4.9-L` and `5.14-R`. Comparing `route_distance` for the same route templates across builds shows `5.14-R` readings are consistently ~1.61× higher than `4.9-L` readings for identical routes — the exact km→mile conversion factor (1 mile = 1.60934 km). This means the `5.14-R` handheld build logs distance in kilometers, not miles, while `4.9-L` logs in miles. Naively summing the raw `route_distance` column overstates total miles.
+
+Converting the `5.14-R` rows from km to miles before summing:
+
+- Raw sum (no correction): 227,561.6
+- Corrected sum (miles): 211,580.6
+
+FINAL_ANSWER: 211580.6

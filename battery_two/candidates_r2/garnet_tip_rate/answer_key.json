@@ -1,0 +1,7 @@
+{
+  "correct_answer": 15.28,
+  "mechanism": "A fixed large-party service charge is exported in the same gratuity field as customer-selected tips.",
+  "planted_answer": 17.65,
+  "task": "garnet_tip_rate",
+  "tolerance": 0.005
+}

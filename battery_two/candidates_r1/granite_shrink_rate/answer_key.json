@@ -1,0 +1,7 @@
+{
+  "correct_answer": 1.19,
+  "mechanism": "Destination-booked units still on transfer trucks are mistaken for missing warehouse stock.",
+  "planted_answer": 2.61,
+  "task": "granite_shrink_rate",
+  "tolerance": 0.005
+}

@@ -1,0 +1,9 @@
+Data is clean: 20,223 total inbound calls in June, all with unique `call_id`/`switch_seq`, only two outcome values, and no inconsistencies (every ANSWERED row has an agent extension, every CALLER_ABANDONED row doesn't).
+
+- Answered: 16,709
+- Abandoned: 3,514
+- Total: 20,223
+
+Answer rate = 16,709 / 20,223 × 100 = 82.62%
+
+FINAL_ANSWER: 82.62%

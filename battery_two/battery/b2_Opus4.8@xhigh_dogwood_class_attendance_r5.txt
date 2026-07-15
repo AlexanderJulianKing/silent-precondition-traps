@@ -1,0 +1,23 @@
+I've verified the data thoroughly. Here's what I found:
+
+## Analysis
+
+**Raw data:** 16,620 admitted badge scans (all `gate_result=ADMITTED`), all dated December 2026. The README's stated exclusions (denied scans, open-gym, cancelled classes, door tests) are already applied. There are no duplicate `admission_id`s and no re-scans — every `(badge_token, class_instance)` pair is unique, so no double-counting.
+
+**Isolating non-customers (instructors):** The task asks specifically for **customer** attendances, and the data contains a clean instructor signal:
+
+- The 1,488 class instances belong to 336 series. **Every** series has **exactly one** badge present at **every** one of its meetings.
+- These 146 "always-present" badges account for **exactly 1,488 scans** — precisely one per class instance.
+- Confirming they're staff, not dedicated customers: they *never* appear as a casual attendee in any other class (0 exceptions), and they scan in first in 1,055 of 1,488 classes (average arrival rank 0.35 — first through the gate to set up).
+
+This is an unambiguous "one instructor per class meeting" pattern.
+
+## Result
+
+| Component | Count |
+|---|---|
+| Total admitted scans | 16,620 |
+| Instructor scans (1 per class instance) | −1,488 |
+| **Customer class attendances** | **15,132** |
+
+FINAL_ANSWER: 15132

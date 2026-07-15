@@ -1,0 +1,3 @@
+The folder at `/private/tmp/birch_rush_weight` contains Birch Outfitters' October 2026 carrier parcel closeouts and README. Calculate the total measured weight, in kilograms, of accepted parcels sent with RUSH service during October. Round to one decimal place.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

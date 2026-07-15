@@ -1,0 +1,5 @@
+All 13,003 session rows are clean (no duplicates, no missing fields, no negative durations, all within June 2026), so no filtering beyond what the README already describes was needed.
+
+**Calculation:** average of `(session_end − session_start)` across all 13,003 rows = 82.20072... minutes.
+
+FINAL_ANSWER: 82.2

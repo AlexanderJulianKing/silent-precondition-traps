@@ -1,0 +1,7 @@
+{
+  "correct_answer": 26.0,
+  "mechanism": "One till build permutes the damage and fit option codes while notes retain their ordinary meanings.",
+  "planted_answer": 19.9,
+  "task": "lilac_damage_rate",
+  "tolerance": 0.05
+}

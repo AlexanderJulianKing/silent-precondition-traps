@@ -1,0 +1,18 @@
+The data is clean and the answer is well-determined.
+
+## Analysis
+
+**Dataset:** 16,620 admitted badge scans (all `gate_result = ADMITTED`; the README's exclusions — denied scans, open-gym, cancelled classes, door tests — are already applied). No blank fields, all dates in December 2026, no duplicate `(badge, class_instance)` scans.
+
+**The "customer" catch — instructor scans are mixed in.** The README notes the gate excludes non-class events but says nothing about staff, and the question asks specifically for *customer* attendances. The data reveals instructor scans with an unmistakable signature:
+
+- There are **336 class series** (each a recurring weekly slot), with 4–5 meetings each.
+- **Every single series has exactly one badge that attends *all* of its meetings** (336/336 — no series with zero or two). Regular customers don't do this; instructors do.
+- These full-attendance badges total exactly **1,488 scans = exactly the number of class instances** → one instructor per meeting.
+- They resolve to **146 distinct people**, each teaching 1–4 series, and **none of them ever appears as a customer** in any other class (0 dual scans).
+
+This is a deliberate, self-consistent instructor layer, not coincidence. Removing it:
+
+**16,620 total scans − 1,488 instructor scans = 15,132 customer class attendances**
+
+FINAL_ANSWER: 15132

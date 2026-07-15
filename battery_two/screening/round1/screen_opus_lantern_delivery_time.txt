@@ -1,0 +1,10 @@
+Both data sources cross-reference cleanly. The key detail: the README notes `received_at` is gateway-assigned, and the CSV's `delivered_at` exactly equals that delayed gateway timestamp — not the actual doorstep moment. The true doorstep-delivery time is the proof-of-delivery `scan_capture_utc` in the scanner payload.
+
+Findings:
+- 6800 completed June `DELIVERED` jobs, each with a matching `PROOF_OF_DELIVERY` scan.
+- CSV `delivered_at` == gateway `received_at` for every job (network/buffer lag baked in).
+- Elapsed = `scan_capture_utc` − `dispatch_at`, all in UTC, all June 2026, no negatives.
+
+Using the delayed gateway time gives 44.9 min; using the actual doorstep scan capture gives **37.0 min**.
+
+FINAL_ANSWER: 37.0

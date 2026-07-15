@@ -1,0 +1,3 @@
+The folder at `/private/tmp/sequoia_member_churn` contains Sequoia Movement Club's July 2026 membership-contract export and README. Calculate the percentage of the membership base active on July 1 that had churned by August 1. Round the percentage to one decimal place.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

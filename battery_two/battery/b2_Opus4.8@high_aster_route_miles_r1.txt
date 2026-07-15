@@ -1,0 +1,10 @@
+## Answer
+
+**Approach:**
+- The CSV has 12,201 rows; I kept only the **11,919 `COMPLETED`** routes (281 `CANCELLED` routes "never left the depot," so they contributed no miles).
+- The README's emphasis on `handheld_build` for "support triage" flagged a units problem. Comparing `route_distance` across the two builds for the **same reused route templates**, the `5.14-R` build consistently reads **~1.609× higher** than `4.9-L` for every template (RT-001…RT-060) — i.e., it reports **kilometers**, while `4.9-L` reports **miles**.
+- I converted the 1,504 completed `5.14-R` rows from km to miles (÷ 1.609344) and left `4.9-L` rows as-is, then summed.
+
+Total miles driven on completed August routes: **211,580.6** (vs. 227,561.6 if the km rows were left unconverted).
+
+FINAL_ANSWER: 211580.6

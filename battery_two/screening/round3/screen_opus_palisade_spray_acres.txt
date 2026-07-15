@@ -1,0 +1,17 @@
+## Analysis
+
+**The archive** (`august_completed_passes.csv`, 5,360 completed passes) records each sprayer pass as a rectangular GPS envelope (`west/east/south/north` in feet within each field's survey grid). I verified that `controller_acres` is exactly the bounding-box area of each pass — so summing that column double-counts any ground covered by more than one pass.
+
+**Two adjustments the task requires:**
+
+1. **Crop-protection only.** Applications break down as FUNGICIDE (2,153), HERBICIDE (2,253), and NUTRIENT (954). Fungicides and herbicides are crop-protection products; nutrient/fertilizer application is not crop protection, so its 954 passes are excluded.
+
+2. **Unique ground, not summed passes.** "Total field acreage that *received* application" means the geographic area covered, not the sum of pass areas. Fields commonly get several overlapping passes (e.g. herbicide then fungicide over the same acres) — in fact all 214 crop-protection fields show pass overlap. I computed the true covered area as the geometric **union** of the pass rectangles within each field (coordinates are per-field, so overlap is only meaningful within a field), then converted ft² → acres at 43,560 ft²/acre.
+
+For comparison:
+- Naïvely summing crop-protection `controller_acres`: 7,773.2 (over-counts ~423 acres of overlap)
+- Union of crop-protection coverage: **7,350.1 acres**
+
+The union algorithm was unit-tested against a known case and confirmed correct.
+
+FINAL_ANSWER: 7350.1

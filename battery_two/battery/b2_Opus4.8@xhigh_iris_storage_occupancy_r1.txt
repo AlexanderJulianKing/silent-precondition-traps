@@ -1,0 +1,16 @@
+I've analyzed the export. Here's what the data shows and how I calculated it.
+
+**Data validation** (matching the README's claims):
+- 43,200 nightly readings — perfectly balanced: **12 facilities × 120 controllers × 30 nights** (June 1–30)
+- All `health = OK`, `occupied_flag` ∈ {0,1}, no duplicate (site, controller, date) keys, all reading IDs unique
+- `controller_bank` is just a maintenance grouping — each (site, controller) maps to exactly one bank, so it doesn't affect unit counts (a red herring)
+
+**Calculation:**
+- Total occupied readings across June: **29,932**
+- Average occupied units per facility on a given night = 29,932 ÷ (12 facilities × 30 nights) = **83.144…**
+
+Because the panel is balanced, averaging each facility's nightly mean and then averaging across facilities gives the identical result (per-facility means range 80.4 → 85.5, grand mean 83.144).
+
+Average occupied rental units per facility during June: **83.1**
+
+FINAL_ANSWER: 83.1

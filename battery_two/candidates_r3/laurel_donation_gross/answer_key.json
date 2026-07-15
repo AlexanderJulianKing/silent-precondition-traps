@@ -1,0 +1,7 @@
+{
+  "correct_answer": 1051008.42,
+  "mechanism": "Each JSON object repeats the amount key; ordinary parsers silently retain settlement net and discard the earlier donor-gross value.",
+  "planted_answer": 1016028.43,
+  "task": "laurel_donation_gross",
+  "tolerance": 0.005
+}

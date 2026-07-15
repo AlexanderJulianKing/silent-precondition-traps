@@ -1,0 +1,3 @@
+The average customer session length in June 2026 was **82.2 minutes**, computed as the mean of `session_end − session_start` across all 13,003 sessions in the export (web, iOS, and Android combined). The data required no filtering: session IDs are unique, all timestamps parse cleanly and fall within June, no session ends before it starts, and the README confirms internal staff accounts were already removed.
+
+FINAL_ANSWER: 82.2

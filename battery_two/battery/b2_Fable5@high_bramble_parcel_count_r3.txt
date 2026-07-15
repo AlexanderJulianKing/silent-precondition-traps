@@ -1,0 +1,7 @@
+**17,000 physical parcels were transferred to the carrier in July.**
+
+The export contains 17,950 rows, all `ACCEPTED` with unique tracking numbers — but 950 of them are duplicate scans of parcels already in the file. Each of those 950 pairs shares an identical physical fingerprint: same destination hash, same weight to the gram, same length/width/height, same lane, same service, and — decisively — the **same raw 6-digit load-cell sample**, which a genuinely separate parcel would essentially never reproduce. Every pair also has consecutive manifest numbers (e.g. `MR-0005872`/`MR-0005873`) and acceptance timestamps 25–75 seconds apart on the same lane, the signature of one box getting a second label printed and re-scanned moments later. The pattern runs daily from July 11 through July 31 (roughly 40–60 pairs per day).
+
+So while the carrier gateway recorded 17,950 acceptances, only 17,950 − 950 = 17,000 distinct physical parcels crossed the dock.
+
+FINAL_ANSWER: 17000

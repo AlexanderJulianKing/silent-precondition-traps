@@ -1,0 +1,10 @@
+I calculated the paid-order GMV for October 2026.
+
+**Method:**
+- Included only `PAID` orders (8,928), excluding the 272 `CANCELLED` orders (which the README confirms were never charged).
+- Converted each order's `order_amount` from its checkout currency (USD/EUR/GBP/CAD) to USD using the daily treasury reference rate matched on the order's date and currency.
+- All 8,928 paid orders matched a treasury rate (no gaps); shipping/tax/fees are outside `order_amount` per the README, so `order_amount` is the correct GMV basis.
+
+**Result:** raw sum = 1,091,183.55467117 USD → rounded to two decimals.
+
+FINAL_ANSWER: 1091183.55

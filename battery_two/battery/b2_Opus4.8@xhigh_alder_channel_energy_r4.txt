@@ -1,0 +1,12 @@
+## Result
+
+I verified the data before summing:
+
+- **Structure:** 4,320 daily rows = 12 workshops × 12 production channels each × 30 days (Sept 1–30). Every channel reports all 30 days — complete, no gaps.
+- **No duplicates:** zero repeated `(site, date, channel)` triples. The 7 channel IDs that appear at two sites (e.g. `CH-566` at AW-04 *and* AW-10) are just reused electrician commissioning labels — distinct physical channels, exactly what the README flags. So they are legitimately counted, not deduplicated.
+- **Daily values, not cumulative:** the `kwh` figures fluctuate day-to-day and no channel's series is monotonic, so each row is that day's consumption ("close"), and summing every row is the right operation.
+- **Scope:** README confirms all rows are production-energy (office/exterior-lighting/HVAC excluded), and all 4,320 rows report `OK` health.
+
+Exact sum = 734760.47 kWh → **734760.5 kWh**.
+
+FINAL_ANSWER: 734760.5

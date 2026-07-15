@@ -1,0 +1,5 @@
+The average is **83.1 occupied rental units per facility** during June 2026.
+
+The export is clean and complete: 43,200 rows covering 12 facilities × 120 controllers × 30 nights (June 1–30), with no duplicate controller/date keys, all devices reporting `OK` health, and only 0/1 occupancy flags — so nothing needed to be excluded or imputed. Summing the 29,932 occupied flags and dividing by the 360 facility-nights (12 facilities × 30 nights) gives 83.14, which rounds to 83.1. Per-site nightly averages range from 80.4 (IS-03) to 85.5 (IS-05), so no facility is an outlier skewing the result.
+
+FINAL_ANSWER: 83.1

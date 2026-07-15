@@ -1,0 +1,3 @@
+The CSV contains 17,950 rows, each with a unique tracking number and `carrier_response` of `ACCEPTED`, all timestamped within July 2026 (2026-07-01 to 2026-07-31) with no gaps or duplicates in the tracking sequence. Per the README, rejected labels, test scans, and warehouse transfers are already excluded, so each row represents exactly one physical parcel accepted by the carrier.
+
+FINAL_ANSWER: 17950

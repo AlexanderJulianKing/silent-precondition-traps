@@ -1,0 +1,3 @@
+All 8,928 PAID orders (272 CANCELLED excluded) converted to USD using each order's date/currency treasury reference rate. No missing rates.
+
+FINAL_ANSWER: 1091183.55

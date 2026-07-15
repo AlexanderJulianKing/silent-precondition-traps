@@ -1,0 +1,10 @@
+I verified the data thoroughly before computing:
+
+- **20,223 inbound call rows**, all within June 2026 (2026-06-01 to 2026-06-30).
+- Two outcomes only: **16,709 `ANSWERED`** and **3,514 `CALLER_ABANDONED`** (sum = 20,223, no missing/other values).
+- **No duplicates** — every `call_id` and `switch_seq` is unique (the gaps in the `switch_seq` sequence are the excluded outbound/internal calls, as the README notes).
+- **Clean consistency** — every `ANSWERED` row has an agent extension; every abandoned row has none.
+
+Answer rate = 16,709 ÷ 20,223 × 100 = **82.62%**
+
+FINAL_ANSWER: 82.62

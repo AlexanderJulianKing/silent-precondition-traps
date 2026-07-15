@@ -1,0 +1,5 @@
+The average customer session length is **82.2 minutes**.
+
+Details: the export contains 13,003 session rows across the three clients (web 4,357, iOS 4,340, Android 4,306), all within June 2026. The data was clean — no duplicate session IDs, no missing or reversed timestamps — so the average is simply the mean of `session_end − session_start` across all rows: 82.20 minutes, which rounds to 82.2.
+
+FINAL_ANSWER: 82.2

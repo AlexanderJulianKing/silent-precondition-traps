@@ -1,0 +1,9 @@
+The data is clean — no traps triggered. Verification summary:
+
+- **17,296 total rows**, all `carrier_status = ACCEPTED`, all `packed_at` in October 2026, no duplicate `parcel_id`s (README confirms rejects/test parcels/transfers already excluded).
+- `measured_kg` is 100% numeric and positive; `service` values are clean with no whitespace/case variants.
+- **RUSH parcels: 4,177 rows**, summing `measured_kg` = 14604.87 kg → 14604.9 kg (1 dp).
+
+Total measured weight of accepted RUSH parcels in October: **14604.9 kg**.
+
+FINAL_ANSWER: 14604.9

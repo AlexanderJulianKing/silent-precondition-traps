@@ -1,0 +1,14 @@
+The data is clean and internally consistent — I verified there are no traps:
+
+- **20,223 rows**, every one with 7 fields, all dated within June 2026 (the `FC-NN` prefix matches the day-of-month).
+- **Only two outcomes**: `ANSWERED` (16,709) and `CALLER_ABANDONED` (3,514) — no blanks, no other statuses.
+- **Perfect consistency**: every `ANSWERED` call has an `agent_extension`; every `CALLER_ABANDONED` has none.
+- **No duplicates**: all 20,223 `call_id` and `switch_seq` values are unique (so no double-counted dispositions to dedupe).
+- `wait_seconds` fully populated, no negatives.
+- Outbound/extension-to-extension calls are already excluded per the README.
+
+So the answer rate is simply answered ÷ total inbound:
+
+$$\frac{16{,}709}{20{,}223} = 0.826188 \Rightarrow 82.62\%$$
+
+FINAL_ANSWER: 82.62

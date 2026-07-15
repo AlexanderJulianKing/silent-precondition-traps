@@ -1,0 +1,12 @@
+Confirmed definitively. All 950 duplicate pairs have **consecutive manifest rows AND consecutive tracking numbers**, identical lane/destination/service, an identical 6-digit load-cell `scale_sample`, and acceptance times seconds apart — spread systematically across every day of the month (not a one-off glitch). This is the acceptance system emitting the **same physical parcel to the carrier twice** with a fresh tracking label each time.
+
+## Reasoning
+
+- **17,950** rows, all with unique tracking numbers and `ACCEPTED` responses — this is the number the README nudges you toward ("each row has a unique tracking number").
+- But the README pointedly retains **dimensions and the load-cell `scale_sample`** "for packing-line diagnostics." Those form a physical fingerprint.
+- **950 pairs** of rows share a byte-for-byte identical physical signature (weight + all three dimensions + the exact 6-digit load-cell sample + destination). A genuine re-weigh of a *different* box would essentially never reproduce the same load-cell sample — identical samples mean the same captured scan, i.e. the same physical box.
+- Each such pair is a duplicate label event (consecutive manifest rows, consecutive tracking numbers, ~25–75s apart), so the second row in each pair is **not** a distinct physical parcel.
+
+Physical parcels = 17,950 − 950 = **17,000** (equivalently, 17,000 distinct physical signatures).
+
+FINAL_ANSWER: 17000

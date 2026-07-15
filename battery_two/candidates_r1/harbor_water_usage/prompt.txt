@@ -1,0 +1,3 @@
+The folder at `/private/tmp/harbor_water_usage` contains Harbor Suds Cooperative's June 2026 washer meter readings, facilities service log, and README. Calculate the total gallons used by all washers between the first and last scheduled June readings. Report a whole number of gallons.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

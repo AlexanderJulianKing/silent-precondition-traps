@@ -1,0 +1,7 @@
+{
+  "correct_answer": 15000,
+  "mechanism": "Unreadable parcels receive a second accepted label, leaving non-identical records for one physical tender.",
+  "planted_answer": 15847,
+  "task": "raven_parcel_count",
+  "tolerance": 0.5
+}

@@ -1,0 +1,7 @@
+{
+  "correct_answer": 74.4,
+  "mechanism": "Double-door rental units emit two perfectly synchronized controller histories and are counted twice as lockers.",
+  "planted_answer": 83.1,
+  "task": "iris_storage_occupancy",
+  "tolerance": 0.05
+}

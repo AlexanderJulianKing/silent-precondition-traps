@@ -1,0 +1,12 @@
+The model is fully validated and self-consistent:
+
+- **All 460** cells with a large raw ERP-vs-count gap (>10 units) are exactly the destinations of an in-transit transfer — confirming the ERP credited destinations at dispatch for units still on the truck.
+- After subtracting incoming in-transit units, discrepancies collapse to a clean 0–10 range with **zero overages**, which is what genuine shrink looks like (units go missing, not appear).
+- Source warehouses need no adjustment — the ERP already decremented them at dispatch (their physical counts show no anomaly).
+
+**Calculation:**
+- Units expected physically on hand = `erp_qty − incoming in-transit units` = **1,530,526**
+- Missing physical units = expected − counted = **18,244**
+- Shrink = 18,244 / 1,530,526 = 1.192008%
+
+FINAL_ANSWER: 1.19%

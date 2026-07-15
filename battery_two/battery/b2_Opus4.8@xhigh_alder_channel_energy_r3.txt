@@ -1,0 +1,12 @@
+The data is clean and unambiguous:
+
+- **4,320 rows** = 12 workshops × 12 production channels × 30 days, each a **daily kWh consumption** value (series fluctuate day-to-day, so they're not cumulative meter registers — summing is correct).
+- Every row has `OK` health; there are no negatives, no inactive channels, and no missing days.
+- **No double-counting**: `reading_id` and `(site, channel, date)` are both unique across all 4,320 rows, and no channel behaves as a main-incomer aggregating others (the largest channel at each site is only ~12–14% of its site total).
+- **Label trap avoided**: 7 of the 137 channel labels repeat across different sites (they're the electrician's commissioning labels, not unique keys). De-duplicating by `channel_id` would wrongly drop distinct readings — so each (site, channel) pair is treated as its own physical channel.
+
+Summing all production-channel daily closes (via `Decimal` to avoid float drift):
+
+**Total = 734,760.47 kWh → 734,760.5 kWh**
+
+FINAL_ANSWER: 734760.5

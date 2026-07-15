@@ -1,0 +1,3 @@
+The folder at `/private/tmp/fairview_answer_rate` contains Fairview Heating & Air's June 2026 inbound call export and README. Calculate the percentage of inbound calls that were answered during June, rounded to two decimal places.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

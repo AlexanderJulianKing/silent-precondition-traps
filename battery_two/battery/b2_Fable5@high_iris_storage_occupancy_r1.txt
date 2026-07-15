@@ -1,0 +1,5 @@
+The average is **83.1 occupied rental units per facility** during June 2026.
+
+The export is fully clean, matching the README: 43,200 rows covering 12 facilities × 120 locker controllers × 30 nights (June 1–30), with no duplicate controller/date keys and every reading in `OK` health. For each facility I summed the nightly `occupied_flag` values and averaged over the 30 nights, giving per-facility averages ranging from 80.4 (IS-03) to 85.5 (IS-05). Averaging those 12 facility means gives 83.144…, which rounds to 83.1. (Because every facility has an identical, complete grid of readings, dividing total occupied flags by 12 facilities × 30 nights yields the same figure.)
+
+FINAL_ANSWER: 83.1

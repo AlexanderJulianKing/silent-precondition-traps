@@ -1,0 +1,8 @@
+The data is clean and unambiguous:
+- **All 17,296 rows** are `ACCEPTED` and packed in **October 2026** (no other months present).
+- No duplicate parcel IDs; all `measured_kg` values for RUSH rows are valid numbers.
+- **RUSH** parcels: 4,177 rows.
+
+Summing `measured_kg` for the RUSH + ACCEPTED parcels gives **14604.87 kg**, which rounds to **14604.9 kg**.
+
+FINAL_ANSWER: 14604.9

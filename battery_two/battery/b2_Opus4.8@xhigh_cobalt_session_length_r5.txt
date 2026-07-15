@@ -1,0 +1,20 @@
+All 2,503 pairs share the same client, confirming each pair is one real session split at the midnight boundary.
+
+## Summary
+
+**Answer: 101.8 minutes**
+
+The export contains a deliberate trap. `june_web_sessions.csv` has 13,003 rows, but **sessions that crossed midnight (UTC) were split into two rows** at the `00:00:00` boundary — each fragment getting its own unique export id (which is exactly why the README notes "Session identifiers are unique export identifiers").
+
+Evidence for the split:
+- Exactly **2,503 rows end at `00:00:00`** and exactly **2,503 rows start at `00:00:00`** (all other `session_start` values are truncated to `:00` seconds, but genuine `session_end` values carry real seconds — only the split fragments end precisely at midnight).
+- Every midnight-ending fragment pairs **1:1** with a midnight-starting fragment on `(account_id, device_hash, timestamp)` — 0 unmatched, 0 multi-matches, 0 genuine `00:00:00` starts, and every pair shares the same `client`.
+
+Merging each pair back into its real session gives **10,500 actual customer sessions**. Total session time is identical either way (splitting preserves duration); only the denominator changes:
+
+- Naive (13,003 raw rows): 82.2 min ❌
+- Correct (10,500 reconstructed sessions): **101.8 min** ✓
+
+No other cleaning was needed — staff accounts were already removed, and `page_events` doesn't affect duration.
+
+FINAL_ANSWER: 101.8

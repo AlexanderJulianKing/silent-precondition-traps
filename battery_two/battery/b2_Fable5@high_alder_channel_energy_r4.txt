@@ -1,0 +1,11 @@
+The total is the straight sum of all readings — the dataset is clean, and the one apparent trap is harmless.
+
+Here's what I checked in `september_channel_closes.csv` (4,320 rows):
+
+- All 4,320 rows fall in September 2026, all have `OK` health, and every `reading_id` is unique.
+- There are 12 sites (AW-01…AW-12) with 144 site-channel pairs, each reporting exactly 30 daily closes — no missing days and no duplicate (site, date, channel) entries.
+- The README's note about "electrician's commissioning labels" points at the one wrinkle: 7 channel IDs (e.g. CH-271, CH-595) are reused at two different sites. These are distinct physical channels, so they must not be deduplicated by channel ID — and since every row is a unique site/date/channel reading, nothing needs to be excluded or collapsed.
+
+Summing the `kwh` column gives 734,760.47 kWh, which rounds to **734,760.5 kWh**.
+
+FINAL_ANSWER: 734760.5

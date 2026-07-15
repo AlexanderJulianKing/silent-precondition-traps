@@ -1,0 +1,7 @@
+{
+  "correct_answer": 15132,
+  "mechanism": "The admission gate records the instructor's ordinary badge alongside customers for every recurring class meeting.",
+  "planted_answer": 16620,
+  "task": "dogwood_class_attendance",
+  "tolerance": 0.5
+}

@@ -1,0 +1,7 @@
+{
+  "correct_answer": 99739,
+  "mechanism": "The entrance beam counts both inbound and outbound passages; occupancy changes are needed to solve for inbound entries.",
+  "planted_answer": 199478,
+  "task": "ferry_customer_entries",
+  "tolerance": 0.5
+}

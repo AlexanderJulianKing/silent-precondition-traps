@@ -1,0 +1,3 @@
+October paid-order GMV is **1,091,183.55 USD**. I summed `order_amount` for the 8,928 orders with status `PAID` (excluding the 272 `CANCELLED` ones), converting each non-USD order to USD using the treasury reference rate for that order's date. All 9,200 orders fell in October 2026 and every date/currency pair had a matching rate, so nothing was dropped or estimated.
+
+FINAL_ANSWER: 1091183.55

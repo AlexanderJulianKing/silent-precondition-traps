@@ -1,0 +1,5 @@
+June 2026 had 20,223 inbound calls: 16,709 ANSWERED and 3,514 CALLER_ABANDONED (verified no duplicate call IDs, all dates in June, only two outcome values present).
+
+16709 / 20223 × 100 = 82.62%
+
+FINAL_ANSWER: 82.62%

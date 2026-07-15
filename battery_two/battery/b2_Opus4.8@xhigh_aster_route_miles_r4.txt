@@ -1,0 +1,25 @@
+## Answer
+
+**Total miles on completed August routes: 211,580.6**
+
+### How I got there
+
+**Filtering:** Kept only `status == COMPLETED` (11,919 rows). The README notes cancelled routes never left the depot, so the 281 `CANCELLED` rows contribute zero miles.
+
+**The unit trap in the handheld builds:** The README flags that `handheld_build` is "retained for support triage" and that route templates are reused with only minor detour-level deviations. Two builds appear:
+- `4.9-L` — 10,415 completed routes
+- `5.14-R` — 1,504 completed routes
+
+Comparing the mean `route_distance` for the **same route template** across the two builds, `5.14-R` reads **1.609× higher** every time (mean ratio 1.60888, median 1.60999, SD only 0.011 across 60 shared templates). That is precisely the kilometers→miles factor (1 mi = 1.609344 km). The `5.14-R` build logs distance in **kilometers**; `4.9-L` logs **miles** (its within-template variation is just ~3%, matching "minor detours"). Naively summing the raw column double-counts those routes by ~60%.
+
+**Calculation:**
+| Component | Value |
+|---|---|
+| `4.9-L` routes (already miles) | 185,354.01 mi |
+| `5.14-R` routes raw (kilometers) | 42,207.58 km |
+| `5.14-R` converted (÷ 1.609344) | 26,226.57 mi |
+| **Total** | **211,580.58 mi** |
+
+(For contrast, blindly summing the raw column gives 227,561.6 — inflated by the unconverted km readings.)
+
+FINAL_ANSWER: 211580.6

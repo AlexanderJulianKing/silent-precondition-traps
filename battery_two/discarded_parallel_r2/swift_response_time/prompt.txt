@@ -1,0 +1,3 @@
+The folder at `/private/tmp/swift_response_time` contains Swift Harbor Appliance Care's June 2026 answered-ticket export and README. Calculate the average elapsed time in minutes from ticket opening to the first human reply. Round the average to one decimal place.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

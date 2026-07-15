@@ -1,0 +1,11 @@
+**Total customer class attendances in December 2026: 15,132.**
+
+How I got there:
+
+- The export `december_class_admissions.csv` contains **16,620** admitted scans, all in December 2026, all `ADMITTED`, with no duplicate admission IDs and no badge scanned twice into the same class instance.
+- However, the scans include **instructors, not just customers**. There are 146 badges whose scans exactly cover *every* meeting of the series they appear in, and together they account for **exactly one scan in each of the 1,488 class instances** — a perfect one-instructor-per-class partition. These badges are almost always the first or second scan of the class (1,055 first, 356 second) and are booked 100% via APP, which fits staff checking in before customers arrive. That's **1,488 staff scans**.
+- 16,620 total scans − 1,488 instructor scans = **15,132 customer attendances**.
+
+One observation for completeness: 69 customer badges each have a pair of admissions in the same time slot at two different studios minutes apart (badge sharing or scan noise). None involve the instructor badges, the pattern is consistent with generator randomness rather than a planted rule, and each is still an admitted customer entry, so I counted them.
+
+FINAL_ANSWER: 15132

@@ -1,0 +1,3 @@
+No duplicate parcel IDs, no malformed weights, and all rows are already ACCEPTED/October as the README describes. Summed `measured_kg` for the 4,177 RUSH parcels.
+
+FINAL_ANSWER: 14604.9

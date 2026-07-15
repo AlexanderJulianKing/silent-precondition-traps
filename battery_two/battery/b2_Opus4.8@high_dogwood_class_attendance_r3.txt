@@ -1,0 +1,11 @@
+All checks confirm a clean, straightforward count:
+
+- **16,620 data rows** (16,621 lines minus header)
+- **All `ADMITTED`** — denied/cancelled/open-gym/door-test scans are already excluded per the README
+- **No duplicate scans** — all 16,620 `(badge_token, class_instance)` pairs are unique, so no customer double-counts against the same class meeting
+- **All timestamps fall within December 2026**
+- **No instructor/staff outliers** — the busiest badge scanned 17 times across the month (a frequent customer, not a daily-teaching instructor), and no badge token is empty
+
+Each row therefore represents one customer admitted to one scheduled class meeting = one attendance.
+
+FINAL_ANSWER: 16620

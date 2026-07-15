@@ -1,0 +1,16 @@
+I've analyzed the export. Here's what I found:
+
+**Data quality checks:**
+- 13,003 session rows, all `session_id`s unique, all timestamps parse cleanly.
+- All sessions fall within June 2026 (06-02 to 06-29).
+- No negative or zero durations; no duplicate sessions (checked on account+device+start+end).
+- The three clients (android 4,306 / ios 4,340 / web 4,357) are statistically homogeneous — near-identical means, medians, and ~2.5 min/page-event — so no client is an artifact to exclude.
+- The single row with 0 page_events has negligible effect (average is 82.2 with or without it).
+
+**Calculation:** session length = `session_end − session_start`, averaged across all customer sessions (staff already removed per the README):
+
+- Per-session mean: **82.2 minutes**
+
+(The README's notes — UTC timestamps, keep-alives excluded from `page_events`, staff removed — don't require any additional filtering, and duration is timezone-invariant. An alternative "average of per-customer means" reads as 70.9, but "average session length" is the standard per-session mean.)
+
+FINAL_ANSWER: 82.2

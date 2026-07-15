@@ -1,0 +1,21 @@
+All data-quality checks pass, and the interpretation is confirmed. Here's my analysis.
+
+## Findings
+
+**Scope filter — completed routes only:** The export has 12,200 rows: 11,919 `COMPLETED` and 281 `CANCELLED`. The README states cancelled routes "never left the depot," yet their rows still carry `route_distance` values (template placeholders) — so they must be excluded, as instructed.
+
+**The units bug (the "support triage" hint):** There are two handheld builds. Comparing mean distance per `route_template` (each template is the same physical route reused across days), build **`5.14-R` reads 1.609× larger than `4.9-L` on every single one of the 60 templates** — median ratio 1.610, exactly the kilometers→miles factor (1.609344). Build `5.14-R` has a units regression: it reports `route_distance` in **kilometers**, not miles. Since these are US (Seattle-area) routes, `4.9-L`'s smaller readings are the true mileage; `5.14-R`'s must be divided by 1.609344.
+
+Data was otherwise clean: no duplicates, blanks, or non-positive distances.
+
+## Calculation (completed routes)
+
+| Build | Routes | Raw sum | Miles |
+|---|---|---|---|
+| `4.9-L` (miles) | 10,415 | 185,354.01 mi | 185,354.01 |
+| `5.14-R` (km) | 1,504 | 42,207.58 km | 26,226.57 |
+| **Total** | **11,919** | | **211,580.58** |
+
+Converting `5.14-R` km→mi (÷1.609344) yields 26,226.57 mi. Total = **211,580.6 miles**. (A naïve sum treating all readings as miles would overcount to 227,561.6.)
+
+FINAL_ANSWER: 211580.6

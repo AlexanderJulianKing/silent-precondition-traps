@@ -1,0 +1,14 @@
+I analyzed the export thoroughly. Here's what I found:
+
+**Data validation** (all 13,003 data rows):
+- Every row parses cleanly — no blank/malformed fields, no missing timestamps.
+- No negative or zero-second durations (min 0.12 min, max 412.3 min).
+- `session_id`, `account_id`, `device_hash` all follow uniform valid formats — no sentinel/test values.
+- No duplicate sessions (checked by content, and by account+device+start/end) — so the "unique export identifiers" note holds; nothing to de-duplicate.
+- Only three `client` values (android 4306, ios 4340, web 4357), all sharing the same schema and near-identical duration distributions.
+
+**On the README's cues** — they're reassurances that steer *away* from filtering, not toward it: timestamps are UTC (no timezone math), keep-alives already excluded from `page_events`, internal staff already removed, all clients comparable. There's no explicit field that flags any row as non-customer, so the calculation is the mean of every session's `session_end − session_start`.
+
+**Calculation:** average of (end − start) across all 13,003 sessions = 82.2007 minutes.
+
+FINAL_ANSWER: 82.2

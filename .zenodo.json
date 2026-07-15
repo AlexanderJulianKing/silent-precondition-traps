@@ -1,6 +1,6 @@
 {
   "title": "The NULL Merchant and Other Silent Precondition Traps for Data-Science Agents — study artifacts",
-  "description": "Reproducibility package: seeded task-environment generators, frozen task environments, task prompts and warned-ablation preamble, 635 scored agent transcripts, the run ledger behind every reported figure, scoring tools with embedded answer keys, and human-verification records.",
+  "description": "Reproducibility package for both frozen batteries: seeded task-environment generators, frozen task environments, task prompts and the warned-ablation preamble, ~1,200 scored agent transcripts including all 1,000 battery runs, both run ledgers, the pre-registered Battery Two design protocol with amendments and operator log plus complete design-session transcripts, scoring tools with embedded answer keys, the development-history supplementary report, and human-verification records.",
   "creators": [
     {"name": "King, Alexander"}
   ],

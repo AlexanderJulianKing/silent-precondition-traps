@@ -1,0 +1,11 @@
+I explored the data, confirmed the structure, and computed the result.
+
+**Method:**
+- **Orders file** has statuses `PAID` (8,928) and `CANCELLED` (272). Per the README, cancelled orders weren't charged, so I excluded them.
+- Currencies present: USD, EUR, GBP, CAD.
+- Each paid order's `order_amount` was converted to USD by multiplying by `usd_per_currency_unit` from the treasury reference, matched on the order's date **and** currency (rates vary daily). USD orders convert at 1.0.
+- Summed all converted amounts and rounded to two decimals (half-up).
+
+All 8,928 paid orders matched a rate; nothing was dropped.
+
+FINAL_ANSWER: 1091183.55

@@ -1,0 +1,10 @@
+The data is clean and the README's notes are reassurances (UTC timestamps ready to subtract, keep-alives/staff already handled, uniform schema, unique IDs) rather than cleaning instructions. My checks confirmed this:
+
+- **13,003 session rows**, all with unique session IDs and valid positive durations (no negatives, no zeros, no duplicate sessions).
+- All timestamps are within June 2026; account/device IDs are uniform (`CA-*`, `DV-*`) with no bot-like accounts.
+- The three clients (android 81.2, ios 81.9, web 83.5 min) are consistent — no client to exclude.
+- The only edge case is one row with 0 page-events (7-second session); excluding it leaves the average unchanged at 82.2.
+
+**Average customer session length** = total session minutes ÷ 13,003 sessions = 82.2007 min.
+
+FINAL_ANSWER: 82.2

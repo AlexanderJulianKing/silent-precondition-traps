@@ -1,0 +1,6 @@
+All 17,296 rows are ACCEPTED and dated October 2026. Filtering to `service == RUSH` gives 4,177 parcels, and summing their `measured_kg`:
+
+- Count: 4,177 RUSH parcels
+- Total measured weight: 14604.87 kg
+
+FINAL_ANSWER: 14604.9

@@ -1,0 +1,3 @@
+Clean data — no missing rates, no market/currency mismatches, no malformed rows. Calculated by converting each PAID order's `order_amount` to USD using that order's `order_date` + `currency` treasury rate, summed across all PAID orders (CANCELLED excluded).
+
+FINAL_ANSWER: 1091183.55

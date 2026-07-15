@@ -1,0 +1,9 @@
+**Total September production electricity: 734,760.5 kWh.**
+
+How I got there and what I checked:
+
+- The CSV holds 4,320 rows — 12 workshops × 12 channels per site × 30 days of September 2026, with all readings marked `OK`, no dates outside the month, no duplicate reading IDs, and no duplicate (site, date, channel) combinations. Nothing needed to be excluded.
+- One wrinkle worth noting: only 137 distinct `channel_id` labels exist because 7 labels (e.g. `CH-566`, `CH-595`) are reused at two different workshops. The README explains these are electricians' commissioning labels kept for maintenance lookup, so they aren't globally unique — each site+channel pair is a distinct physical channel with its own full set of 30 daily closes. Deduplicating by channel ID would wrongly discard real consumption; summing every row is correct.
+- The exact sum of the `kwh` column is 734,760.47, which rounds to 734,760.5.
+
+FINAL_ANSWER: 734760.5

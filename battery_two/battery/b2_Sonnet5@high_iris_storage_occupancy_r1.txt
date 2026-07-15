@@ -1,0 +1,9 @@
+**Iris Self Storage — June 2026 occupancy**
+
+The dataset has 12 facilities (site_id IS-01…IS-12), each with 120 locker controllers, reporting nightly for all 30 days of June (43,200 rows total, fully complete as the README states).
+
+For each facility, I summed occupied units per night, then averaged across the 30 nights. The per-facility nightly averages range from ~80.4 to ~85.5, and averaging across all 12 facilities gives:
+
+**83.1444 → 83.1**
+
+FINAL_ANSWER: 83.1

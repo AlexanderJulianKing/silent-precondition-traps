@@ -1,0 +1,7 @@
+{
+  "correct_answer": 761333.84,
+  "mechanism": "Firmware heartbeat approvals are mixed with customer approvals and are identifiable only by a three-field sequence echo.",
+  "planted_answer": 796715.74,
+  "task": "cinder_terminal_sales",
+  "tolerance": 0.005
+}

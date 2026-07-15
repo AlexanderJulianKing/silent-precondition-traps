@@ -1,0 +1,22 @@
+## Analysis
+
+I computed session length as `session_end − session_start` for each row and averaged across all sessions. Before trusting the number, I checked the data for the usual traps:
+
+| Check | Result |
+|---|---|
+| Rows | 13,003 sessions (+1 header) |
+| Duplicate/duplicated sessions | None — `session_id` unique, no repeated `(account, device, start, end)` content |
+| Negative or zero durations | 0 (min 0.12 min, max 412.3 min) |
+| Out-of-range dates | 0 — all starts in June 2026, no July spillover on ends |
+| Staff / non-customer accounts | None — all `CA-` accounts (staff already removed per README) |
+| Fragmented sessions needing merge | No — only 25 within-account overlaps out of 13,003; not systematic |
+| Idle/unclosed long sessions | No — `page_events` scales ~0.40/min uniformly across short **and** long sessions, so the long tail is genuine engagement |
+
+The data is clean and homogeneous, so no filtering is warranted. The one row with `page_events == 0` doesn't affect the rounded result either way.
+
+- **Sum of durations:** 1,068,856.05 min over 13,003 sessions
+- **Mean:** 82.2007 min → **82.2**
+
+The elaborate README (UTC timestamps, keep-alives excluded, staff removed, unique export IDs) is reassurance that no extra cleaning is needed — the timezone note is a red herring since a duration is timezone-invariant, and "unique export identifiers" just confirms there's nothing to dedupe.
+
+FINAL_ANSWER: 82.2

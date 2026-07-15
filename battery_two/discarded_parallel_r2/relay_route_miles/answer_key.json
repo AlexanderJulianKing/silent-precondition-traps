@@ -1,0 +1,7 @@
+{
+  "correct_answer": 109370.6,
+  "mechanism": "One handheld build silently exports route distance in kilometers into the same plausible-looking numeric column.",
+  "planted_answer": 122804.1,
+  "task": "relay_route_miles",
+  "tolerance": 0.05
+}

@@ -1,0 +1,105 @@
+Reading additional input from stdin...
+OpenAI Codex v0.144.0
+--------
+workdir: /private/tmp/cobalt_session_length
+model: gpt-5.5
+provider: openai
+approval: never
+sandbox: workspace-write [workdir, /tmp, $TMPDIR]
+reasoning effort: high
+reasoning summaries: none
+session id: 019f61dd-00fc-78f0-8527-d4b4587d7b00
+--------
+user
+The folder at `/private/tmp/cobalt_session_length` contains Cobalt Courseware's June 2026 product-session export and README. Calculate the average customer session length in minutes, rounded to one decimal place.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.
+codex
+I’ll inspect the export and README to identify the session length fields and any filtering rules before calculating the average.
+exec
+/bin/bash -lc 'pwd && rg --files' in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+/private/tmp/cobalt_session_length
+june_web_sessions.csv
+README.md
+
+exec
+/bin/bash -lc 'ls -la' in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+total 1976
+drwxr-xr-x@    4 alexanderking  wheel      128 Jul 14 11:21 .
+drwxrwxrwt  1483 root           wheel    47456 Jul 14 11:21 ..
+-rw-r--r--@    1 alexanderking  wheel      373 Jul 14 11:21 README.md
+-rw-r--r--@    1 alexanderking  wheel  1003786 Jul 14 11:21 june_web_sessions.csv
+
+codex
+I found a CSV plus README. I’m reading the README and sampling the CSV headers now so the calculation matches the export’s definitions.
+exec
+/bin/bash -lc 'head -n 5 june_web_sessions.csv' in /private/tmp/cobalt_session_length
+exec
+/bin/bash -lc "sed -n '1,200p' README.md" in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+# Cobalt Courseware — June engagement export
+
+`june_web_sessions.csv` contains the June session rows emitted by the product telemetry pipeline. Timestamps are UTC, `page_events` excludes background keep-alives, and internal staff accounts have already been removed.
+
+The three client values use the same session schema. Session identifiers are unique export identifiers.
+
+ succeeded in 0ms:
+session_id,account_id,device_hash,session_start,session_end,page_events,client
+CS-0005245,CA-01492,DV-04700,2026-06-04 12:01:00,2026-06-04 12:49:06,16,android
+CS-0008476,CA-00256,DV-02796,2026-06-06 07:24:00,2026-06-06 08:05:09,22,ios
+CS-0012668,CA-03740,DV-07272,2026-06-17 19:02:00,2026-06-17 20:45:12,44,ios
+CS-0011284,CA-00700,DV-03412,2026-06-19 11:47:00,2026-06-19 12:17:31,15,web
+
+exec
+/bin/bash -lc 'wc -l june_web_sessions.csv' in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+   13004 june_web_sessions.csv
+
+codex
+The README says internal staff accounts are already removed, so I’m treating all CSV rows as customer sessions and using `session_end - session_start` as the session length.
+exec
+/bin/bash -lc "python3 - <<'PY'
+import csv
+from datetime import datetime
+from decimal import Decimal, ROUND_HALF_UP
+
+path = 'june_web_sessions.csv'
+fmt = '%Y-%m-%d %H:%M:%S'
+total_seconds = 0
+count = 0
+bad = []
+with open(path, newline='') as f:
+    reader = csv.DictReader(f)
+    for row in reader:
+        count += 1
+        start = datetime.strptime(row['session_start'], fmt)
+        end = datetime.strptime(row['session_end'], fmt)
+        seconds = (end - start).total_seconds()
+        if seconds < 0:
+            bad.append(row['session_id'])
+        total_seconds += seconds
+avg_minutes = Decimal(str(total_seconds)) / Decimal(count) / Decimal(60)
+print('rows', count)
+print('negative_durations', len(bad))
+print('total_seconds', int(total_seconds))
+print('avg_minutes_raw', avg_minutes)
+print('avg_minutes_1dp', avg_minutes.quantize(Decimal('0.1'), rounding=ROUND_HALF_UP))
+PY" in /private/tmp/cobalt_session_length
+ succeeded in 247ms:
+rows 13003
+negative_durations 0
+total_seconds 64131363
+avg_minutes_raw 82.20072675536414673536876105
+avg_minutes_1dp 82.2
+
+codex
+Average customer session length: 82.2 minutes.
+
+FINAL_ANSWER: 82.2
+tokens used
+6,662
+Average customer session length: 82.2 minutes.
+
+FINAL_ANSWER: 82.2

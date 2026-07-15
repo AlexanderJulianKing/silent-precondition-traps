@@ -1,0 +1,9 @@
+The dataset is clean and requires no special handling: all 20,223 rows are distinct inbound calls received in June 2026, with only two possible outcomes and no data-quality anomalies (unique `call_id`/`switch_seq`, consistent `agent_extension` per outcome, no negative/blank wait times).
+
+- Total inbound calls: **20,223**
+- Answered (`ANSWERED`): **16,709**
+- Abandoned (`CALLER_ABANDONED`): 3,514
+
+Answer rate = 16,709 / 20,223 = **82.62%**
+
+FINAL_ANSWER: 82.62%

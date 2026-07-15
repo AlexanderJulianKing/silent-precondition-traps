@@ -1,0 +1,7 @@
+{
+  "correct_answer": 8942.0,
+  "mechanism": "Boom controllers close each pass independently, so deliberate edge overlap is counted twice even though the land was covered once.",
+  "planted_answer": 9455.9,
+  "task": "palisade_spray_acres",
+  "tolerance": 0.05
+}

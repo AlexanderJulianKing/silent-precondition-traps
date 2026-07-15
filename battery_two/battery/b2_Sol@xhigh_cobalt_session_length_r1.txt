@@ -1,0 +1,105 @@
+Reading additional input from stdin...
+OpenAI Codex v0.144.0
+--------
+workdir: /private/tmp/cobalt_session_length
+model: gpt-5.6-sol
+provider: openai
+approval: never
+sandbox: workspace-write [workdir, /tmp, $TMPDIR]
+reasoning effort: xhigh
+reasoning summaries: none
+session id: 019f61e6-e30f-7e03-87ec-4ff5b08051f9
+--------
+user
+The folder at `/private/tmp/cobalt_session_length` contains Cobalt Courseware's June 2026 product-session export and README. Calculate the average customer session length in minutes, rounded to one decimal place.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.
+codex
+I’ll inspect the README for the export schema, then compute the session average from the relevant records and cross-check the units.
+exec
+/bin/bash -lc 'pwd && rg --files -uu . && find . -maxdepth 2 -type f -print0 | xargs -0 ls -lh' in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+/private/tmp/cobalt_session_length
+./june_web_sessions.csv
+./README.md
+-rw-r--r--@ 1 alexanderking  wheel   373B Jul 14 11:32 ./README.md
+-rw-r--r--@ 1 alexanderking  wheel   980K Jul 14 11:32 ./june_web_sessions.csv
+
+exec
+/bin/bash -lc "sed -n '1,220p' README.md && sed -n '1,8p' june_web_sessions.csv && wc -l june_web_sessions.csv" in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+# Cobalt Courseware — June engagement export
+
+`june_web_sessions.csv` contains the June session rows emitted by the product telemetry pipeline. Timestamps are UTC, `page_events` excludes background keep-alives, and internal staff accounts have already been removed.
+
+The three client values use the same session schema. Session identifiers are unique export identifiers.
+session_id,account_id,device_hash,session_start,session_end,page_events,client
+CS-0005245,CA-01492,DV-04700,2026-06-04 12:01:00,2026-06-04 12:49:06,16,android
+CS-0008476,CA-00256,DV-02796,2026-06-06 07:24:00,2026-06-06 08:05:09,22,ios
+CS-0012668,CA-03740,DV-07272,2026-06-17 19:02:00,2026-06-17 20:45:12,44,ios
+CS-0011284,CA-00700,DV-03412,2026-06-19 11:47:00,2026-06-19 12:17:31,15,web
+CS-0005499,CA-04927,DV-05515,2026-06-05 06:08:00,2026-06-05 06:48:07,21,web
+CS-0004415,CA-00391,DV-04711,2026-06-12 08:51:00,2026-06-12 09:17:05,12,web
+CS-0011910,CA-00481,DV-06321,2026-06-09 11:27:00,2026-06-09 11:52:05,14,ios
+   13004 june_web_sessions.csv
+
+codex
+The README confirms staff traffic is already excluded and every client uses the same schema, so I’m treating each CSV row as one customer session and averaging `session_end − session_start` across all rows.
+exec
+/bin/bash -lc "TZ=UTC awk -F, '
+NR==1 {next}
+{
+  gsub(/\\r"'$/, "", $NF)
+  split($4, s, /[- :]/); split($5, e, /[- :]/)
+  start=mktime(s[1]" "s[2]" "s[3]" "s[4]" "s[5]" "s[6])
+  end=mktime(e[1]" "e[2]" "e[3]" "e[4]" "e[5]" "e[6])
+  d=end-start
+  if (d < 0 || start < 0 || end < 0) bad++
+  sum+=d; count++; byclient[$7]+=d; clientcount[$7]++
+  seen[$1]++
+  if (seen[$1] > 1) dup++
+}
+END {
+  printf "rows=%d total_seconds=%.0f average_seconds=%.9f average_minutes=%.9f rounded_minutes=%.1f bad=%d duplicate_ids=%d'"\\n\", count, sum, sum/count, sum/count/60, sum/count/60, bad+0, dup+0
+  for (c in byclient) printf \"%s rows=%d average_minutes=%.6f\\n\", c, clientcount[c], byclient[c]/clientcount[c]/60
+}' june_web_sessions.csv" in /private/tmp/cobalt_session_length
+ exited 2 in 0ms:
+awk: calling undefined function mktime
+ input record number 2, file june_web_sessions.csv
+ source line number 6
+
+exec
+/bin/bash -lc "perl -MTime::Local=timegm -F, -lane '
+  next if "'$. == 1;
+  $F[-1] =~ s/'"\\r"'$//;
+  my @s = split /[- :]/, $F[3];
+  my @e = split /[- :]/, $F[4];
+  my $start = timegm($s[5],$s[4],$s[3],$s[2],$s[1]-1,$s[0]);
+  my $end   = timegm($e[5],$e[4],$e[3],$e[2],$e[1]-1,$e[0]);
+  my $d = $end - $start;
+  $bad++ if $d < 0;
+  $sum += $d; $count++;
+  $byclient{$F[6]} += $d; $clientcount{$F[6]}++;
+  $dup++ if $seen{$F[0]}++;
+  END {
+    printf "rows=%d total_seconds=%d average_seconds=%.9f average_minutes=%.9f rounded_minutes=%.1f bad=%d duplicate_ids=%d'"\\n\", "'$count, $sum, $sum/$count, $sum/$count/60, $sum/$count/60, $bad+0, $dup+0;
+    for my $c (sort keys %byclient) {
+      printf "%s rows=%d average_minutes=%.6f'"\\n\", "'$c, $clientcount{$c}, $byclient{$c}/$clientcount{$c}/60;
+    }
+  }
+'"' june_web_sessions.csv" in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+rows=13003 total_seconds=64131363 average_seconds=4932.043605322 average_minutes=82.200726755 rounded_minutes=82.2 bad=0 duplicate_ids=0
+android rows=4306 average_minutes=81.209224
+ios rows=4340 average_minutes=81.920722
+web rows=4357 average_minutes=83.459536
+
+codex
+Across 13,003 customer sessions, the average session length was **82.2 minutes**.
+
+FINAL_ANSWER: 82.2
+tokens used
+9,697
+Across 13,003 customer sessions, the average session length was **82.2 minutes**.
+
+FINAL_ANSWER: 82.2

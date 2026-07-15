@@ -1,0 +1,5 @@
+Data is clean — no duplicates, no negative amounts, all rates matched. Paid-order GMV for October, converted to USD using the daily treasury reference rate for each order's date and currency, excluding cancelled orders:
+
+**Total: 1,091,183.55**
+
+FINAL_ANSWER: 1091183.55

@@ -1,0 +1,7 @@
+{
+  "correct_answer": 78.59,
+  "mechanism": "Calls that disconnect before disposition are absent as rows but consume consecutive switch-sequence positions.",
+  "planted_answer": 82.62,
+  "task": "fairview_answer_rate",
+  "tolerance": 0.005
+}

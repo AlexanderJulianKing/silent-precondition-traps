@@ -1,0 +1,7 @@
+{
+  "correct_answer": 403168.11,
+  "mechanism": "A month-labeled owner pack follows controller close dates rather than calendar-month dates.",
+  "planted_answer": 447232.86,
+  "task": "willow_pack_revenue",
+  "tolerance": 0.005
+}

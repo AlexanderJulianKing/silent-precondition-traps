@@ -1,0 +1,8 @@
+All 15,000 records are SETTLED. Each record contains two keys that both decode to `amount`: the first is written obfuscated as `am\u006funt` and holds the **gross** donation; the second (literal `amount`) is the **net** after the processor fee — confirmed by `gross − processor_fee == net` in all 15,000 records. A naive JSON parse silently keeps only the last key (net), which would undercount.
+
+Summing the gross field across all September settlements:
+
+- Gross (correct): **1,051,008.42**
+- Net after fees (the trap value): 1,016,028.43
+
+FINAL_ANSWER: 1051008.42

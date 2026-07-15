@@ -1,0 +1,3 @@
+The folder at `/private/tmp/elm_cold_compliance` contains Elm & Iron Creamery's June 2026 cooler telemetry and README. Calculate the percentage of total monitored cooler-time during June that was within the stated food-safety temperature band. Round the percentage to one decimal place.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

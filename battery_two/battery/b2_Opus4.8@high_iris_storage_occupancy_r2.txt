@@ -1,0 +1,8 @@
+The data is clean and complete: 12 facilities × 120 controllers × 30 nights = 43,200 rows, no duplicates, all `OK` health, occupied flags 0/1.
+
+**Method:** Each `(site_id, locker_controller)` pair is a distinct rental door (controller numbers repeat across sites, so I keyed on site). For each facility I counted occupied doors (`occupied_flag=1`) per night, averaged over June's 30 nights, then averaged across the 12 facilities. The README notes facility-held units are already excluded, so every exported door is a rental unit; `controller_bank` is just maintenance grouping and doesn't affect the count.
+
+- Total occupied door-nights: 29,932 → ÷ (12 facilities × 30 nights) = **83.14** occupied units per facility-night
+- Per-facility nightly averages range from 80.4 (IS-03) to 85.5 (IS-05)
+
+FINAL_ANSWER: 83.1

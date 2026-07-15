@@ -1,0 +1,11 @@
+The data is fully clean and complete: 43,200 rows = 1,440 rental units (120 per facility × 12 facilities) × 30 June nights, no duplicate keys, all readings `OK` health, flags strictly 0/1. The `controller_bank` column is a redundant grouping (each unit maps to exactly one bank), and the README's caveats (units held for facility use excluded; controllers numbered within site) introduce no double-counting.
+
+**Calculation** — each night a facility has a count of occupied units (`occupied_flag = 1`). Averaging that count:
+
+- Total occupied readings across June: **29,932**
+- Facility-nights: 12 facilities × 30 nights = **360**
+- Average occupied units per facility = 29,932 / 360 = **83.144…**
+
+Because every facility reported all 30 nights, averaging per-night-per-facility and averaging the 12 per-facility means give the identical result (83.14), so the answer is robust to interpretation. Per-facility nightly averages range from 80.4 (IS-03) to 85.5 (IS-05).
+
+FINAL_ANSWER: 83.1

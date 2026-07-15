@@ -1,0 +1,7 @@
+{
+  "correct_answer": 101.8,
+  "mechanism": "A daily telemetry partition gives uninterrupted sessions new IDs at midnight.",
+  "planted_answer": 82.2,
+  "task": "cobalt_session_length",
+  "tolerance": 0.05
+}

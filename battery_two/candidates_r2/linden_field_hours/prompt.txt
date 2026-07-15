@@ -1,0 +1,3 @@
+The folder at `/private/tmp/linden_field_hours` contains Linden Appliance Repair's November 2026 mobile activity timers and README. Calculate the total technician-hours spent working on customer jobs during November, rounded to one decimal place.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

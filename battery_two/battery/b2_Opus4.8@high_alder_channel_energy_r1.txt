@@ -1,0 +1,9 @@
+The data is clean and unambiguous:
+
+- **4,320 rows** = 12 workshops × 12 production channels × 30 days (Sept 1–30)
+- No duplicate reading IDs, no duplicate site+date+channel combinations
+- All rows report `OK` health, and the README confirms every channel is a production-energy channel (office/lighting/HVAC are excluded from this export)
+
+Summing every daily kWh close gives **734,760.47 kWh**.
+
+FINAL_ANSWER: 734760.5

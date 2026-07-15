@@ -1,0 +1,3 @@
+The folder at `/private/tmp/lark_room_hours` contains Lark Creative Studios' June 2026 room-presence sessions and README. Calculate the total number of hours that the reservable studios were occupied during June, rounded to one decimal place.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

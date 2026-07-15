@@ -1,0 +1,3 @@
+Data is clean: 12 workshops × 12 channels × 30 days = 4,320 rows, all `OK` health, no duplicates, no negatives, and channel IDs that repeat are always paired with distinct site IDs (properly disambiguated). Summing every `kwh` value gives the total.
+
+FINAL_ANSWER: 734760.5

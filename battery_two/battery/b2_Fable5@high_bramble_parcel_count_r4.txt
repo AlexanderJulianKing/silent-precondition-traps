@@ -1,0 +1,9 @@
+The pattern is unambiguous. All 950 duplicate groups are exact pairs; in every pair the two rows have consecutive manifest numbers, the same lane and service, timestamps 25–75 seconds apart, and identical weight, dimensions, destination, and the exact same 6-digit load-cell sample — a physical fingerprint. These are single parcels that got manifested twice under two tracking numbers (a recurring double-scan starting July 11). The 90 remaining scale-sample collisions have different dimensions/destinations, so they're just numeric coincidences between genuinely distinct parcels.
+
+## Result
+
+- The export has **17,950 rows**, all in July 2026, all `ACCEPTED`, all with unique tracking numbers — so a naive row count overstates the handoff.
+- **950 rows are duplicate scans** of a parcel already in the manifest (identical destination, weight, dims, and load-cell reading; consecutive manifest numbers on the same lane ~50 seconds apart).
+- Physical parcels transferred to the carrier: 17,950 − 950 = **17,000**.
+
+FINAL_ANSWER: 17000

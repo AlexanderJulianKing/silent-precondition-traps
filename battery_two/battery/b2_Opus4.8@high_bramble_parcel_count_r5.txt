@@ -1,0 +1,10 @@
+All checks confirm the data is clean and consistent:
+
+- **17,950 data rows**, each with a unique tracking number
+- All 17,950 manifest rows unique; tracking numbers embed the manifest ID (e.g. `MR-0013696` → `BPC8800013696`)
+- Every row's `carrier_response` is `ACCEPTED`
+- Every `accepted_at` timestamp falls in July 2026 (2026-07-01 → 2026-07-31)
+
+The README confirms rejected labels, test scans, and warehouse transfers are already excluded, and that dimensions/weight/scale_sample are only retained as diagnostics (not parcel identifiers). So each accepted row corresponds to exactly one physical parcel handed to the carrier.
+
+FINAL_ANSWER: 17950

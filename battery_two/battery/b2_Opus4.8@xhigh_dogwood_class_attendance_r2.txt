@@ -1,0 +1,18 @@
+## Analysis
+
+I examined the December admissions export (16,620 admitted badge scans) and validated the data against the README:
+
+- **All 16,620 rows** are `gate_result = ADMITTED`, all timestamped within December 2026, across all 8 studios — denied/open-gym/cancelled/door-test scans are already excluded as documented.
+- **No duplicate scans**: every `(badge_token, class_instance)` pair is unique, so no re-scans to collapse.
+
+The catch is the word **"customer."** The badge-frequency distribution is bimodal — a normal decaying tail (most badges scan 1–6 times) plus an anomalous bump at 13/14/17 appearances. Those high-frequency badges are **instructors**, confirmed by three independent checks that all agree:
+
+1. Each of the **336 class series** has **exactly one** badge that attends *every* meeting of that series.
+2. Those instructor badges collectively cover all 336 series exactly once (36×1 + 45×2 + 50×3 + 15×4 = 336) — **146 instructors** teaching 1–4 series each.
+3. Their total scans = **1,488**, which exactly equals the **1,488 class instances** — i.e., precisely **one instructor per class**, with zero instances having 0 or 2+.
+
+Removing the instructor (non-customer) scans:
+
+**16,620 total scans − 1,488 instructor scans = 15,132 customer class attendances.**
+
+FINAL_ANSWER: 15132

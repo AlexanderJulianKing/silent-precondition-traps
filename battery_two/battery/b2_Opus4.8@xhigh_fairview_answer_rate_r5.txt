@@ -1,0 +1,11 @@
+## Summary
+
+I calculated Fairview Heating & Air's June 2026 inbound answer rate from `june_inbound_calls.csv` (20,223 disposition records), after validating the data against the README's cues:
+
+- **Only two dispositions exist:** `ANSWERED` (16,709) and `CALLER_ABANDONED` (3,514) — abandoned calls are the unanswered ones.
+- **No data-quality issues:** zero duplicate `call_id` / `switch_seq`, all timestamps fall within June 1–30 2026, no blank fields, and outcome/agent-extension flags are perfectly consistent.
+- **The `switch_seq` gaps are expected, not missing inbound calls:** the sequence spans 29,698 values for 20,223 rows, and the 9,475 gaps correspond to the outbound callbacks and extension-to-extension calls the README explicitly says are *outside* this export — so no inbound records are missing.
+
+**Answer rate = 16,709 ÷ 20,223 = 82.62%**
+
+FINAL_ANSWER: 82.62

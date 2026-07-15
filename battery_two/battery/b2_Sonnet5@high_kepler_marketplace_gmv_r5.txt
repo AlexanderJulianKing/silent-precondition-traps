@@ -1,0 +1,7 @@
+All PAID orders (8,928 of them) matched a treasury rate for their order_date/currency, with no missing joins or duplicate order IDs. Cancelled orders (272) were excluded per the README note that they were never charged.
+
+GMV = Σ(order_amount × usd_per_currency_unit) for status=PAID, converted using the same-day treasury reference rate for each order's checkout currency.
+
+**Result: 1091183.55**
+
+FINAL_ANSWER: 1091183.55

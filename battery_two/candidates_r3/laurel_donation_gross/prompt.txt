@@ -1,0 +1,3 @@
+The folder at `/private/tmp/laurel_donation_gross` contains Laurel Community Fund's September 2026 donation-settlement archive and README. Calculate the gross amount donated during September, rounded to two decimal places and reported without a currency symbol.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

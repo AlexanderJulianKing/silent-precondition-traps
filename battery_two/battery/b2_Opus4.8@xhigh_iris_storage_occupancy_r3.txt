@@ -1,0 +1,17 @@
+I've analyzed the export. Here's what the data shows:
+
+**Data shape (all clean):**
+- 43,200 rows = **12 facilities** × **120 locker controllers each** × **30 nights** (June 1–30)
+- Each `(site, controller, date)` key is unique — no duplicate readings
+- `occupied_flag` is strictly 0/1; all `health = OK`; every controller reports all 30 nights (perfectly balanced panel)
+- Each controller maps to exactly one bank, and controllers are numbered *within* site — so units are identified by `(site, controller)`, and all exported units are rental units (facility-held units are excluded per the README)
+
+**Calculation** — average occupied units per facility on a June night:
+- Total occupied readings = **29,932**
+- Average per facility per night = 29,932 ÷ (12 facilities × 30 nights) = **83.144…**
+
+Because the panel is balanced, averaging per-facility nightly counts and then across facilities gives the identical result (per-facility nightly averages range 80.4–85.5, mean 83.14).
+
+Rounded to one decimal place: **83.1**
+
+FINAL_ANSWER: 83.1

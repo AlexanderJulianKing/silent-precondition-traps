@@ -1,0 +1,11 @@
+{
+  "coin_field": "aggregate cents",
+  "export_name": "drawer_cash_audits",
+  "field_emission": {
+    "empty_denomination_field": "retain_prior_value",
+    "first_row_per_drawer": "full_snapshot",
+    "later_rows": "changed_fields_only"
+  },
+  "product": "TillTrace Compact 4.8",
+  "row_mode": "daily_close"
+}

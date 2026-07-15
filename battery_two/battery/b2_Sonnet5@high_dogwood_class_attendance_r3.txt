@@ -1,0 +1,5 @@
+Clean data: 16,620 rows, all `ADMITTED`, no duplicate admission IDs, no duplicate badge_token+class_instance pairs, and dates span the full month of December. Each row represents one customer's admitted attendance at a scheduled class.
+
+Total customer class attendances in December: **16,620**
+
+FINAL_ANSWER: 16620

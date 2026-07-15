@@ -1,0 +1,3 @@
+All 17,950 rows are unique tracking numbers, all dated within July 2026, and all carry an `ACCEPTED` carrier response — matching the README's description exactly (dimensions/scale_sample are diagnostic-only noise, not part of the count). So the count of physical parcels transferred equals the row count.
+
+FINAL_ANSWER: 17950

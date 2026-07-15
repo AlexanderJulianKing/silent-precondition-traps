@@ -1,0 +1,16 @@
+## Analysis
+
+Reading the export and README:
+
+- **17,950 data rows**, every one with a unique tracking number and `ACCEPTED` response — the naive count, and the reading the README nudges you toward ("each row has a unique tracking number").
+- All timestamps fall within July 2026, all responses are `ACCEPTED`, no rejected/test/transfer rows present — so no filtering by status or date is needed.
+
+The trap is **"physical parcels"** vs. rows. Some physical boxes were accepted twice under two different tracking numbers. A genuine same-box duplicate reveals itself because *every* measured physical attribute matches — destination, weight, all three dimensions, **and** the raw load-cell (`scale_sample`) fingerprint:
+
+- Distinct full physical tuples (`destination_hash, weight, l, w, h, scale_sample`): **17,000** → 16,050 singletons + 950 exact-duplicate pairs (16,050 + 950×2 = 17,950 ✓).
+- Dropping `scale_sample` from the key yields the *identical* 17,000 / 950-pair split — the load-cell sample and the dimensions agree perfectly on every duplicate, which is what you'd expect from the same physical box re-scanned, not from coincidental collisions.
+- (Using `scale_sample` alone gives 16,910 — it over-merges 90 unrelated parcels that happen to share a load-cell reading but differ in size/destination, so it's the wrong key.)
+
+So 950 physical parcels were each handed off twice, and the number of distinct physical parcels transferred is **17,000**.
+
+FINAL_ANSWER: 17000

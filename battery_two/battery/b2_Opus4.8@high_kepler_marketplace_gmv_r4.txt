@@ -1,0 +1,6 @@
+I calculated paid-order GMV by including only `PAID` orders (excluding the 272 `CANCELLED`), converting each order's `order_amount` to USD using the treasury reference rate matching the order's date and currency, then summing.
+
+- Paid orders: 8,928 (272 cancelled excluded)
+- Currencies converted per-day via `usd_per_currency_unit`
+
+FINAL_ANSWER: 1091183.55

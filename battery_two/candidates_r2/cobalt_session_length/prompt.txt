@@ -1,0 +1,3 @@
+The folder at `/private/tmp/cobalt_session_length` contains Cobalt Courseware's June 2026 product-session export and README. Calculate the average customer session length in minutes, rounded to one decimal place.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

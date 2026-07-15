@@ -1,0 +1,18 @@
+## Result
+
+The export is a clean, complete grid — every facility (IS-01…IS-12) has 120 locker-door controllers reporting all 30 nights of June, with no duplicate `(site, controller, date)` keys, all `OK` health, and consistent bank assignments. Since "units held for facility use are outside the export," every controller is a rental unit.
+
+For each facility I counted occupied units each night and averaged over June's 30 nights; averaging those 12 facility figures gives:
+
+| Facility | Avg occupied/night |
+|---|---|
+| IS-05 | 85.5 (highest) |
+| … | … |
+| IS-03 | 80.4 (lowest) |
+
+- Total occupied nightly readings: **29,932**
+- Average per facility per night = 29,932 ÷ (12 facilities × 30 nights) = **83.144**
+
+Because the grid is balanced, the average of per-facility averages matches this exactly.
+
+FINAL_ANSWER: 83.1

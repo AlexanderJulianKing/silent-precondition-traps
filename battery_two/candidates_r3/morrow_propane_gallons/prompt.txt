@@ -1,0 +1,3 @@
+The folder at `/private/tmp/morrow_propane_gallons` contains Morrow Propane's July 2026 completed delivery closes and README. Calculate the total delivered propane gallons for July, rounded to one decimal place.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

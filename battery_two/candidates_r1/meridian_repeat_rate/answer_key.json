@@ -1,0 +1,7 @@
+{
+  "correct_answer": 22.5,
+  "mechanism": "Store-local receipt customer numbers are mistaken for a chainwide person identifier.",
+  "planted_answer": 53.8,
+  "task": "meridian_repeat_rate",
+  "tolerance": 0.05
+}

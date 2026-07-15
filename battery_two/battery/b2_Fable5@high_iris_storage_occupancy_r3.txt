@@ -1,0 +1,5 @@
+The average is **83.1 occupied rental units per facility** during June 2026.
+
+The export is a clean, complete panel: 43,200 rows covering 12 facilities × 120 locker controllers × 30 nights, with no duplicate controller/date keys, all devices reporting `OK` health, and occupancy flags strictly 0/1. Total occupied flags were 29,932, so the average nightly occupied count per facility is 29,932 ÷ (12 facilities × 30 nights) = 83.144… Because the panel is perfectly balanced, averaging each facility's nightly occupancy first and then averaging across facilities gives the identical result. Per-facility averages range from 80.4 (IS-03) to 85.5 (IS-05).
+
+FINAL_ANSWER: 83.1

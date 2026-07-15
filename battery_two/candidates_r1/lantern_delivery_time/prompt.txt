@@ -1,0 +1,3 @@
+The folder at `/private/tmp/lantern_delivery_time` contains Lantern Local Delivery's June 2026 completed-job export, handheld scanner event log, and README. Calculate the average elapsed time in minutes from dispatch to doorstep delivery for completed June jobs, rounded to one decimal place.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

@@ -1,0 +1,5 @@
+All parcels are within October 2026, all ACCEPTED, no duplicate parcel IDs, and no malformed weights. Summing `measured_kg` for the 4,177 RUSH parcels:
+
+Total measured weight of accepted RUSH parcels = **14,604.9 kg**
+
+FINAL_ANSWER: 14604.9

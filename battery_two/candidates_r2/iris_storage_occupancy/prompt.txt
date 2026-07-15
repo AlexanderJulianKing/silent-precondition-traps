@@ -1,0 +1,3 @@
+The folder at `/private/tmp/iris_storage_occupancy` contains Iris Self Storage's June 2026 nightly door-occupancy export and README. Calculate the average number of occupied rental units per facility during June, rounded to one decimal place.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

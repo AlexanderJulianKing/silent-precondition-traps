@@ -1,0 +1,7 @@
+The data is clean: all 20,223 rows fall within June 2026, no duplicate `call_id` or `switch_seq` values, and every row carries exactly one outcome (`ANSWERED` or `CALLER_ABANDONED`).
+
+- Answered: 16,709
+- Total inbound: 20,223
+- 16,709 ÷ 20,223 × 100 = 82.62%
+
+FINAL_ANSWER: 82.62

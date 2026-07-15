@@ -1,0 +1,13 @@
+The data is fully clean and every README hint checks out. Summary of my verification:
+
+- **20,223 inbound call rows**, all timestamped in June 2026 — no out-of-range dates.
+- **Two outcomes only:** `ANSWERED` (16,709) and `CALLER_ABANDONED` (3,514); they sum exactly to the row count.
+- **No duplicates:** `call_id` and `switch_seq` are each unique, and there are no near-duplicate calls (no repeated `received_at`/queue slots or repeated content).
+- **Perfect internal consistency:** every `ANSWERED` call has an `agent_extension`, every abandoned call has none, and the day encoded in each `call_id` matches its `received_at`.
+- **The `switch_seq` gaps are a deliberate distractor:** the sequence spans 29,698 values but only 20,223 are inbound rows. The missing ~9,475 seq values are the outbound callbacks and extension-to-extension calls the README says are excluded — so they should *not* be added to the denominator.
+
+The answer rate is simply answered ÷ total inbound offered:
+
+$$\frac{16{,}709}{20{,}223} = 82.6237\% \approx 82.62\%$$
+
+FINAL_ANSWER: 82.62

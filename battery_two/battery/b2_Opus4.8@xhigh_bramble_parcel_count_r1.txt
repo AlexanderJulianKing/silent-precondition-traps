@@ -1,0 +1,12 @@
+Confirmed. All 950 duplicate pairs share the same physical fingerprint (weight, dimensions, and the raw load-cell `scale_sample`) **and** carry consecutive tracking numbers, consecutive manifest rows, the same lane, and the same service — i.e. the identical physical box was recorded twice under two adjacent tracking numbers. A raw load-cell reading matching to the exact integer for two supposedly different boxes is the giveaway that it's one parcel scanned twice, not two parcels.
+
+**Calculation:**
+- Total accepted rows: **17,950** (all `ACCEPTED`, all tracking numbers unique — so tracking number alone overcounts)
+- Physical-duplicate records (same box, second tracking number): **950**
+- Distinct physical parcels: 17,950 − 950 = **17,000**
+
+Note I deliberately did *not* dedupe on `scale_sample` alone — that key merges 1,040 rows, but ~90 of those are coincidental sample collisions between genuinely different boxes (different weight/dimensions/destination). The full physical signature avoids that over-merge.
+
+Physical parcels transferred to the carrier in July: **17,000**.
+
+FINAL_ANSWER: 17000

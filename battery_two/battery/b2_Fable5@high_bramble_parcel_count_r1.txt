@@ -1,0 +1,10 @@
+**17,000 physical parcels were transferred to the carrier in July.**
+
+How I got there:
+
+- The export contains **17,950 rows**, each with a unique tracking number, all `ACCEPTED`, all dated July 2026 — so at face value the count would be 17,950.
+- However, **950 of those rows are double-scans of parcels already in the file**. Exactly 950 pairs of rows match perfectly on every physical and routing attribute: destination hash, weight, all three dimensions, lane, service level, and — decisively — the raw six-digit `scale_sample` load-cell reading that the README says was retained for packing-line diagnostics. A coincidental match on all of that is essentially impossible.
+- The pairs are unmistakably re-scans, not similar parcels: all 950 sit on **consecutive manifest rows**, were accepted **25–75 seconds apart** on the same lane, and the pattern runs daily from July 11 through July 31 (never appearing as triples). Each re-scan simply generated a fresh tracking number and manifest row for the same box.
+- Deduplicating those 950 extra rows: 17,950 − 950 = **17,000** physical parcels handed to the carrier.
+
+FINAL_ANSWER: 17000

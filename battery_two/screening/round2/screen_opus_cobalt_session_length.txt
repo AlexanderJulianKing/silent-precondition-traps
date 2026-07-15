@@ -1,0 +1,21 @@
+I analyzed the export and found a data-quality trap that has to be handled before averaging.
+
+## What's in the data
+- `june_web_sessions.csv`: 13,003 unique sessions across three clients (android/ios/web), session length = `session_end − session_start`.
+
+## The corruption signature
+Looking at the distribution of session **start hours**:
+
+- Hours 06:00–23:00 are populated normally (~475–1,100 sessions each).
+- Hours 01:00–05:59 have **zero** sessions.
+- Exactly **00:00:00** has a pile of **2,503** sessions.
+
+That's not real overnight usage — a genuine spread would scatter sessions across 00–05. Instead, 2,503 rows have their start clobbered to midnight (`YYYY-MM-DD 00:00:00`), so their computed length is `session_end − midnight`, an inflated artifact. These bad rows average **215 min** and stretch to 412 min (~6.9 hrs), while the 10,500 clean rows form a tight, sensible population bounded at exactly **5.0–150.0 min** (round bounds — the real telemetry cap).
+
+Including the corrupted rows drags the mean to 82.2 min; excluding them gives the true customer session average.
+
+## Result
+- Valid sessions: 10,500
+- Average length: **50.6 minutes**
+
+FINAL_ANSWER: 50.6

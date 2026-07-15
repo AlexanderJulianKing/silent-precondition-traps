@@ -1,0 +1,17 @@
+The analysis is conclusive.
+
+## Findings
+
+The export contains **17,950 rows**, all with unique tracking numbers and `ACCEPTED` responses. A naive count would give 17,950 — but that counts labels, not physical parcels.
+
+Within the data there are **950 duplicate pairs** where two rows share an *identical physical fingerprint*: same weight, all three dimensions, destination, **and the raw `scale_sample` (load-cell reading)**. A raw load-cell sample is a per-weighing sensor value — two genuinely separate parcels essentially never reproduce it. Every one of these 950 pairs also shows the tell-tale signature of a double-record:
+
+- **Consecutive tracking numbers** (950/950) and **consecutive manifest rows** (950/950)
+- **Same calendar day**, weighed **25–75 seconds apart** (median 49s)
+- Same lane and service
+
+So each pair is a single physical box written into the manifest twice under two adjacent labels ~1 minute apart. The README's note that "the short load-cell sample [is] retained for packing-line diagnostics" is exactly the field that lets these be collapsed. (Scale_sample *alone* also collides ~90 times coincidentally, but those have differing weights/dimensions and are correctly *not* treated as duplicates.)
+
+**Physical parcels = 17,950 − 950 = 17,000**
+
+FINAL_ANSWER: 17000

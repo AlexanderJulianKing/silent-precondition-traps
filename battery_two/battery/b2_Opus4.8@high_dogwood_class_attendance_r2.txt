@@ -1,0 +1,9 @@
+Analysis of the export:
+
+- **16,620 data rows**, all with `gate_result = ADMITTED` (denied scans, open-gym, cancelled classes, and door tests were already excluded per the README).
+- Every `(badge_token, class_instance)` pair is **unique** — no double-scans to dedupe.
+- 8 studios (matching the README), 1,488 distinct class instances, 6,907 distinct badges, max 17 classes per badge (all plausible customer activity, no instructor/staff outlier scanning into everything).
+
+Each row is one customer admitted to one class meeting, so the total attendance count is the row count.
+
+FINAL_ANSWER: 16620

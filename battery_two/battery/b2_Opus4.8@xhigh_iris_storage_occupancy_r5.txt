@@ -1,0 +1,17 @@
+## Result
+
+The export is a clean, perfectly balanced panel, so the computation is unambiguous:
+
+- **12 facilities** (IS-01 … IS-12), **120 rental units each** (1,440 total physical units, keyed by site + controller since controller labels are only unique within a site).
+- Each unit reported on **all 30 June nights** — no duplicates, no missing keys, all `OK` health, and every unit in the export is a rental unit (facility-held units are excluded per the README). Installation banks are just descriptive metadata (each unit maps to a single bank), not a source of double-counting.
+
+"Average number of occupied rental units per facility" = the average nightly count of occupied units at a facility:
+
+- Total occupied unit-nights in June: **29,932**
+- Per-facility nightly average, then averaged across the 12 facilities = 29,932 ÷ (12 facilities × 30 nights) = **83.144…**
+
+(The alternative reading — distinct units occupied *at least once* — gives ~119.9, i.e. nearly every unit, which is a trivial near-maximum rather than an occupancy level, so it isn't the intended metric.)
+
+Rounded to one decimal place: **83.1** occupied rental units per facility.
+
+FINAL_ANSWER: 83.1

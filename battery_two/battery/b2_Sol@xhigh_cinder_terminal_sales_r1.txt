@@ -1,0 +1,985 @@
+Reading additional input from stdin...
+OpenAI Codex v0.144.0
+--------
+workdir: /private/tmp/cinder_terminal_sales
+model: gpt-5.6-sol
+provider: openai
+approval: never
+sandbox: workspace-write [workdir, /tmp, $TMPDIR]
+reasoning effort: xhigh
+reasoning summaries: none
+session id: 019f61e6-e326-7eb2-87fa-9ec7d39c6bfd
+--------
+user
+The folder at `/private/tmp/cinder_terminal_sales` contains Cinder Corner Market's November 2026 card-approval closeout and README. Calculate total approved customer card sales for November, rounded to two decimal places and reported without a currency symbol.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.
+codex
+I’ll inspect the closeout files and README, follow the stated reconciliation rules, and verify the total before reporting it.
+exec
+/bin/bash -lc "rg --files -g '"'!*~'"' -g '"'!*.tmp'"'" in /private/tmp/cinder_terminal_sales
+ succeeded in 0ms:
+november_card_approvals.csv
+README.md
+
+codex
+I’m using the spreadsheet skill because the closeout is a CSV; it requires validating the source structure and calculation rather than relying on a quick visual sum.
+exec
+/bin/bash -lc "sed -n '1,240p' /Users/alexanderking/.codex/plugins/cache/openai-primary-runtime/spreadsheets/26.709.11516/skills/spreadsheets/SKILL.md" in /private/tmp/cinder_terminal_sales
+ succeeded in 0ms:
+---
+name: "Spreadsheets"
+description: "Create, edit, analyze, and verify standalone spreadsheet files or Google Sheets-ready workbooks, including .xlsx, .xls, .csv, and .tsv. Do not use for live controlling Microsoft Excel app or a live Excel session."
+---
+
+# Spreadsheets skill (Create • Edit • Analyze • Visualize)
+Use this skill when you need to work with spreadsheets (.xlsx, .csv, .tsv) to do any of the following:
+- Create or modify a new workbook/sheet with proper formulas, cell/number formatting, and structured layout
+- Read or analyze tabular data (filter, aggregate, pivot, compute metrics) directly in a sheet
+- Visualize data with in-sheet charts/tables and sensible formatting
+- Recalculate/evaluate formulas to update results after changes
+
+## Decision Boundary
+
+- For Google Sheets-targeted outputs, such as creating or editing a Google Sheet, follow the additional instructions here: `routing/google_sheets.md`.
+
+Do not follow those routing instructions if irrelevant to the task. Default is to create/edit spreadsheets with artifact tool.
+
+## Tools + Contract Requirements
+- Use `@oai/artifact-tool` JS library for all spreadsheet authoring, using only the executables and dependency paths provided by `load_workspace_dependencies`. Do not use system, global, or repo-local dependencies.
+- If the runtime or `@oai/artifact-tool` is unavailable, report a blocker. Do not guess or search for paths, install packages, use resolution hacks, or import bundled internals.
+- Work in a writable, conversation-specific or tmp directory. In that working directory, create a `node_modules` symlink or Windows junction pointing to the loader-provided `node_modules` directory. Never modify the loader-provided dependency directory.
+- Prefer one executable `.mjs` builder and patch/rerun it. Do not use heredocs or duplicate builders.
+- Use the provided API reference. Do not inspect package internals or prototypes. If blocked, run at most one targeted `workbook.help("<api_or_feature>")` query.
+- Do not use alternate workbook creation/editing libraries such as `openpyxl`, `xlsxwriter`, or `pandas.ExcelWriter` unless the user explicitly asks.
+- For supporting analysis or data processing outside workbook authoring, use JS or spreadsheet formulas when sufficient. If Python is necessary, prefer the bundled python libraries, save JSON/CSV intermediates, and have the JS builder create the workbook. Use existing system Python or user-provided libraries only when the bundled environment lacks a required capability. Keep auditable and user-editable calculations in the workbook as formulas.
+- Use `update_plan` for complex spreadsheet work.
+
+### Final Response
+- Include a short user-visible summary and standalone Markdown link(s) only to final `.xlsx` artifact(s), one per line: `[Revenue Model - MNST.xlsx](/absolute/path/to/revenue_model_mnst.xlsx)`.
+- Do not mention or link builders, previews, or other support files unless requested.
+
+Other documents:
+- `style_guidelines.md`: REQUIRED for formatting requirements
+- `API_QUICK_START.md`: REQUIRED API documentation for `artifact_tool` JS library, which exposes methods to read, manipulate, edit, recalculate, render, import and save spreadsheets. You must read it entirely to get started.
+- `charts.md`: Read when creating or editing charts.
+
+## Domain Requirements
+You must read these domain rules when the request clearly relates to the domain, but do not load domain guidance for unrelated tasks unless asked:
+- Finance and investment banking: `domain_guidance/financial_models.md`
+- Corporate finance and FP&A: `domain_guidance/corporate_finance_fpa.md`
+- Healthcare: `domain_guidance/healthcare.md`
+- Marketing and advertising: `domain_guidance/marketing_advertising.md`
+- Scientific research: `domain_guidance/scientific_research.md`
+
+Instruction precedence for workbook content, layout, and formatting is: user request > reference/template > domain and formatting defaults.
+
+## Making edits on a spreadsheet or using an uploaded reference or template.
+- Before modifying: ALWAYS study and match the existing format, style and conventions when making edits by rendering and viewing the image. Read related values and formulas.
+- For visual fix requests, start with the smallest plausible local change. Do not apply sheet-wide autofit, wrapping, or restyling unless requested.
+- Ensure existing formulas, layouts, structures, and patterns are consistent. For example, if asked to add another column or row to a table and there is conditional formatting applied to the whole table, it should extend to the new column or rows as well.
+- Keep edits targeted unless a broader change is clearly necessary. Exceptions are when there's dependencies, e.g. a dynamic chart that is based on the range of values in a table and a new row is added, the chart should also update.
+- Extend conditional formatting if needed to keep style consistent for an area or table.
+- Never overwrite formatting for spreadsheets with established formats, unless requested or to extend an added range.
+
+## Importing or extracting data from screenshots or reference images
+- When a reference image or screenshot is provided, use appropriate data formats (e.g. number/date formats) based on the workbook topic, audience and purpose instead of trying to recreate the rendered format with just text. Preserve numeric/date usability even when the screenshot shows locale-specific punctuation or currency symbols.
+- Use formulas when appropriate and correct: For screenshot recreation, do not bulk-write numeric tables as all static values until you have separated any clearly formula-derived ranges; test adjacent numeric rows/columns for exact repeated relationships such as sums, differences, products, ratios, or constant multiples, then keep inputs hardcoded and write derived ranges as formulas.
+- Match visible styling, but do not infer intentional formatting from ambiguous image artifacts such as zoom, antialiasing, or compression. Infer font weight only from relative contrast or clear semantics; if all visible text has the same apparent weight, use normal weight.
+
+## Handling queries and questions
+- The user may ask questions about the sheet instead of requesting an edit or a change. Simply answer those questions about the spreadsheet based on the context available rather than making an edit the user didn't intend for. Use the selected workflow's read tools to inspect relevant values, formulas, tables, and objects.
+- For a read-only question, do not modify or export the workbook.
+- Locate the requested output by its row and column labels and period, inspect its displayed value and formula, and trace formula precedents to labeled assumptions or raw inputs instead of stopping at an intermediate total.
+- Explain calculations with the workbook's displayed values and preserve units and period conversions. For broad questions about assumptions or drivers, rank the inputs that actually drive the requested output rather than inferring from nearby labels.
+
+## Error Recovery
+On first tool or API error:
+1. Read error text.
+2. Consult the selected workflow's targeted help or schema discovery only if needed.
+3. Retry with minimal patch (not full rewrite).
+4. Continue from existing workbook state.
+
+Do not loop indefinitely on similar failures.
+
+## Formula Rules
+- Place assumptions and raw data in dedicated cells or clearly delineated input ranges, following the reference workbook's organization when one is provided.
+- Keep lookup, mapping, scoring, and quality-control rules in visible cells or tables and reference them from formulas instead of hardcoding the logic.
+- Derived values must be formulas (not hardcoded) and legible.
+- Keep calculations formula driven, and prefer consistent formula patterns across a range where possible for readability. For example, formulas should be consistent across all projection periods.
+- Use absolute/relative references correctly for fill/copy behavior.
+- Use references instead of hardcoded or magic numbers inside formulas e.g. Use `=A5*(1+$A$6)` instead of =A5*1.05
+- Formulas should be simple, legible and **easily auditable**. Use helper cells for intermediate values rather than performing complex calculations in a single cell. Users should be able to trace the model from inputs to outputs easily.
+- No harcoded numbers inside calculation areas unless explicitly allowed. Always ensure color formatting conventions are properly applied.
+- For any complex formulas or important assumptions, add comments to cells to explain.
+- Always reference cells on other Excel sheets using the format ='Sheet Name'!A1, wrapping the sheet name in single quotes every time since quotes are required for any spaces or special characters.
+
+### Ensure formulas are correct
+- Checklist: No formula errors, all cell references are correct, no off-by-one errors in ranges, edge cases (zero values, negative numbers) are handled, no unintended circular references.
+- For source-backed analyses and summaries, spot-check representative outputs and reconcile key totals with source definitions.
+
+## Data Formatting Rules
+- Store numbers, percentages, currency, and dates as typed spreadsheet values, not preformatted strings. Use text only for true identifiers such as ZIP codes, account IDs, SKUs, or labels.
+- Use Excel-invariant number/date format codes, not locale-specific display strings. Examples include `#,##0`, `#,##0.0`, `0.0%`, `0.00%`, `"$"#,##0`, `"$"#,##0.00`, `yyyy-mm-dd`, `mmm yyyy` but choose the format that best fits the data.
+- Percentages: When not specified or no reference is provided, use 1 decimal for most internal/analytical cells, 0 decimals for user-facing/dashboard outputs, and 2 decimals where small differences in rates matter.
+- Do not swap `.` and `,` in format codes to mimic locale separators; separators are controlled by spreadsheet/render locale. Use `0.0%`, not `0,0%`, and `#,##0`, not `#.##0`.
+- Choose the appropriate format for readability. Match precision to meaning: counts use `#,##0`; rates usually use `0.0%` or `0.00%`; currency uses whole units unless cents matter.
+
+## Quality Guidelines
+- Build correct, readable workbooks for the intended audience with clear structure, consistent formatting, reliable formulas, and useful outputs. Keep them as simple as practical.
+- After autofit and wrapping, cap oversized column widths and row heights.
+- Make workbooks easy for another person to update, trace, and audit without the original author.
+
+## Completion Criteria
+### Criteria for Question / Read only requests
+- Answer from the available workbook context. Do not edit or overwrite unless the user asks for a workbook change.
+
+### Criteria for all create and edit requests
+Complete only when:
+- Workbook content is populated and formulas compute.
+- No obvious formula errors in key scanned ranges (no bad refs/off-by-one/circular errors).
+- `.xlsx` saved to `outputs/<unique_thread_id>/`.
+- Visual render verification passes:
+  - Layout is organized, legible, and aligned to request style (or default/existing formatting baseline for edits).
+  - Important numbers and callouts are all visible.
+  - Numbers, text, charts and content is not clipped or awkwardly wrapped.
+
+## Verification Rules
+Before final response, verify values/formulas and visual quality.
+
+1. Inspect key ranges:
+```js
+const check = await workbook.inspect({
+  kind: "table",
+  range: "Dashboard!A1:H20",
+  include: "values,formulas",
+  tableMaxRows: 20,
+  tableMaxCols: 12,
+});
+console.log(check.ndjson);
+```
+
+2. Scan formula errors:
+```js
+const errors = await workbook.inspect({
+  kind: "match",
+  searchTerm: "#REF!|#DIV/0!|#VALUE!|#NAME\\?|#N/A",
+  options: { useRegex: true, maxResults: 300 },
+  summary: "final formula error scan",
+});
+console.log(errors.ndjson);
+```
+
+3. Render sheets/ranges to verify visual output (skip if already verified and no style changes):
+```js
+const blob = await workbook.render({ sheetName: "Sheet1", range: "A1:H20", scale: 2 });
+```
+Make sure you do at least one visual pass of all the sheets in the workbook before the final export.
+
+Visual requirements:
+- Fix severe defects before finalizing: blank/broken charts, clipped key headers or numbers, unreadable colors, obvious formula errors, default blank sheets, or content outside the visible working area.
+- Ensure logical labels or titles appear once, and merged ranges exist where labels or content intentionally span multiple columns.
+- Ensure texts are all clearly visible and NOT clipped, columns and appropriately sized
+- Do focused visual repair pass(s) after the initial render. Limit looping/time sinks for minor polish: stop once the workbook is correct, legible, and exported; note any minor limitation briefly and finalize.
+
+4. Keep verification compact:
+- Inspect key ranges.
+- Avoid huge NDJSON dumps.
+
+5. Export:
+```js
+await fs.mkdir(outputDir, { recursive: true });
+const output = await SpreadsheetFile.exportXlsx(workbook);
+await output.save(`${outputDir}/output.xlsx`);
+```
+
+6. Finalize immediately after successful export + compact verification.
+- Do not export extra `.xlsx` variants unless asked.
+
+## Citation Requirements
+### Cite sources inside the spreadsheet
+- Use plain-text URLs in spreadsheet cells.
+- For financial models, cite model-input sources in cell comments.
+- For researched row-wise data tables, include source URLs in a dedicated source column.
+
+## Final response citations
+
+Use the inline form `:codex-file-citation{...}` and place each citation immediately after the claim it supports.
+
+For read-only Q&A, cite the source workbook. For editing, cite the final delivered workbook.
+
+For creation, include exactly one standalone Markdown link to the final delivered workbook. Do not add a file, range, or object citation.
+
+Use a plain file citation only for whole-workbook summaries:
+
+```text
+:codex-file-citation{path="/abs/path/book.xlsx"}
+```
+
+Workbook range citations require both `sheet` and `range`. Cite the narrowest range that directly contains the claimed evidence; for a discrete numeric assumption, cite its exact value cell.
+
+```text
+:codex-file-citation{path="/abs/path/book.xlsx" artifact_kind="workbook" sheet="Revenue Model" range="C27"}
+```
+
+For a concrete table, chart, image, or shape, use `sheet` plus an exact inspected `object_id`, optional `object_kind`, and a useful `label`. Do not emit sheet-only citations or guess ranges or object IDs.
+
+A calculation answer should normally cite its source assumption, operating driver, and formula or result when those are distinct cells or ranges.
+
+Do not cite previews, source notes, scratch files, generated JSON/CSV/logs, builders, or QA outputs unless asked.
+
+## Comment Author
+- If the authenticated/user profile or env context provides a user display name, use it as the threaded comment display name unless the user requests another name. Default to `User`.
+
+
+## Source, PDF, and Attachment Processing
+- Keep source notes compact: record file name, section/table label, and enough context to audit the number. Do not paste large PDF excerpts into the workbook unless requested.
+- Bundled Python libraries available in the bundled runtime environment for extraction/analysis include `pandas`, `numpy`, `pypdf`, `python-docx`, and `reportlab`. You may read/extract in separate scripts if needed.
+- Bundled JS libraries available for document/PDF work include `docx`, `pdf-lib`, and `pdfjs-dist`.
+
+exec
+/bin/bash -lc 'cat /Users/alexanderking/.codex/plugins/cache/openai-primary-runtime/spreadsheets/26.709.11516/skills/spreadsheets/style_guidelines.md' in /private/tmp/cinder_terminal_sales
+ succeeded in 0ms:
+# Style and Formatting Instructions
+
+## Formatting requirements when provided a formatted spreadsheet as part of the task
+- If editing an uploaded/template workbook: render first, preserve and match existing style unless user asks to restyle.
+- Before editing, inspect all relevant current styling attributes (fills, fonts, borders, merged cells, number formats). If changing values only, never overwrite or clear cell formats.
+
+## Formatting Baseline
+Apply these defaults to all spreadsheet outputs but ensure user provided style reference(s), template, or explicit formatting instructions take precedence. If the user specifies a style or reference, match that instead.
+
+### Use a visually clear layout
+- Headers should be formatted differently from data and derived cells to distinguish them with a consistent visual style
+- Use fill colors, borders, and merged cells judiciously to give the spreadsheet a professional visual style with a clear layout without overdoing it
+- Set appropriate row heights and column widths to give a clean visual appearance; contents of cells should be readable within the cell, without excessive buffer space
+- Keep row heights consistent within each section unless wrapped content requires expansion.
+- Do not apply borders around every filled cell. Borders clarify structure, not decorate arbitrary ranges. Prefer thin, light borders for structure; use stronger borders only for important section breaks.
+- Keep formatting and colors consistent for a given role or section for legibility, and ideally across the workbook. Conditional Formatting is preferred over manually painted cells when applying styles consistently over a range, column or table.
+- Colors should be used to convey meaning.
+- Use strategic whitespace or slightly taller section/header rows to separate sections
+- Add data validation for editable categorical columns (`Status`, `Priority`, `Owner`) where feasible.
+- When text wraps, prefer widening the column before allowing deep multi-line rows; if wrapping is necessary, increase row height just enough to fully show the content.
+- Maintain structural elements (filters, tables, totals rows), and never introduce merged cells in calculation areas.
+- If users are likely to edit the workbook later, make worksheet cells the live source of truth: any downstream values or visual states that depend on editable inputs should be driven by formulas referencing worksheet cells, then styled with conditional formatting or presentation-only formatting instead of precomputed values or one-time manual fills.
+- Use freeze rows/columns when they help with usability, and especially for large datasets that span a lot of rows or columns. Follow best practices.
+- Apply global styling only to populated or intentionally reserved ranges. Avoid formatting hundreds of unused rows or columns because this can expand the used range and degrade rendering, printing, and navigation.
+- Keep presentation sheets compact: stack sections when side-by-side blocks become hard to scan, and verify at normal zoom that labels, values, charts, and shapes are not clipped, disconnected, or overlapping.
+
+### Avoiding gridlines
+Define structure with explicit fills and borders rather than relying on default gridlines. Use subtle internal borders for separation and slightly stronger outside borders to frame sections or cards. Hide gridlines when explicit section styling already defines the sheet.
+
+### Align and format by data type
+Apply semantic formatting to entire columns or blocks:
+- text/descriptive fields left-aligned
+- labels centered or left-aligned depending on context
+- numeric and currency fields right-aligned
+- dates with explicit date formats
+- financial values with explicit currency/accounting formats
+- do not leave important numeric fields in raw General format
+
+### Typography and whitespace
+- Use bold sparingly and only to establish reading order.
+- Give titles, summaries, and section breaks visible breathing room so the sheet does not feel cramped.
+
+#### Use typography intentionally but conservatively
+Use one display-style font choice for titles/section headers and one neutral readable font for body content when supported by the workbook viewer. Keep body text modest in size, reserve larger fonts for titles or major section labels, and avoid mixing many fonts or excessive emphasis.
+
+### Prefer visible summaries over buried totals
+Important totals should usually appear in a visible summary area near the top or in a side panel, even if table-footer totals also exist. Use formulas, not hardcoded values, and style summary cards as distinct panels with their own fill and border treatment.
+
+### Dashboard, report, and scorecard quality floor
+For generated dashboards, reports, scorecards, and trackers, work within the user's or supplied template's visual language:
+- Establish a clear hierarchy: make primary KPIs prominent with explicit number formats and enough whitespace to scan at normal zoom.
+- Use native conditional-formatting rules for status, risk, priority, variance, threshold, and exception fields when they aid scanning or must react to future changes; verify the applied range rather than substituting static fills.
+- Include a meaningful chart, sparkline, or compact visual or table only when it clarifies the requested analysis; avoid decorative or redundant visuals and follow `charts.md`.
+
+exec
+/bin/bash -lc 'cat /Users/alexanderking/.codex/plugins/cache/openai-primary-runtime/spreadsheets/26.709.11516/skills/spreadsheets/API_QUICK_START.md' in /private/tmp/cinder_terminal_sales
+ succeeded in 0ms:
+# Using artifact_tool APIs (JavaScript)
+
+Library version: 2.8.6+
+
+## Required Imports + Startup
+
+Import existing workbook only when needed:
+```js
+import { FileBlob, SpreadsheetFile } from "@oai/artifact-tool";
+
+const input = await FileBlob.load("path/to/input.xlsx");
+const workbook = await SpreadsheetFile.importXlsx(input);
+```
+
+Import CSV text directly when the source or intermediate data is CSV:
+```js
+import fs from "node:fs/promises";
+import { Workbook } from "@oai/artifact-tool";
+
+const csvText = await fs.readFile("path/to/input.csv", "utf8");
+const workbook = await Workbook.fromCSV(csvText, { sheetName: "Sheet1" });
+```
+Prefer `Workbook.fromCSV(...)` over hand-parsing CSV rows; clean or analyze CSV with Python/Node first only when needed.
+
+Create new workbook:
+```js
+import fs from "node:fs/promises";
+import { SpreadsheetFile, Workbook } from "@oai/artifact-tool";
+
+const workbook = Workbook.create();
+const sheet = workbook.worksheets.add("Inputs");
+```
+
+Final export:
+```js
+await fs.mkdir(outputDir, { recursive: true });
+const output = await SpreadsheetFile.exportXlsx(workbook);
+await output.save(`${outputDir}/output.xlsx`);
+```
+
+## Build Patterns
+- Prefer block writes (`range.values`, `range.formulas`) over per-cell loops. Matrix shape must match the target range (for example `"D4:M4"` should be a 1x10 matrix, row x col).
+- Seed scalar formulas once, then `fillDown()` / `fillRight()`. For dynamic-array formulas (`SEQUENCE`, `UNIQUE`, `FILTER`, `SORT`, `VSTACK`, `HSTACK`), write only the anchor cell and let the result spill after.
+- Use `range.displayFormulas` plus `range.formulaInfos` when you need to understand a spill child or a data-table output cell.
+- You do not need to call recalculate; calculation automatically happens.
+- Date handling:
+  - Prefer real `Date` objects for sortable/charted/formula date columns.
+  - Apply date formats explicitly (for example `yyyy-mm-dd`).
+- Use JSON-serializable values for non-Date cells: `string | number | boolean | null`.
+- If a cell is intended to display literal text that begins with `=`, write it as a value prefixed with a single quote (for example `'=B2*C2`). This includes formula descriptions, validation examples, and labels; do not write these cells through `range.formulas`.
+- Create every worksheet referenced by formulas before writing any cross-sheet formulas.
+- When rebuilding dashboards, delete drawings first with `sheet.deleteAllDrawings()`. `range.clear()` does not remove charts, shapes, or images.
+- Verify with `await workbook.inspect(...)`; use `workbook.help(...)` only when the quick surface below is insufficient.
+
+## Conventions
+- Use camelCase API names and option keys.
+- Cell/range addressing: A1 notation (`sheet.getRange("A1:C10")`).
+- Drawing anchors (`sheet.charts`, `sheet.shapes`, `sheet.images`): 0-based `{ row, col }`.
+- Drawing offsets/extents use pixels (`rowOffsetPx`, `colOffsetPx`, `widthPx`, `heightPx`).
+
+## API Discovery Policy (Strict)
+- Use this quick API surface first.
+- Over 440 Excel formulas are supported, covering the most common ones. Use `workbook.help` in the way described below to browse families of formulas or to lookup a specific formula. 
+- Use `workbook.help(...)` only when blocked by uncertainty.
+- For help queries, start with exact feature/path lookups (`chart`, `worksheet.getRange`, `worksheet.freezePanes`, `range.dataValidation`, `chart.series.add`). If an exact path fails, one broader wildcard search is allowed.
+- Do not repeat semantically similar help queries.
+- If one help query returns 0 matches, reformulate once, then proceed best-effort.
+- `render` can be used to examine an existing workbook visually and for visual verifications.
+
+## Supported Formulas
+- To check if the exact Excel formula is supported, or to see how it's used, use `fx.<formula>`: `workbook.help("fx.PMT", { include: "index,examples,notes", maxChars: 3000 })`.
+- To browse a family of formulas, use `fx.*` with a category regex. Useful categories: `financial`, `math-trig`, `statistical`, `lookup-reference`, `logical`, `text`, `date-time`, `information`, `engineering`, `database`.
+- For intent-based lookup, use a short natural query plus a narrow `search` regex of likely functions.
+- Keep `maxChars` bounded; if results are noisy, narrow `search` rather than issuing many similar queries.
+
+Useful `help` calls:
+```js
+console.log(workbook.help("shape.add", { include: "examples,notes" }).ndjson);
+console.log(
+  workbook.help("*", {
+    search: "fill|borders|autofit",
+    include: "index,examples,notes",
+    maxChars: 6000,
+  }).ndjson,
+);
+console.log(workbook.help("fx.PMT", { include: "index,examples,notes" }).ndjson);
+console.log(workbook.help("fx.*", { search: "financial", include: "index,examples", maxChars: 4000 }).ndjson);
+console.log(workbook.help("fx.*", { search: "math-trig", include: "index,examples", maxChars: 4000 }).ndjson);
+console.log(workbook.help("lookup with fallback", { search: "XLOOKUP|INDEX|MATCH|IFERROR", include: "index,examples,notes", maxChars: 4000 }).ndjson);
+```
+
+## Reading existing/imported workbooks
+- On existing/imported workbooks, get a compact summary via `inspect` to understand what already exists and where.
+- Prefer `inspect(...)` for workbook understanding and discovery across broad areas.
+- Prefer direct getters like `range.formulas` when you already know the target range and need the exact rectangular formula matrix.
+- If formula locations are unknown, prefer `inspect({ kind: "formula", ... })` over reading `range.formulas` across a very large area.
+- Prefer to set `maxChars`, `tableMaxRows`, `tableMaxCols`, and/or `maxResults` to prevent large dumps of data.
+- For suspicious or high-impact outputs, use `workbook.trace("Sheet!A1")` to audit the dependency tree from final output/check cell back to source cells. Trace output can be large, so summarize by depth/node count before logging.
+
+### Inspect for workbook understanding
+- Compact summary:
+```js
+await wb.inspect({
+  kind: "workbook,sheet,table",
+  maxChars: 6000,
+  tableMaxRows: 6,
+  tableMaxCols: 6,
+  tableMaxCellChars: 80,
+});
+```
+- Quick overview of sheet ids and names: `await wb.inspect({ kind: "sheet", include: "id,name" })`
+- Formula discovery in a targeted area: `await wb.inspect({ kind: "formula", sheetId: firstSheetName, range: "A1:Z30", maxChars: 2500, options: {maxResults:50} })`
+- Checking existing styles in a targeted area: `await wb.inspect({ kind: "computedStyle", sheetId: firstSheetName, range: "A1:E10", maxChars: 2500 })`
+- Common `kind` tokens: `workbook`, `sheet`, `table`, `region`, `match`, `formula`, `thread`, `computedStyle`, `definedName`, `drawing`
+- Inspects can also be used to zoom in on specific areas, especially for target edits:
+```js
+await wb.inspect({
+  kind: "region",
+  sheetId: firstSheetName,
+  range: "A1:Z30",
+  maxChars: 2500,
+});
+```
+- Inspect output may include JSON records with `"id"` values (for example `"ws/r5qsk5"`), which you can resolve back to workbook objects with `wb.resolve(...)`:
+- `wb.resolve("ws/...")` -> worksheet
+- `wb.resolve("th/...")` -> comment thread
+
+## Additional feature-specific notes
+
+### Merging cells
+- Merging cells is useful for visual headers, title bands, note/source blocks, and other multi-cell labels that span columns.
+- If you plan to set a range of cells to a single value, consider merging those cells first.
+- `range.merge()` merges the target range into one cell; `range.merge(true)` merges across each row in the target range.
+- `range.unmerge()` reverses a merge.
+For example:
+```js
+const range = sheet.getRange("I23:N24");
+range.merge();
+range.values = [["Source note spanning the recommendation panel"]];
+```
+
+## Known Gotchas (Do not repeat)
+- Do not set undocumented attributes on remote objects.
+- `Workbook.create()` starts with no sheets; add one before calling `getActiveWorksheet()`.
+- If a formula appears unsupported use an alternate equivalent.
+- Use matrix sizes that match target ranges unless you intentionally spill.
+- Create every worksheet referenced by formulas before writing cross-sheet formulas.
+- Avoid full-column formula references such as `A:A`, `$A:$A`, or `Sheet!B:B`. Prefer bounded ranges sized to the editable table, e.g. `$A$6:$A$205`, especially inside `COUNTIFS`, `SUMIFS`, `INDEX`, and lookup formulas.
+- If a formula appears unsupported, use an alternate equivalent.
+- If export fails, isolate the cause by checkpoint-export after major blocks to isolate the cause: base sheets, values/formulas, formatting, conditional formatting, tables, charts/rendering. For charts, first simplify optional styling first: nested border configs, custom chart axis/series mutations, broad autofit/formatting, then nonessential drawings.
+
+## Quick API Surface (High-Value + Common)
+
+### Core workbook/file APIs
+- `import { FileBlob, SpreadsheetFile, Workbook } from "@oai/artifact-tool"`
+- `const workbook = Workbook.create(); const sheet = workbook.worksheets.add("Sheet1")`
+- `const workbook = await SpreadsheetFile.importXlsx(arrayBufferOrFileBlob)`
+- `const xlsx = await SpreadsheetFile.exportXlsx(workbook); await xlsx.save("output.xlsx")`
+- `const inspect = await workbook.inspect({ kind: "sheet", include: "id,name", sheetId, range: "A1:C10" })`
+- `const help = workbook.help("worksheet.getRange", { include: "index,examples" })`
+- Preferred: `const blob = await workbook.render({ sheetName: "Sheet1", autoCrop: "all", scale: 1, format: "png" })`
+- To get the bytes and/or save the blob to file:
+```js
+const previewBytes = new Uint8Array(await preview.arrayBuffer());
+await fs.writeFile(`${outputDir}/preview.png`, previewBytes);
+```
+- `const workbook = await Workbook.fromCSV(csvText, { sheetName: "Sheet1" })`
+- `await workbook.fromCSV(csvText, { sheetName: "ImportedData" })`
+
+### Worksheet selection/creation
+- `workbook.worksheets.add(name)`
+- `workbook.worksheets.getItem(name)`
+- `workbook.worksheets.getOrAdd(name, { renameFirstIfOnlyNewSpreadsheet: true })`
+- `workbook.worksheets.getItemAt(index)`
+- `workbook.worksheets.getActiveWorksheet()` (only after at least one sheet exists)
+
+### Worksheet operations
+- `sheet.getRange("A1:C10")`, `sheet.getRangeByIndexes(startRow, startCol, rowCount, colCount)`, `sheet.getCell(row, col)`
+- `sheet.getUsedRange(valuesOnly?)`
+- `sheet.mergeCells("A1:C1")`, `sheet.unmergeCells("A1:C1")`
+- `sheet.freezePanes.freezeRows(1)`, `sheet.freezePanes.freezeColumns(2)`, `sheet.freezePanes.unfreeze()`
+- `sheet.tables`, `sheet.charts`, `sheet.sparklineGroups` (`sheet.sparklines` alias), `sheet.shapes`, `sheet.images`
+- `sheet.showGridLines = false`
+- `sheet.dataTables`, `sheet.conditionalFormattings`, `sheet.dataValidations`
+- `sheet.deleteAllDrawings()` removes charts, shapes, and images before a dashboard rebuild.
+
+### Range values/formulas
+- `const range = sheet.getRange("A1:C10")`
+- `range.values = [[...], ...]` (2D matrix of values)
+- `range.formulas = [["=..."], ...]`
+- `range.formulasR1C1 = [["=RC[-1]*2"]]`
+- To read: `range.values` / `range.formulas` / `range.displayFormulas` / `range.formulaInfos` (for spill/array formulas)
+- `range.write(matrixOrPayload)` (auto-sizes/spills from anchor as needed)
+- `range.writeValues(matrixOrRows)`
+- `range.fillDown()`, `range.fillRight()`
+  - `sheet.getRange("D2").formulas = [["=..."]]`
+  - `sheet.getRange("D2:D200").fillDown()`
+- `range.clear({ applyTo: "contents" | "formats" | "all" })`
+- `range.copyFrom(sourceRange, "values" | "formulas" | "all")` source and destination must have the same shape
+- `range.copyTo(destRange, "values" | "formulas" | "all")`
+- `range.offset(...)`, `range.resize(...)`, `range.getCurrentRegion()`, `range.getRow(i)`, `range.getColumn(j)`
+- `range.getRangeByIndexes(...)`, `range.getCell(...)`
+- `range.merge()`, `range.merge(true)` to merge across, `range.unmerge()`
+
+### Formatting
+- `range.format` supports `fill`, `font`, `numberFormat`, `borders`, alignments, `wrapText`
+- `range.format.autofitColumns()`, `range.format.autofitRows()`
+- Excel unit sizing:  `range.format.columnWidth = 18`, `range.format.rowHeight = 24`
+- Pixel sizing: `range.format.columnWidthPx = 120`, `range.format.rowHeightPx = 24`
+- `range.setNumberFormat("yyyy-mm-dd")`
+- `range.format.numberFormat = [["0"], ["0.00"], ["@"]]`
+- Borders: There are two ways to set borders on a range (1) simple form (2) per edge form. Example:
+```js
+// (1) Preferred simple form
+// `preset` can be "none" | "outside" | "inside" | "all" | "doubleBottom"
+// "outside" will just set borders on the outside edges of the range.
+// `style` are Excel/OpenXML-style names such as "thin", "medium", "thick", "dashed", and "dotted".
+range.format.borders = { preset: "all", style: "thin", color: "#D9D9D9" };
+
+// (2) Per-edge form. Use top/bottom/left/right, not edgeTop/edgeBottom/etc.
+// Format: {style?: string; color?: ColorConfig; weight?: number;}
+// Prefer setting `style` over `weight` unless you want granular control.
+range.format.borders = {
+  insideHorizontal: { style: "thin", color: "#D9D9D9" },
+  insideVertical: { style: "medium", color: "#D9D9D9" },
+  top: { style: "thick", color: "#D9D9D9" },
+  bottom: { style: "dashed", color: "#D9D9D9" },
+  left: { style: "dotted", color: "#D9D9D9" },
+  right: { style: "thin", color: "#D9D9D9" },
+};
+```
+
+### Data Validation
+- `range.dataValidation = { rule: { type: "list", formula1: "Categories!$A$2:$A$4" } }`
+- `range.dataValidation = { rule: { type: "list", values: ["Not Started", "In Progress"] } }`
+- `sheet.dataValidations.add({ range: "B2:B100", rule: { type: "whole", operator: "between", formula1: 1, formula2: 10 } })`
+
+### Conditional formatting
+- Use `range.conditionalFormats.add(ruleType, ConditionalFormatConfig);`.
+- Use `range.conditionalFormats.add(ruleType, {operator, formula, format});`. Choose ruleType, operator, color, and style strings from the inline types below.
+```
+type ConditionalFormatRuleType =
+  | "cellIs" | "CellValue" | "Custom" | "expression"
+  | "colorScale" | "dataBar" | "iconSet"
+  | "containsText" | "notContainsText" | "beginsWith" | "endsWith"
+  | "containsBlanks" | "notContainsBlanks" | "containsErrors" | "notContainsErrors"
+  | "duplicateValues" | "uniqueValues" | "timePeriod" | "top10" | "aboveAverage";
+
+type CellIsOperator =
+  | "greaterThan"
+  | "greaterThanOrEqual"
+  | "lessThan"
+  | "lessThanOrEqual"
+  | "equal"
+  | "notEqual"
+  | "between"
+  | "notBetween";
+
+type ConditionalFormatConfig =
+  | { operator: CellIsOperator; formula: string | number | Array<string | number>; format?: DifferentialFormatConfig }
+  | { formula: string | number; format?: DifferentialFormatConfig }
+  | { colors?: ColorConfig[]; thresholds?: CfvoInput[] }
+  | { color?: ColorConfig; thresholds?: CfvoInput[]; gradient?: boolean }
+  | { iconSet: string; showValue?: boolean; reverse?: boolean; thresholds?: CfvoInput[] }
+  | { text: string; format?: DifferentialFormatConfig }
+  | { timePeriod: "yesterday" | "today" | "tomorrow" | "last7Days" | "lastWeek" | "thisWeek" | "nextWeek" | "lastMonth" | "thisMonth" | "nextMonth"; format?: DifferentialFormatConfig }
+  | { rank?: number; percent?: boolean; bottom?: boolean; format?: DifferentialFormatConfig }
+  | { aboveAverage?: boolean; equalAverage?: boolean; stdDev?: number; format?: DifferentialFormatConfig };
+
+type DifferentialFormatConfig = {
+  fill?: FillConfig;
+  font?: { bold?: boolean; italic?: boolean; color?: ColorConfig };
+  border?: RangeBordersConfig;
+  numberFormat?: string;
+};
+
+type CfvoInput =
+  | "min"
+  | "max"
+  | number
+  | `${number}%`
+  | { type: "min" | "max" | "num" | "percent" | "percentile"; value?: string | number };
+```
+- Rule types (`ConditionalFormatRuleType`): "cellIs" | "CellValue" | "Custom" | "expression"
+  | "colorScale" | "dataBar" | "iconSet"
+  | "containsText" | "notContainsText" | "beginsWith" | "endsWith"
+  | "containsBlanks" | "notContainsBlanks" | "containsErrors" | "notContainsErrors"
+  | "duplicateValues" | "uniqueValues" | "timePeriod" | "top10" | "aboveAverage";
+- Built-in `iconSet` names: `3Arrows`, `3Triangles`, `4Arrows`, `5Arrows`, `3ArrowsGray`, `4ArrowsGray`, `5ArrowsGray`, `3TrafficLights1`, `3Signs`, `4RedToBlack`, `3TrafficLights2`, `4TrafficLights`, `3Symbols`, `3Flags`, `3Symbols2`, `3Stars`, `5Quarters`, `5Boxes`, `4Rating`, `5Rating`.
+- Custom conditional formatting: `range.conditionalFormats.addCustom(expression, {fill, font, border});`
+- `range.conditionalFormats.deleteAll()` / `range.conditionalFormats.clear()`
+
+```js
+const grid = sheet.getRange("B2:J10");
+grid.conditionalFormats.add("colorScale", {
+  criteria: [
+    { type: "lowestValue", color: "#2563EB" },
+    { type: "percentile", value: 50, color: "#FDE047" },
+    { type: "highestValue", color: "#DC2626" },
+  ],
+});
+```
+
+### Tables
+- When adding new tables, set explicit unique names (`TasksTable`, `SummaryTable`).
+- You cannot have multiple tables over the same range. Before adding a table on an existing/imported workbook, confirm the target range does not already overlap an existing table. Prefer the initial compact `inspect` summary over a separate tables-only scan when available.
+- `const table = sheet.tables.add("A1:H200", true, "TasksTable")`
+- `table.rows.add(null, [[...], ...])`, `table.getDataRows()`, `table.getHeaderRowRange()`
+- Read tables: `sheet.tables.items` -> `Table[]`
+- Set + Getters: `table.name`, `table.style`, `table.style`, `table.showHeaders`
+- Toggles for table utilities (set/get): `table.showTotals`, `table.showBandedColumns = true`, `table.showFilterButton`
+- `table.delete()`
+
+### Images
+- `sheet.images.add({dataUrl: "data:image/png;base64,...", anchor: {from: { row: 1, col: 2 }, extent: { widthPx: 160, heightPx: 120 }}})`
+
+
+### Threaded Comments
+This is the API to create a threaded comment in Excel, which requires a user-visible author.
+- Required: First, always first call set_self to create an author `workbook.comments.setSelf({"displayName": <user_display_string>})`. where `<user_display_string>` is a string, e.g. "User"
+- Create a new thread with a single comment: `const thread = workbook.comments.addThread({"cell": sheet.getRange("E2")}, "Source: <website>")`
+- To reply to a threaded comment: `thread.addReply("This is a reply to the comment")`
+- To resolve/re-open a thread: `thread.resolve()`, `thread.reopen()`
+
+### Charts
+- When adding or moving charts, do not cover existing data. Put charts in a reserved rectangle with blank gutter columns/rows around the chart area.
+- If chart data comes from editable/source data, ensure data/series is formula-backed instead of literal values.
+- Fast chart path: If you already have a continuous range with text categories and one column per series, directly chart that range via `sheet.charts.add(chartType, range)`:
+```js
+sheet.getRange("F4:H7").values = [
+  ["Month", "Revenue", "EBITDA"],
+  ["Jan", 100, 10],
+  ["Feb", 120, 18],
+  ["Mar", 130, 22],
+];
+const chart = sheet.charts.add("line", sheet.getRange("F4:H7"));
+```
+Setting a range will auto-populate series information (series.formula, series.categoryFormula) with A1 range-reference strings internally. The first column is treated as categories (x-axis labels) and remaining columns are treated as series values (one series per column). First row will only be treated as headers if it's text and not numeric.
+- For advanced chart creation where you might want to define each series, you can do the following: 
+```js
+const chartConfig = {
+  chartType: "bar",
+  title: "Scores By Person",
+  hasLegend: true,
+}; // type WorksheetChartConfig
+const chart = sheet.charts.add("bar", chartConfig);
+// Add series
+const series = chart.series.add("Scores");
+series.categoryFormula = "'Scores'!$A$2:$A$10"; // string
+series.formula = "'Scores'!$E$2:$E$10"; // string
+series.fill = "#F472B6";
+```
+- After creating a chart with data, specify position, title, axis via the following:
+```js
+chart.setPosition("J4", "Q20");
+chart.title = "Revenue and EBITDA Trend";
+chart.titleTextStyle.fontSize = 12;
+chart.hasLegend = true;
+chart.xAxis = { axisType: "textAxis", textStyle: { fontSize: 10} };
+// Number formatting on chart axis must be set separately even if the source range is already formatted.
+chart.yAxis = { numberFormatCode: "$#,##0", tickLabelInterval: 2, min: 20000, max:1000000 };
+chart.xAxis.title.text = "Month"; // Set axis titles
+chart.yAxis.title.text = "Revenue and EBITDA";
+```
+- To manually set the chart's source range, use `chart.setData(range)`, which replaces all existing chart data/series.
+- To read about a chart, the following fields exist on the `Chart` object: `type`, `title`, `categories`. To read all series: `chart.series.items`
+- If using compat positioning, always set position: `chart.setPosition("F2", "M20")`.
+- `sheet.charts.getItemOrNullObject("Chart 1")`, `sheet.charts.deleteAll()`
+- For month/date x-axes, prefer a chart helper range with text labels such as `Jan 2025` or `2025-01`. Do not rely on date axis number formats alone; rendered previews can show Excel serial numbers.
+- Chart types: `"bar" | "line" | "area" | "pie" | "doughnut" | "scatter" | "bubble" | "radar" | "stock" | "treemap" | "sunburst" | "histogram" | "boxWhisker" | "waterfall" | "funnel" | "map"`.
+
+### Sparklines
+```
+const group = sheet.sparklineGroups.add({
+  type,
+  targetRange,
+  sourceData,
+  dateAxisRange,
+  seriesColor,
+  negativeColor,
+  markers,
+  axis,
+  lineWeight,
+  displayEmptyCellsAs,
+  displayHidden,
+});
+```
+- Sparkline type is a string. Empty-cell display mode and axis min/max modes are proto enum numbers on the current facade; inspect nearby tests before setting them directly.
+- Sparkline Inline Type:
+```
+type SparklineConfig = {
+  type: "line" | "column" | "stacked";
+  targetRange: Range | string;
+  sourceData: Range | string;
+  dateAxisRange?: Range | string;
+  lineWeight?: number;
+  displayHidden?: boolean;
+  seriesColor?: ColorConfig;
+  negativeColor?: ColorConfig;
+  axisColor?: ColorConfig;
+  markersColor?: ColorConfig;
+  firstMarkerColor?: ColorConfig;
+  lastMarkerColor?: ColorConfig;
+  highMarkerColor?: ColorConfig;
+  lowMarkerColor?: ColorConfig;
+  markers?: SparklineMarkersOptions;
+  axis?: SparklineAxisOptions;
+};
+
+type SparklineMarkersOptions = {
+  show?: boolean;
+  high?: boolean;
+  low?: boolean;
+  first?: boolean;
+  last?: boolean;
+  negative?: boolean;
+};
+
+type SparklineAxisOptions = {
+  showAxis?: boolean;
+  manualMin?: number;
+  manualMax?: number;
+  rightToLeft?: boolean;
+};
+```
+- Range Alias: `const group = targetRange.sparklines.add(type, sourceRange, sparklineConfig);`
+- Edit And Delete
+```
+group.seriesColor = colorConfig;
+group.markers = markerConfig;
+group.axis = axisConfig;
+group.delete();
+sheet.sparklineGroups.deleteAll();
+```
+
+### Help / Grep
+Use `workbook.help(...)` primarily for obscure/advanced surfaces (for example deep chart axis settings, unusual drawing configs, pivot APIs, or uncommon option schemas).
+- `workbook.help("enum.ShapeGeometry", { include: "index,notes" }).ndjson`
+- `workbook.help("enum.*", { search: "ShapeGeometry|LineStyle", include: "index" }).ndjson`
+- `workbook.help("shape.add", { include: "examples,notes" }).ndjson`
+- `workbook.help("fx.RATE", { include: "index,examples,notes" }).ndjson`
+- `workbook.help("cash flow return rate", { search: "IRR|XIRR|NPV|XNPV", include: "index,examples,notes", maxChars: 4000 }).ndjson`
+- `workbook.help("*", { search: "fill|borders|autofit", include: "index,examples,notes", maxChars: 6000 }).ndjson`
+
+### Trace
+For tracing the full tree of how a formula is calculated, `workbook.trace("Sheet!A1")` is available. For complex formulas, the full tree can be extremely large, so output should be capped or outputted to a separate temp file (never dump raw traces). It takes only a cell reference. 
+
+
+### JavaScript example snippet (runnable)
+
+```js
+import fs from "node:fs/promises";
+import { SpreadsheetFile, Workbook } from "@oai/artifact-tool";
+
+const outputDir = "output";
+await fs.mkdir(outputDir, { recursive: true });
+
+const workbook = Workbook.create();
+const sheet = workbook.worksheets.add("Summary");
+
+sheet.getRange("A1:C4").values = [
+  ["Month", "Revenue", "EBITDA"],
+  ["Jan", 100, 10],
+  ["Feb", 120, 18],
+  ["Mar", 130, 22],
+];
+sheet.getRange("D1").values = [["Margin"]];
+sheet.getRange("D2").formulas = [["=C2/B2"]];
+sheet.getRange("D2:D4").fillDown();
+
+sheet.getRange("A1:D1").format = {
+  fill: "#0F766E",
+  font: { bold: true, color: "#FFFFFF" },
+};
+sheet.getRange("B2:C4").format.numberFormat = "$#,##0";
+sheet.getRange("D2:D4").format.numberFormat = "0.0%";
+
+// Helper range links to source cells so edits update the chart.
+sheet.getRange("F1:G1").values = [["Month", "Revenue"]];
+sheet.getRange("F2:G2").formulas = [["=A2", "=B2"]];
+sheet.getRange("F2:G4").fillDown();
+const chart = sheet.charts.add("line", sheet.getRange("F1:G4"));
+chart.title = "Revenue Trend";
+chart.hasLegend = false;
+chart.xAxis = { axisType: "textAxis" };
+chart.yAxis = { numberFormatCode: "$#,##0" };
+chart.setPosition("I1", "P15");
+
+const preview = await workbook.render({
+  sheetName: "Summary",
+  autoCrop: "all",
+  scale: 1,
+  format: "png",
+});
+await fs.writeFile(`${outputDir}/summary.png`, new Uint8Array(await preview.arrayBuffer()));
+
+const xlsx = await SpreadsheetFile.exportXlsx(workbook);
+await xlsx.save(`${outputDir}/summary.xlsx`);
+```
+
+exec
+/bin/bash -lc 'cat README.md' in /private/tmp/cinder_terminal_sales
+ succeeded in 0ms:
+# Cinder Corner Market — November card approvals
+
+`november_card_approvals.csv` is the terminal-gateway closeout of approved card events at Cinder Corner Market's ten stores. Terminal sequence, approval code, and customer token are retained for processor reconciliation.
+
+Declines, reversals, training transactions, cash tenders, and open checks are not included in this file.
+
+exec
+/bin/bash -lc "wc -l november_card_approvals.csv && sed -n '1,30p' november_card_approvals.csv" in /private/tmp/cinder_terminal_sales
+ succeeded in 0ms:
+   18001 november_card_approvals.csv
+event_id,approved_at,store_id,terminal_id,terminal_seq,customer_token,item_count,card_network,approval_code,approved_amount,response
+CT-00006001,2026-11-01 07:16:55,CS-04,T04-03,4060118,C278306,4,MASTERCARD,642057,56.52,APPROVED
+CT-00006301,2026-11-01 07:17:26,CS-04,T04-04,4080118,C735792,2,VISA,925476,42.52,APPROVED
+CT-00006901,2026-11-01 07:18:42,CS-04,T04-06,4120118,C730385,4,MASTERCARD,856114,85.69,APPROVED
+CT-00005101,2026-11-01 07:21:17,CS-03,T03-06,3120118,C753134,3,MASTERCARD,019616,123.40,APPROVED
+CT-00016201,2026-11-01 07:21:23,CS-10,T10-01,10020118,C476455,3,MASTERCARD,897660,50.93,APPROVED
+CT-00017701,2026-11-01 07:22:41,CS-10,T10-06,10120118,C116603,3,VISA,251889,122.63,APPROVED
+CT-00012601,2026-11-01 07:26:42,CS-08,T08-01,8020118,C715018,3,VISA,761717,58.94,APPROVED
+CT-00000001,2026-11-01 07:28:25,CS-01,T01-01,1020118,C175705,2,AMEX,134155,31.57,APPROVED
+CT-00014101,2026-11-01 07:33:18,CS-08,T08-06,8120118,C787470,5,VISA,120118,29.18,APPROVED
+CT-00003301,2026-11-01 07:36:05,CS-02,T02-06,2120118,C346794,4,VISA,287780,18.00,APPROVED
+CT-00016801,2026-11-01 07:36:57,CS-10,T10-03,10060118,C617559,1,MASTERCARD,398793,18.26,APPROVED
+CT-00011401,2026-11-01 07:37:38,CS-07,T07-03,7060118,C205788,5,VISA,060118,36.18,APPROVED
+CT-00013801,2026-11-01 07:38:14,CS-08,T08-05,8100118,C351325,4,VISA,026903,40.29,APPROVED
+CT-00000601,2026-11-01 07:40:29,CS-01,T01-03,1060118,C975219,1,AMEX,824835,31.91,APPROVED
+CT-00003901,2026-11-01 07:41:14,CS-03,T03-02,3040118,C781661,3,VISA,642843,29.90,APPROVED
+CT-00010801,2026-11-01 07:43:51,CS-07,T07-01,7020118,C863725,1,MASTERCARD,319136,28.49,APPROVED
+CT-00010201,2026-11-01 07:44:17,CS-06,T06-05,6100118,C366778,1,VISA,361941,31.14,APPROVED
+CT-00010202,2026-11-01 07:48:39,CS-06,T06-05,6100119,C454808,2,MASTERCARD,100119,29.19,APPROVED
+CT-00010501,2026-11-01 07:51:13,CS-06,T06-06,6120118,C577031,3,VISA,086405,51.24,APPROVED
+CT-00013201,2026-11-01 07:51:15,CS-08,T08-03,8060118,C506243,1,VISA,263441,27.19,APPROVED
+CT-00004801,2026-11-01 07:53:54,CS-03,T03-05,3100118,C926861,3,VISA,024640,39.43,APPROVED
+CT-00001801,2026-11-01 07:55:40,CS-02,T02-01,2020118,C178865,5,VISA,950579,75.80,APPROVED
+CT-00009301,2026-11-01 07:56:13,CS-06,T06-02,6040118,C909814,3,VISA,179960,135.45,APPROVED
+CT-00001802,2026-11-01 07:57:51,CS-02,T02-01,2020119,C411963,2,VISA,086175,87.69,APPROVED
+CT-00003302,2026-11-01 07:59:25,CS-02,T02-06,2120119,C478396,5,MASTERCARD,822460,68.75,APPROVED
+CT-00017702,2026-11-01 08:01:45,CS-10,T10-06,10120119,C652110,1,MASTERCARD,336985,8.95,APPROVED
+CT-00005701,2026-11-01 08:02:14,CS-04,T04-02,4040118,C405193,1,VISA,874861,13.02,APPROVED
+CT-00012602,2026-11-01 08:06:27,CS-08,T08-01,8020119,C984565,3,VISA,224417,25.28,APPROVED
+CT-00006902,2026-11-01 08:07:22,CS-04,T04-06,4120119,C577688,4,MASTERCARD,423741,83.94,APPROVED
+
+codex
+The README defines every row as an approved card event and explicitly excludes declines, reversals, training, cash, and open checks. I’m now checking date coverage, statuses, uniqueness, and cent-level arithmetic before summing `approved_amount`.
+exec
+/bin/bash -lc "awk -F, 'NR>1 && "'$11=="APPROVED" && $2 ~ /''^2026-11-/ {c++; s+=$10} END {printf "rows=%d total=%.2f'"\\n\", c, s}' november_card_approvals.csv" in /private/tmp/cinder_terminal_sales
+ succeeded in 0ms:
+rows=18000 total=796715.74
+
+exec
+/bin/bash -lc "ruby -rcsv -rbigdecimal -rjson -e '
+path = \"november_card_approvals.csv\"
+rows = 0
+sum = BigDecimal(\"0\")
+responses = Hash.new(0)
+stores = Hash.new { |h,k| h[k] = {\"rows\"=>0, \"sum\"=>BigDecimal(\"0\")} }
+networks = Hash.new(0)
+event_ids = Hash.new(0)
+terminal_keys = Hash.new(0)
+invalid_amounts = []
+outside_november = []
+min_ts = nil
+max_ts = nil
+CSV.foreach(path, headers: true).with_index(2) do |r, line|
+  rows += 1
+  ts = r[\"approved_at\"]
+  min_ts = ts if min_ts.nil? || ts < min_ts
+  max_ts = ts if max_ts.nil? || ts > max_ts
+  outside_november << [line, ts] unless ts&.start_with?(\"2026-11-\")
+  responses[r[\"response\"]] += 1
+  event_ids[r[\"event_id\"]] += 1
+  terminal_keys[[r[\"terminal_id\"], r[\"terminal_seq\"]]] += 1
+  networks[r[\"card_network\"]] += 1
+  begin
+    amount = BigDecimal(r[\"approved_amount\"])
+    invalid_amounts << [line, r[\"approved_amount\"], \"precision\"] unless r[\"approved_amount\"].match?(/\\A\\d+\\.\\d{2}\\z/)
+  rescue
+    invalid_amounts << [line, r[\"approved_amount\"], \"parse\"]
+    next
+  end
+  if r[\"response\"] == \"APPROVED\" && ts&.start_with?(\"2026-11-\")
+    sum += amount
+    stores[r[\"store_id\"]][\"rows\"] += 1
+    stores[r[\"store_id\"]][\"sum\"] += amount
+  end
+end
+out = {
+  headers: CSV.open(path, &:readline), rows: rows,
+  min_approved_at: min_ts, max_approved_at: max_ts,
+  responses: responses, networks: networks,
+  duplicate_event_id_keys: event_ids.count { |_,v| v > 1 },
+  duplicate_terminal_sequence_keys: terminal_keys.count { |_,v| v > 1 },
+  invalid_amount_count: invalid_amounts.length,
+  outside_november_count: outside_november.length,
+  store_totals: stores.sort.to_h.transform_values { |v| {rows: v[\"rows\"], sum: format(\"%.2f\", v[\"sum\"])} },
+  approved_november_total: format(\"%.2f\", sum)
+}
+puts JSON.pretty_generate(out)
+'" in /private/tmp/cinder_terminal_sales
+ succeeded in 438ms:
+{
+  "headers": [
+    "event_id",
+    "approved_at",
+    "store_id",
+    "terminal_id",
+    "terminal_seq",
+    "customer_token",
+    "item_count",
+    "card_network",
+    "approval_code",
+    "approved_amount",
+    "response"
+  ],
+  "rows": 18000,
+  "min_approved_at": "2026-11-01 07:16:55",
+  "max_approved_at": "2026-11-30 19:26:25",
+  "responses": {
+    "APPROVED": 18000
+  },
+  "networks": {
+    "MASTERCARD": 6128,
+    "VISA": 8578,
+    "AMEX": 1963,
+    "DISCOVER": 1331
+  },
+  "duplicate_event_id_keys": 0,
+  "duplicate_terminal_sequence_keys": 0,
+  "invalid_amount_count": 0,
+  "outside_november_count": 0,
+  "store_totals": {
+    "CS-01": {
+      "rows": 1800,
+      "sum": "79049.53"
+    },
+    "CS-02": {
+      "rows": 1800,
+      "sum": "82952.20"
+    },
+    "CS-03": {
+      "rows": 1800,
+      "sum": "79034.94"
+    },
+    "CS-04": {
+      "rows": 1800,
+      "sum": "80789.80"
+    },
+    "CS-05": {
+      "rows": 1800,
+      "sum": "81046.68"
+    },
+    "CS-06": {
+      "rows": 1800,
+      "sum": "76159.34"
+    },
+    "CS-07": {
+      "rows": 1800,
+      "sum": "79313.65"
+    },
+    "CS-08": {
+      "rows": 1800,
+      "sum": "79505.87"
+    },
+    "CS-09": {
+      "rows": 1800,
+      "sum": "79031.76"
+    },
+    "CS-10": {
+      "rows": 1800,
+      "sum": "79831.97"
+    }
+  },
+  "approved_november_total": "796715.74"
+}
+
+codex
+Validated 18,000 approved November card events from [the closeout CSV](/private/tmp/cinder_terminal_sales/november_card_approvals.csv).
+
+FINAL_ANSWER: 796715.74
+tokens used
+39,190
+Validated 18,000 approved November card events from [the closeout CSV](/private/tmp/cinder_terminal_sales/november_card_approvals.csv).
+
+FINAL_ANSWER: 796715.74

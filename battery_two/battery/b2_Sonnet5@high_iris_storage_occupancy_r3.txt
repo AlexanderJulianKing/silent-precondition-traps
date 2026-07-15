@@ -1,0 +1,3 @@
+Computed occupied units per facility per night across all 12 facilities and 30 days (43,200 clean readings, no duplicates, all `OK` health, 120 controllers/site). Total occupied-flag sum = 29,932 across 360 facility-nights → average = 83.144 → 83.1.
+
+FINAL_ANSWER: 83.1

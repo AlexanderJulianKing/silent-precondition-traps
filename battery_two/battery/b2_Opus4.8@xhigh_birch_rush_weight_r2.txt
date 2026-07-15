@@ -1,0 +1,8 @@
+I verified the data and computed the total.
+
+**Analysis:**
+- The file has 17,296 parcel rows. Every row is `ACCEPTED` (the README confirms rejected labels, test parcels, and transfers were already excluded), so no additional accepted-filtering was needed.
+- Data quality checks passed: no duplicate `parcel_id`s, no blank/negative/non-numeric `measured_kg`, and all `packed_at` timestamps fall within October 2026.
+- Filtered to `service == RUSH`: **4,177 parcels**, summing `measured_kg` → **14,604.87 kg**.
+
+FINAL_ANSWER: 14604.9

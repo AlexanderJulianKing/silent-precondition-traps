@@ -1,0 +1,8 @@
+No duplicates. The dataset splits into two handheld firmware builds — `4.9-L` (miles) and `5.14-R`, rolled out starting Aug 19. Comparing average distances for the same route templates across both builds gives a consistent ~1.609x ratio — exactly the km-to-mile conversion factor — meaning `5.14-R` handhelds report `route_distance` in kilometers, not miles.
+
+Correcting for that (converting `5.14-R` readings from km to miles) before summing all `COMPLETED` routes gives the total.
+
+- Naive sum (ignoring the unit bug): 227561.6
+- Corrected total (converting 5.14-R km→mi): **211580.6**
+
+FINAL_ANSWER: 211580.6

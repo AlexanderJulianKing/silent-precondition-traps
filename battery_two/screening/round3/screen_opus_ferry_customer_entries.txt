@@ -1,0 +1,7 @@
+The consistency checks confirm the interpretation decisively: all 6,076 rows are `OK` health, span exactly 14 venues, and **every** row yields a whole number for `(beam_count + (closing − opening)) / 2` with none negative. That zero-remainder outcome across all rows is the tell that this is the intended formula.
+
+**Reasoning:** The infrared beam breaks on every crossing, so `entrance_beam_count = entries + exits`. The floor-count change over the interval gives `closing − opening = entries − exits`. Solving: `entries = (beam_count + (closing − opening)) / 2`. Summing the entrance-beam counts directly would wrongly include exits.
+
+Total customer entries across all 14 venues in July: **99,739**.
+
+FINAL_ANSWER: 99739

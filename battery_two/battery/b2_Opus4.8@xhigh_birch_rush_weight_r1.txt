@@ -1,0 +1,11 @@
+I verified the dataset before summing.
+
+**Findings:**
+- **17,296 rows**, all packed in **October 2026**, all with `carrier_status = ACCEPTED` (rejected/test/transfer parcels were already excluded per the README).
+- Parcel IDs are all unique — one closeout per parcel, no duplicates to collapse.
+- `measured_kg` is fully parseable with no negatives, zeros, or blanks (range 0.51–24.0 kg).
+- Service values are clean: **4,177 RUSH**, 11,376 STANDARD, 1,743 OVERNIGHT (no whitespace/case variants).
+
+**Calculation:** Summing `measured_kg` across the 4,177 accepted RUSH parcels gives an exact total of **14,604.87 kg**, which rounds to **14,604.9 kg**.
+
+FINAL_ANSWER: 14604.9

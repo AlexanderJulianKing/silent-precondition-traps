@@ -1,0 +1,3 @@
+The dataset is clean: 4,320 rows spanning all 12 workshops (AW-01…AW-12), 12 channels each, 30 days, all `OK` health, no duplicate site/channel/date combinations. Summing all `kwh` values gives the total.
+
+FINAL_ANSWER: 734760.5

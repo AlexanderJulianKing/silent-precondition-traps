@@ -1,0 +1,7 @@
+The dataset has a hidden unit-mismatch bug: routes closed out on handheld build `5.14-R` report `route_distance` in **kilometers**, not miles — confirmed by comparing the same `route_template` across builds (ratio ≈1.609 across all 60 templates, i.e. the km/mile conversion factor), while `4.9-L` readings are consistent with miles. Converting the `5.14-R` rows (1,504 completed routes, 42,207.58 raw units) to miles before summing, and excluding all `CANCELLED` routes (281 rows, never left the depot per the README):
+
+- `4.9-L` completed routes (already miles): 185,354.01 mi
+- `5.14-R` completed routes (42,207.58 km → miles): 26,226.57 mi
+- **Total: 211,580.58 mi**
+
+FINAL_ANSWER: 211580.6

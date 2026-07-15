@@ -1,0 +1,3 @@
+The folder at `/private/tmp/cedar_units_shipped` contains Cedar Bend Beverage Co.'s Q2 2026 shipment lines, item catalog, supplier item notices, and README. Calculate the total number of individual beverage units shipped during Q2. Report a whole number of units.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

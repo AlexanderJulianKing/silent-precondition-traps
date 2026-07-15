@@ -1,0 +1,3 @@
+16,620 admitted badge scans in December — all rows are `ADMITTED`, all dated within December 2026, and there are no duplicate `admission_id` or duplicate badge/class-instance pairs (no double-counted scans), so each row represents one distinct customer class attendance.
+
+FINAL_ANSWER: 16620

@@ -1,0 +1,11 @@
+## Summary
+
+**Total miles driven on completed routes in August 2026: 211,580.6**
+
+Key findings from the data:
+- **12,200 total routes**, of which **11,919 are COMPLETED** (281 CANCELLED routes never left the depot, so they're excluded).
+- The data mixes two handheld builds: **4.9-L** (10,665 routes) and **5.14-R** (1,535 routes).
+- Comparing `route_distance` for identical `route_template`s across the two builds, the **5.14-R build consistently reports ~1.61× larger values** — the kilometer-to-mile factor (1.609344). The 5.14-R firmware records distance in **kilometers**, not miles. (This is what the README's "handheld build is retained for support triage" hint points to.)
+- Correcting the 5.14-R rows to miles yields the total. (Without correction, the naïve sum would be an inflated 227,561.6.)
+
+FINAL_ANSWER: 211580.6

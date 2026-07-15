@@ -1,0 +1,3 @@
+Data checked clean: 13,003 unique sessions, no missing fields, duplicates, negative durations, or out-of-range dates. Average session length across all rows (session_end − session_start) is 82.2 minutes.
+
+FINAL_ANSWER: 82.2

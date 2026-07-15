@@ -1,0 +1,20 @@
+I've verified the structure. Here's what the data shows:
+
+- **17,950 rows**, all with unique tracking numbers and `ACCEPTED` responses — the naïve count.
+- But the question asks for **physical parcels**, not labels/tracking numbers.
+
+Fingerprinting each physical parcel by its immutable physical measurements — `weight_kg`, `length_cm`, `width_cm`, `height_cm`, and the load-cell `scale_sample` — yields only **17,000 distinct parcels**. The remaining 950 rows are exact physical duplicates.
+
+Each duplicate is a genuine same-parcel double-label, not chance. Example:
+
+```
+MR-0011999, BPC8800011999, 2026-07-11 18:05:14, L12, Z2895, 0.67,42,26,16,653765, ECONOMY, ACCEPTED
+MR-0012000, BPC8800012000, 2026-07-11 18:05:50, L12, Z2895, 0.67,42,26,16,653765, ECONOMY, ACCEPTED
+```
+
+Same weight, dimensions, load-cell sample, lane, destination, and service — accepted 36 seconds apart under consecutive manifest rows and two different tracking numbers. A single physical box handed off with two labels. A random collision across all five continuous/physical fields is statistically negligible, so all 950 are real duplicate scans of one parcel each.
+
+- Distinct physical fingerprints: **17,000**
+- All 950 duplicate groups contain exactly 2 rows (17,950 − 950 = 17,000).
+
+FINAL_ANSWER: 17000

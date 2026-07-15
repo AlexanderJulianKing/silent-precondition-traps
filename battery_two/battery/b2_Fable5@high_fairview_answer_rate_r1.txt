@@ -1,0 +1,10 @@
+The data is clean — I checked for duplicate call IDs and sequence numbers, non-June dates, malformed rows, and inconsistent outcome/agent fields, and found none. The gaps in `switch_seq` (~9,500 missing values across the range) are expected: the README notes the switch also assigns sequence numbers to outbound callbacks and internal extension calls, which are outside this inbound export, so those gaps don't represent missing inbound calls.
+
+June totals from the export:
+- Total inbound calls: 20,223
+- Answered: 16,709
+- Caller abandoned: 3,514
+
+Answer rate = 16,709 / 20,223 × 100 = 82.6238…% → **82.62%**
+
+FINAL_ANSWER: 82.62

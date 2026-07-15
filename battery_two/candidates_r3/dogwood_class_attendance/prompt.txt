@@ -1,0 +1,3 @@
+The folder at `/private/tmp/dogwood_class_attendance` contains Dogwood Movement's December 2026 class-admission export and README. Calculate the total number of customer class attendances during December. Report a whole number.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

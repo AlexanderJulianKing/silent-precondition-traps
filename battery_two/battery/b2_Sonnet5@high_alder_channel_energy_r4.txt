@@ -1,0 +1,3 @@
+12 workshops (AW-01 through AW-12), all 30 days of September, 4,320 clean OK-health readings, no duplicates. Summing the `kwh` column gives 734,760.47 kWh.
+
+FINAL_ANSWER: 734760.5

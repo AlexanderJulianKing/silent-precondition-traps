@@ -1,0 +1,11 @@
+## Summary
+
+**Data:** `august_route_closeout.csv` has 12,200 route closeout rows for August 2026.
+
+**Cleaning steps:**
+1. **Excluded cancelled routes** — 281 `CANCELLED` rows (README: "Cancelled routes never left the depot"), keeping 11,919 `COMPLETED` routes.
+2. **Fixed a unit bug flagged by `handheld_build`** — comparing the same reused `route_template` across the two firmware builds, the `5.14-R` handheld consistently reported distances **1.609×** larger than `4.9-L` (the exact km→mile factor). That build logs `route_distance` in **kilometers**, not miles. I divided those 1,535 rows by 1.609344 to convert to miles; the 4.9-L rows were already in miles.
+
+Without the unit fix the total would be 227,561.6; correcting the kilometer rows yields **211,580.6 miles**.
+
+FINAL_ANSWER: 211580.6

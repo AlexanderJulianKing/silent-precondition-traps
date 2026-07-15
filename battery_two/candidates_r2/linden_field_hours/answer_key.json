@@ -1,0 +1,7 @@
+{
+  "correct_answer": 13049.3,
+  "mechanism": "Nested mobile task timers overlap an enclosing visit timer for the same technician.",
+  "planted_answer": 14442.8,
+  "task": "linden_field_hours",
+  "tolerance": 0.05
+}

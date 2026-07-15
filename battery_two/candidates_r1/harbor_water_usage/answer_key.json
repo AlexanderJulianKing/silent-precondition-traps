@@ -1,0 +1,7 @@
+{
+  "correct_answer": 60801,
+  "mechanism": "Machine-level cumulative ranges cross physical register exchanges with new zero origins.",
+  "planted_answer": 52322,
+  "task": "harbor_water_usage",
+  "tolerance": 0.5
+}

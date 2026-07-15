@@ -1,0 +1,7 @@
+{
+  "correct_answer": 650229,
+  "mechanism": "A subset of cooling-cart controllers records a stable empty-cart baseline inside released batch weights.",
+  "planted_answer": 663677,
+  "task": "cobalt_roast_output",
+  "tolerance": 0.5
+}

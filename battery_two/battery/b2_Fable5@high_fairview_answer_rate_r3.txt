@@ -1,0 +1,5 @@
+The data is clean — all 20,223 rows are June 2026 inbound queue calls with no duplicates or inconsistencies. Of those, 16,709 were `ANSWERED` and 3,514 were `CALLER_ABANDONED`.
+
+Answer rate = 16,709 / 20,223 = 82.6238…% → **82.62%**
+
+FINAL_ANSWER: 82.62

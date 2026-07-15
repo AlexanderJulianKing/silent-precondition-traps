@@ -1,0 +1,7 @@
+Data is clean — no duplicate call IDs, only two outcome values (ANSWERED / CALLER_ABANDONED), and agent_extension is populated exactly when a call was answered.
+
+- Total inbound calls: 20,223
+- Answered: 16,709
+- Answer rate: 16,709 / 20,223 = 82.62%
+
+FINAL_ANSWER: 82.62%

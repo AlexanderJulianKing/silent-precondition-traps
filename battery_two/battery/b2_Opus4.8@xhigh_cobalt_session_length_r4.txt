@@ -1,0 +1,14 @@
+## Summary
+
+I computed the average customer session length as the mean of `session_end − session_start` across all rows.
+
+**Findings from the data (13,003 sessions):**
+- No malformed rows, no blank fields, no duplicate session IDs, and every session is within June 2026.
+- Zero sessions where end precedes start; durations range from 0.1 to 412.3 minutes (right-skewed, as expected).
+- All three clients (`web`, `ios`, `android`) have near-identical distributions (means ~81–83 min), so all are pooled into one average — consistent with the README noting they share the same session schema.
+
+The README's notes each defuse a common gotcha, confirming a straight subtraction is correct: timestamps are UTC (difference is timezone-agnostic), `page_events` keep-alives don't affect the end time, staff accounts are already removed, and IDs are unique (no dedup needed).
+
+**Average session length = 82.20073 min → 82.2 minutes.**
+
+FINAL_ANSWER: 82.2

@@ -1,0 +1,7 @@
+The data is clean and unambiguous: 4,320 daily reading rows = 144 site-channel combinations × 30 days of September, every one `OK` health, no duplicates, no negatives, values in a normal daily-consumption range (50–379 kWh, not cumulative meter registers). The README confirms every channel in this export is a production-energy channel (office/lighting/HVAC excluded), so the total is simply the sum of all `kwh` values.
+
+- Data rows: 4,320
+- Site+channel combos: 144 (each with exactly 30 daily closes)
+- Sum of all daily kWh: **734,760.5**
+
+FINAL_ANSWER: 734760.5

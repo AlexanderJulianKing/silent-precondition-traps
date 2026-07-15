@@ -1,0 +1,9 @@
+The data has no explicit "optional" flag, but the tip pattern makes the distinction unambiguous: every check with party size ≥ 8 has a tip of **exactly 20.00%** with zero variance — an automatic gratuity/service charge, not customer-selected. Checks with party size 1–7 show a spread of tip rates including outright zeros, i.e. tipping was optional.
+
+Computing the customer-selected tip as a share of pretax food-and-beverage sales across the 10,843 optional-tip checks:
+
+- Tip total: $220,360.76
+- Pretax F&B sales total: $1,441,821.07
+- 220360.76 / 1441821.07 = 15.28%
+
+FINAL_ANSWER: 15.28

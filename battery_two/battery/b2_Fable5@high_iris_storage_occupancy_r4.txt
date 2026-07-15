@@ -1,0 +1,5 @@
+The average is **83.1 occupied rental units per facility** during June.
+
+How I got there: the export is a complete grid — 12 facilities, each with 120 locker-door controllers, reporting one occupied/unoccupied flag per night for all 30 nights of June (43,200 rows, no duplicates or missing keys, all devices healthy, so no cleaning was needed). Summing the occupied flags gives 29,932 occupied unit-nights; dividing by 12 facilities × 30 nights gives an average nightly occupancy of 83.14 units per facility. Per-facility averages range from 80.4 (IS-03) to 85.5 (IS-05). The controller-bank column is just a maintenance grouping and doesn't affect the count, and per the README no facility-use units are in the export, so every row is a rental unit.
+
+FINAL_ANSWER: 83.1

@@ -1,0 +1,10 @@
+## Findings
+
+The export has a data-quality issue: **2,503 of 13,003 rows (~19%) have `session_start` set to exactly `00:00:00`**, versus an expected ~9 rows if minute-of-day were genuinely uniform (13,003 sessions ÷ 1,440 minutes/day). These midnight-start rows are also *exactly* the rows with all the extreme durations — every session over 160 minutes has a midnight start, and their durations spread almost uniformly from 160 to 412 minutes, unlike the natural decay curve of the other 10,500 sessions. This pattern is consistent for every day in June, meaning `session_start` was corrupted/defaulted to midnight for these records, making their computed duration meaningless. Notably, `page_events` for these rows still tracks proportionally with the (inflated) duration, so the corruption is isolated to the start timestamp, not detectable via other fields alone.
+
+I excluded these 2,503 corrupted rows and averaged the remaining 10,500 valid sessions:
+
+- Valid sessions: 10,500
+- Average duration: 50.552... minutes
+
+FINAL_ANSWER: 50.6

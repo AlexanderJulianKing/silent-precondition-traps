@@ -1,0 +1,11 @@
+All data is clean and consistent with the README:
+
+- **16,620** data rows, each a unique `admission_id`
+- All `gate_result = ADMITTED` (denied scans, open-gym, cancelled classes, and door tests already excluded per the README)
+- All scans dated within **December 2026**
+- No duplicate `(badge_token, class_instance)` pairs — each row is one customer admitted to one class instance
+- No outliers suggesting instructor/staff badges (max badge appears 17×/month; max class size 19)
+
+Each admitted scan represents one customer attending one class, so the total is simply the row count.
+
+FINAL_ANSWER: 16620

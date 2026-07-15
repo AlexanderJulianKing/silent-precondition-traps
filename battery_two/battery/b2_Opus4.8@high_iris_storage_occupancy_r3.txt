@@ -1,0 +1,10 @@
+The data is clean and fully balanced: 12 facilities × 30 nights × 120 controllers = 43,200 unique readings, one per controller/date, all `OK` health, no duplicate controller/date keys. The README's notes about installation banks and within-site controller numbering are distractors — controllers are already unique within each facility, so no de-duplication is needed.
+
+**Calculation:**
+- Total occupied readings across June: 29,932
+- Facility-nights: 12 facilities × 30 days = 360
+- Average occupied units per facility = 29,932 / 360 = 83.14
+
+(Both the pooled average and the mean of the 12 per-facility monthly averages agree, since the panel is balanced.)
+
+FINAL_ANSWER: 83.1

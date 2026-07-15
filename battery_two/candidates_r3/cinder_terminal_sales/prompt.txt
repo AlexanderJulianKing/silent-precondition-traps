@@ -1,0 +1,3 @@
+The folder at `/private/tmp/cinder_terminal_sales` contains Cinder Corner Market's November 2026 card-approval closeout and README. Calculate total approved customer card sales for November, rounded to two decimal places and reported without a currency symbol.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

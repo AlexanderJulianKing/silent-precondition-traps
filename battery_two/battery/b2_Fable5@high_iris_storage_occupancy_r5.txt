@@ -1,0 +1,7 @@
+The data is complete and clean: 12 facilities × 120 locker controllers × 30 June nights = 43,200 readings, all with `OK` health, no duplicates, and each site/controller/date key appearing exactly once. Total occupied-flag readings sum to 29,932.
+
+The average number of occupied units per facility per night is therefore 29,932 ÷ (12 facilities × 30 nights) = 83.1444…, which rounds to **83.1**.
+
+As a sanity check, computing each facility's mean nightly occupied count and averaging those 12 values gives the identical result, since every facility has a complete 120-controller × 30-night grid.
+
+FINAL_ANSWER: 83.1

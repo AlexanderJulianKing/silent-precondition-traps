@@ -1,0 +1,11 @@
+Confirmed. The math locks it in: there are exactly 1,488 class instances (192 series × 4 meetings + 144 series × 5 meetings), and these 146 badges account for exactly 1,488 scans — one per class instance, never a partial appearance anywhere else, and first through the gate 71% of the time. These are the instructors, not customers.
+
+## Result
+
+The December export contains 16,620 admitted scans, all in December 2026, all `ADMITTED`, with no duplicate admission IDs and no badge scanned twice into the same class. However, embedded in the data is one staff scan per class meeting: 146 badges that each attend 100% of every meeting of their series (exactly one such badge per series across all 336 series), never attend any other class partially, and typically scan in first. Those are instructors badging in to teach, not customer attendances.
+
+- Total admitted scans: 16,620
+- Instructor scans (one per each of the 1,488 class meetings): 1,488
+- **Customer class attendances: 16,620 − 1,488 = 15,132**
+
+FINAL_ANSWER: 15132

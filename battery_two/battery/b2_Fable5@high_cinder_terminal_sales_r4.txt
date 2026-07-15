@@ -1,0 +1,3 @@
+Total approved customer card sales for November come to 796,715.74. The file checks out cleanly against the README's description: exactly ten stores (CS-01 through CS-10), all 18,000 events dated in November 2026, every row marked APPROVED, no duplicate event IDs, terminal sequences, or approval tuples, and no non-positive amounts — so the answer is simply the exact-decimal sum of the `approved_amount` column.
+
+FINAL_ANSWER: 796715.74

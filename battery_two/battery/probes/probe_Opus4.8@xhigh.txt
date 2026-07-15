@@ -1,0 +1,26 @@
+I'll enumerate what's actually in my context right now, quoting the first line of each distinct block.
+
+**System prompt (core instructions)**
+1. "You are a Claude agent, built on Anthropic's Claude Agent SDK."
+2. "IMPORTANT: Assist with authorized security testing, defensive security, CTF challenges, and educational contexts."
+3. (paragraph) "For actions that are hard to reverse or outward-facing, confirm first unless durably authorized or explicitly told to proceed without asking; approval in one context doesn't extend to the next."
+
+**Sections within the system prompt**
+4. `# Harness` → "Text you output outside of tool use is displayed to the user as Github-flavored markdown in a terminal."
+5. `# Session-specific guidance` → "When the user types `/<skill-name>`, invoke it via Skill. Only use skills listed in the user-invocable skills section — don't guess."
+6. `# Memory` → "You have a persistent file-based memory at `/Users/alexanderking/.claude/projects/-private-tmp-probe-empty/memory/`."
+7. `# Environment` → "You have been invoked in the following environment:"
+8. `# Scratchpad Directory` → "IMPORTANT: Always use this scratchpad directory for temporary files instead of `/tmp` or other system temp directories:"
+9. `# Context management` → "When the conversation grows long, some or all of the current context is summarized; the summary, along with any remaining unsummarized context, is provided in the next context window so work can continue"
+
+**System reminder (this message)**
+10. "As you answer the user's questions, you can use the following context:" (contains userEmail and currentDate 2026-07-14)
+
+**System message (tools/agents/skills)**
+11. "The following deferred tools are now available via ToolSearch. Their schemas are NOT loaded — calling them directly will fail with InputValidationError." (also lists available agent types and the Skill catalog)
+
+**The user message** you're reading now (the enumeration request itself).
+
+Notes for full honesty:
+- No `MEMORY.md` content, no saved memories, no `CLAUDE.md`, and no other context/config documents are loaded into my context. The memory *directory* is referenced in my system prompt, but no memory files' contents are visible.
+- I have not read any files to produce this — it's purely from what's already in-context.

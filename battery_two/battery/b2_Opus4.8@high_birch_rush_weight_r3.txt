@@ -1,0 +1,3 @@
+All 17,296 rows are ACCEPTED, unique parcels, all packed in October. Summing `measured_kg` for the 4,177 RUSH-service parcels gives 14,604.87 kg.
+
+FINAL_ANSWER: 14604.9

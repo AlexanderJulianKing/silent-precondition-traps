@@ -1,0 +1,16 @@
+## Summary
+
+**Total miles driven on completed August routes: 211,580.6**
+
+How I got there:
+
+1. **Filtered to completed routes.** The export has 12,200 rows: 11,919 `COMPLETED` and 281 `CANCELLED`. Per the README, "Cancelled routes never left the depot," so only the 11,919 completed routes count.
+
+2. **Caught a unit bug across handheld builds.** The data comes from two handheld builds: `4.9-L` (10,415 completed rows) and `5.14-R` (1,504 rows). The README flags that the build is "retained for support triage" — a hint. Comparing the *same route templates* across the two builds (60 templates appear in both), `5.14-R` consistently reports distances **1.609× larger** — the exact kilometers-per-mile factor (1 mi = 1.609344 km). So `5.14-R` logs `route_distance` in **kilometers**, not miles.
+
+3. **Corrected and summed.** Left `4.9-L` distances as miles; divided `5.14-R` distances by 1.609344 to convert km→miles, then summed.
+
+- Uncorrected (treating all as miles): 227,561.6 — overcounts by ~16,000 mi.
+- Corrected: **211,580.6 mi**.
+
+FINAL_ANSWER: 211580.6

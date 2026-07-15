@@ -1,0 +1,10 @@
+I analyzed the export and computed session length as `session_end − session_start` for every row.
+
+**Findings:**
+- **13,003 sessions**, all three clients (web, ios, android) share the same schema — so despite the `web` in the filename, the README's note *"the three client values use the same session schema"* means all are included. Per-client means are consistent (81.2 / 81.9 / 83.5 min), so no client group is an anomaly to drop.
+- **No data-quality exclusions apply:** session IDs are unique (no dedup needed — README confirms they're just export identifiers), no duplicate content rows, zero negative or zero-length durations, and staff accounts were already removed. The README's cleaning notes serve to prevent *wrong* filtering rather than prescribe any.
+- Durations range 0.1 → 412.3 min; mean = **82.2007 min**.
+
+Average customer session length: **82.2 minutes**.
+
+FINAL_ANSWER: 82.2

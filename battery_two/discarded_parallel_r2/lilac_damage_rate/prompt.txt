@@ -1,0 +1,3 @@
+The folder at `/private/tmp/lilac_damage_rate` contains Lilac Lane Housewares' Q2 2026 completed-returns export and README. Calculate the percentage of completed returns that were due to product damage. Round the percentage to one decimal place.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

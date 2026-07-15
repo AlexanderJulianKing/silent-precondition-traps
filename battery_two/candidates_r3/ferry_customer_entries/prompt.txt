@@ -1,0 +1,3 @@
+The folder at `/private/tmp/ferry_customer_entries` contains Ferry Climbing's July 2026 entrance-controller archive and README. Calculate the total number of customer entries across all venues during July. Report a whole number.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

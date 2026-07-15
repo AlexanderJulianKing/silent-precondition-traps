@@ -1,0 +1,3 @@
+Chainwide fulfilled orders per paid labor hour for June 2026 = 34,832 fulfilled orders ÷ 14,248.75 paid hours = **2.44**.
+
+FINAL_ANSWER: 2.44

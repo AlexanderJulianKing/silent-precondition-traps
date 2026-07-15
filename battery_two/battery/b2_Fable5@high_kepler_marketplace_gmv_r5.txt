@@ -1,0 +1,5 @@
+October paid-order GMV comes to **1,091,183.55 USD**.
+
+Method: I summed `order_amount` for the 8,928 orders with status `PAID` (excluding the 272 `CANCELLED` ones), converting each non-USD order to USD using the treasury reference rate for that order's date and currency. Every order date and currency (USD, EUR, GBP, CAD) had a matching daily rate, there were no duplicate order IDs, and the unrounded total was 1,091,183.55467, which rounds to two decimals as below.
+
+FINAL_ANSWER: 1091183.55

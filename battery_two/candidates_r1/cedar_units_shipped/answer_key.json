@@ -1,0 +1,7 @@
+{
+  "correct_answer": 1431890,
+  "mechanism": "A quarter-end catalog's current case size is applied to shipments made before midquarter carton changes.",
+  "planted_answer": 1395530,
+  "task": "cedar_units_shipped",
+  "tolerance": 0.5
+}

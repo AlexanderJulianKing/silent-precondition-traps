@@ -1,0 +1,15 @@
+## Analysis
+
+I examined the export against the README's guarantees:
+
+- **17,950 data rows**, each with a **unique tracking number** — no duplicates.
+- **All 17,950** rows have `carrier_response = ACCEPTED`.
+- All timestamps fall within **July 2026** (2026-07-01 → 2026-07-31).
+- **Zero duplicate physical fingerprints** (destination + weight + all dimensions + scale sample) — no parcel is double-listed under two tracking numbers.
+- The README confirms rejected labels, test scans, and warehouse transfers are already excluded.
+
+Distractors I ruled out: `weight_kg`, dimensions, and `scale_sample` are diagnostics. The 1,027 repeated `scale_sample` values are coincidental load-cell reading collisions across parcels with otherwise-different dimensions/weights — not duplicate parcels (the full physical fingerprint has zero collisions).
+
+Each accepted row is one distinct physical parcel handed to the carrier.
+
+FINAL_ANSWER: 17950

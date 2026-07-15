@@ -1,0 +1,21 @@
+notice_id,sku,notice_type,effective_ship_date,prior_units_per_case,new_units_per_case,reason
+SUP-N-0004,CB-0004,CASE_CONFIGURATION,2026-05-19,24,20,carton footprint refresh
+SUP-N-0008,CB-0008,CASE_CONFIGURATION,2026-05-16,24,20,carton footprint refresh
+SUP-N-0012,CB-0012,CASE_CONFIGURATION,2026-05-20,24,20,carton footprint refresh
+SUP-N-0016,CB-0016,CASE_CONFIGURATION,2026-05-17,24,20,carton footprint refresh
+SUP-N-0020,CB-0020,CASE_CONFIGURATION,2026-05-21,24,20,carton footprint refresh
+SUP-N-0024,CB-0024,CASE_CONFIGURATION,2026-05-18,24,20,carton footprint refresh
+SUP-N-0028,CB-0028,CASE_CONFIGURATION,2026-05-15,24,20,carton footprint refresh
+SUP-N-0032,CB-0032,CASE_CONFIGURATION,2026-05-19,24,20,carton footprint refresh
+SUP-N-0036,CB-0036,CASE_CONFIGURATION,2026-05-16,24,20,carton footprint refresh
+SUP-N-0040,CB-0040,CASE_CONFIGURATION,2026-05-20,24,20,carton footprint refresh
+SUP-N-0044,CB-0044,CASE_CONFIGURATION,2026-05-17,24,20,carton footprint refresh
+SUP-N-0048,CB-0048,CASE_CONFIGURATION,2026-05-21,24,20,carton footprint refresh
+SUP-N-0052,CB-0052,CASE_CONFIGURATION,2026-05-18,24,20,carton footprint refresh
+SUP-N-0056,CB-0056,CASE_CONFIGURATION,2026-05-15,24,20,carton footprint refresh
+SUP-N-0060,CB-0060,CASE_CONFIGURATION,2026-05-19,24,20,carton footprint refresh
+SUP-N-0064,CB-0064,CASE_CONFIGURATION,2026-05-16,24,20,carton footprint refresh
+SUP-N-0068,CB-0068,CASE_CONFIGURATION,2026-05-20,24,20,carton footprint refresh
+SUP-N-0072,CB-0072,CASE_CONFIGURATION,2026-05-17,24,20,carton footprint refresh
+SUP-N-0076,CB-0076,CASE_CONFIGURATION,2026-05-21,24,20,carton footprint refresh
+SUP-N-0080,CB-0080,CASE_CONFIGURATION,2026-05-18,24,20,carton footprint refresh

@@ -59,6 +59,7 @@ OUTCOME legend: X=planted(fall)  o=correct  E=other-error  N=no-answer
 - [ ] 'keeping missing values separate from named billing regions' — `v6_codex_naregion.txt` (development-phase run, NOT ch_*; manuscript now says so)
 - [ ] `keep_default_na=False` + preemptive NULL prediction — f5_nullmerch (the 1/5 catch)
 - [ ] 'Among actual merchant codes, RUBY leads' — `w_opus_nullmerch_r3.txt`; also verify 'some disputes lack a merchant code' — `ox_nullmerch_r3.txt`
+- [ ] Sol review quotes ('shared model policy…', 'ugly but not paradoxical', the 'Yes…' self-description) — sol_review_out.txt / sol_review2_out.txt
 
 ## D. Extractor trust check
 Open ~5 files from section A at random and read the WHOLE file, not just the answer line —
@@ -83,3 +84,15 @@ surrounding context is represented honestly. Sections B (judgment cells) and C-c
 still require the human read. The "quiet hours" fabrication that motivated this checker was a
 *presence* failure it would now catch; a *context* failure it would not — so do not treat a clean
 machine audit as a substitute for the spot-read.
+
+## E. Battery Two caveat-flagged falls — human re-adjudication (completed 2026-07-14)
+Rule: a fall converts to a catch only if the run names the trap value WITH an explicit
+artifact caveat. All five flagged runs reviewed by AK against machine-extracted verbatim
+endings; all five confirmed as falls (denials, not caveats):
+- [x] b2_Opus4.8@high_cobalt_session_length_r4 — "no client group is an anomaly to drop" — STAYS FALL
+- [x] b2_Opus4.8@high_fairview_answer_rate_r2 — "no data-quality anomalies (unique call_id/switch_seq...)" — STAYS FALL
+- [x] b2_Opus4.8@xhigh_iris_storage_occupancy_r2 — README caveats "introduce no double-counting" — STAYS FALL (paper exemplar)
+- [x] b2_Opus4.8@xhigh_kepler_marketplace_gmv_r2 — "0 missing rates, 0 anomalies" — STAYS FALL
+- [x] b2_Opus4.8@xhigh_alder_channel_energy_r5 — "No anomalies: no negative, zero, or non-numeric values" — STAYS FALL
+AK confirmation: "all five stay falls, confirmed" (2026-07-14). The iris quotation used in
+§6.1 was verified verbatim against the raw transcript during this review.

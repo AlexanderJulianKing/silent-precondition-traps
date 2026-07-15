@@ -1,0 +1,7 @@
+{
+  "correct_answer": 12.8,
+  "mechanism": "The ready-made response metric silently saturates at the 900-second SLA boundary.",
+  "planted_answer": 10.3,
+  "task": "swift_response_time",
+  "tolerance": 0.05
+}

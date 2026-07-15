@@ -1,0 +1,5 @@
+The data is clean: 12 workshops × 12 channels each, every channel reporting exactly 30 daily closes for September (144 site-channel pairs × 30 days = 4,320 rows, matching the file), all with `OK` health, no duplicates. Summing every `kwh` value gives the total production-energy usage.
+
+- Total: 734760.47 kWh → rounded to 734760.5 kWh
+
+FINAL_ANSWER: 734760.5

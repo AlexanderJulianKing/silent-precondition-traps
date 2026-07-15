@@ -1,0 +1,165 @@
+Reading additional input from stdin...
+OpenAI Codex v0.144.0
+--------
+workdir: /private/tmp/cobalt_session_length
+model: gpt-5.5
+provider: openai
+approval: never
+sandbox: workspace-write [workdir, /tmp, $TMPDIR]
+reasoning effort: high
+reasoning summaries: none
+session id: 019f6207-7d09-7743-9f21-d32df095e9ca
+--------
+user
+The folder at `/private/tmp/cobalt_session_length` contains Cobalt Courseware's June 2026 product-session export and README. Calculate the average customer session length in minutes, rounded to one decimal place.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.
+codex
+I’ll inspect the export structure and README first, then compute the average directly from the source data so the rounding matches the documented definitions.
+exec
+/bin/bash -lc 'find . -maxdepth 3 -type f | sort' in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+./README.md
+./june_web_sessions.csv
+
+exec
+/bin/bash -lc 'pwd && ls -la' in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+/private/tmp/cobalt_session_length
+total 1976
+drwxr-xr-x@    4 alexanderking  wheel      128 Jul 14 12:08 .
+drwxrwxrwt  1490 root           wheel    47680 Jul 14 12:08 ..
+-rw-r--r--@    1 alexanderking  wheel      373 Jul 14 12:08 README.md
+-rw-r--r--@    1 alexanderking  wheel  1003786 Jul 14 12:08 june_web_sessions.csv
+
+codex
+I found a README and one CSV export. Next I’m reading the schema notes and a sample of the rows before calculating, because “customer session length” may have an inclusion rule rather than just a raw column average.
+exec
+/bin/bash -lc "sed -n '1,220p' README.md" in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+# Cobalt Courseware — June engagement export
+
+`june_web_sessions.csv` contains the June session rows emitted by the product telemetry pipeline. Timestamps are UTC, `page_events` excludes background keep-alives, and internal staff accounts have already been removed.
+
+The three client values use the same session schema. Session identifiers are unique export identifiers.
+
+exec
+/bin/bash -lc 'head -5 june_web_sessions.csv' in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+session_id,account_id,device_hash,session_start,session_end,page_events,client
+CS-0005245,CA-01492,DV-04700,2026-06-04 12:01:00,2026-06-04 12:49:06,16,android
+CS-0008476,CA-00256,DV-02796,2026-06-06 07:24:00,2026-06-06 08:05:09,22,ios
+CS-0012668,CA-03740,DV-07272,2026-06-17 19:02:00,2026-06-17 20:45:12,44,ios
+CS-0011284,CA-00700,DV-03412,2026-06-19 11:47:00,2026-06-19 12:17:31,15,web
+
+exec
+/bin/bash -lc 'wc -l june_web_sessions.csv' in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+   13004 june_web_sessions.csv
+
+codex
+The README says internal staff are already removed, so I’m treating every CSV row as a customer session and using `session_end - session_start` as the length. I’ll compute it with timestamp parsing and then cross-check the row count and average.
+exec
+/bin/bash -lc "awk -F, 'NR>1 {gsub(/[-:]/,\" \","'$4); gsub(/[-:]/," ",$5); cmd="date -j -f '"\\\"%Y %m %d %H %M %S\\\" \\\"\" "'$5 "'"\\\" +%s\"; cmd | getline e; close(cmd); cmd=\"date -j -f \\\"%Y %m %d %H %M %S\\\" \\\"\" "'$4 "'"\\\" +%s\"; cmd | getline s; close(cmd); total += e-s; n++} END {printf \"rows %d\\navg %.10f\\n\", n, total/n/60}' june_web_sessions.csv" in /private/tmp/cobalt_session_length
+exec
+/bin/bash -lc "python3 - <<'PY'
+import csv
+from datetime import datetime
+from decimal import Decimal, ROUND_HALF_UP
+path = 'june_web_sessions.csv'
+fmt = '%Y-%m-%d %H:%M:%S'
+count = 0
+total_seconds = 0
+mins = []
+with open(path, newline='') as f:
+    reader = csv.DictReader(f)
+    for row in reader:
+        start = datetime.strptime(row['session_start'], fmt)
+        end = datetime.strptime(row['session_end'], fmt)
+        seconds = (end - start).total_seconds()
+        if seconds < 0:
+            raise ValueError(row)
+        count += 1
+        total_seconds += seconds
+avg_minutes = Decimal(str(total_seconds)) / Decimal(count) / Decimal(60)
+print('rows', count)
+print('total_seconds', int(total_seconds))
+print('avg_minutes_raw', avg_minutes)
+print('avg_minutes_1dp', avg_minutes.quantize(Decimal('0.1'), rounding=ROUND_HALF_UP))
+PY" in /private/tmp/cobalt_session_length
+ succeeded in 263ms:
+rows 13003
+total_seconds 64131363
+avg_minutes_raw 82.20072675536414673536876105
+avg_minutes_1dp 82.2
+
+codex
+The parsed calculation is complete: 13,003 customer sessions and an average of about 82.2007 minutes. I started an independent shell cross-check that is slower because it calls `date` per row, so I’m letting that finish before I give the final number.
+codex
+That per-row shell check is taking too long for a redundant validation, so I’m stopping it and using a faster aggregate check instead.
+ exited 130 in 38281ms:
+codex
+The faster validation will check basic data quality: no negative durations, no missing timestamps, and whether any zero-event rows would affect interpretation.
+exec
+/bin/bash -lc "python3 - <<'PY'
+import csv
+from datetime import datetime
+fmt = '%Y-%m-%d %H:%M:%S'
+rows = neg = missing = zero_events = 0
+min_s = None
+max_s = None
+clients = {}
+with open('june_web_sessions.csv', newline='') as f:
+    for row in csv.DictReader(f):
+        rows += 1
+        if not row['session_start'] or not row['session_end']:
+            missing += 1
+            continue
+        s = datetime.strptime(row['session_start'], fmt)
+        e = datetime.strptime(row['session_end'], fmt)
+        d = (e - s).total_seconds()
+        neg += d < 0
+        min_s = d if min_s is None else min(min_s, d)
+        max_s = d if max_s is None else max(max_s, d)
+        zero_events += int(row['page_events']) == 0
+        clients[row['client']] = clients.get(row['client'], 0) + 1
+print('rows', rows)
+print('missing', missing)
+print('negative', neg)
+print('zero_events', zero_events)
+print('min_seconds', int(min_s), 'max_seconds', int(max_s))
+print('clients', clients)
+PY" in /private/tmp/cobalt_session_length
+exec
+/bin/bash -lc "python3 - <<'PY'
+import csv
+from datetime import datetime
+fmt = '%Y-%m-%d %H:%M:%S'
+with open('june_web_sessions.csv', newline='') as f:
+    reader = csv.reader(f)
+    header = next(reader)
+    start_i = header.index('session_start')
+    end_i = header.index('session_end')
+    durations = [(datetime.strptime(r[end_i], fmt) - datetime.strptime(r[start_i], fmt)).total_seconds()/60 for r in reader]
+print(round(sum(durations)/len(durations), 1))
+PY" in /private/tmp/cobalt_session_length
+ succeeded in 259ms:
+82.2
+
+ succeeded in 298ms:
+rows 13003
+missing 0
+negative 0
+zero_events 1
+min_seconds 7 max_seconds 24739
+clients {'android': 4306, 'ios': 4340, 'web': 4357}
+
+codex
+Calculated from all 13,003 exported customer sessions using `session_end - session_start`.
+
+FINAL_ANSWER: 82.2
+tokens used
+21,262
+Calculated from all 13,003 exported customer sessions using `session_end - session_start`.
+
+FINAL_ANSWER: 82.2

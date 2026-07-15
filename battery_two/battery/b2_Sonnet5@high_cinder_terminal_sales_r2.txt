@@ -1,0 +1,3 @@
+Total approved customer card sales for November across all 18,000 approved transactions at Cinder Corner Market's ten stores: **796715.74**.
+
+FINAL_ANSWER: 796715.74

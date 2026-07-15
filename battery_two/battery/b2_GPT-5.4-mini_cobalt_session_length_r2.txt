@@ -1,0 +1,107 @@
+Reading additional input from stdin...
+OpenAI Codex v0.144.0
+--------
+workdir: /private/tmp/cobalt_session_length
+model: gpt-5.4-mini
+provider: openai
+approval: never
+sandbox: workspace-write [workdir, /tmp, $TMPDIR]
+reasoning effort: xhigh
+reasoning summaries: none
+session id: 019f61f2-fb69-7b33-b2e1-8d323682bc09
+--------
+user
+The folder at `/private/tmp/cobalt_session_length` contains Cobalt Courseware's June 2026 product-session export and README. Calculate the average customer session length in minutes, rounded to one decimal place.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.
+codex
+I’m checking the export and README to identify the session-length field and the exact records to average, then I’ll compute the rounded minute value from the raw data.
+exec
+/bin/bash -lc "pwd && rg --files -g '"'!*node_modules*'"'" in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+/private/tmp/cobalt_session_length
+june_web_sessions.csv
+README.md
+
+exec
+/bin/bash -lc 'ls -la' in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+total 1976
+drwxr-xr-x@    4 alexanderking  wheel      128 Jul 14 11:45 .
+drwxrwxrwt  1484 root           wheel    47488 Jul 14 11:45 ..
+-rw-r--r--@    1 alexanderking  wheel      373 Jul 14 11:45 README.md
+-rw-r--r--@    1 alexanderking  wheel  1003786 Jul 14 11:45 june_web_sessions.csv
+
+codex
+I’ve found a single CSV export and the README. Next I’m checking the schema and any README guidance so I average the right sessions and units rather than guessing from the filename.
+exec
+/bin/bash -lc "sed -n '1,200p' README.md" in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+# Cobalt Courseware — June engagement export
+
+`june_web_sessions.csv` contains the June session rows emitted by the product telemetry pipeline. Timestamps are UTC, `page_events` excludes background keep-alives, and internal staff accounts have already been removed.
+
+The three client values use the same session schema. Session identifiers are unique export identifiers.
+
+exec
+/bin/bash -lc "python3 - <<'PY'
+import csv
+from itertools import islice
+path='june_web_sessions.csv'
+with open(path, newline='') as f:
+    r=csv.reader(f)
+    for i,row in enumerate(islice(r,6)):
+        print(i, row)
+PY" in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+0 ['session_id', 'account_id', 'device_hash', 'session_start', 'session_end', 'page_events', 'client']
+1 ['CS-0005245', 'CA-01492', 'DV-04700', '2026-06-04 12:01:00', '2026-06-04 12:49:06', '16', 'android']
+2 ['CS-0008476', 'CA-00256', 'DV-02796', '2026-06-06 07:24:00', '2026-06-06 08:05:09', '22', 'ios']
+3 ['CS-0012668', 'CA-03740', 'DV-07272', '2026-06-17 19:02:00', '2026-06-17 20:45:12', '44', 'ios']
+4 ['CS-0011284', 'CA-00700', 'DV-03412', '2026-06-19 11:47:00', '2026-06-19 12:17:31', '15', 'web']
+5 ['CS-0005499', 'CA-04927', 'DV-05515', '2026-06-05 06:08:00', '2026-06-05 06:48:07', '21', 'web']
+
+codex
+I have the schema: each row is a session with UTC start/end timestamps, and the README says the export is already cleaned of staff accounts. I’m now computing duration per row from timestamps and averaging all June sessions.
+exec
+/bin/bash -lc "python3 - <<'PY'
+import csv
+from datetime import datetime
+from statistics import mean
+path='june_web_sessions.csv'
+fmt='%Y-%m-%d %H:%M:%S'
+durations=[]
+clients={}
+with open(path, newline='') as f:
+    r=csv.DictReader(f)
+    for i,row in enumerate(r, start=2):
+        try:
+            start=datetime.strptime(row['session_start'], fmt)
+            end=datetime.strptime(row['session_end'], fmt)
+        except Exception as e:
+            raise SystemExit(f'parse error on line {i}: {e} {row}')
+        delta=(end-start).total_seconds()/60
+        durations.append(delta)
+        clients[row['client']] = clients.get(row['client'], 0)+1
+print('rows', len(durations))
+print('mean_minutes', mean(durations))
+print('rounded', round(mean(durations),1))
+print('min', min(durations), 'max', max(durations))
+print('clients', clients)
+PY" in /private/tmp/cobalt_session_length
+ succeeded in 286ms:
+rows 13003
+mean_minutes 82.20072675536414
+rounded 82.2
+min 0.11666666666666667 max 412.31666666666666
+clients {'android': 4306, 'ios': 4340, 'web': 4357}
+
+codex
+Average session length across the June export is 82.2 minutes from 13,003 sessions.
+
+FINAL_ANSWER: 82.2
+tokens used
+9,776
+Average session length across the June export is 82.2 minutes from 13,003 sessions.
+
+FINAL_ANSWER: 82.2

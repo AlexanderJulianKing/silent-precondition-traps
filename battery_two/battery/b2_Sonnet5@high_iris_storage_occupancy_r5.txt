@@ -1,0 +1,7 @@
+All 12 facilities have identical structure (10 banks × 12 controllers = 120 rental units, 30 days of complete June data). Total occupied-door readings across the dataset: 29,932 out of 43,200 controller-nights (12 sites × 120 units × 30 days).
+
+Average occupied rental units per facility = 29,932 ÷ (12 facilities × 30 days) = 83.14 → **83.1**.
+
+(Per-facility averages ranged from ~80.4 at IS-03 to ~85.5 at IS-05, so this is the overall average across all 12 sites.)
+
+FINAL_ANSWER: 83.1

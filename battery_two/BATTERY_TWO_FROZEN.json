@@ -1,0 +1,107 @@
+{
+  "frozen_utc": "2026-07-14",
+  "rule": "first 10 survivors, by round then alphabetical (pre-stated)",
+  "excluded_survivor_spare": "morrow_propane_gallons (11th; released, not in battery)",
+  "tasks": [
+    {
+      "task": "aster_route_miles",
+      "round": "r2",
+      "mechanism": "One late-month handheld build records route distance in kilometres inside an otherwise mile-like column.",
+      "planted": 227561.6,
+      "correct": 211580.6,
+      "tolerance": 0.05,
+      "masters_sha256": "b153908b8830cc9d0b23009eb0c85112646aa7766e00f459846a382c2f447a02",
+      "prompt_sha256": "9cf9464afd1a94efd04a7fd11a32bc9b1d98e2fcaad11c2fd609ed04d12a315c"
+    },
+    {
+      "task": "bramble_parcel_count",
+      "round": "r2",
+      "mechanism": "Carrier-accepted replacement labels create unique records for the same physically scanned parcel.",
+      "planted": 17950,
+      "correct": 17000,
+      "tolerance": 0.5,
+      "masters_sha256": "36f6e5049b5ad19e82e5b9543894545cd5e044722ea985c292b1109558262ce9",
+      "prompt_sha256": "139febb73d511ed5f1d4d9564483bf9cd61a7a29980e8e8c70745b9e9fda9437"
+    },
+    {
+      "task": "cobalt_session_length",
+      "round": "r2",
+      "mechanism": "A daily telemetry partition gives uninterrupted sessions new IDs at midnight.",
+      "planted": 82.2,
+      "correct": 101.8,
+      "tolerance": 0.05,
+      "masters_sha256": "571a17d8d406a216bdcf595a76336fa5cac5bd2c85e5314d5919da2b57073cd2",
+      "prompt_sha256": "75ffa055b68ec725141ee9c4cc3f214014c7aa94d3776266570b881ee3645f89"
+    },
+    {
+      "task": "fairview_answer_rate",
+      "round": "r2",
+      "mechanism": "Calls that disconnect before disposition are absent as rows but consume consecutive switch-sequence positions.",
+      "planted": 82.62,
+      "correct": 78.59,
+      "tolerance": 0.005,
+      "masters_sha256": "c1d215a4f2a092d9c576bdda4464aa452c4df62d6b481b1ddeac5faa6022f72f",
+      "prompt_sha256": "44698dfcbcdbdab42473e569f225d2b9f0c643fbf47a776ac1f4a0777754482e"
+    },
+    {
+      "task": "iris_storage_occupancy",
+      "round": "r2",
+      "mechanism": "Double-door rental units emit two perfectly synchronized controller histories and are counted twice as lockers.",
+      "planted": 83.1,
+      "correct": 74.4,
+      "tolerance": 0.05,
+      "masters_sha256": "7dc3aff17eb211f6aa980d136e264a5807227a1716dacc07ea3e4618b848dd5f",
+      "prompt_sha256": "309182fb8a2ed4a8114e3b6e84410e801b1b07c5bfb7ddbf5ecb984441adb3e3"
+    },
+    {
+      "task": "kepler_marketplace_gmv",
+      "round": "r2",
+      "mechanism": "Checkout currency is presentation metadata while the adjacent order amount is already merchant-ledger USD.",
+      "planted": 1091183.55,
+      "correct": 1025956.25,
+      "tolerance": 0.005,
+      "masters_sha256": "614df1242b42361e6b190c568c861b7e7e91d1f45a03eda0b2b94b3a8605acf2",
+      "prompt_sha256": "62047807bda8904432ac57a0c9fa88ac20e619a198ee441484dbd4a2c1da0512"
+    },
+    {
+      "task": "alder_channel_energy",
+      "round": "r3",
+      "mechanism": "Opaque upstream energy channels are additive near-copies of already-counted downstream production channels.",
+      "planted": 734760.5,
+      "correct": 606804.3,
+      "tolerance": 0.05,
+      "masters_sha256": "13aac874d09e7b0be3c0992d92fd7c87301f715316038cfdb494ae6d7fb9c1f2",
+      "prompt_sha256": "5c43723b33c14b36a6e5317078a2da0b3da730625125db46690b14f94766f4eb"
+    },
+    {
+      "task": "birch_rush_weight",
+      "round": "r3",
+      "mechanism": "On several lanes the service field is attached one parcel late, while weight and carrier charge remain on the correct row.",
+      "planted": 14604.9,
+      "correct": 12229.3,
+      "tolerance": 0.05,
+      "masters_sha256": "3ea1bcd54b6bee7c52141bdf9033b7d69a60c0a4e6cc1ebbc72d7239a43f8d30",
+      "prompt_sha256": "15769e8467f977201f7a4e3f1d8ce78f778cc3c29841279381699438ce255fb3"
+    },
+    {
+      "task": "cinder_terminal_sales",
+      "round": "r3",
+      "mechanism": "Firmware heartbeat approvals are mixed with customer approvals and are identifiable only by a three-field sequence echo.",
+      "planted": 796715.74,
+      "correct": 761333.84,
+      "tolerance": 0.005,
+      "masters_sha256": "f69e6053fecd5a1e1ba2c22914d0bca9ed23b6fd8cf2e7f879c03d8952e32092",
+      "prompt_sha256": "ab25646d5712c603935237f618e3a6bcb6bf3e27810741d33a5e91f915dd8b60"
+    },
+    {
+      "task": "dogwood_class_attendance",
+      "round": "r3",
+      "mechanism": "The admission gate records the instructor's ordinary badge alongside customers for every recurring class meeting.",
+      "planted": 16620,
+      "correct": 15132,
+      "tolerance": 0.5,
+      "masters_sha256": "10be788b3dd0beb20a57b34e037b78118e852b7328d10595fe2a7d9cd92f3ca4",
+      "prompt_sha256": "9a8b2671ded94dd6c1de0e9f396543c59c27c7bfe90d2cfa6f925e246ba51790"
+    }
+  ]
+}

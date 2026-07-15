@@ -1,0 +1,8 @@
+The data is clean (all COMPLETE, all November 2026, no negative/zero durations, no duplicate activity IDs), but the README's note — *"Technicians may use several activity codes during a job; each timer has its own activity identifier"* — is the trap: activity timers within a job **overlap in time**. A technician can't accumulate two hours of work in one hour of wall-clock, so naively summing every timer double-counts concurrent activities.
+
+- Naive sum of all timer durations: **14,442.8 h** (overcounts overlapping activities)
+- Merged (union of intervals) per technician: **13,049.3 h** ← actual time worked
+
+The two are identical whether I merge per-technician or per-technician-per-job, confirming overlaps occur only within concurrent activity timers, with no cross-job double-booking.
+
+FINAL_ANSWER: 13049.3

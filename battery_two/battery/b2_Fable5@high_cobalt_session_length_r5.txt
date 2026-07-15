@@ -1,0 +1,7 @@
+The duplicate-looking rows are just the same account active on two different devices at the same time — different device hashes, clients, and end times — so they're legitimate distinct sessions, not export duplicates. The README confirms no filtering is needed: staff accounts are already removed, all three `client` values (web, ios, android) use the same session schema (the filename's "web" just means product telemetry, not web-only), and session IDs are unique. All 13,003 rows parse cleanly with no negative or missing durations.
+
+Computing the mean of `session_end − session_start` across all 13,003 sessions gives 82.2007 minutes.
+
+**Average customer session length: 82.2 minutes** (13,003 June sessions, mean duration 82.2007 min).
+
+FINAL_ANSWER: 82.2

@@ -1,0 +1,20 @@
+All 2503 two-row groups are clean midnight splits (0 unexpected), stitching into exactly 10,500 real sessions. The `page_events`-per-minute density (0.40) is identical across split and unsplit rows, confirming the parts are legitimate halves of continuous sessions rather than corrupt rows.
+
+## Summary
+
+The export contains **13,003 rows** but not 13,003 distinct customer sessions. The telemetry pipeline **splits any session crossing UTC midnight** into two rows:
+- a head half ending exactly at `00:00:00`, and
+- a tail half starting at `00:00:00`,
+
+sharing the same account, device, and client (with consecutive export IDs). This is why the README stresses that timestamps are **UTC** and that **session IDs are merely unique export identifiers** — a single real session can span two rows.
+
+- **2,503** sessions were split this way → stitched back to their true start/end.
+- **7,997** sessions were single rows.
+- **Total real customer sessions: 10,500.**
+
+Computing length as `session_end − session_start` per stitched session and averaging:
+
+- Naïve (un-stitched, 13,003 rows): 82.2 min ← wrong, double-counts split sessions as two shorter ones
+- **Stitched (10,500 true sessions): 101.795… → 101.8 min**
+
+FINAL_ANSWER: 101.8

@@ -1,0 +1,10 @@
+I've verified the data end to end. Here's what the file contains:
+
+- **4,320 rows** = 12 workshops × 12 production-energy channels each (144 channels) × all 30 days of September, a complete grid with no missing days.
+- **No duplicates**: every (site, channel, date) triple is unique; no repeated reading IDs.
+- **All in scope**: every channel is a production-energy channel (README confirms office, exterior-lighting, and HVAC loads are excluded from this export), and all 4,320 readings report `OK` health.
+- **No anomalies**: no negative, zero, or non-numeric values; per-channel daily closes range 50.42–379.41 kWh (consistent with daily consumption, not cumulative meter readings).
+
+Summing every daily channel close gives **734,760.47 kWh**, which rounds to **734,760.5 kWh**.
+
+FINAL_ANSWER: 734760.5

@@ -1,0 +1,7 @@
+{
+  "correct_answer": 37.0,
+  "mechanism": "The convenient delivery timestamp is gateway receipt time, not the handheld's doorstep capture time.",
+  "planted_answer": 44.9,
+  "task": "lantern_delivery_time",
+  "tolerance": 0.05
+}

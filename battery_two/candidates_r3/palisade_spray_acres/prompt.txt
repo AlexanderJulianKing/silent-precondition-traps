@@ -1,0 +1,3 @@
+The folder at `/private/tmp/palisade_spray_acres` contains Palisade Crop Care's August 2026 completed sprayer-pass archive and README. Calculate the total field acreage that received completed crop-protection application during August, rounded to one decimal place.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

@@ -1,0 +1,21 @@
+The analysis is conclusive.
+
+## Summary
+
+**The export contains 17,950 accepted rows, but not 17,950 physical parcels.**
+
+Starting point: 17,950 data rows, all with `carrier_response = ACCEPTED`, unique tracking numbers, unique manifest rows, all timestamped in July 2026. Taken naively that's 17,950 — but the question asks for *physical* parcels, and the README's pointed mention that "dimensions and the short load-cell sample are retained" is the tell.
+
+**Finding duplicate physical parcels.** Keying every row on its full physical fingerprint — lane, destination, weight, all three dimensions, the load-cell `scale_sample`, and service — the 17,950 rows collapse to exactly **17,000** distinct parcels. There are **950 pairs** that are byte-identical across every physical attribute, differing only in tracking number, manifest row, and timestamp.
+
+**Why these are the same parcel, not coincidence:**
+- The load-cell `scale_sample` is an instantaneous high-resolution reading (e.g., `238300`, `808960`, `734584`). Two genuinely separate weighings reproducing the *identical* sample **and** identical weight **and** identical L×W×H **and** same lane/destination/service by chance is effectively impossible.
+- All 950 pairs have **consecutive manifest-row numbers** (e.g., MR-0005872 / MR-0005873).
+- All 950 pairs are **25–75 seconds apart** (median 49 s).
+- Every non-identity field is identical within each pair (0 exceptions).
+
+This is the textbook double-scan signature: one parcel crossing the acceptance scanner twice within a minute, receiving two consecutive labels. (Coincidental `scale_sample`-only collisions — where dimensions/weight differ — were correctly *not* merged; those are different parcels.)
+
+**Physical parcels = 17,950 acceptance records − 950 duplicate re-scans = 17,000.**
+
+FINAL_ANSWER: 17000

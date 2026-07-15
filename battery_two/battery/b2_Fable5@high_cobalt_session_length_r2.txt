@@ -1,0 +1,5 @@
+The average session length across all 13,003 sessions in the June export is **82.2 minutes**.
+
+Details: every row parsed cleanly (no missing or negative durations, no duplicate sessions, no non-June rows), so no filtering was needed — durations were computed as `session_end − session_start` and averaged, giving 82.2007 minutes, which rounds to 82.2.
+
+FINAL_ANSWER: 82.2

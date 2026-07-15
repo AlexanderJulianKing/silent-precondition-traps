@@ -1,0 +1,12 @@
+The calculation is complete and validated. Here's what I found:
+
+**Data validated:**
+- 9,200 orders total: **8,928 PAID** (included) and **272 CANCELLED** (excluded, per README "cancelled orders were not charged")
+- 4 currencies (USD, EUR, GBP, CAD), each matching its market cleanly — zero currency/market mismatches
+- Every PAID order's `order_date`+`currency` had a matching daily treasury rate — zero missing rates
+
+**Method:** For each PAID order, converted `order_amount` to USD using that day's `usd_per_currency_unit` reference rate, then summed. Shipping, tax, and fees are excluded from `order_amount` per the README, so GMV is `order_amount` as-is.
+
+**Result:** Exact sum = 1,091,183.5547, which rounds to **1,091,183.55**. (For reference, rounding each order to cents before summing gives 1,091,183.26 — a $0.29 difference; summing exact values then rounding once is the correct approach.)
+
+FINAL_ANSWER: 1091183.55

@@ -1,0 +1,19 @@
+I analyzed the data and accounted for the mid-month meter swaps.
+
+## Findings
+
+- **Readings**: 30 washers, 3-hour pulse-register readings, all marked `OK`. The scheduled window runs from the first reading (`2026-06-01 00:00:00`) to the last (`2026-06-30 21:00:00`).
+- **Meter swaps**: The service log shows 10 washers had a scheduled pulse-register exchange on 2026-06-15 12:00. On those machines the cumulative register **restarts on the new meter** (e.g. WASH-007's old meter reads 1156, then the new meter begins at 6 at the same instant).
+
+## Method
+
+Naively taking `last − first` per machine treats the register restart as a huge drop and **undercounts** (gives only 48,123). The correct approach sums each meter serial's own `last − first` and adds the two segments for swapped machines:
+
+- Non-swapped machine: `last − first`
+- Swapped machine: `(old-meter last − old-meter first) + (new-meter last − new-meter first)`
+
+All registers are monotonic within each serial, so the arithmetic is clean.
+
+**Total = 60,801 gallons** across all 30 washers for the June reporting window.
+
+FINAL_ANSWER: 60801

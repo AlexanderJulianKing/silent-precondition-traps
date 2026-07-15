@@ -1,0 +1,19 @@
+## Analysis
+
+**Data:** 17,950 rows, each with a unique tracking number and `ACCEPTED` response.
+
+**The catch:** "unique tracking number" ≠ "unique physical parcel." 950 rows are the **same physical parcel re-manifested with a second tracking number** — they carry a different `manifest_row`, tracking number, timestamp, lane, and even service, but their physical fingerprint (weight to 0.01 kg + all three dimensions + destination + load-cell `scale_sample`) matches an earlier row exactly.
+
+Deduplicating on the physical signature collapses to **17,000** — and this holds identically whether I key on (weight+dims+destination), add `scale_sample`, or add `service`, so it isn't a coincidental attribute collision:
+
+| Dedup key | Distinct parcels |
+|---|---|
+| weight + dims + destination | 17,000 |
+| + scale_sample | 17,000 |
+| + service | 17,000 |
+
+(`scale_sample` alone gives 16,910 — that includes ~90 birthday-paradox collisions of the short 6-digit sample, which is why it's unreliable by itself but confirmatory in combination.)
+
+So 17,950 accepted labels represent **17,000** distinct physical parcels handed to the carrier.
+
+FINAL_ANSWER: 17000

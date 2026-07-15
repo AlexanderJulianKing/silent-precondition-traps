@@ -1,0 +1,5 @@
+16,709 of 20,223 inbound calls in the June export were `ANSWERED` (the rest `CALLER_ABANDONED`) — no duplicate call IDs, no out-of-range dates, and no other outcome types.
+
+16,709 / 20,223 × 100 = 82.62%
+
+FINAL_ANSWER: 82.62%

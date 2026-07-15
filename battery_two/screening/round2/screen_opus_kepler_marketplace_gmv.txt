@@ -1,0 +1,3 @@
+All 8,928 paid orders converted cleanly (272 cancelled excluded; no missing rates). Each order's `order_amount` was converted to USD using the treasury `usd_per_currency_unit` for its own `order_date` and `currency`, then summed.
+
+FINAL_ANSWER: 1091183.55

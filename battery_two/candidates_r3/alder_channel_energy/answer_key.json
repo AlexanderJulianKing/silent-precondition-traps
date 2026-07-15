@@ -1,0 +1,7 @@
+{
+  "correct_answer": 606804.3,
+  "mechanism": "Opaque upstream energy channels are additive near-copies of already-counted downstream production channels.",
+  "planted_answer": 734760.5,
+  "task": "alder_channel_energy",
+  "tolerance": 0.05
+}

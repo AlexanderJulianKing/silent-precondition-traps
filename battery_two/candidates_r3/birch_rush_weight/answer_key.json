@@ -1,0 +1,7 @@
+{
+  "correct_answer": 12229.3,
+  "mechanism": "On several lanes the service field is attached one parcel late, while weight and carrier charge remain on the correct row.",
+  "planted_answer": 14604.9,
+  "task": "birch_rush_weight",
+  "tolerance": 0.05
+}

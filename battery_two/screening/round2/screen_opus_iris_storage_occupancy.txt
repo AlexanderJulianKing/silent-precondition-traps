@@ -1,0 +1,7 @@
+Data is clean and complete: 12 facilities × 30 nights × 120 controllers = 43,200 rows, all `OK` health, no duplicate keys, `occupied_flag` ∈ {0,1}, and facility-use units are already excluded per the README.
+
+Counting occupied readings (`occupied_flag = 1`): **29,932** total across the month.
+
+Average occupied rental units per facility during June = 29,932 ÷ (12 facilities × 30 nights) = **83.1444**. (Averaging each facility's mean nightly occupancy across facilities gives the identical result, since every facility has all 30 nights.)
+
+FINAL_ANSWER: 83.1

@@ -1,0 +1,15 @@
+All integrity checks pass — the data is clean, so this is a straightforward answer-rate calculation.
+
+## Summary
+
+**Data validation** (`june_inbound_calls.csv`, 20,223 rows):
+- All rows are June 2026, inbound queue calls — no out-of-month dates, no duplicate `call_id`/`switch_seq`, no duplicate rows.
+- Exactly two outcomes: **ANSWERED = 16,709**, **CALLER_ABANDONED = 3,514** (no whitespace/casing variants, no third category).
+- Outcome aligns perfectly with `agent_extension` (every ANSWERED has an extension; every abandoned has none).
+- `switch_seq` gaps correspond to the outbound/extension calls the README says are already excluded — the inbound set is complete, not missing calls.
+- `wait_seconds` all valid (0–517, no negatives/blanks). This column and `switch_seq` are context, not filters — nothing to exclude.
+
+**Calculation:**
+$$\frac{16{,}709 \text{ answered}}{20{,}223 \text{ total inbound}} = 0.8262374\ldots = 82.62\%$$
+
+FINAL_ANSWER: 82.62

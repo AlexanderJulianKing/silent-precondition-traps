@@ -1,0 +1,3 @@
+The folder at `/private/tmp/cobalt_roast_output` contains Cobalt Row Roasters' June 2026 cooling-scale captures and README. Calculate the total kilograms of finished coffee produced in released roast batches during June. Report a whole number of kilograms.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

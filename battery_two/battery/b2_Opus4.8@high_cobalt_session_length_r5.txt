@@ -1,0 +1,11 @@
+I analyzed the export. Here's what I verified before computing:
+
+- **13,003 session rows** (header excluded), all with valid, parseable UTC timestamps.
+- **No data-quality issues to correct**: zero negative/zero-length durations, all `session_id` values unique, no duplicate real sessions (checked account+device+start+end combinations), staff already removed per the README, and the only "extra" client value was the header artifact — the real data is exactly the three documented clients (android, ios, web).
+- Session length = `session_end − session_start`, in minutes.
+
+The mean session duration across all 13,003 customer sessions is **82.2007… → 82.2 minutes**.
+
+(For reference, weighting each of the 6,200 accounts equally instead would give 70.9, but "average customer session length" reads as the mean length of a session, which is 82.2.)
+
+FINAL_ANSWER: 82.2

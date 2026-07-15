@@ -1,0 +1,3 @@
+The folder at `/private/tmp/aster_route_miles` contains Aster Home Courier's August 2026 route closeout export and README. Calculate the total miles driven on completed routes during August, rounded to one decimal place.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

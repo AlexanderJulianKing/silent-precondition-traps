@@ -1,0 +1,6 @@
+The January 2026 owner pack uses the controller's merchandising-month window (2026-01-05 through 2026-02-01), not the calendar month. Summing `net_revenue` for all non-void invoices in that date range:
+
+- 5,595 invoices (VOID excluded)
+- Net revenue: **403168.11**
+
+FINAL_ANSWER: 403168.11

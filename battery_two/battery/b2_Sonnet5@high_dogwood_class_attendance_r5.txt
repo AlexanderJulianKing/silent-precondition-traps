@@ -1,0 +1,5 @@
+That's fine to leave — it's just scratchpad cleanup, not consequential.
+
+The CSV contains 16,620 rows, each a distinct `admission_id` with `gate_result = ADMITTED`, all timestamped in December 2026, with no duplicate badge/class-instance scans. Each row represents one customer's attendance at one class instance, so the total equals the row count.
+
+FINAL_ANSWER: 16620

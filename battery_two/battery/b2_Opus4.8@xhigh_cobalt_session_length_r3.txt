@@ -1,0 +1,22 @@
+I have a complete picture. Let me summarize the analysis.
+
+## Analysis
+
+**Data:** 13,003 session rows, each with a unique `session_id`, across three clients (web 4,357 / ios 4,340 / android 4,306). Session length = `session_end − session_start`.
+
+**Checked the README's cues for traps:**
+- **"Session identifiers are unique export identifiers"** → verified no real-session duplication. Every strong natural key (`account + device + start + end`) is unique across all 13,003 rows, so there's nothing to de-duplicate.
+- **"Timestamps are UTC" / "staff accounts already removed"** → reassurances; all rows fall in June 2026, no negative/malformed durations.
+- **"`page_events` excludes background keep-alives"** → this flags one phantom row: `CS-0007478`, a 7-second session starting at `00:00:00` with **0 page events** — a keep-alive-only ping, not a real customer session.
+
+**Result (robust either way):**
+| Basis | n | Mean (min) | Rounded |
+|---|---|---|---|
+| All rows | 13,003 | 82.2007 | **82.2** |
+| Excluding the 0-event keep-alive | 13,002 | 82.2070 | **82.2** |
+
+Both the raw mean and the cleaned mean round to the same value, so the result is not sensitive to that single phantom row. (The filename says "web_sessions," but the export legitimately contains all three clients — all are customer sessions and all are included.)
+
+The average customer session length is **82.2 minutes**.
+
+FINAL_ANSWER: 82.2

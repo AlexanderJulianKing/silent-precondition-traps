@@ -1,0 +1,5 @@
+All 18,000 rows are `APPROVED`, all amounts positive, all dated within November 2026, and there are no duplicate events (event_id, terminal sequence, and full rows are each fully unique). The README confirms declines/reversals/training/cash/open checks are already excluded, so the file is the clean approved-sales set.
+
+Summing `approved_amount` across all 18,000 rows with exact decimal arithmetic gives **796715.74**.
+
+FINAL_ANSWER: 796715.74

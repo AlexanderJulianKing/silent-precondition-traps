@@ -1,0 +1,7 @@
+{
+  "correct_answer": 7004.6,
+  "mechanism": "Individually valid booking sessions overlap, so summing durations double-counts physical room occupancy.",
+  "planted_answer": 7500.7,
+  "task": "lark_room_hours",
+  "tolerance": 0.05
+}

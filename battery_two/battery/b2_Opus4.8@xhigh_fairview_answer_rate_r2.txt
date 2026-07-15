@@ -1,0 +1,13 @@
+I examined the export thoroughly before computing.
+
+**Data validation:**
+- 20,223 rows, all with 7 well-formed fields; every `received_at` falls in June 2026 (days 1–30).
+- Only two outcomes exist: `ANSWERED` (16,709) and `CALLER_ABANDONED` (3,514).
+- `call_id` and `switch_seq` are both fully unique — no duplicate records to dedupe. (`switch_seq` runs 501058→530755, and its gaps are the outbound/extension calls the README says are excluded from this file.)
+- Perfect internal consistency: every `ANSWERED` row has an agent extension, every abandoned row is blank; `call_id` day/seq segments match `received_at` and `switch_seq`; no negative/invalid `wait_seconds`.
+
+No filtering or deduplication is warranted, so the answer rate is simply answered ÷ total inbound calls:
+
+**16,709 ÷ 20,223 = 82.6237…% → 82.62%**
+
+FINAL_ANSWER: 82.62

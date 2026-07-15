@@ -1,0 +1,3 @@
+The folder at `/private/tmp/bramble_parcel_count` contains Bramble Box & Paper's July 2026 carrier-acceptance export and README. Calculate the number of physical parcels transferred to the carrier during July. Report a whole number.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

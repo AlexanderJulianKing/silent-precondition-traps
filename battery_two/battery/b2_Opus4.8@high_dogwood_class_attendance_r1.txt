@@ -1,0 +1,10 @@
+All checks confirm a clean dataset:
+
+- **16,620** rows, all with `gate_result = ADMITTED` (denied/open-gym/cancelled/door-test scans already excluded per README).
+- All scans fall within **2026-12**.
+- All eight studios (DS-01…DS-08) present.
+- **No duplicate `(badge_token, class_instance)` pairs** — no double-scans to collapse, so each row is one distinct customer attendance at one class meeting.
+
+Each admitted badge scan = one customer attending one scheduled class instance. Total = 16,620.
+
+FINAL_ANSWER: 16620

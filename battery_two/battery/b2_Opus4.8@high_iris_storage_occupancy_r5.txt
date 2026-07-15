@@ -1,0 +1,15 @@
+## Summary
+
+**Data structure** (all verified clean):
+- 43,200 rows = 12 facilities × 120 locker-door controllers × 30 nights (June 1–30)
+- Every controller reports once per night (no duplicate site/controller/date keys), all health `OK`
+- Each controller maps to exactly one bank (banks B01–B10, 12 controllers each) — banks are a maintenance grouping only, not a factor in occupancy
+- Facility-use units are already excluded from the export, so every controller = one rental unit
+
+**Calculation:** Each facility's average nightly occupied count = (its occupied readings) ÷ 30 nights. Averaging those 12 facility means gives the average occupied rental units per facility.
+
+Total occupied readings = 29,932 → 29,932 ÷ (12 × 30) = 83.144…
+
+The `controller_bank` and "numbered within site" details in the README are context/distractors — one controller is one unit, so no deduplication or filtering is needed.
+
+FINAL_ANSWER: 83.1

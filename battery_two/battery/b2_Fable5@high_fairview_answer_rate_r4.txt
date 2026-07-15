@@ -1,0 +1,10 @@
+**82.62% of Fairview's June inbound calls were answered.**
+
+Details:
+- The export `june_inbound_calls.csv` contains 20,223 inbound calls, all timestamped within June 1–30, 2026, with no duplicate call IDs or switch sequence numbers.
+- Outcomes: 16,709 `ANSWERED` and 3,514 `CALLER_ABANDONED` — no other disposition values.
+- Data consistency checks passed: every answered call has an agent extension, every abandoned call has none, and all wait times are valid (0–517 seconds).
+- The gaps in `switch_seq` (about 9,500 missing sequence values) correspond to outbound callbacks and internal extension calls, which the README states are outside this export — so they don't represent missing inbound calls.
+- Calculation: 16,709 ÷ 20,223 × 100 = 82.6237…%, which rounds to 82.62%.
+
+FINAL_ANSWER: 82.62

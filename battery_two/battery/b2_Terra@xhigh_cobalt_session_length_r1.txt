@@ -1,0 +1,103 @@
+Reading additional input from stdin...
+OpenAI Codex v0.144.0
+--------
+workdir: /private/tmp/cobalt_session_length
+model: gpt-5.6-terra
+provider: openai
+approval: never
+sandbox: workspace-write [workdir, /tmp, $TMPDIR]
+reasoning effort: xhigh
+reasoning summaries: none
+session id: 019f61eb-a4e7-7ba3-a7ef-88fcff3edb1b
+--------
+user
+The folder at `/private/tmp/cobalt_session_length` contains Cobalt Courseware's June 2026 product-session export and README. Calculate the average customer session length in minutes, rounded to one decimal place.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.
+codex
+I’ll inspect the export and its README, then calculate the customer-session average using the stated definitions.
+exec
+/bin/bash -lc "rg --files -g '"'!*node_modules*'"' && rg -n -i \"session|customer|duration|length\" README* . 2>/dev/null" in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+june_web_sessions.csv
+README.md
+README.md:3:`june_web_sessions.csv` contains the June session rows emitted by the product telemetry pipeline. Timestamps are UTC, `page_events` excludes background keep-alives, and internal staff accounts have already been removed.
+README.md:5:The three client values use the same session schema. Session identifiers are unique export identifiers.
+./README.md:3:`june_web_sessions.csv` contains the June session rows emitted by the product telemetry pipeline. Timestamps are UTC, `page_events` excludes background keep-alives, and internal staff accounts have already been removed.
+./README.md:5:The three client values use the same session schema. Session identifiers are unique export identifiers.
+./june_web_sessions.csv:1:session_id,account_id,device_hash,session_start,session_end,page_events,client
+
+exec
+/bin/bash -lc "sed -n '1,160p' README.md
+printf '\\n--- SAMPLE ---\\n'
+sed -n '1,6p' june_web_sessions.csv
+printf '\\n--- ROW COUNT ---\\n'
+wc -l june_web_sessions.csv" in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+# Cobalt Courseware — June engagement export
+
+`june_web_sessions.csv` contains the June session rows emitted by the product telemetry pipeline. Timestamps are UTC, `page_events` excludes background keep-alives, and internal staff accounts have already been removed.
+
+The three client values use the same session schema. Session identifiers are unique export identifiers.
+
+--- SAMPLE ---
+session_id,account_id,device_hash,session_start,session_end,page_events,client
+CS-0005245,CA-01492,DV-04700,2026-06-04 12:01:00,2026-06-04 12:49:06,16,android
+CS-0008476,CA-00256,DV-02796,2026-06-06 07:24:00,2026-06-06 08:05:09,22,ios
+CS-0012668,CA-03740,DV-07272,2026-06-17 19:02:00,2026-06-17 20:45:12,44,ios
+CS-0011284,CA-00700,DV-03412,2026-06-19 11:47:00,2026-06-19 12:17:31,15,web
+CS-0005499,CA-04927,DV-05515,2026-06-05 06:08:00,2026-06-05 06:48:07,21,web
+
+--- ROW COUNT ---
+   13004 june_web_sessions.csv
+
+exec
+/bin/bash -lc "awk -F, 'NR>1 {split("'$4,s,/[- :]/); split($5,e,/[- :]/); start=mktime(s[1] " " s[2] " " s[3] " " s[4] " " s[5] " " s[6]); end=mktime(e[1] " " e[2] " " e[3] " " e[4] " " e[5] " " e[6]); d=end-start; sum+=d; if (d<0) neg++; if (d==0) zero++; n++} END {printf "sessions=%d'"\\ntotal_seconds=%.0f\\naverage_minutes=%.10f\\nnegative=%d\\nzero=%d\\n\", n, sum, sum/n/60, neg, zero}' june_web_sessions.csv
+awk -F, 'NR>1 {count["'$7]++} END {for (client in count) print client,count[client]}'"' june_web_sessions.csv | sort" in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+awk: calling undefined function mktime
+ input record number 2, file june_web_sessions.csv
+ source line number 1
+android 4306
+ios 4340
+web 4357
+
+codex
+The README establishes that each row is a customer session and staff have already been removed. I’m calculating end-minus-start across all 13,003 exported sessions.
+exec
+/bin/bash -lc "node - <<'NODE'
+const fs = require('fs');
+const rows = fs.readFileSync('june_web_sessions.csv', 'utf8').trim().split(/\\r?\\n/);
+let totalMs = 0, n = 0, invalid = 0, negative = 0;
+for (const row of rows.slice(1)) {
+  const columns = row.split(',');
+  const start = Date.parse(columns[3].replace(' ', 'T') + 'Z');
+  const end = Date.parse(columns[4].replace(' ', 'T') + 'Z');
+  const duration = end - start;
+  if ("'!Number.isFinite(duration)) { invalid++; continue; }
+  if (duration < 0) negative++;
+  totalMs += duration;
+  n++;
+}
+const minutes = totalMs / n / 60000;
+console.log(JSON.stringify({ sessions: n, total_seconds: totalMs / 1000, average_minutes: minutes, rounded_one_decimal: minutes.toFixed(1), invalid, negative }, null, 2));
+NODE' in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+{
+  "sessions": 13003,
+  "total_seconds": 64131363,
+  "average_minutes": 82.20072675536414,
+  "rounded_one_decimal": "82.2",
+  "invalid": 0,
+  "negative": 0
+}
+
+codex
+Average customer session length: 82.2 minutes.
+
+FINAL_ANSWER: 82.2
+tokens used
+8,774
+Average customer session length: 82.2 minutes.
+
+FINAL_ANSWER: 82.2

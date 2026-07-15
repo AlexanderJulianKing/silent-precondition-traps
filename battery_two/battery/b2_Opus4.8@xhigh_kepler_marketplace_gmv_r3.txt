@@ -1,0 +1,16 @@
+The computation is clean — all 8,928 paid orders converted with a matching daily reference rate (no missing rates, no malformed amounts).
+
+**Method:**
+- Kept only `PAID` orders (excluded the 272 `CANCELLED` ones, which per the README were never charged).
+- Converted each order's `order_amount` to USD using `usd_per_currency_unit` for that order's `order_date` and `currency` (USD rows convert at 1.0).
+- Summed at full precision, then rounded once to two decimals (half-up).
+
+| Metric | Value |
+|---|---|
+| Total rows | 9,200 |
+| Paid orders | 8,928 |
+| Cancelled (excluded) | 272 |
+| GMV (full precision) | 1091183.55467117 |
+| **GMV (USD, 2dp)** | **1091183.55** |
+
+FINAL_ANSWER: 1091183.55

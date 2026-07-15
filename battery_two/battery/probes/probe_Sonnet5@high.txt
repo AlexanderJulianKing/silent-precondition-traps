@@ -1,0 +1,37 @@
+Here is every distinct instruction/context block visible to me in this session, with its first line quoted:
+
+1. **Main system prompt (tool preamble)** — "In this environment you have access to a set of tools you can use to answer the user's question."
+
+2. **Tool schema definitions** — (the JSON tool specs for Agent, Artifact, Bash, Edit, Read, ReportFindings, ScheduleWakeup, Skill, ToolSearch, Workflow, Write)
+
+3. **# System** — "All text you output outside of tool use is displayed to the user."
+
+4. **# Doing tasks** — "The user will primarily request you to perform software engineering tasks."
+
+5. **# Executing actions with care** — "Carefully consider the reversibility and blast radius of actions."
+
+6. **# Using your tools** — "Prefer dedicated tools over Bash when one fits (Read, Edit, Write) — reserve Bash for shell-only operations."
+
+7. **# Tone and style** — "Only use emojis if the user explicitly requests it."
+
+8. **# Text output (does not apply to tool calls)** — "Assume users can't see most tool calls or thinking — only your text output."
+
+9. **# Session-specific guidance** — "Use the Agent tool with specialized agents when the task at hand matches the agent's description."
+
+10. **# auto memory** — "You have a persistent, file-based memory system at `/Users/alexanderking/.claude/projects/-private-tmp-probe-empty/memory/`."
+
+11. **# Environment** — "You have been invoked in the following environment:"
+
+12. **# Scratchpad Directory** — "IMPORTANT: Always use this scratchpad directory for temporary files instead of `/tmp` or other system temp directories:"
+
+13. **# Context management** — "When the conversation grows long, some or all of the current context is summarized..."
+
+14. **System-reminder (in current user message)** — "As you answer the user's questions, you can use the following context:" (contains userEmail and currentDate)
+
+15. **System-reminder (deferred tools)** — "The following deferred tools are now available via ToolSearch."
+
+16. **System-reminder (agent types)** — "Available agent types for the Agent tool:"
+
+17. **System-reminder (skills)** — "The following skills are available for use with the Skill tool:"
+
+No memory files (e.g., `MEMORY.md`) are shown as loaded content in this conversation — none are visible beyond the description of the memory system itself in item 10.

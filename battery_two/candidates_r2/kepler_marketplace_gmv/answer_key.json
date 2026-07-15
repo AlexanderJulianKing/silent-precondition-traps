@@ -1,0 +1,7 @@
+{
+  "correct_answer": 1025956.25,
+  "mechanism": "Checkout currency is presentation metadata while the adjacent order amount is already merchant-ledger USD.",
+  "planted_answer": 1091183.55,
+  "task": "kepler_marketplace_gmv",
+  "tolerance": 0.005
+}

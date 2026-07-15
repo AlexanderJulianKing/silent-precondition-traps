@@ -1,0 +1,6 @@
+I inspected all three files. The orders CSV has 8,928 PAID orders (272 CANCELLED excluded) across USD/EUR/GBP/CAD. I converted each paid order's `order_amount` to USD using the treasury reference rate matched on the order's date and currency (`usd_per_currency_unit`), then summed.
+
+- PAID orders included: 8,928; CANCELLED excluded: 272
+- Conversion: per-day, per-currency rate; USD rows use 1.0
+
+FINAL_ANSWER: 1091183.55

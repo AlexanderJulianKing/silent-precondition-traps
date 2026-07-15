@@ -1,0 +1,3 @@
+The folder at `/private/tmp/alder_channel_energy` contains Alder Works' September 2026 production-energy channel closes and README. Calculate the total electricity used by production operations during September, in kWh, rounded to one decimal place.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

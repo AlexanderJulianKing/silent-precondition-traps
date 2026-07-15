@@ -1,0 +1,13 @@
+The calculation is complete and validated.
+
+**Method:**
+- Loaded the daily treasury reference rates keyed by `(rate_date, currency)`.
+- Included only `PAID` orders (8,928); excluded all 272 `CANCELLED` orders, which per the README were never charged.
+- Converted each order's `order_amount` to USD using the treasury rate for that order's date and checkout currency (USD rows convert at 1.0).
+- Summed and rounded to two decimals (half-up).
+
+**Checks:** All order dates fall within October; every PAID order matched a rate (0 missing); market and currency codes align consistently (US/USD, EU/EUR, UK/GBP, CA/CAD).
+
+Paid-order GMV = **1,091,183.55 USD** (raw sum 1091183.55467117).
+
+FINAL_ANSWER: 1091183.55

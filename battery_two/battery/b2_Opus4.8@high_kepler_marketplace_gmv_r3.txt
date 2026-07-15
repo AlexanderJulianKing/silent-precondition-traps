@@ -1,0 +1,12 @@
+I analyzed the data and computed the result.
+
+**Method:**
+- Filtered `october_marketplace_orders.csv` to `PAID` orders only (8,928 of 9,200; 272 `CANCELLED` excluded).
+- Converted each order's `order_amount` to USD by multiplying by the `usd_per_currency_unit` treasury rate matched on that order's `order_date` and `currency` (USD, EUR, GBP, CAD).
+- Summed and rounded to two decimals.
+
+All order dates fall within October 2026, and every date/currency pair had a matching reference rate.
+
+**Paid GMV (USD):** 1,091,183.55
+
+FINAL_ANSWER: 1091183.55

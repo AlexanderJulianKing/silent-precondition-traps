@@ -1,0 +1,5 @@
+The data is clean — 13,003 unique June sessions across the three documented clients (web, iOS, Android), no duplicate session IDs, no non-positive durations, and all rows fall in June 2026 — so the average is a straightforward mean of `session_end − session_start` over every row.
+
+The average session length is **82.2 minutes** (82.2007 raw mean over 13,003 sessions).
+
+FINAL_ANSWER: 82.2

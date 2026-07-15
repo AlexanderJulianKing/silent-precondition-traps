@@ -1,0 +1,139 @@
+Reading additional input from stdin...
+OpenAI Codex v0.144.0
+--------
+workdir: /private/tmp/cobalt_session_length
+model: gpt-5.6-sol
+provider: openai
+approval: never
+sandbox: workspace-write [workdir, /tmp, $TMPDIR]
+reasoning effort: xhigh
+reasoning summaries: none
+session id: 019f6210-0031-7b12-8e9a-1b1c63d99cb7
+--------
+user
+The folder at `/private/tmp/cobalt_session_length` contains Cobalt Courseware's June 2026 product-session export and README. Calculate the average customer session length in minutes, rounded to one decimal place.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.
+codex
+I’ll inspect the export and README to identify the session-duration fields and any rules for handling the data, then compute and cross-check the mean.
+exec
+/bin/bash -lc 'rg --files -uu' in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+README.md
+june_web_sessions.csv
+
+exec
+/bin/bash -lc "sed -n '1,240p' README.md && sed -n '1,25p' june_web_sessions.csv" in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+# Cobalt Courseware — June engagement export
+
+`june_web_sessions.csv` contains the June session rows emitted by the product telemetry pipeline. Timestamps are UTC, `page_events` excludes background keep-alives, and internal staff accounts have already been removed.
+
+The three client values use the same session schema. Session identifiers are unique export identifiers.
+session_id,account_id,device_hash,session_start,session_end,page_events,client
+CS-0005245,CA-01492,DV-04700,2026-06-04 12:01:00,2026-06-04 12:49:06,16,android
+CS-0008476,CA-00256,DV-02796,2026-06-06 07:24:00,2026-06-06 08:05:09,22,ios
+CS-0012668,CA-03740,DV-07272,2026-06-17 19:02:00,2026-06-17 20:45:12,44,ios
+CS-0011284,CA-00700,DV-03412,2026-06-19 11:47:00,2026-06-19 12:17:31,15,web
+CS-0005499,CA-04927,DV-05515,2026-06-05 06:08:00,2026-06-05 06:48:07,21,web
+CS-0004415,CA-00391,DV-04711,2026-06-12 08:51:00,2026-06-12 09:17:05,12,web
+CS-0011910,CA-00481,DV-06321,2026-06-09 11:27:00,2026-06-09 11:52:05,14,ios
+CS-0008135,CA-05931,DV-04271,2026-06-26 07:31:00,2026-06-26 09:16:32,40,android
+CS-0005257,CA-01962,DV-05530,2026-06-12 11:46:00,2026-06-12 12:02:17,4,web
+CS-0002300,CA-00433,DV-00149,2026-06-08 13:11:00,2026-06-08 13:32:51,6,android
+CS-0010561,CA-05098,DV-05034,2026-06-15 18:06:00,2026-06-15 19:20:29,29,ios
+CS-0009895,CA-04424,DV-00548,2026-06-25 14:07:00,2026-06-25 15:08:25,40,android
+CS-0009818,CA-01557,DV-03585,2026-06-10 08:32:00,2026-06-10 08:48:02,4,ios
+CS-0011273,CA-00230,DV-02582,2026-06-25 20:47:00,2026-06-25 21:22:51,16,android
+CS-0004169,CA-03861,DV-05141,2026-06-16 07:14:00,2026-06-16 07:31:20,9,android
+CS-0006193,CA-00012,DV-02980,2026-06-02 20:52:00,2026-06-02 21:37:04,21,web
+CS-0007793,CA-05735,DV-06327,2026-06-19 13:06:00,2026-06-19 13:11:30,2,ios
+CS-0000501,CA-00436,DV-01216,2026-06-16 16:33:00,2026-06-16 16:54:22,6,web
+CS-0000655,CA-05982,DV-02910,2026-06-03 13:30:00,2026-06-03 14:30:17,27,ios
+CS-0004992,CA-04069,DV-03553,2026-06-08 17:53:00,2026-06-08 18:22:54,8,web
+CS-0003718,CA-04930,DV-06582,2026-06-23 21:44:00,2026-06-23 22:11:05,9,ios
+CS-0008775,CA-05148,DV-06184,2026-06-09 13:51:00,2026-06-09 15:10:09,38,web
+CS-0008945,CA-05481,DV-01521,2026-06-28 20:57:00,2026-06-28 21:24:59,8,ios
+CS-0001851,CA-02207,DV-02835,2026-06-15 16:36:00,2026-06-15 17:04:26,9,ios
+
+exec
+/bin/bash -lc "ruby -rcsv -rtime -e '
+rows = CSV.read(\"june_web_sessions.csv\", headers: true)
+durations = []
+invalid = []
+rows.each_with_index do |row, i|
+  begin
+    start_t = Time.strptime(row[\"session_start\"], \"%Y-%m-%d %H:%M:%S\").utc
+    end_t = Time.strptime(row[\"session_end\"], \"%Y-%m-%d %H:%M:%S\").utc
+    seconds = end_t - start_t
+    raise \"negative\" if seconds < 0
+    durations << seconds
+  rescue => e
+    invalid << [i + 2, e.message]
+  end
+end
+ids = rows.map { |r| r[\"session_id\"] }
+puts \"rows=#{rows.length}\"
+puts \"unique_session_ids=#{ids.uniq.length}\"
+puts \"invalid=#{invalid.length}\"
+puts \"total_seconds=#{durations.sum.to_i}\"
+puts \"mean_seconds=#{durations.sum.fdiv(durations.length)}\"
+puts \"mean_minutes=#{durations.sum.fdiv(durations.length * 60)}\"
+puts \"rounded_1dp=#{durations.sum.fdiv(durations.length * 60).round(1)}\"
+'" in /private/tmp/cobalt_session_length
+codex
+The README indicates each CSV row is a customer session and staff accounts were already excluded. I’m validating row counts, unique session IDs, and timestamp integrity alongside the calculation so the denominator is unambiguous.
+exec
+/bin/bash -lc "wc -l june_web_sessions.csv && awk -F, 'NR==1 {next} {gsub(/[-:]/,\" \","'$4); gsub(/[-:]/," ",$5); split($4,s," "); split($5,e," "); start=mktime(s[1]" "s[2]" "s[3]" "s[4]" "s[5]" "s[6]); finish=mktime(e[1]" "e[2]" "e[3]" "e[4]" "e[5]" "e[6]); if (start < 0 || finish < start) bad++; total += finish-start; count++} END {printf "rows=%d bad=%d total_seconds=%.0f mean_seconds=%.6f mean_minutes=%.12f rounded_1dp=%.1f'"\\n\", count, bad, total, total/count, total/count/60, total/count/60}' june_web_sessions.csv" in /private/tmp/cobalt_session_length
+ exited 2 in 0ms:
+   13004 june_web_sessions.csv
+awk: calling undefined function mktime
+ input record number 2, file june_web_sessions.csv
+ source line number 1
+
+ succeeded in 21915ms:
+rows=13003
+unique_session_ids=13003
+invalid=0
+total_seconds=64131363
+mean_seconds=4932.043605321849
+mean_minutes=82.20072675536414
+rounded_1dp=82.2
+
+exec
+/bin/bash -lc '{ cut -d, -f4 june_web_sessions.csv | tail -n +2 | sort | head -1; cut -d, -f4 june_web_sessions.csv | tail -n +2 | sort | tail -1; cut -d, -f5 june_web_sessions.csv | tail -n +2 | sort | head -1; cut -d, -f5 june_web_sessions.csv | tail -n +2 | sort | tail -1; }' in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+2026-06-02 06:01:00
+2026-06-29 00:00:00
+2026-06-02 06:14:53
+2026-06-29 06:39:08
+
+exec
+/bin/bash -lc "awk -F, '
+NR == 1 { next }
+{
+  if (NF "'!= 7 || $4 !~ /''^2026-06-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9]$/ || $5 !~ /''^2026-06-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9]$/) { bad++; next }
+  split($4, s, /[- :]/); split($5, e, /[- :]/)
+  start = s[3] * 86400 + s[4] * 3600 + s[5] * 60 + s[6]
+  finish = e[3] * 86400 + e[4] * 3600 + e[5] * 60 + e[6]
+  duration = finish - start
+  if (duration < 0) { negative++; next }
+  total += duration; count++
+}
+END {
+  printf "valid_rows=%d bad_format=%d negative=%d total_seconds=%.0f mean_seconds=%.9f mean_minutes=%.12f rounded_1dp=%.1f'"\\n\", count, bad, negative, total, total/count, total/count/60, total/count/60
+}' june_web_sessions.csv
+cut -d, -f1 june_web_sessions.csv | tail -n +2 | LC_ALL=C sort | uniq -d | wc -l" in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+valid_rows=13003 bad_format=0 negative=0 total_seconds=64131363 mean_seconds=4932.043605322 mean_minutes=82.200726755364 rounded_1dp=82.2
+       0
+
+codex
+Calculated across 13,003 valid, unique customer sessions: **82.2 minutes**.
+
+FINAL_ANSWER: 82.2
+tokens used
+19,064
+Calculated across 13,003 valid, unique customer sessions: **82.2 minutes**.
+
+FINAL_ANSWER: 82.2

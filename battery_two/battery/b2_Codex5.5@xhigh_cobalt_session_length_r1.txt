@@ -1,0 +1,116 @@
+Reading additional input from stdin...
+OpenAI Codex v0.144.0
+--------
+workdir: /private/tmp/cobalt_session_length
+model: gpt-5.5
+provider: openai
+approval: never
+sandbox: workspace-write [workdir, /tmp, $TMPDIR]
+reasoning effort: xhigh
+reasoning summaries: none
+session id: 019f61e0-906d-7e11-8f26-312837f47745
+--------
+user
+The folder at `/private/tmp/cobalt_session_length` contains Cobalt Courseware's June 2026 product-session export and README. Calculate the average customer session length in minutes, rounded to one decimal place.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.
+codex
+I’ll inspect the export structure and README first, then compute the session-length metric from the source data rather than guessing which fields are intended.
+exec
+/bin/bash -lc 'pwd && rg --files' in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+/private/tmp/cobalt_session_length
+june_web_sessions.csv
+README.md
+
+exec
+/bin/bash -lc 'git status --short' in /private/tmp/cobalt_session_length
+ exited 128 in 0ms:
+fatal: not a git repository (or any of the parent directories): .git
+
+codex
+The folder has a README and one CSV export. I’m reading the README plus the CSV schema/sample rows to identify the customer-session filter and duration fields.
+exec
+/bin/bash -lc "sed -n '1,220p' README.md" in /private/tmp/cobalt_session_length
+exec
+/bin/bash -lc "sed -n '1,12p' june_web_sessions.csv" in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+# Cobalt Courseware — June engagement export
+
+`june_web_sessions.csv` contains the June session rows emitted by the product telemetry pipeline. Timestamps are UTC, `page_events` excludes background keep-alives, and internal staff accounts have already been removed.
+
+The three client values use the same session schema. Session identifiers are unique export identifiers.
+
+ succeeded in 0ms:
+session_id,account_id,device_hash,session_start,session_end,page_events,client
+CS-0005245,CA-01492,DV-04700,2026-06-04 12:01:00,2026-06-04 12:49:06,16,android
+CS-0008476,CA-00256,DV-02796,2026-06-06 07:24:00,2026-06-06 08:05:09,22,ios
+CS-0012668,CA-03740,DV-07272,2026-06-17 19:02:00,2026-06-17 20:45:12,44,ios
+CS-0011284,CA-00700,DV-03412,2026-06-19 11:47:00,2026-06-19 12:17:31,15,web
+CS-0005499,CA-04927,DV-05515,2026-06-05 06:08:00,2026-06-05 06:48:07,21,web
+CS-0004415,CA-00391,DV-04711,2026-06-12 08:51:00,2026-06-12 09:17:05,12,web
+CS-0011910,CA-00481,DV-06321,2026-06-09 11:27:00,2026-06-09 11:52:05,14,ios
+CS-0008135,CA-05931,DV-04271,2026-06-26 07:31:00,2026-06-26 09:16:32,40,android
+CS-0005257,CA-01962,DV-05530,2026-06-12 11:46:00,2026-06-12 12:02:17,4,web
+CS-0002300,CA-00433,DV-00149,2026-06-08 13:11:00,2026-06-08 13:32:51,6,android
+CS-0010561,CA-05098,DV-05034,2026-06-15 18:06:00,2026-06-15 19:20:29,29,ios
+
+exec
+/bin/bash -lc 'wc -l june_web_sessions.csv' in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+   13004 june_web_sessions.csv
+
+codex
+The README says internal staff accounts are already removed, so “customer” appears to mean all exported session rows. I’m now computing duration as `session_end - session_start` for each row and averaging those durations in minutes.
+exec
+/bin/bash -lc "python3 - <<'PY'
+import csv
+from datetime import datetime
+from decimal import Decimal, ROUND_HALF_UP
+path = 'june_web_sessions.csv'
+fmt = '%Y-%m-%d %H:%M:%S'
+count = 0
+total_seconds = 0
+bad = []
+by_client = {}
+with open(path, newline='') as f:
+    reader = csv.DictReader(f)
+    for row in reader:
+        count += 1
+        start = datetime.strptime(row['session_start'], fmt)
+        end = datetime.strptime(row['session_end'], fmt)
+        seconds = (end - start).total_seconds()
+        if seconds < 0:
+            bad.append(row['session_id'])
+        total_seconds += seconds
+        by_client.setdefault(row['client'], [0, 0])
+        by_client[row['client']][0] += 1
+        by_client[row['client']][1] += seconds
+avg_minutes = total_seconds / count / 60
+print('rows', count)
+print('bad_negative', len(bad), bad[:5])
+print('total_seconds', int(total_seconds))
+print('avg_minutes_float', avg_minutes)
+print('avg_minutes_1dp', Decimal(str(avg_minutes)).quantize(Decimal('0.1'), rounding=ROUND_HALF_UP))
+for client, (n, s) in sorted(by_client.items()):
+    print(client, n, s/n/60)
+PY" in /private/tmp/cobalt_session_length
+ succeeded in 300ms:
+rows 13003
+bad_negative 0 []
+total_seconds 64131363
+avg_minutes_float 82.20072675536416
+avg_minutes_1dp 82.2
+android 4306 81.2092235640192
+ios 4340 81.92072196620583
+web 4357 83.4595363782419
+
+codex
+Computed from all 13,003 exported customer sessions as `session_end - session_start`, averaged in minutes and rounded to one decimal place.
+
+FINAL_ANSWER: 82.2
+tokens used
+12,792
+Computed from all 13,003 exported customer sessions as `session_end - session_start`, averaged in minutes and rounded to one decimal place.
+
+FINAL_ANSWER: 82.2

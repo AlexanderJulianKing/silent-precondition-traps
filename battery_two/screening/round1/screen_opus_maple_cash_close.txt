@@ -1,0 +1,12 @@
+Confirmed. The June 30 close rows contain blank denomination fields (e.g., MSM-01-D1 has a blank `fives`), which per the register export profile mean "retain prior value" — not zero. Reconstructing each drawer's full snapshot by carrying forward the last emitted value for every field gives the correct total.
+
+**Summary:**
+- 80 drawers × 30 daily closes (June 1–30), exported in TillTrace "Compact" delta format
+- First row per drawer = full snapshot; later rows emit changed fields only; blank field = retain prior value
+- For each drawer, carried forward the last non-empty value per denomination through June 30
+- Value = ones×\$1 + fives×\$5 + tens×\$10 + twenties×\$20 + fifties×\$50 + hundreds×\$100 + coins_cents/100
+- All 80 drawers resolve to a complete, `CLOSED` June 30 snapshot
+
+Total cash on hand at the June 30 close: **182417.86** (vs. 159955.93 if blanks were wrongly read as zero).
+
+FINAL_ANSWER: 182417.86

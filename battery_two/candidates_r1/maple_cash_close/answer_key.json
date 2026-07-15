@@ -1,0 +1,7 @@
+{
+  "correct_answer": 182417.86,
+  "mechanism": "Blank denomination cells in a change-only export mean retain prior state, not zero cash.",
+  "planted_answer": 159955.93,
+  "task": "maple_cash_close",
+  "tolerance": 0.005
+}

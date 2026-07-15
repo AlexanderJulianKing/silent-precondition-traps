@@ -1,0 +1,10 @@
+I calculated the total miles for completed August routes, accounting for a units bug in the data.
+
+**Findings:**
+- 12,200 August routes; 11,919 `COMPLETED` (281 `CANCELLED` "never left the depot" and are excluded).
+- Two handheld builds emit `route_distance`: `4.9-L` and `5.14-R`. The README flags that the handheld build is "retained for support triage" — a hint that build matters.
+- Comparing the same route templates across builds, `5.14-R` reads a consistent **1.609×** higher — the km↔mile factor. That build reports **kilometers**, not miles. I divided those 1,535 routes' distances by 1.609344 to convert to miles.
+
+Total miles on completed routes = **211,580.6** (vs. 227,561.6 if the km readings were left unconverted).
+
+FINAL_ANSWER: 211580.6

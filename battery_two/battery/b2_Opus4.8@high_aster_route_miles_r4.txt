@@ -1,0 +1,8 @@
+## Summary
+
+- **Filtering:** 12,200 rows → kept **11,919 COMPLETED** August routes; excluded 281 CANCELLED (which "never left the depot"). All rows are already August 2026.
+- **Units bug found:** The `handheld_build` column (flagged as "retained for support triage") has two builds. Comparing `route_distance` for the *same route templates*, the `5.14-R` build consistently reads **1.61× higher** than `4.9-L` — exactly the km→mile factor (1 mi = 1.609344 km). The newer `5.14-R` handheld logs kilometers, not miles.
+- **Correction:** Divided the 1,535 completed `5.14-R` readings by 1.609344; left the 4.9-L readings as-is.
+- Without the fix the naive sum is 227,561.6; the unit-corrected total is **211,580.6 miles**.
+
+FINAL_ANSWER: 211580.6

@@ -1,0 +1,7 @@
+{
+  "correct_answer": 3.0,
+  "mechanism": "Same-day plan migrations close one billing contract and open another without ending the underlying membership.",
+  "planted_answer": 8.0,
+  "task": "sequoia_member_churn",
+  "tolerance": 0.05
+}

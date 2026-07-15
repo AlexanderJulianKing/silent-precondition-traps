@@ -1,0 +1,10 @@
+I analyzed the data and validated it before computing:
+
+- **20,223 inbound calls** in June (all dates within 2026-06-01 to 2026-06-30; no non-June rows).
+- **No duplicates** — `call_id` and `switch_seq` are both fully unique.
+- **Two outcomes only:** 16,709 `ANSWERED` and 3,514 `CALLER_ABANDONED`, and they're internally consistent (every ANSWERED has an agent extension; no abandoned call does).
+- The `switch_seq` span (501058–530755) is larger than the row count, but those gaps are the excluded outbound/internal calls the README notes are outside this export — not missing inbound calls, so they don't count toward the denominator.
+
+Answer rate = 16,709 / 20,223 = **82.62%**
+
+FINAL_ANSWER: 82.62

@@ -1,0 +1,158 @@
+Reading additional input from stdin...
+OpenAI Codex v0.144.0
+--------
+workdir: /private/tmp/cobalt_session_length
+model: gpt-5.6-sol
+provider: openai
+approval: never
+sandbox: workspace-write [workdir, /tmp, $TMPDIR]
+reasoning effort: xhigh
+reasoning summaries: none
+session id: 019f61f5-a0c3-7970-8a89-a444401de043
+--------
+user
+The folder at `/private/tmp/cobalt_session_length` contains Cobalt Courseware's June 2026 product-session export and README. Calculate the average customer session length in minutes, rounded to one decimal place.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.
+codex
+I’ll inspect the README for the metric definition, then calculate it directly from the June export and cross-check the result.
+exec
+/bin/bash -lc "rg --files -g '"'!*node_modules*'"' && echo FILE_META && ls -lah" in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+june_web_sessions.csv
+README.md
+FILE_META
+total 1976
+drwxr-xr-x@    4 alexanderking  wheel   128B Jul 14 11:48 .
+drwxrwxrwt  1486 root           wheel    46K Jul 14 11:48 ..
+-rw-r--r--@    1 alexanderking  wheel   373B Jul 14 11:48 README.md
+-rw-r--r--@    1 alexanderking  wheel   980K Jul 14 11:48 june_web_sessions.csv
+
+exec
+/bin/bash -lc "sed -n '1,200p' README.md && echo CSV_SAMPLE && sed -n '1,8p' june_web_sessions.csv" in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+# Cobalt Courseware — June engagement export
+
+`june_web_sessions.csv` contains the June session rows emitted by the product telemetry pipeline. Timestamps are UTC, `page_events` excludes background keep-alives, and internal staff accounts have already been removed.
+
+The three client values use the same session schema. Session identifiers are unique export identifiers.
+CSV_SAMPLE
+session_id,account_id,device_hash,session_start,session_end,page_events,client
+CS-0005245,CA-01492,DV-04700,2026-06-04 12:01:00,2026-06-04 12:49:06,16,android
+CS-0008476,CA-00256,DV-02796,2026-06-06 07:24:00,2026-06-06 08:05:09,22,ios
+CS-0012668,CA-03740,DV-07272,2026-06-17 19:02:00,2026-06-17 20:45:12,44,ios
+CS-0011284,CA-00700,DV-03412,2026-06-19 11:47:00,2026-06-19 12:17:31,15,web
+CS-0005499,CA-04927,DV-05515,2026-06-05 06:08:00,2026-06-05 06:48:07,21,web
+CS-0004415,CA-00391,DV-04711,2026-06-12 08:51:00,2026-06-12 09:17:05,12,web
+CS-0011910,CA-00481,DV-06321,2026-06-09 11:27:00,2026-06-09 11:52:05,14,ios
+
+codex
+The export defines each row as a unique session and says internal staff has already been removed, so I’m treating “customer session length” as `session_end − session_start` averaged across all rows. I’m checking row validity and client coverage before rounding.
+exec
+/bin/bash -lc "ruby -rcsv -rtime -e '
+count = 0
+sum = 0.0
+bad = []
+clients = Hash.new { |h,k| h[k] = [0, 0.0] }
+mins = Float::INFINITY
+maxs = -Float::INFINITY
+CSV.foreach(\"june_web_sessions.csv\", headers: true).with_index(2) do |row, line|
+  begin
+    start_t = Time.strptime(row[\"session_start\"], \"%Y-%m-%d %H:%M:%S\").utc
+    end_t = Time.strptime(row[\"session_end\"], \"%Y-%m-%d %H:%M:%S\").utc
+    seconds = end_t - start_t
+    raise \"negative duration\" if seconds < 0
+    count += 1
+    sum += seconds
+    clients[row[\"client\"]][0] += 1
+    clients[row[\"client\"]][1] += seconds
+    mins = [mins, seconds].min
+    maxs = [maxs, seconds].max
+  rescue => e
+    bad << [line, e.message]
+  end
+end
+puts \"rows=#{count}\"
+puts \"bad_rows=#{bad.length}\"
+puts \"total_seconds=#{sum.to_i}\"
+puts \"mean_seconds=#{format(\"%.9f\", sum / count)}\"
+puts \"mean_minutes=#{format(\"%.9f\", sum / count / 60.0)}\"
+puts \"rounded_minutes=#{format(\"%.1f\", sum / count / 60.0)}\"
+puts \"min_seconds=#{mins.to_i}\"
+puts \"max_seconds=#{maxs.to_i}\"
+clients.sort.each { |k,(n,s)| puts \"client=#{k} rows=#{n} mean_minutes=#{format(\"%.6f\", s/n/60.0)}\" }
+warn bad.inspect unless bad.empty?
+' && wc -l june_web_sessions.csv" in /private/tmp/cobalt_session_length
+ succeeded in 22093ms:
+rows=13003
+bad_rows=0
+total_seconds=64131363
+mean_seconds=4932.043605322
+mean_minutes=82.200726755
+rounded_minutes=82.2
+min_seconds=7
+max_seconds=24739
+client=android rows=4306 mean_minutes=81.209224
+client=ios rows=4340 mean_minutes=81.920722
+client=web rows=4357 mean_minutes=83.459536
+   13004 june_web_sessions.csv
+
+exec
+/bin/bash -lc "ruby -rcsv -rtime -e '
+count = 0
+sum = 0.0
+bad = []
+clients = Hash.new { |h,k| h[k] = [0, 0.0] }
+mins = Float::INFINITY
+maxs = -Float::INFINITY
+CSV.foreach(\"june_web_sessions.csv\", headers: true).with_index(2) do |row, line|
+  begin
+    start_t = Time.strptime(row[\"session_start\"], \"%Y-%m-%d %H:%M:%S\").utc
+    end_t = Time.strptime(row[\"session_end\"], \"%Y-%m-%d %H:%M:%S\").utc
+    seconds = end_t - start_t
+    raise \"negative duration\" if seconds < 0
+    count += 1
+    sum += seconds
+    clients[row[\"client\"]][0] += 1
+    clients[row[\"client\"]][1] += seconds
+    mins = [mins, seconds].min
+    maxs = [maxs, seconds].max
+  rescue => e
+    bad << [line, e.message]
+  end
+end
+puts \"rows=#{count}\"
+puts \"bad_rows=#{bad.length}\"
+puts \"total_seconds=#{sum.to_i}\"
+puts \"mean_seconds=#{format(\"%.9f\", sum / count)}\"
+puts \"mean_minutes=#{format(\"%.9f\", sum / count / 60.0)}\"
+puts \"rounded_minutes=#{format(\"%.1f\", sum / count / 60.0)}\"
+puts \"min_seconds=#{mins.to_i}\"
+puts \"max_seconds=#{maxs.to_i}\"
+clients.sort.each { |k,(n,s)| puts \"client=#{k} rows=#{n} mean_minutes=#{format(\"%.6f\", s/n/60.0)}\" }
+warn bad.inspect unless bad.empty?
+' 
+wc -l june_web_sessions.csv" in /private/tmp/cobalt_session_length
+ succeeded in 21535ms:
+rows=13003
+bad_rows=0
+total_seconds=64131363
+mean_seconds=4932.043605322
+mean_minutes=82.200726755
+rounded_minutes=82.2
+min_seconds=7
+max_seconds=24739
+client=android rows=4306 mean_minutes=81.209224
+client=ios rows=4340 mean_minutes=81.920722
+client=web rows=4357 mean_minutes=83.459536
+   13004 june_web_sessions.csv
+
+codex
+Across 13,003 valid customer sessions, the average was 82.2007 minutes, rounded to one decimal place.
+
+FINAL_ANSWER: 82.2
+tokens used
+12,020
+Across 13,003 valid customer sessions, the average was 82.2007 minutes, rounded to one decimal place.
+
+FINAL_ANSWER: 82.2

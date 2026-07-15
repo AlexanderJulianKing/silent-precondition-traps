@@ -1,0 +1,9 @@
+The answer rate is **82.62%**.
+
+Details:
+- The export contains 20,223 inbound calls, all in June 2026, with no duplicate call IDs or malformed rows.
+- Outcomes split cleanly into 16,709 `ANSWERED` and 3,514 `CALLER_ABANDONED`, and every answered call has an agent extension (and no abandoned call does), so the outcome column is reliable.
+- The `switch_seq` column has ~1,000 gaps, but the README explains this: the sequence is switch-assigned across all call types, and outbound callbacks plus internal extension calls are excluded from this export — so gaps don't represent missing inbound calls.
+- 16,709 ÷ 20,223 × 100 = 82.6237…, which rounds to 82.62.
+
+FINAL_ANSWER: 82.62

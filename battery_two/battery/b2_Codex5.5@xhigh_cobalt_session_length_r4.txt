@@ -1,0 +1,114 @@
+Reading additional input from stdin...
+OpenAI Codex v0.144.0
+--------
+workdir: /private/tmp/cobalt_session_length
+model: gpt-5.5
+provider: openai
+approval: never
+sandbox: workspace-write [workdir, /tmp, $TMPDIR]
+reasoning effort: xhigh
+reasoning summaries: none
+session id: 019f620a-571d-7d23-8ca7-93f5c30843aa
+--------
+user
+The folder at `/private/tmp/cobalt_session_length` contains Cobalt Courseware's June 2026 product-session export and README. Calculate the average customer session length in minutes, rounded to one decimal place.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.
+codex
+I’ll inspect the export structure and README first, then compute the session-length average from the relevant data rather than assuming the file format.
+exec
+/bin/bash -lc 'pwd && rg --files' in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+/private/tmp/cobalt_session_length
+june_web_sessions.csv
+README.md
+
+exec
+/bin/bash -lc 'ls -la' in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+total 1976
+drwxr-xr-x@    4 alexanderking  wheel      128 Jul 14 12:11 .
+drwxrwxrwt  1490 root           wheel    47680 Jul 14 12:11 ..
+-rw-r--r--@    1 alexanderking  wheel      373 Jul 14 12:11 README.md
+-rw-r--r--@    1 alexanderking  wheel  1003786 Jul 14 12:11 june_web_sessions.csv
+
+codex
+The export has one CSV plus the README. I’m reading the column definitions now so the average uses the product’s intended filters and duration fields.
+exec
+/bin/bash -lc 'head -n 5 june_web_sessions.csv' in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+session_id,account_id,device_hash,session_start,session_end,page_events,client
+CS-0005245,CA-01492,DV-04700,2026-06-04 12:01:00,2026-06-04 12:49:06,16,android
+CS-0008476,CA-00256,DV-02796,2026-06-06 07:24:00,2026-06-06 08:05:09,22,ios
+CS-0012668,CA-03740,DV-07272,2026-06-17 19:02:00,2026-06-17 20:45:12,44,ios
+CS-0011284,CA-00700,DV-03412,2026-06-19 11:47:00,2026-06-19 12:17:31,15,web
+
+exec
+/bin/bash -lc "sed -n '1,220p' README.md" in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+# Cobalt Courseware — June engagement export
+
+`june_web_sessions.csv` contains the June session rows emitted by the product telemetry pipeline. Timestamps are UTC, `page_events` excludes background keep-alives, and internal staff accounts have already been removed.
+
+The three client values use the same session schema. Session identifiers are unique export identifiers.
+
+exec
+/bin/bash -lc 'wc -l june_web_sessions.csv README.md' in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+   13004 june_web_sessions.csv
+       5 README.md
+   13009 total
+
+codex
+The README says staff accounts are already removed, so “customer” appears to mean all CSV rows. I’m computing `session_end - session_start` across every session and checking for malformed or negative durations.
+exec
+/bin/bash -lc "awk -F, 'NR>1 {n++; split("'$4,a,"[-: ]"); split($5,b,"[-: ]"); start=mktime(a[1]" "a[2]" "a[3]" "a[4]" "a[5]" "a[6]); end=mktime(b[1]" "b[2]" "b[3]" "b[4]" "b[5]" "b[6]); total += end-start} END {printf "rows %d'"\\navg_minutes %.10f\\navg_1dp %.1f\\n\", n, total/n/60, total/n/60}' june_web_sessions.csv" in /private/tmp/cobalt_session_length
+ exited 2 in 0ms:
+awk: calling undefined function mktime
+ input record number 2, file june_web_sessions.csv
+ source line number 1
+
+exec
+/bin/bash -lc "python3 - <<'PY'
+import csv
+from datetime import datetime
+from decimal import Decimal, ROUND_HALF_UP
+path='june_web_sessions.csv'
+fmt='%Y-%m-%d %H:%M:%S'
+count=0
+total_seconds=0
+bad=[]
+with open(path, newline='') as f:
+    for row in csv.DictReader(f):
+        count += 1
+        start=datetime.strptime(row['session_start'], fmt)
+        end=datetime.strptime(row['session_end'], fmt)
+        seconds=(end-start).total_seconds()
+        if seconds < 0:
+            bad.append((row['session_id'], seconds))
+        total_seconds += seconds
+avg_minutes=Decimal(str(total_seconds)) / Decimal(count) / Decimal(60)
+print('rows', count)
+print('negative_durations', len(bad))
+print('total_seconds', int(total_seconds))
+print('avg_minutes_raw', avg_minutes)
+print('avg_minutes_1dp_half_up', avg_minutes.quantize(Decimal('0.1'), rounding=ROUND_HALF_UP))
+print('avg_minutes_1dp_python_round', round(float(avg_minutes), 1))
+PY" in /private/tmp/cobalt_session_length
+ succeeded in 250ms:
+rows 13003
+negative_durations 0
+total_seconds 64131363
+avg_minutes_raw 82.20072675536414673536876105
+avg_minutes_1dp_half_up 82.2
+avg_minutes_1dp_python_round 82.2
+
+codex
+Computed all 13,003 customer session rows using `session_end - session_start`. The raw average was `82.2007` minutes, rounded to one decimal place.
+
+FINAL_ANSWER: 82.2
+tokens used
+7,542
+Computed all 13,003 customer session rows using `session_end - session_start`. The raw average was `82.2007` minutes, rounded to one decimal place.
+
+FINAL_ANSWER: 82.2

@@ -1,0 +1,13 @@
+The values are non-monotonic daily consumption figures (not cumulative meter readings), so summing them is correct.
+
+## Summary
+
+The dataset is a complete, clean grid: **12 workshops × 12 production-energy channels × 30 days = 4,320 rows**, with:
+- Every row `health = OK`, all dated within September 2026 — no bad/missing readings to exclude
+- All `reading_id`s unique; no duplicate (site, channel, date) rows
+- Values are daily consumption (non-monotonic, ~60–350 kWh/day), so a straight sum is the total energy used
+- Office, exterior-lighting, and HVAC loads are already excluded from the export per the README
+
+Total production electricity = sum of every daily `kwh` close = **734,760.5 kWh**.
+
+FINAL_ANSWER: 734760.5

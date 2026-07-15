@@ -1,0 +1,9 @@
+**17,000 physical parcels were transferred to the carrier in July.**
+
+The export has 17,950 rows, all with unique tracking numbers, `ACCEPTED` responses, and July timestamps — so by tracking number alone nothing looks off. But the physical fingerprint columns retained for packing-line diagnostics reveal double-labeling: exactly 950 pairs of rows share an identical signature (same weight, same length/width/height, same destination hash, and the exact same 6-digit raw load-cell `scale_sample` — a value that two genuinely different boxes wouldn't reproduce).
+
+Every one of those 950 duplicate groups is a pair (never a triple), with consecutive manifest row numbers, the same lane, and acceptance scans 25–75 seconds apart — the classic pattern of one parcel getting a second label and a second scan moments later. The pattern runs daily from July 11 through July 31, so it's a persistent line issue, not a one-day glitch.
+
+Counting each of those pairs as one physical box: 17,950 rows − 950 duplicate scans = 17,000 parcels.
+
+FINAL_ANSWER: 17000

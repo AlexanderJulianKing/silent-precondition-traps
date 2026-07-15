@@ -1,0 +1,13 @@
+## Summary
+
+**Total individual beverage units shipped in Q2 2026: 1,431,890**
+
+How I got there:
+
+- **9,600 shipment lines**, all dated within Q2 (2026-04-01 to 2026-06-30), covering all 80 catalog SKUs — no unknown SKUs, and samples/damaged/cancelled picks are already excluded per the README.
+- Units = `cases_shipped × units_per_case`.
+- **The trap:** the catalog's `units_per_case` is "as of June 30" (a snapshot). 20 SKUs (the Cinder brand items) had a supplier `CASE_CONFIGURATION` notice mid-quarter reducing cases from **24 → 20 units/case**, effective on various May dates. The catalog shows only the *post-change* value (20).
+- So for those 20 SKUs, any line shipped **before** its effective date must use the **prior 24 units/case**; on/after uses 20. I confirmed each catalog value equals the notice's `new_units_per_case`.
+- Naively trusting the catalog for every line undercounts by **36,360 units** (1,395,530). Applying the date-correct case config gives the true total.
+
+FINAL_ANSWER: 1431890

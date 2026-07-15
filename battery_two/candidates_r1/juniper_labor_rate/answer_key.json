@@ -1,0 +1,7 @@
+{
+  "correct_answer": 2.44,
+  "mechanism": "Payroll durations that look decimal are actually H.MM clock-duration displays.",
+  "planted_answer": 2.5,
+  "task": "juniper_labor_rate",
+  "tolerance": 0.005
+}

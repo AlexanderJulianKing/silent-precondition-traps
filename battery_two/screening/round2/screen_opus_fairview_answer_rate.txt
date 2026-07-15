@@ -1,0 +1,15 @@
+**Answer rate calculation for Fairview Heating & Air — June 2026**
+
+- Total inbound calls in export: **20,223** (all June 2026, all inbound queue dispositions)
+- Answered (`ANSWERED`): **16,709**
+- Abandoned (`CALLER_ABANDONED`): 3,514
+
+Data verification confirmed no adjustments were needed:
+- No duplicate `call_id` or `switch_seq` values
+- All timestamps unique; `switch_seq` is perfectly chronological
+- Every `ANSWERED` row has an agent extension; every abandoned row has none
+- Outbound/extension calls are already excluded (accounting for the gaps in `switch_seq`), so the denominator is exactly the inbound set
+
+Answer rate = 16,709 / 20,223 = **82.62%**
+
+FINAL_ANSWER: 82.62

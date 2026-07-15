@@ -1,0 +1,8 @@
+The total is **211,580.6 miles** driven on completed routes in August 2026.
+
+How I got there:
+- The export has 12,200 rows, all in August 2026, with no duplicate route IDs. I kept the 11,919 `COMPLETED` routes and excluded the 281 `CANCELLED` ones (which never left the depot).
+- The README's hint about the handheld build mattered: routes closed on build `5.14-R` (in use from Aug 19–30, 1,535 rows) read ~1.609× higher than the same route templates on build `4.9-L` — exactly the kilometers-per-mile factor. So `5.14-R` reports `route_distance` in kilometers, and I converted those readings to miles (÷1.609344) before summing.
+- A naive sum without the unit correction would have been 227,561.6, overstated by about 16,000 miles.
+
+FINAL_ANSWER: 211580.6

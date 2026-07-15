@@ -1,0 +1,7 @@
+The number of physical parcels transferred to the carrier in July is **17,000**.
+
+The export has 17,950 accepted rows, each with a unique tracking number — but 950 of them are duplicate scans of the same physical box. In every one of those 950 cases, two rows share an identical load-cell reading (`scale_sample`), weight, all three dimensions, and destination hash, sit on **consecutive manifest rows**, on the **same lane** with the **same service**, accepted 25–75 seconds apart. That pattern (which appears daily from July 11 onward, consistent with a label reprint/double-scan fault on the packing line) means each pair is one parcel handed over once but recorded under two tracking numbers.
+
+So: 17,950 rows − 950 duplicate second-scans = 17,000 unique physical parcels, matching the count of distinct parcel fingerprints in the file.
+
+FINAL_ANSWER: 17000

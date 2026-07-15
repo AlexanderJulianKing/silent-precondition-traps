@@ -1,0 +1,10 @@
+The data is clean and unambiguous:
+
+- **16,620** admitted badge scans, all `gate_result = ADMITTED` (denied/open-gym/cancelled/door-test already excluded per README)
+- All rows fall within December 2026 (Dec 1–31) across the eight studios (DS-01…DS-08)
+- Every `admission_id` is unique, and every `(class_instance, badge_token)` pair is unique — **zero duplicate/double scans** to dedupe
+- Max scans per badge is 17/month (a frequent regular), so no instructor/staff badge outliers to strip
+
+Each admitted scan represents one customer attending one class instance, so the total attendance count equals the row count.
+
+FINAL_ANSWER: 16620

@@ -1,0 +1,5 @@
+Both float and Decimal computations agree.
+
+**Method:** Filtered to `status = PAID` (excluded 272 CANCELLED orders out of 9,200), converted each order's `order_amount` to USD using that order's `order_date` + `currency` match against the daily treasury reference rate (USD orders use rate 1.0), and summed. All 8,928 paid orders matched a rate with no gaps.
+
+FINAL_ANSWER: 1091183.55

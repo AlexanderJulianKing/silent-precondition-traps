@@ -1,0 +1,14 @@
+The data is clean and unambiguous. Here's my analysis:
+
+**Findings:**
+- **16,620 data rows**, every one with `gate_result = ADMITTED` (denied scans, open-gym, cancelled classes, and door tests were already excluded per the README).
+- All timestamps fall within **December 2026**.
+- **No duplicate scans**: every `(badge_token, class_instance)` pair is unique — no customer double-scanned into the same class meeting, so nothing to deduplicate.
+- Every `admission_id` is distinct.
+- All badges share the `DB` prefix, and the only booking channels are customer-facing (APP, WEB, FRONT_DESK) — no staff/instructor category. The per-badge scan distribution (max 17 scans/month ≈ 4×/week) is consistent with regular customers, not instructors, so no non-customer badges need to be removed.
+
+Each admitted scan therefore represents one customer attending one scheduled class instance = one class attendance.
+
+**Total customer class attendances in December = 16,620.**
+
+FINAL_ANSWER: 16620

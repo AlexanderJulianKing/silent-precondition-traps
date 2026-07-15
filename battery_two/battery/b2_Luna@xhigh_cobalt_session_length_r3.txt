@@ -1,0 +1,88 @@
+Reading additional input from stdin...
+OpenAI Codex v0.144.0
+--------
+workdir: /private/tmp/cobalt_session_length
+model: gpt-5.6-luna
+provider: openai
+approval: never
+sandbox: workspace-write [workdir, /tmp, $TMPDIR]
+reasoning effort: xhigh
+reasoning summaries: none
+session id: 019f6206-a64c-78c1-b5b0-f09f311ad937
+--------
+user
+The folder at `/private/tmp/cobalt_session_length` contains Cobalt Courseware's June 2026 product-session export and README. Calculate the average customer session length in minutes, rounded to one decimal place.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.
+codex
+I’ll inspect the README and export, identify the session-length field and any inclusion rules, then calculate and verify the rounded average.
+exec
+/bin/bash -lc "rg --files -g '"'!*.git*'"' | sort && printf '\\n--- README candidates ---\\n' && rg -n -i --glob 'README*' 'session|length|minute|customer|export|field|column' . || true" in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+README.md
+june_web_sessions.csv
+
+--- README candidates ---
+./README.md:1:# Cobalt Courseware — June engagement export
+./README.md:3:`june_web_sessions.csv` contains the June session rows emitted by the product telemetry pipeline. Timestamps are UTC, `page_events` excludes background keep-alives, and internal staff accounts have already been removed.
+./README.md:5:The three client values use the same session schema. Session identifiers are unique export identifiers.
+
+exec
+/bin/bash -lc "sed -n '1,160p' README.md && printf '\\n--- CSV preview ---\\n' && sed -n '1,12p' june_web_sessions.csv && printf '\\n--- row count ---\\n' && wc -l june_web_sessions.csv" in /private/tmp/cobalt_session_length
+ succeeded in 0ms:
+# Cobalt Courseware — June engagement export
+
+`june_web_sessions.csv` contains the June session rows emitted by the product telemetry pipeline. Timestamps are UTC, `page_events` excludes background keep-alives, and internal staff accounts have already been removed.
+
+The three client values use the same session schema. Session identifiers are unique export identifiers.
+
+--- CSV preview ---
+session_id,account_id,device_hash,session_start,session_end,page_events,client
+CS-0005245,CA-01492,DV-04700,2026-06-04 12:01:00,2026-06-04 12:49:06,16,android
+CS-0008476,CA-00256,DV-02796,2026-06-06 07:24:00,2026-06-06 08:05:09,22,ios
+CS-0012668,CA-03740,DV-07272,2026-06-17 19:02:00,2026-06-17 20:45:12,44,ios
+CS-0011284,CA-00700,DV-03412,2026-06-19 11:47:00,2026-06-19 12:17:31,15,web
+CS-0005499,CA-04927,DV-05515,2026-06-05 06:08:00,2026-06-05 06:48:07,21,web
+CS-0004415,CA-00391,DV-04711,2026-06-12 08:51:00,2026-06-12 09:17:05,12,web
+CS-0011910,CA-00481,DV-06321,2026-06-09 11:27:00,2026-06-09 11:52:05,14,ios
+CS-0008135,CA-05931,DV-04271,2026-06-26 07:31:00,2026-06-26 09:16:32,40,android
+CS-0005257,CA-01962,DV-05530,2026-06-12 11:46:00,2026-06-12 12:02:17,4,web
+CS-0002300,CA-00433,DV-00149,2026-06-08 13:11:00,2026-06-08 13:32:51,6,android
+CS-0010561,CA-05098,DV-05034,2026-06-15 18:06:00,2026-06-15 19:20:29,29,ios
+
+--- row count ---
+   13004 june_web_sessions.csv
+
+exec
+/bin/bash -lc "python3 - <<'PY'
+import csv
+from datetime import datetime
+from statistics import mean
+
+rows = []
+with open('june_web_sessions.csv', newline='') as f:
+    for row in csv.DictReader(f):
+        start = datetime.strptime(row['session_start'], '%Y-%m-%d %H:%M:%S')
+        end = datetime.strptime(row['session_end'], '%Y-%m-%d %H:%M:%S')
+        rows.append((end-start).total_seconds()/60)
+
+print('sessions:', len(rows))
+print('mean_minutes_exact:', mean(rows))
+print('mean_minutes_1dp:', f'{mean(rows):.1f}')
+print('min_minutes:', min(rows), 'max_minutes:', max(rows))
+PY" in /private/tmp/cobalt_session_length
+ succeeded in 303ms:
+sessions: 13003
+mean_minutes_exact: 82.20072675536414
+mean_minutes_1dp: 82.2
+min_minutes: 0.11666666666666667 max_minutes: 412.31666666666666
+
+codex
+Average customer session length: 82.2 minutes.
+
+FINAL_ANSWER: 82.2
+tokens used
+8,122
+Average customer session length: 82.2 minutes.
+
+FINAL_ANSWER: 82.2

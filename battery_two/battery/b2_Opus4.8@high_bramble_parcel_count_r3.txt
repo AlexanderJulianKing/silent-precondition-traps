@@ -1,0 +1,23 @@
+## Analysis
+
+The export has **17,950 data rows**, each with a unique tracking number and an `ACCEPTED` response — so a naïve count gives 17,950. But the question asks for **physical parcels**, and tracking numbers are labels, not parcels.
+
+Checking each parcel's physical fingerprint — `destination_hash`, `weight_kg`, all three dimensions, and the high‑entropy `scale_sample` load‑cell reading — reveals:
+
+- **17,000** distinct physical signatures
+- **950** signatures appearing exactly twice → 950 duplicate rows
+
+The duplicates are unambiguous same-parcel double-labels. Example pair:
+
+| tracking | accepted_at | lane | dims/weight/scale |
+|---|---|---|---|
+| BPC8800005872 | 2026-07-11 07:00:13 | L03 | identical |
+| BPC8800005873 | 2026-07-11 07:01:17 | L03 | identical |
+
+Consecutive tracking numbers, same lane, ~1 minute apart, with an identical 6-digit load-cell sample plus identical destination and dimensions — a genuine collision across all those fields is astronomically unlikely by chance (scale_sample ranges 100040–999967). These are the same physical box scanned/labeled twice.
+
+Removing the 950 redundant labels:
+
+**17,950 − 950 = 17,000** physical parcels (which matches the 17,000 distinct physical signatures exactly).
+
+FINAL_ANSWER: 17000

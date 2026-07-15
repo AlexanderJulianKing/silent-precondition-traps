@@ -1,0 +1,11 @@
+work_order,machine_id,serviced_at,retired_meter,installed_meter,reason
+WO-0626-0007,WASH-007,2026-06-15 12:00:00,HWM-007-1,HWM-007-2,scheduled pulse-register exchange
+WO-0626-0009,WASH-009,2026-06-15 12:00:00,HWM-009-1,HWM-009-2,scheduled pulse-register exchange
+WO-0626-0012,WASH-012,2026-06-15 12:00:00,HWM-012-1,HWM-012-2,scheduled pulse-register exchange
+WO-0626-0014,WASH-014,2026-06-15 12:00:00,HWM-014-1,HWM-014-2,scheduled pulse-register exchange
+WO-0626-0017,WASH-017,2026-06-15 12:00:00,HWM-017-1,HWM-017-2,scheduled pulse-register exchange
+WO-0626-0019,WASH-019,2026-06-15 12:00:00,HWM-019-1,HWM-019-2,scheduled pulse-register exchange
+WO-0626-0022,WASH-022,2026-06-15 12:00:00,HWM-022-1,HWM-022-2,scheduled pulse-register exchange
+WO-0626-0024,WASH-024,2026-06-15 12:00:00,HWM-024-1,HWM-024-2,scheduled pulse-register exchange
+WO-0626-0027,WASH-027,2026-06-15 12:00:00,HWM-027-1,HWM-027-2,scheduled pulse-register exchange
+WO-0626-0029,WASH-029,2026-06-15 12:00:00,HWM-029-1,HWM-029-2,scheduled pulse-register exchange

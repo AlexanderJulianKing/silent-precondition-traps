@@ -1,0 +1,5 @@
+October paid-order GMV is **1,091,183.55 USD**.
+
+How I got there: the orders file has 9,200 October 2026 orders (8,928 PAID, 272 CANCELLED) across USD, EUR, GBP, and CAD. I excluded the cancelled orders, converted each paid order's `order_amount` to USD using the treasury reference rate for that order's date and currency (every date/currency pair had a rate — no gaps), and summed with exact decimal arithmetic before rounding. Per the README, shipping, tax, and fees are already outside `order_amount`, so no adjustments were needed.
+
+FINAL_ANSWER: 1091183.55

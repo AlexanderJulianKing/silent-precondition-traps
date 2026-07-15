@@ -1,0 +1,5 @@
+The CSV's `route_distance` field is consistent within a route template but the `5.14-R` handheld build consistently reports values ~1.609× higher than `4.9-L` for the same route (verified across all 60 route templates, mean ratio 1.609) — that build is emitting kilometers instead of miles. Converting those 1,504 rows to miles before summing gives the correct total.
+
+Only `COMPLETED` routes are counted (11,919 rows); `CANCELLED` rows carry leftover planned-distance values but the README states those routes never left the depot, so they're excluded.
+
+FINAL_ANSWER: 211580.6

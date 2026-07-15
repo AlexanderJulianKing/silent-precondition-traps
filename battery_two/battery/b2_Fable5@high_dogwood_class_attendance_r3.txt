@@ -1,0 +1,5 @@
+The export is clean: every one of the 16,620 rows is an admitted badge scan within December 2026, with no duplicate admission IDs and no repeated badge-plus-class-instance pairs, so each row is exactly one customer attending one class meeting. There's nothing to filter out — no denied scans, no staff/test markers (all badges are customer `DB-` tokens, bookings only via APP/WEB/FRONT_DESK), and no out-of-month records — so the total attendance is simply the row count.
+
+**Total customer class attendances in December: 16,620**
+
+FINAL_ANSWER: 16620

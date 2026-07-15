@@ -1,0 +1,3 @@
+All 16,620 data rows are `ADMITTED` scans in December, with unique `admission_id`s and no duplicate (badge_token, class_instance) pairs — each row represents one distinct customer class attendance.
+
+FINAL_ANSWER: 16620

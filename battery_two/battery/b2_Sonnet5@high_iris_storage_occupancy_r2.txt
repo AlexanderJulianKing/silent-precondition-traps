@@ -1,0 +1,20 @@
+Each of the 12 facilities has 120 door controllers reporting nightly for all 30 days of June (43,200 clean rows, no duplicates). Averaging the daily occupied-unit counts within each facility, then averaging across the 12 facilities, gives:
+
+| Facility | Avg occupied units |
+|---|---|
+| IS-01 | 82.7 |
+| IS-02 | 82.9 |
+| IS-03 | 80.4 |
+| IS-04 | 81.4 |
+| IS-05 | 85.5 |
+| IS-06 | 84.2 |
+| IS-07 | 81.5 |
+| IS-08 | 83.6 |
+| IS-09 | 83.8 |
+| IS-10 | 83.8 |
+| IS-11 | 84.8 |
+| IS-12 | 83.2 |
+
+Overall average across all 12 facilities: **83.1** occupied units per facility during June.
+
+FINAL_ANSWER: 83.1

@@ -1,0 +1,18 @@
+## Summary
+
+**Total miles on completed August routes: 211,580.6**
+
+**How I got there:**
+
+1. **Filtered to completed routes only.** The README states cancelled routes "never left the depot," so the 281 `CANCELLED` rows are excluded (they carry a distance reading, but no actual driving occurred). That leaves 11,919 completed routes.
+
+2. **Found the unit defect.** The README's pointed mention that "the handheld build is retained for support triage" was the tell. There are two builds: `4.9-L` (10,415 routes) and `5.14-R` (1,504 routes). Comparing the **same route templates** across both builds, the `5.14-R` readings were consistently **~1.609×** larger — across all 60 shared templates, mean ratio 1.6089, matching the exact km→mile factor (1.609344). The `5.14-R` handheld reports `route_distance` in **kilometers**, not miles.
+
+3. **Corrected and summed:**
+   - `4.9-L` (already miles): 185,354.010 mi
+   - `5.14-R` (42,207.580 km ÷ 1.609344): 26,226.574 mi
+   - **Total: 211,580.58 → 211,580.6 mi**
+
+(An uncorrected sum would wrongly give 227,561.6 — inflated by ~16,000 km-as-miles.) The result is insensitive to conversion-factor precision; it rounds to 211,580.6 either way.
+
+FINAL_ANSWER: 211580.6

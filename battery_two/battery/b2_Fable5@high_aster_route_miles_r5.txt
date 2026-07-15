@@ -1,0 +1,7 @@
+Total miles driven on completed August routes: **211,580.6 miles**.
+
+Key details:
+- Of the 12,200 rows, 11,919 are `COMPLETED`; the 281 `CANCELLED` routes never left the depot and are excluded.
+- The catch was units: distances from handheld build `5.14-R` are consistently ~1.609× the `4.9-L` readings for the same route templates (median ratio 1.6094 across 60 shared templates — exactly km per mile). So `5.14-R` reports kilometers, and I converted those readings to miles (÷1.609344) before summing. Naively summing the raw column would have given an inflated 227,561.6.
+
+FINAL_ANSWER: 211580.6

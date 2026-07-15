@@ -1,0 +1,5 @@
+No blank lines, all 17,950 data rows are ACCEPTED with unique tracking numbers, and one row = one physical parcel.
+
+**17,950 physical parcels** were transferred to the carrier in July 2026.
+
+FINAL_ANSWER: 17950

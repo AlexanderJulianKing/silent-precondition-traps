@@ -1,0 +1,11 @@
+The dataset turned out to be clean, so the total is a straight row count.
+
+**Total customer class attendances in December 2026: 16,620.**
+
+What I checked before trusting the count:
+- The CSV has 16,620 data rows, each a unique `admission_id` with `gate_result = ADMITTED` (the README confirms denied scans, open-gym visits, cancelled classes, and door tests were already excluded from the export).
+- Every scan timestamp falls in December 2026 (2026-12-01 through 2026-12-31).
+- No duplicate scans: no badge token appears more than once in the same class instance, so each row is one person attending one class meeting.
+- Class instances map consistently to their series, and all six disciplines across the eight studios look like normal customer classes — nothing staff-only or test-like to exclude.
+
+FINAL_ANSWER: 16620

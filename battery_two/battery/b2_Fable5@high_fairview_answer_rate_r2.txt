@@ -1,0 +1,5 @@
+The June export contains 20,223 inbound calls, of which 16,709 have outcome `ANSWERED` and 3,514 `CALLER_ABANDONED`. The data is clean: every row falls in June 2026, there are no duplicate `call_id` or `switch_seq` values, and every answered call has an agent extension. The `switch_seq` column does have 9,475 gaps, but per the README that sequence is assigned globally by the switch and outbound/extension-to-extension calls are intentionally excluded from the export — so those gaps aren't missing inbound calls.
+
+Answer rate = 16,709 / 20,223 = 82.623745…% ≈ **82.62%**
+
+FINAL_ANSWER: 82.62

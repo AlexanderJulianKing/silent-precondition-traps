@@ -1,0 +1,3 @@
+The folder at `/private/tmp/juniper_labor_rate` contains Juniper Street Kitchens' June 2026 order and payroll exports plus a README describing the files. Calculate the chainwide number of fulfilled orders per paid labor hour for June 2026, rounded to two decimal places.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

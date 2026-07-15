@@ -1,0 +1,5 @@
+Data is clean: 20,223 inbound calls in June, all with valid `ANSWERED`/`CALLER_ABANDONED` outcomes, no duplicates, and `agent_extension` consistently populated only for answered calls. Of these, 16,709 were answered.
+
+16,709 / 20,223 = 82.62%
+
+FINAL_ANSWER: 82.62%

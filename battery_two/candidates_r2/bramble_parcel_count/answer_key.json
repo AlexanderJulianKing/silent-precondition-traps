@@ -1,0 +1,7 @@
+{
+  "correct_answer": 17000,
+  "mechanism": "Carrier-accepted replacement labels create unique records for the same physically scanned parcel.",
+  "planted_answer": 17950,
+  "task": "bramble_parcel_count",
+  "tolerance": 0.5
+}

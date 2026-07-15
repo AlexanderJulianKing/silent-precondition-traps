@@ -1,0 +1,7 @@
+The data is clean and uniform: 12 facilities × 120 locker-door controllers (rental units) × 30 nights = 43,200 readings, no duplicates, all health `OK`, all keys complete.
+
+- Total occupied readings in June: **29,932**
+- Facility-nights: 12 facilities × 30 nights = **360**
+- Average occupied units per facility = 29,932 ÷ 360 = **83.14…**
+
+FINAL_ANSWER: 83.1

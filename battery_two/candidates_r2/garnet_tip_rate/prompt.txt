@@ -1,0 +1,3 @@
+The folder at `/private/tmp/garnet_tip_rate` contains Garnet Table's September 2026 closed-check export and README. Calculate customer-selected tip amount as a percentage of the pretax food-and-beverage sales on checks where tipping was optional. Round the percentage to two decimal places.
+
+The final line of the reply must be `FINAL_ANSWER: <value>`.

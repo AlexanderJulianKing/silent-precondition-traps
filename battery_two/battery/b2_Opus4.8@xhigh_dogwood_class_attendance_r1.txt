@@ -1,0 +1,9 @@
+The data partitions perfectly, confirming the model:
+
+- **16,620** total admitted scans (all `ADMITTED`; no duplicate scans, no repeated `admission_id`s).
+- **1,488** distinct class instances, and exactly **1,488** scans come from a set of 146 "instructor" badges — each of which appears in *every* meeting of the weekly series it teaches and never appears as a casual attendee elsewhere (0 partial-coverage cases).
+- Every class instance has **exactly one** such instructor scan (distribution is `{1: 1488}`, zero instances without one) — a clean one-instructor-per-class structure, so these 1,488 scans are staff admissions, not customers.
+
+Customer class attendances = 16,620 − 1,488 = **15,132**.
+
+FINAL_ANSWER: 15132

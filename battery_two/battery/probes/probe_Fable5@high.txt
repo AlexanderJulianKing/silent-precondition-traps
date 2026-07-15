@@ -1,0 +1,23 @@
+Here is everything currently visible in my context for this session, with the first line of each quoted:
+
+1. **System prompt (core instructions)** — first line:
+   > "You are a Claude agent, built on Anthropic's Claude Agent SDK."
+
+   This one document contains several titled sections: `# Harness`, `# Communicating with the user`, `# Session-specific guidance`, `# Memory` (which describes a persistent memory directory at `~/.claude/projects/-private-tmp-probe-empty/memory/` but injects no memory contents), `# Environment`, `# Scratchpad Directory`, and `# Context management`, plus autonomy/operating guidance.
+
+2. **Tool definitions** — a block of function schemas for the tools I can call (Agent, Artifact, Bash, Edit, Read, ReportFindings, ScheduleWakeup, Skill, ToolSearch, Workflow, Write) — first line of the block:
+   > "In this environment you have access to a set of tools you can use to answer the user's question."
+
+3. **Deferred-tools notice (system message)** — first line:
+   > "The following deferred tools are now available via ToolSearch."
+
+   Followed in the same message by two listings: "Available agent types for the Agent tool:" and "The following skills are available for use with the Skill tool:" (skill names and descriptions only, no skill contents loaded).
+
+4. **System reminder embedded in your message** — first line:
+   > "As you answer the user's questions, you can use the following context:"
+
+   It contains two facts: your email (alexander.julian.king@gmail.com) and today's date (2026-07-14).
+
+5. **Your own message** — the enumeration request itself.
+
+Nothing else is visible: no recalled memories, no CLAUDE.md content, no project configuration text, no hook output, and no other context documents have been injected into this session. I have not read any files.

@@ -1,0 +1,6 @@
+All 17,296 rows are ACCEPTED and dated within October 2026, with no duplicate parcel IDs. Filtering to the 4,177 rows where `service == RUSH` and summing `measured_kg`:
+
+- Count: 4,177 parcels
+- Total: 14,604.87 kg
+
+FINAL_ANSWER: 14604.9

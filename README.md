@@ -16,6 +16,22 @@ for Data-Science Agents*.
   answer keys, and the quote-fidelity checker (`quote_check.py`).
 - `verification/` — the human-verification checklist and the quote audit.
 
+## Battery Two (Sol-designed half)
+
+`battery_two/` adds the second frozen battery: ten tasks designed by GPT-5.6 Sol under the
+pre-registered protocol in `battery_two/PROTOCOL_SOL_BATTERY.md` (amendments and operator
+log included). Contents: all design-session transcripts and designer prompts
+(`design_sessions/`), every candidate from all three design rounds including failed and
+discarded designs (`candidates_r1/`, `candidates_r2/`, `candidates_r3/`,
+`discarded_parallel_r2/`), the frozen manifest with SHA-256 tree hashes
+(`BATTERY_TWO_FROZEN.json`), all screening transcripts (`screening/round1..3`), the 500
+battery-run transcripts with ledger, scorer, harness, and isolation probes (`battery/`).
+In the ledgers, GPT-5.5 configurations appear under their CLI-era label `Codex5.5`, and
+the halves are labeled Battery One and Battery Two.
+
+`supplementary_report.md` is the development-history report referenced by the paper
+(scrubbed of internal model-review quotations; see its release note).
+
 ## Provenance note
 The v2–v8 generator sources were reconstructed after a file-management error during
 data collection and re-verified by regenerating each environment and confirming it is

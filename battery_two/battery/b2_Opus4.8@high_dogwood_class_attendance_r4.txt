@@ -1,0 +1,21 @@
+I have everything I need. Let me summarize the analysis.
+
+## Analysis
+
+The export `december_class_admissions.csv` contains **16,620 data rows** (16,621 lines minus the header).
+
+I verified the data is already clean for the "customer class attendance" count:
+
+| Check | Result |
+|---|---|
+| `gate_result` values | All 16,620 rows are `ADMITTED` (denied scans, door tests, cancelled/open-gym already excluded per README) |
+| Date range | Every scan falls within `2026-12-01` → `2026-12-31` |
+| `admission_id` | All unique — no duplicate rows |
+| Same badge + same class instance | 0 duplicate (double) scans — each row is a distinct attendance |
+| Badge scan frequency | Max 17 scans/month (~4×/week), no instructor/staff outliers to strip out |
+
+Each row is one customer admitted to one scheduled class, with no duplicates or non-customer records to remove. So the total equals the row count.
+
+Total customer class attendances in December: **16,620**
+
+FINAL_ANSWER: 16620

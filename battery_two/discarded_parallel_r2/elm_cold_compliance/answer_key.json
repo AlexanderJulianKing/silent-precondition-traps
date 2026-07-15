@@ -1,0 +1,7 @@
+{
+  "correct_answer": 86.6,
+  "mechanism": "Change-driven telemetry oversamples volatile compliant periods and undersamples long stable excursions.",
+  "planted_answer": 97.2,
+  "task": "elm_cold_compliance",
+  "tolerance": 0.05
+}

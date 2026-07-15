@@ -1,0 +1,5 @@
+The dataset is clean — 13,003 unique sessions, no missing fields, no duplicates, no negative/zero durations, and all timestamps fall within June 2026.
+
+Average session length = total session duration (session_end − session_start) summed across all 13,003 rows, divided by the row count, converted to minutes: **82.2007 minutes**.
+
+FINAL_ANSWER: 82.2

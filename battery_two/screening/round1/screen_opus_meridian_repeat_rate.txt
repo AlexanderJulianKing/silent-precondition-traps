@@ -1,0 +1,11 @@
+All 12,131 purchases joined to the directory cleanly (no guests in the extract), and identity was keyed on `member_uuid` — which matters because `customer_no` 1000 is three different people across the three stores.
+
+**Method:**
+- Joined each purchase to its `member_uuid` via `(store_id, customer_no)`.
+- Determined each customer's first purchase date across the full April–July extract.
+- Kept the 3,000 customers whose first purchase fell in May 2026.
+- Counted those with another purchase on a strictly later calendar date within 30 days (`0 < days ≤ 30`).
+
+**Result:** 676 of 3,000 = 22.533% → **22.5%** chainwide.
+
+FINAL_ANSWER: 22.5%

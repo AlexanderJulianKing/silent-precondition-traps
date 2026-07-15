@@ -1,0 +1,5 @@
+Each of the 12 facilities has exactly 120 controllers reporting all 30 nights (43,200 rows total, no duplicates/gaps, all health OK), so the average occupied units per facility per night, averaged across facilities, equals total occupied readings ÷ (12 facilities × 30 nights) = 29,932 / 360 ≈ 83.1.
+
+Per-facility nightly averages ranged from 80.4 (IS-03) to 85.5 (IS-05), giving an overall average of 83.1 occupied units per facility.
+
+FINAL_ANSWER: 83.1

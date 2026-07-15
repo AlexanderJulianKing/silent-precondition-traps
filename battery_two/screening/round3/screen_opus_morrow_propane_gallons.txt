@@ -1,0 +1,8 @@
+All 12,000 rows are unique, all `DELIVERED`, all dated within July 2026, with positive gallon values. The scale-mass and product-temperature columns are internally consistent across every truck (mass/gallon ratio tracks temperature exactly as propane density should) — confirming they're the loading-reconciliation/maintenance data the README describes, not something to correct the meter volume against.
+
+So the total delivered propane is simply the sum of `meter_gallons` across all delivered closes.
+
+- Rows: 12,000 (all `DELIVERED`, no duplicates, all July 2026)
+- Sum of `meter_gallons`: **3,852,666.7 gallons**
+
+FINAL_ANSWER: 3852666.7

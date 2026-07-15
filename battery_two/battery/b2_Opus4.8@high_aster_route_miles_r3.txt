@@ -1,0 +1,9 @@
+## Summary
+
+- **Filtered to completed routes**: 11,919 of 12,201 rows are `COMPLETED` (281 `CANCELLED` routes never left the depot, per the README, and are excluded).
+- **Found a unit inconsistency**: Two handheld builds emitted the distance readings. Comparing the same reused `route_template` across builds, the `5.14-R` build's distances run **1.609×** higher than `4.9-L` — exactly the kilometers→miles factor. So `5.14-R` (1,504 completed routes) reported in **kilometers**; `4.9-L` reported in miles.
+- **Converted** the 5.14-R rows to miles (÷ 1.609344) and summed.
+
+Without the fix the naïve total is 227,561.6; correcting the km readings gives 211,580.6 miles.
+
+FINAL_ANSWER: 211580.6

@@ -1,0 +1,14 @@
+The calculation is complete and clean. Here's what I did:
+
+**Method**
+- Loaded the daily treasury reference rates keyed by `(date, currency)`.
+- Iterated the 9,200 orders, excluding the **272 CANCELLED** orders and keeping the **8,928 PAID** orders (only two statuses exist).
+- Converted each paid order's `order_amount` to USD using that day's `usd_per_currency_unit` for the order's currency (USD rows = 1.0), then summed with exact decimal arithmetic.
+
+**Validation**
+- Every field row was well-formed (9 columns, numeric amounts, no quoting).
+- Currency ↔ market pairings were consistent, and **every** paid order had a matching same-day rate (0 missing rates, 0 anomalies).
+
+Paid-order GMV = **1,091,183.55 USD** (raw sum 1091183.55467117, rounded half-up to 2 dp).
+
+FINAL_ANSWER: 1091183.55

@@ -1,0 +1,12 @@
+The dataset needed no filtering — every check came back clean, so the answer is the row count.
+
+**Total customer class attendances in December: 16,620**
+
+What I verified before settling on the raw count:
+
+- The CSV has 16,620 data rows, each a unique `admission_id` (no duplicate records).
+- Every row has `gate_result = ADMITTED` and a `scanned_at` timestamp in December 2026 — no denied scans or out-of-month spillover to exclude.
+- No badge was scanned into the same class instance twice, so there are no double-counted attendances.
+- No badge shows instructor-like volume (the busiest badge has 17 scans in the month, consistent with a dedicated customer), and the README confirms denied scans, open-gym visits, cancelled classes, and door tests were already excluded from the export.
+
+FINAL_ANSWER: 16620

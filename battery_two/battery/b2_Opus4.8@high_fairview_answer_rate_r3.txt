@@ -1,0 +1,9 @@
+The data is clean: 20,223 inbound call rows, all dated within June 2026, no duplicate `call_id` or `switch_seq` values, and only two outcomes present.
+
+- Answered (`ANSWERED`): 16,709
+- Abandoned (`CALLER_ABANDONED`): 3,514
+- Total inbound: 20,223
+
+Answer rate = 16,709 / 20,223 × 100 = **82.62%**
+
+FINAL_ANSWER: 82.62

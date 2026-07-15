@@ -1,0 +1,3 @@
+Data is clean — no duplicates, no negative amounts, every order/date currency pair had a matching treasury rate, and only PAID/CANCELLED statuses exist. Converting each PAID order's `order_amount` to USD using that day's treasury rate and summing gives the October GMV.
+
+FINAL_ANSWER: 1091183.55
