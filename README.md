@@ -3,7 +3,7 @@
 Reproducibility package for *The `NULL` Merchant and Other Silent Precondition Traps
 for Data-Science Agents*.
 
-**The paper:** [`manuscript.pdf`](manuscript.pdf) (under review at TMLR, July 2026).
+**The paper:** [`manuscript.pdf`](manuscript.pdf).
 
 ## Contents
 - `generators/` — seeded Python scripts that build every task environment
